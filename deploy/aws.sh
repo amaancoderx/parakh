@@ -18,8 +18,9 @@ REGION=${AWS_REGION:-ap-south-1}
 NAME=parakh
 KEY=~/.ssh/$NAME.pem
 : "${PARAKH_ACCESS_CODE:?set PARAKH_ACCESS_CODE to the code judges will type}"
-aws() { command aws --region "$REGION" --output text "$@"; }
+aws() { command aws --region "$REGION" --output text "$@" | tr -d '\r'; }  # the Windows CLI ends lines with \r
 
+mkdir -p "$(dirname "$KEY")"
 if [ ! -f "$KEY" ]; then
   aws ec2 create-key-pair --key-name $NAME --query KeyMaterial > "$KEY"
   chmod 600 "$KEY"
@@ -47,11 +48,13 @@ SSH="ssh -i $KEY -o StrictHostKeyChecking=accept-new ubuntu@$IP"
 until $SSH true 2>/dev/null; do sleep 4; done
 
 # Code, keys, saved recogniser answers and the bundled calls. Not the test sets, uploads or anyone's saved names.
-rsync -az --delete -e "ssh -i $KEY" \
-  --exclude .venv --exclude .git --exclude __pycache__ --exclude .pytest_cache --exclude 'data/external' --exclude 'data/uploads' \
-  --exclude 'data/memory' --exclude 'data/calls' --exclude 'data/keys.json' --exclude 'data/logs' --exclude 'data/real' \
-  --exclude research_notes --exclude reports \
-  ./ ubuntu@"$IP":parakh/
+SKIP=(.venv .git __pycache__ .pytest_cache data/external data/uploads data/memory data/calls data/keys.json data/logs data/real
+      research_notes reports web/classic.html)
+if command -v rsync > /dev/null; then
+  rsync -az --delete -e "ssh -i $KEY" "${SKIP[@]/#/--exclude=}" ./ ubuntu@"$IP":parakh/
+else  # Windows (Git Bash) has no rsync: stream a tarball over ssh instead
+  tar czf - "${SKIP[@]/#/--exclude=}" . | $SSH "mkdir -p parakh && tar xzf - -C parakh"
+fi
 $SSH "PARAKH_ACCESS_CODE='$PARAKH_ACCESS_CODE' HOST='$HOST' bash parakh/deploy/setup.sh"
 echo
 echo "Live at https://$HOST   (access code for new audio: $PARAKH_ACCESS_CODE)"
