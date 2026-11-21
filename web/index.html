@@ -919,7 +919,7 @@ table.plain tr.us td { font-weight: 600; }
       <div class="card funnel" id="funnel-card" hidden>
         <div class="eyebrow" id="funnel-h">On held-out recordings</div>
         <h3 class="funnel-take" id="funnel-take"></h3>
-        <div class="funnel-tags"><span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Public dataset</span><span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Human-checked transcripts</span><span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Never tuned on</span></div>
+        <div class="funnel-tags"><span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Public dataset</span><span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Correct answers checked by people</span><span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Never seen while building</span></div>
         <div id="funnel"></div>
       </div>
     </div>
@@ -2642,7 +2642,7 @@ function siteResults() {
         <div class="ln"><div class="tr"><div class="fl" data-w="${w(r.base_names)}"></div></div><span class="v">${r.base_names}%</span></div>
         <div class="ln"><div class="tr"><div class="fl us" data-w="${w(r.names_right)}"></div></div><span class="v">${r.names_right}%</span></div>
       </div></div>`).join("");
-    $("proof-sub").textContent = `Names right on ${f ? f.clips : ""} public Hindi recordings Parakh was never tuned on. Axis starts at ${lo}%.`;
+    $("proof-sub").textContent = `Names right on ${f ? f.clips : ""} public Hindi recordings Parakh never saw while it was being built. Axis starts at ${lo}%.`;
     growWhenSeen($("res-groups"), ".fl");
   } else {
     $("res-groups").innerHTML = `<p style="color:var(--muted)">No saved results on this server.</p>`;
