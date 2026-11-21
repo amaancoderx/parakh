@@ -110,112 +110,202 @@ input, select { font: inherit; color: inherit; }
 .modal .row { display: flex; gap: 8px; justify-content: flex-end; margin-top: 14px; }
 
 /* =========================================================================
-   SITE (marketing)
+   SITE (marketing): visuals first, a line of text per section
    ========================================================================= */
-.wrap { max-width: 1160px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
-.nav { position: sticky; top: 0; z-index: 40; background: rgba(246,245,242,.86); backdrop-filter: saturate(1.4) blur(12px); border-bottom: 1px solid transparent; transition: border-color .2s; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+.nav { position: sticky; top: 0; z-index: 40; background: rgba(246,245,242,.82); backdrop-filter: saturate(1.4) blur(14px); border-bottom: 1px solid transparent; transition: border-color .2s; }
 .nav.scrolled { border-bottom-color: var(--line); }
 .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
 .logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 17px; letter-spacing: -0.02em; text-decoration: none; }
 .logo .mk { width: 30px; height: 30px; border-radius: 8px; background: var(--brand); display: grid; place-items: center; }
 .logo .mk svg { width: 17px; height: 17px; }
 .logo small { font-weight: 400; color: var(--muted); font-size: 14px; }
-.nav-links { display: flex; align-items: center; gap: 4px; }
+.nav-links { display: flex; align-items: center; gap: 2px; }
 .nav-links a { text-decoration: none; color: var(--ink-2); font-size: 14px; padding: 8px 12px; border-radius: 8px; }
 .nav-links a:hover { background: var(--sunken); color: var(--ink); }
 @media (max-width: 820px) { .nav-links a.hide-m { display: none; } }
 
-.hero { padding: 64px 0 56px; }
-.hero-grid { display: grid; grid-template-columns: 1fr 1.05fr; gap: 56px; align-items: center; }
-@media (max-width: 980px) { .hero-grid { grid-template-columns: 1fr; gap: 40px; } .hero { padding-top: 40px; } }
-.hero h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(44px, 6vw, 72px); line-height: 1; letter-spacing: -0.02em; }
+/* hero */
+.hero { padding: 72px 0 0; text-align: center; position: relative; }
+.hero::before { content: ""; position: absolute; inset: 0 0 auto; height: 620px; z-index: -1;
+  background: radial-gradient(60% 55% at 50% 0%, rgba(200,85,61,.09), transparent 70%),
+              linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 56px 56px,
+              linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 56px 56px;
+  mask-image: radial-gradient(70% 70% at 50% 20%, #000 30%, transparent 75%); opacity: .7; }
+.pill { display: inline-flex; align-items: center; gap: 8px; height: 30px; padding: 0 12px 0 6px; border-radius: 99px; background: var(--surface); border: 1px solid var(--line); font-size: 13px; color: var(--ink-2); box-shadow: 0 1px 2px rgba(21,23,26,.04); }
+.pill b { height: 20px; padding: 0 8px; border-radius: 99px; background: var(--brand-soft); color: var(--brand-ink); font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; }
+.hero h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(46px, 7.2vw, 88px); line-height: .98; letter-spacing: -0.025em; margin-top: 22px; }
 .hero h1 em { color: var(--brand); }
-.hero .lead { font-size: 18px; color: var(--ink-2); margin-top: 22px; max-width: 520px; }
-.hero .ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
-.hero .fine { margin-top: 18px; font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 18px; }
-.hero .fine span { display: inline-flex; align-items: center; gap: 6px; }
-.hero .fine svg { width: 14px; height: 14px; color: var(--ok); }
+.hero .lead { font-size: clamp(16px, 2vw, 19px); color: var(--ink-2); margin: 20px auto 0; max-width: 560px; }
+.hero .ctas { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 28px; }
 
-.window { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 30px 80px -40px rgba(21,23,26,.35); overflow: hidden; }
-.window-top { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--line); background: #fbfaf8; font-size: 12.5px; color: var(--muted); }
-.window-top .wave { display: flex; align-items: center; gap: 2px; height: 18px; }
-.window-top .wave i { width: 2px; border-radius: 2px; background: var(--brand); opacity: .8; animation: bounce 1.2s ease-in-out infinite; animation-delay: calc(var(--i) * -0.09s); }
-@keyframes bounce { 0%,100% { height: 4px; } 50% { height: 16px; } }
-.duo { display: grid; grid-template-columns: 1fr 1fr; }
-.duo > div { padding: 18px; min-width: 0; }
-.duo > div + div { border-left: 1px solid var(--line); }
-@media (max-width: 560px) { .duo { grid-template-columns: 1fr; } .duo > div + div { border-left: 0; border-top: 1px solid var(--line); } }
-.duo h4 { font-size: 12.5px; font-weight: 600; color: var(--muted); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-.duo h4.us { color: var(--brand-ink); }
-.duo .say { font-size: 15px; line-height: 1.75; min-height: 106px; }
-.duo .say b { font-weight: 500; border-radius: 5px; padding: 1px 3px; transition: background .35s, color .35s; }
-.duo .say b.bad { background: var(--wrong-soft); color: var(--wrong); }
-.duo .say b.fixed { background: var(--fix-soft); color: var(--fix); }
-.duo .say b.digit { background: var(--num-soft); color: var(--num); font-family: var(--mono); font-size: .93em; }
-.duo .say b.asked { background: var(--ask-soft); color: var(--ask); }
-.note { margin-top: 14px; border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; background: #fcfbf9; }
-.note .eyebrow { margin-bottom: 8px; }
-.note dl { display: grid; grid-template-columns: 64px 1fr; gap: 5px 10px; margin: 0; font-size: 13.5px; }
-.note dt { color: var(--muted); }
-.note dd { margin: 0; min-height: 21px; }
-.note dd span { border-radius: 5px; padding: 0 4px; }
-.note dd .bad { background: var(--wrong-soft); color: var(--wrong); }
-.note dd .good { background: var(--ok-soft); color: var(--ok); }
-.stamp { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; font-size: 12px; font-weight: 600; padding: 4px 9px; border-radius: 7px; opacity: 0; transition: opacity .4s; }
-.stamp.on { opacity: 1; }
-.stamp.bad { background: var(--wrong-soft); color: var(--wrong); }
-.stamp.good { background: var(--ok-soft); color: var(--ok); }
-.steps-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-.steps-row span { font-size: 12px; padding: 4px 9px; border-radius: 99px; border: 1px solid var(--line); color: var(--ink-2); background: #fff; opacity: 0; transform: translateY(4px); transition: opacity .35s, transform .35s; }
-.steps-row span.on { opacity: 1; transform: none; }
+/* the product shot */
+.shot-wrap { position: relative; max-width: 1080px; margin: 56px auto 0; }
+.shot { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; text-align: left;
+  box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 50px 100px -50px rgba(21,23,26,.45), 0 20px 40px -30px rgba(21,23,26,.25); }
+.shot-bar { display: flex; align-items: center; gap: 12px; height: 42px; padding: 0 14px; border-bottom: 1px solid var(--line); background: #fbfaf8; }
+.shot-bar .dots { display: flex; gap: 6px; }
+.shot-bar .dots i { width: 10px; height: 10px; border-radius: 99px; background: #e3dfd8; }
+.shot-bar .url { flex: 1; max-width: 420px; margin: 0 auto; height: 26px; border-radius: 7px; background: var(--sunken); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--muted); }
+.shot-bar .live { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; color: var(--ok); font-weight: 500; }
+.shot-body { display: grid; grid-template-columns: 56px 1fr; min-height: 470px; }
+.shot-side { border-right: 1px solid var(--line); background: #faf9f6; display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 14px 0; }
+.shot-side .sq { width: 26px; height: 26px; border-radius: 7px; background: var(--brand); display: grid; place-items: center; }
+.shot-side .sq svg { width: 15px; height: 15px; }
+.shot-side i { width: 18px; height: 18px; border-radius: 5px; background: var(--sunken); }
+.shot-side i.on { background: var(--brand-soft); box-shadow: inset 0 0 0 1.5px var(--brand); }
+.shot-main { padding: 18px 20px 20px; min-width: 0; display: grid; gap: 14px; align-content: start; }
+.shot-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+.shot-head b { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+.shot-head .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.shot-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 12px; }
+.panel { border: 1px solid var(--line); border-radius: 12px; padding: 12px; min-width: 0; }
+.sv { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; font-weight: 600; font-size: 13.5px; transition: background .4s, color .4s; }
+.sv i { width: 22px; height: 22px; border-radius: 99px; display: grid; place-items: center; font-style: normal; font-size: 12px; color: #fff; flex: none; transition: background .4s; }
+.sv.ask { background: var(--ask-soft); color: var(--ask); } .sv.ask i { background: var(--ask); }
+.sv.ok { background: var(--ok-soft); color: var(--ok); } .sv.ok i { background: var(--ok); }
+.q { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px; padding: 10px 2px 0; margin-top: 10px; border-top: 1px solid var(--line); font-size: 13px; }
+.q b { font-weight: 600; display: block; }
+.q small { color: var(--muted); font-size: 11.5px; }
+.q .pl { width: 24px; height: 24px; border-radius: 99px; border: 1px solid var(--line-2); display: grid; place-items: center; }
+.q .pl svg { width: 9px; height: 9px; }
+.q .opts { display: flex; gap: 5px; }
+@media (max-width: 560px) { .q { grid-template-columns: auto 1fr; } .q .opts { grid-column: 1 / -1; padding-left: 34px; } }
+.opt { height: 26px; padding: 0 9px; border-radius: 7px; border: 1px solid var(--line-2); display: inline-flex; align-items: center; font-size: 12px; white-space: nowrap; transition: background .3s, color .3s, border-color .3s, transform .15s; }
+.opt.solid { background: var(--ink); color: #fff; border-color: var(--ink); }
+.opt.tap { background: var(--ink); color: #fff; border-color: var(--ink); transform: scale(.96); }
+.opt.done { background: var(--ok-soft); color: var(--ok); border-color: transparent; }
+.mini-sheet { display: grid; grid-template-columns: 74px 1fr; margin: 8px 0 0; font-size: 13px; }
+.mini-sheet dt, .mini-sheet dd { margin: 0; padding: 7px 0; border-top: 1px solid var(--line); }
+.mini-sheet dt { color: var(--muted); }
+.mini-sheet dt:first-of-type, .mini-sheet dd:first-of-type { border-top: 0; }
+.mini-sheet dd span { border-radius: 5px; padding: 1px 5px; transition: background .4s, color .4s; }
+.mini-sheet .q-mark { background: var(--ask-soft); color: var(--ask); }
+.mini-sheet .ok-mark { background: var(--ok-soft); color: var(--ok); }
+.shot-cmp { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.shot-cmp > div { padding: 12px 14px; min-width: 0; }
+.shot-cmp > div + div { border-left: 1px solid var(--line); background: #fdfcfa; }
+.cmp-h { font-size: 11.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.cmp-h.us { color: var(--brand-ink); }
+.shot-cmp p { font-size: 14px; line-height: 1.75; }
+.shot-cmp s { background: var(--wrong-soft); color: var(--wrong); text-decoration-color: rgba(192,57,43,.5); border-radius: 4px; padding: 0 3px; }
+.shot-cmp b { font-weight: 500; border-radius: 4px; padding: 0 3px; transition: background .35s, color .35s; }
+.shot-cmp b.k-fix { background: var(--fix-soft); color: var(--fix); }
+.shot-cmp b.k-num { background: var(--num-soft); color: var(--num); font-family: var(--mono); font-size: .92em; }
+.shot-cmp b.k-ask { background: var(--ask-soft); color: var(--ask); box-shadow: inset 0 -2px 0 rgba(168,93,6,.45); }
+.float { position: absolute; z-index: 3; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; box-shadow: 0 24px 48px -20px rgba(21,23,26,.35);
+  font-size: 12.5px; width: 250px; opacity: 0; transform: translateY(8px); transition: opacity .35s, transform .35s; pointer-events: none; text-align: left; }
+.float.on { opacity: 1; transform: none; }
+.float h5 { margin: 0 0 6px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 7px; }
+.float table { width: 100%; border-collapse: collapse; }
+.float td { padding: 4px 0; border-top: 1px solid var(--line); }
+.float td:first-child { color: var(--muted); }
+.float .res { margin-top: 8px; color: var(--fix); font-weight: 600; }
+#f-evidence { right: -34px; top: 300px; }
+#f-math { left: -38px; top: 420px; width: 220px; }
+@media (max-width: 1180px) { #f-evidence { right: 12px; } #f-math { left: 12px; } }
+@media (max-width: 860px) { .shot-body { grid-template-columns: 1fr; } .shot-side { display: none; } .shot-grid, .shot-cmp { grid-template-columns: 1fr; } .shot-cmp > div + div { border-left: 0; border-top: 1px solid var(--line); } .float { display: none; } }
 
-.strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--surface); }
-.strip .wrap { display: grid; grid-template-columns: repeat(4, 1fr); }
-.strip .wrap > div { padding: 26px 20px; }
-.strip .wrap > div + div { border-left: 1px solid var(--line); }
-.strip .num { font-family: var(--serif); font-size: 40px; line-height: 1; }
-.strip .num small { font-family: var(--sans); font-size: 15px; color: var(--muted); }
-.strip p { font-size: 13.5px; color: var(--ink-2); margin-top: 8px; }
-@media (max-width: 820px) { .strip .wrap { grid-template-columns: 1fr 1fr; } .strip .wrap > div:nth-child(3) { border-left: 0; } .strip .wrap > div:nth-child(n+3) { border-top: 1px solid var(--line); } }
+.runs-on { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 34px; margin: 46px auto 0; color: var(--muted); font-size: 13px; }
+.runs-on span.m { font-size: 15px; font-weight: 600; color: #8f949b; letter-spacing: -0.01em; }
 
-.sec { padding: 88px 0; }
-.sec-h { max-width: 640px; margin-bottom: 40px; }
-.sec-h h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(32px, 4vw, 46px); line-height: 1.05; }
+/* metric strip */
+.metrics { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 64px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.metrics > div { padding: 30px 24px; text-align: left; }
+.metrics > div + div { border-left: 1px solid var(--line); }
+.metrics .num { font-family: var(--serif); font-size: 46px; line-height: 1; letter-spacing: -0.01em; }
+.metrics .num small { font-family: var(--sans); font-size: 15px; color: var(--muted); letter-spacing: 0; }
+.metrics .num .to { color: var(--brand); }
+.metrics p { font-size: 13.5px; color: var(--muted); margin-top: 10px; }
+@media (max-width: 820px) { .metrics { grid-template-columns: 1fr 1fr; } .metrics > div:nth-child(3) { border-left: 0; } .metrics > div:nth-child(n+3) { border-top: 1px solid var(--line); } }
+
+/* sections */
+.sec { padding: 104px 0 0; }
+.sec-h { text-align: center; max-width: 680px; margin: 0 auto 44px; }
+.sec-h .eyebrow { display: block; margin-bottom: 12px; color: var(--brand-ink); }
+.sec-h h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(34px, 4.6vw, 52px); line-height: 1.02; letter-spacing: -0.02em; }
 .sec-h p { color: var(--ink-2); font-size: 16.5px; margin-top: 14px; }
-.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-@media (max-width: 980px) { .grid4 { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 760px) { .grid3, .grid4 { grid-template-columns: 1fr; } }
-.feature { padding: 22px; }
-.feature .ic { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: var(--sunken); margin-bottom: 16px; }
-.feature .ic svg { width: 19px; height: 19px; }
-.feature h3 { font-size: 16.5px; font-weight: 600; margin-bottom: 6px; }
-.feature p { color: var(--ink-2); font-size: 14.5px; }
-.step-card { padding: 22px; position: relative; }
-.step-card .n { font-family: var(--mono); font-size: 12px; color: var(--brand-ink); margin-bottom: 12px; display: block; }
-.step-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
-.step-card p { color: var(--ink-2); font-size: 14px; }
-.proof-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px; }
-@media (max-width: 900px) { .proof-grid { grid-template-columns: 1fr; } }
-.big-num { font-family: var(--serif); font-size: 64px; line-height: 1; }
-.big-num small { font-size: 26px; color: var(--muted); }
-.big-num .to { color: var(--brand); }
-.dev { display: grid; grid-template-columns: 1fr 1.15fr; gap: 40px; align-items: center; }
+
+/* pipeline */
+.pipe { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; position: relative; }
+.pipe::before { content: ""; position: absolute; left: 12%; right: 12%; top: 44px; height: 2px; background: repeating-linear-gradient(90deg, var(--line-2) 0 6px, transparent 6px 12px); z-index: 0; }
+.node { position: relative; z-index: 1; text-align: center; padding: 0 8px; }
+.node .ic { width: 88px; height: 88px; margin: 0 auto 16px; border-radius: 24px; background: var(--surface); border: 1px solid var(--line); display: grid; place-items: center; box-shadow: var(--shadow); }
+.node .ic svg { width: 34px; height: 34px; }
+.node h3 { font-size: 16px; font-weight: 600; }
+.node p { color: var(--muted); font-size: 13.5px; margin-top: 4px; }
+.node .eg { display: inline-flex; margin-top: 12px; font-size: 12.5px; padding: 3px 9px; border-radius: 7px; }
+@media (max-width: 760px) { .pipe { grid-template-columns: 1fr 1fr; row-gap: 32px; } .pipe::before { display: none; } }
+.funnel { margin: 52px auto 0; max-width: 860px; padding: 22px 24px; }
+.funnel .eyebrow { margin-bottom: 14px; }
+.frow { display: grid; grid-template-columns: 170px 1fr 70px; align-items: center; gap: 14px; padding: 6px 0; font-size: 13.5px; }
+.frow .bar { height: 12px; border-radius: 99px; background: #d9d5ce; width: 0; transition: width 1s cubic-bezier(.2,.7,.2,1); }
+.frow.us .bar { background: var(--brand); }
+.frow .v { font-family: var(--mono); font-size: 13px; text-align: right; color: var(--ink-2); }
+@media (max-width: 600px) { .frow { grid-template-columns: 1fr 60px; } .frow > div:nth-child(2) { grid-column: 1 / -1; order: 3; } }
+
+/* bento */
+.bento { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+@media (max-width: 860px) { .bento { grid-template-columns: 1fr; } }
+.tile2 { padding: 26px; display: grid; gap: 22px; align-content: start; overflow: hidden; }
+.tile2 h3 { font-size: 18px; font-weight: 600; letter-spacing: -0.015em; }
+.tile2 p { color: var(--muted); font-size: 14px; margin-top: 4px; }
+.vis { border-radius: 12px; background: #faf9f6; border: 1px solid var(--line); padding: 18px; min-height: 150px; display: grid; align-content: center; gap: 10px; }
+.vis .row-a { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: 14px; }
+.vis .arrow { color: var(--muted); }
+.vis .said { font-style: italic; color: var(--ink-2); }
+.vis .dig { font-family: var(--mono); background: var(--num-soft); color: var(--num); padding: 3px 9px; border-radius: 7px; font-size: 15px; }
+.vis .math { display: inline-flex; gap: 8px; align-items: center; justify-content: center; font-size: 12.5px; color: var(--ok); background: var(--ok-soft); border-radius: 99px; padding: 5px 12px; justify-self: center; }
+.vis .chips { justify-content: center; }
+.vis .nm { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border-radius: 99px; border: 1px solid var(--line); background: var(--surface); font-size: 13px; }
+.vis .nm svg { width: 13px; height: 13px; color: var(--ok); }
+.vis .nm.wait { background: var(--ask-soft); border-color: #efd8b1; color: var(--ask); }
+.vis table { width: 100%; border-collapse: collapse; font-size: 13px; background: var(--surface); border-radius: 10px; overflow: hidden; border: 1px solid var(--line); }
+.vis td { padding: 8px 12px; border-top: 1px solid var(--line); }
+.vis tr:first-child td { border-top: 0; }
+.vis td:first-child { color: var(--muted); width: 45%; }
+.vis .verdict-line { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 13px; padding: 2px 2px 0; }
+
+/* results */
+.res-card { max-width: 920px; margin: 0 auto; padding: 28px; }
+.res-groups { display: grid; gap: 22px; }
+.res-g .lbl { display: flex; justify-content: space-between; font-size: 13.5px; margin-bottom: 8px; }
+.res-g .lbl b { font-weight: 600; }
+.res-g .lbl small { color: var(--ok); font-weight: 500; }
+.res-g .pair { display: grid; gap: 6px; }
+.res-g .ln { display: grid; grid-template-columns: 1fr 64px; align-items: center; gap: 12px; }
+.res-g .tr { height: 14px; border-radius: 99px; background: var(--sunken); overflow: hidden; }
+.res-g .fl { height: 100%; width: 0; border-radius: 99px; background: #c9c4bb; transition: width 1s cubic-bezier(.2,.7,.2,1); }
+.res-g .fl.us { background: var(--brand); }
+.res-g .v { font-family: var(--mono); font-size: 13px; text-align: right; color: var(--ink-2); }
+.res-legend { display: flex; flex-wrap: wrap; gap: 8px 18px; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+.res-legend .k { display: inline-flex; align-items: center; gap: 7px; margin-right: 14px; }
+.res-legend .k i { width: 12px; height: 12px; border-radius: 4px; background: #c9c4bb; }
+.res-legend .k i.us { background: var(--brand); }
+
+/* developers + cta */
+.dev { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: center; }
 @media (max-width: 900px) { .dev { grid-template-columns: 1fr; } }
+.dev h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(34px, 4.4vw, 48px); line-height: 1.04; letter-spacing: -0.02em; margin-top: 10px; }
 .code { background: #16181c; color: #d6dae0; border-radius: 14px; padding: 18px 20px; font: 12.5px/1.75 var(--mono); overflow-x: auto; white-space: pre; }
 .code i { color: #7d8590; font-style: normal; }
 .code b { color: #f0b49f; font-weight: 400; }
 .code u { color: #9ecbff; text-decoration: none; }
-.checks { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 10px; }
+.checks { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 10px; }
 .checks li { display: flex; gap: 10px; color: var(--ink-2); font-size: 15px; }
 .checks svg { width: 18px; height: 18px; color: var(--ok); flex: none; margin-top: 3px; }
-.cta-band { background: var(--ink); color: #fff; border-radius: 22px; padding: 56px 40px; text-align: center; }
-.cta-band h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(32px, 4vw, 48px); line-height: 1.05; }
-.cta-band p { color: #b8bdc4; margin: 14px auto 26px; max-width: 520px; font-size: 16px; }
+.big-num { font-family: var(--serif); font-size: 64px; line-height: 1; }
+.big-num small { font-size: 26px; color: var(--muted); }
+.big-num .to { color: var(--brand); }
+.cta-band { margin-top: 104px; background: var(--ink); color: #fff; border-radius: 24px; padding: 64px 40px; text-align: center; position: relative; overflow: hidden; }
+.cta-band::before { content: ""; position: absolute; inset: 0; background: radial-gradient(50% 80% at 50% 0%, rgba(200,85,61,.35), transparent 70%); }
+.cta-band > * { position: relative; }
+.cta-band h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(36px, 5vw, 56px); line-height: 1.02; }
+.cta-band p { color: #b8bdc4; margin: 14px auto 28px; max-width: 460px; font-size: 16px; }
 .cta-band .btn.ghost { background: transparent; color: #fff; border-color: #3a3f46; }
 .cta-band .btn.ghost:hover { background: #22262b; }
-footer.site-foot { padding: 36px 0 48px; color: var(--muted); font-size: 13px; }
-footer.site-foot .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+footer.site-foot { padding: 40px 0 52px; color: var(--muted); font-size: 13px; }
+footer.site-foot .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: center; }
 
 /* =========================================================================
    APP (console)
@@ -406,133 +496,174 @@ table.plain tr.us td { font-weight: 600; }
   </header>
 
   <section class="hero">
-    <div class="wrap hero-grid">
-      <div>
-        <span class="badge brand">Voice AI for India · Hindi &amp; Hinglish</span>
-        <h1 style="margin-top:18px">Voice AI hears.<br><em>Parakh checks.</em></h1>
-        <p class="lead">Speech models get names and amounts wrong, and sound just as sure when they do. Parakh sits between the model and whatever acts on it: it checks every name and number against the audio and the people you know, fixes what it can prove, and asks about the rest.</p>
-        <div class="ctas">
-          <a class="btn brand lg" href="#/app">Try it on a real call
-            <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <a class="btn ghost lg" href="#proof">See the results</a>
-        </div>
-        <div class="fine">
-          <span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Works on Sarvam and OpenAI</span>
-          <span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>No model training</span>
-          <span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>One URL change for developers</span>
-        </div>
+    <div class="wrap">
+      <span class="pill"><b>New</b>Voice AI for India · Hindi and Hinglish</span>
+      <h1>Voice AI hears.<br><em>Parakh checks.</em></h1>
+      <p class="lead">Every name and number checked against the audio before anyone acts on it.</p>
+      <div class="ctas">
+        <a class="btn brand lg" href="#/app">Try it on a real call
+          <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="btn ghost lg" href="#how">How it works</a>
       </div>
 
-      <div class="window" id="scene" aria-label="The same seconds of a real trade call, on a speech model alone and with Parakh">
-        <div class="window-top"><span class="wave" id="wave"></span>A real trade call · the same seconds, twice</div>
-        <div class="duo">
-          <div>
-            <h4>Speech model on its own</h4>
-            <div class="say">Kaun? <b data-bad="1">Mohan bhai</b>? … Teen ka kyon lo phir? <b data-bad="2">Aishar</b> mein lo to chaar ka hi lo … humse chaalis set ya bayalis set.</div>
-            <div class="note"><div class="eyebrow">Order note</div>
-              <dl><dt>For</dt><dd><span class="bad">Mohan bhai</span></dd><dt>Truck</dt><dd><span class="bad">Aishar</span></dd><dt>Sets</dt><dd>chaalis ya bayalis</dd></dl>
-              <span class="stamp bad on">Acted on · 2 names wrong</span></div>
-          </div>
-          <div>
-            <h4 class="us">Same model, with Parakh</h4>
-            <div class="say">Kaun? <b data-step="4" data-ask="1">Mohan bhai</b>? … Teen ka kyon lo phir? <b data-step="2" data-fix="Eicher">Aishar</b> mein lo to chaar ka hi lo … humse <b data-step="3" data-num="40">chaalis</b> set ya <b data-step="3" data-num="42">bayalis</b> set.</div>
-            <div class="steps-row">
-              <span data-step="1">3 models disagree on “Aishar”</span>
-              <span data-step="2">Sounds like Eicher, a name you know</span>
-              <span data-step="3">Numbers written as digits</span>
-              <span data-step="4">Asks: Mohan bhai or Mohammad bhai?</span>
-              <span data-step="5">You tapped Mohammad bhai</span>
+      <div class="shot-wrap" id="scene" aria-label="Parakh checking a real trade call: a name is fixed, numbers become digits, and one name is asked about before the order is safe to act on.">
+        <div class="shot">
+          <div class="shot-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">Parakh · Steel drums order</span><span class="live"><span class="dot"></span>Live check</span></div>
+          <div class="shot-body">
+            <aside class="shot-side" aria-hidden="true">
+              <span class="sq"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9.5 8.5 6h7L18 9.5 12 18z" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg></span>
+              <i></i><i class="on"></i><i></i><i></i><i></i>
+            </aside>
+            <div class="shot-main">
+              <div class="shot-head"><b>Call 1 · Steel drums order</b>
+                <span class="chips"><span class="badge">3 min 28 s</span><span class="badge fix">1 name fixed</span><span class="badge num">14 numbers as digits</span></span></div>
+              <div class="shot-grid">
+                <div class="panel">
+                  <div class="sv ask" id="sv-verdict"><i id="sv-icon">?</i><span id="sv-text">2 things to confirm before you act</span></div>
+                  <div class="q"><span class="pl"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3.5v9l7-4.5z"/></svg></span><div><b>Who was it?</b><small>at 0:05 in the recording</small></div>
+                    <div class="opts"><span class="opt">Mohan bhai</span><span class="opt" id="sv-pick">Mohammad bhai</span></div></div>
+                  <div class="q"><span class="pl"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3.5v9l7-4.5z"/></svg></span><div><b>Is “Eicher” right?</b><small>heard as “Aishar”</small></div>
+                    <div class="opts"><span class="opt solid" id="sv-yes">Yes</span><span class="opt">No</span></div></div>
+                </div>
+                <div class="panel">
+                  <div class="eyebrow">What was agreed</div>
+                  <dl class="mini-sheet">
+                    <dt>For</dt><dd><span class="q-mark" id="sv-for">Mohan bhai ?</span></dd>
+                    <dt>Truck</dt><dd><span id="sv-truck">Eicher</span></dd>
+                    <dt>Quantity</dt><dd>40 sets · 160 nag</dd>
+                    <dt>Rate</dt><dd>₹6,600</dd>
+                  </dl>
+                </div>
+              </div>
+              <div class="shot-cmp">
+                <div><div class="cmp-h">Speech model alone</div>
+                  <p>Kaun? <s>Mohan bhai</s>? Teen ka kyon lo phir? <s>Aishar</s> mein lo to chaar ka hi lo. Humse chaalis set ya bayalis set.</p></div>
+                <div><div class="cmp-h us">With Parakh</div>
+                  <p>Kaun? <b id="w-ask">Mohan bhai</b>? Teen ka kyon lo phir? <b id="w-fix">Aishar</b> mein lo to chaar ka hi lo. Humse <b data-to="40">chaalis</b> set ya <b data-to="42">bayalis</b> set.</p></div>
+              </div>
             </div>
-            <div class="note"><div class="eyebrow">Order note</div>
-              <dl><dt>For</dt><dd id="n-for"></dd><dt>Truck</dt><dd id="n-truck"></dd><dt>Sets</dt><dd id="n-sets"></dd></dl>
-              <span class="stamp good" id="n-stamp">Checked, then acted on</span></div>
+          </div>
+        </div>
+        <div class="float" id="f-evidence">
+          <h5><span class="dot" style="background:var(--fix);box-shadow:0 0 0 3px var(--fix-soft)"></span>Three models disagreed</h5>
+          <table><tr><td>Saaras v4</td><td>Aishar</td></tr><tr><td>Saaras v3</td><td>Aishwarya</td></tr><tr><td>gpt-transcribe</td><td>आईशर</td></tr></table>
+          <div class="res">Eicher · a name you know</div>
+        </div>
+        <div class="float" id="f-math">
+          <h5><span class="dot"></span>Settled by the call itself</h5>
+          <div style="color:var(--ink-2)">Heard 160 and 360. <span class="mono">40 × 4 = 160</span>, said a sentence earlier.</div>
+        </div>
+      </div>
+
+      <div class="runs-on"><span>Works on top of</span><span class="m">Sarvam Saaras v4</span><span class="m">Sarvam Saaras v3</span><span class="m">OpenAI gpt-transcribe</span></div>
+
+      <div class="metrics" id="metrics"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="how">
+    <div class="wrap">
+      <div class="sec-h"><span class="eyebrow">How it works</span><h2>It proves a name, or it asks.</h2></div>
+      <div class="pipe">
+        <div class="node"><div class="ic"><svg viewBox="0 0 32 32" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round"><path d="M5 16h2M9 11v10M13 7v18M17 11v10M21 14v4M25 12v8"/></svg></div>
+          <h3>Listen</h3><p>Three speech models, side by side</p><span class="eg badge">Aishar · Aishwarya · आईशर</span></div>
+        <div class="node"><div class="ic"><svg viewBox="0 0 32 32" fill="none" stroke="var(--ask)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="14" r="8"/><path d="m20 20 6 6M14 10.5v4M14 17.5v.5"/></svg></div>
+          <h3>Doubt</h3><p>Finds where they disagree</p><span class="eg badge ask">1 word in doubt</span></div>
+        <div class="node"><div class="ic"><svg viewBox="0 0 32 32" fill="none" stroke="var(--fix)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="11" r="4.5"/><path d="M5 25a8 8 0 0 1 16 0M22 15l3 3 5-6"/></svg></div>
+          <h3>Check</h3><p>Against the audio and your names</p><span class="eg badge fix">Sounds like Eicher</span></div>
+        <div class="node"><div class="ic"><svg viewBox="0 0 32 32" fill="none" stroke="var(--ok)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 16.5 5 5L24 10"/></svg></div>
+          <h3>Decide</h3><p>Fix it, or ask you once</p><span class="eg badge ok">Eicher, written</span></div>
+      </div>
+      <div class="card funnel" id="funnel-card" hidden>
+        <div class="eyebrow" id="funnel-h">On held-out recordings</div>
+        <div id="funnel"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="features">
+    <div class="wrap">
+      <div class="sec-h"><span class="eyebrow">Product</span><h2>Built for the words that carry the action.</h2></div>
+      <div class="bento">
+        <div class="card tile2">
+          <div><h3>Asks instead of guessing</h3><p>One tap to settle what the audio cannot prove.</p></div>
+          <div class="vis">
+            <div class="q" style="border:0;margin:0;padding:0"><span class="pl"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3.5v9l7-4.5z"/></svg></span><div><b>Who was it?</b><small>at 0:05</small></div>
+              <div class="opts"><span class="opt">Mohan bhai</span><span class="opt done">Mohammad bhai</span></div></div>
+            <div class="verdict-line"><span class="badge ok">All clear · safe to act</span><span style="color:var(--muted);font-size:12px">answer kept for next time</span></div>
+          </div>
+        </div>
+        <div class="card tile2">
+          <div><h3>Numbers, by rule</h3><p>Lakh, hazaar, dhai, saadhe. Never by a language model.</p></div>
+          <div class="vis">
+            <div class="row-a"><span class="said">ek lakh paintalis hazaar</span><span class="arrow">→</span><span class="dig">1,45,000</span></div>
+            <div class="row-a"><span class="said">aath sau battis</span><span class="arrow">→</span><span class="dig">832</span></div>
+            <span class="math">40 × 4 = 160 · settled by the call</span>
+          </div>
+        </div>
+        <div class="card tile2">
+          <div><h3>Learns your people</h3><p>Trusts a name only after you say yes.</p></div>
+          <div class="vis">
+            <div class="chips" style="display:flex;flex-wrap:wrap;gap:8px">
+              <span class="nm"><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Mohammad bhai</span>
+              <span class="nm"><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Eicher</span>
+              <span class="nm"><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Kotak Mahindra</span>
+              <span class="nm wait">Venkatesan ?</span>
+              <span class="nm"><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Tolichowki</span>
+            </div>
+            <div style="text-align:center;font-size:12px;color:var(--muted)">Import a phone's contacts. Only names are kept.</div>
+          </div>
+        </div>
+        <div class="card tile2">
+          <div><h3>Evidence for every word</h3><p>Click any change to see what each model heard.</p></div>
+          <div class="vis">
+            <table><tr><td>Saaras v4</td><td>Aishar</td></tr><tr><td>Saaras v3</td><td>Aishwarya</td></tr><tr><td>gpt-transcribe</td><td>आईशर</td></tr></table>
+            <div class="verdict-line"><span class="badge fix">Written as Eicher</span><span style="color:var(--muted);font-size:12px">the audio backs it</span></div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="strip" id="strip" hidden>
-    <div class="wrap" id="strip-in"></div>
-  </section>
-
-  <section class="sec">
+  <section class="sec" id="proof">
     <div class="wrap">
-      <div class="sec-h"><span class="eyebrow">Who it is for</span><h2>Anywhere an Indian voice turns into an action.</h2>
-        <p>A misheard name sends the order to the wrong person. A misheard amount moves the wrong money. Parakh makes the words that carry the action trustworthy.</p></div>
-      <div class="grid3">
-        <div class="card feature"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <h3>Call assistants</h3><p>Call screening and call summaries where the caller's name, company and amount have to be right before anyone reads them.</p></div>
-        <div class="card feature"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 10h.01M15 10h.01M9 15c1.7 1.2 4.3 1.2 6 0" stroke-linecap="round"/></svg></div>
-          <h3>Voice agents</h3><p>Booking, support and ordering agents that take action on what they hear. Parakh returns a draft at once and the checked words a second later.</p></div>
-        <div class="card feature"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M7 15h4" stroke-linecap="round"/></svg></div>
-          <h3>Orders &amp; payments</h3><p>Trade calls, collections and payments, where “chaalis ya bayalis” and “Mohan or Mohammad” decide what actually happens.</p></div>
+      <div class="sec-h"><span class="eyebrow">Results</span><h2>Measured on recordings it never saw.</h2><p id="proof-sub">Names right, on each speech model alone and with Parakh.</p></div>
+      <div class="card res-card">
+        <div class="res-groups" id="res-groups"><span class="pending"><span class="spinner"></span>Loading results</span></div>
+        <div class="res-legend"><span><span class="k"><i></i>Speech model alone</span><span class="k"><i class="us"></i>With Parakh</span></span>
+          <a class="btn ghost sm" href="#/app/results">Every test, including ties</a></div>
       </div>
     </div>
   </section>
 
-  <section class="sec" id="how" style="padding-top:0">
-    <div class="wrap">
-      <div class="sec-h"><span class="eyebrow">How it works</span><h2>It never guesses a name. It proves it, or it asks.</h2>
-        <p>No model is retrained. Parakh is a checking layer over the speech models you already use.</p></div>
-      <div class="grid4">
-        <div class="card step-card"><span class="n">01 · Listen</span><h3>Three models hear the call</h3><p>Sarvam Saaras v4, v3 and OpenAI hear the same audio side by side, with no hints that could bias them.</p></div>
-        <div class="card step-card"><span class="n">02 · Doubt</span><h3>Find where they disagree</h3><p>Where the models write different things, something unusual was said. Numbers are compared by value, however they were written.</p></div>
-        <div class="card step-card"><span class="n">03 · Check</span><h3>Match against people you know</h3><p>Names you have confirmed that sound like the doubtful words, across Hindi and Roman script. The audio has to back the name.</p></div>
-        <div class="card step-card"><span class="n">04 · Decide</span><h3>Fix, or ask once</h3><p>Proven names are fixed, numbers become digits by rule, and anything uncertain becomes one tap-to-answer question.</p></div>
-      </div>
-      <p id="funnel" style="color:var(--ink-2);font-size:14.5px;margin-top:18px;max-width:860px"></p>
-    </div>
-  </section>
-
-  <section class="sec" id="proof" style="padding-top:0">
-    <div class="wrap">
-      <div class="sec-h"><span class="eyebrow">Results</span><h2>Measured on recordings it never saw.</h2>
-        <p>189 public Hindi recordings, run once after the rules were frozen. The same audio goes through each speech model alone and with Parakh on top.</p></div>
-      <div class="proof-grid">
-        <div class="card card-b" id="proof-bars-card">
-          <div class="eyebrow" style="margin-bottom:10px">Names right, on each speech model</div>
-          <div class="bars" id="site-bars"><span class="pending"><span class="spinner"></span>Loading results</span></div>
-        </div>
-        <div class="card card-b">
-          <div class="eyebrow" style="margin-bottom:12px">Read this honestly</div>
-          <ul class="honest" id="site-honest"></ul>
-          <a class="btn ghost sm" href="#/app/results" style="margin-top:18px">Every test, including where it ties</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec" id="developers" style="padding-top:0">
+  <section class="sec" id="developers">
     <div class="wrap dev">
       <div>
-        <span class="eyebrow">For developers</span>
-        <div class="sec-h" style="margin:10px 0 0"><h2>Drop-in for the endpoint you already call.</h2>
-          <p><code class="mono">POST /speech-to-text</code> has the same request and response shape as Sarvam's endpoint of that name. Add the caller's names, and the checked transcript comes back with the evidence for every change.</p></div>
+        <span class="eyebrow" style="color:var(--brand-ink)">Developers</span>
+        <h2>One URL change.</h2>
         <ul class="checks">
-          <li><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Base transcript first, checked one after, as a stream</li>
-          <li><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Every edit says what each model heard and why</li>
-          <li><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>A verdict: clear, or exactly what to confirm</li>
-          <li><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Free key with 10 minutes of audio to start</li>
+          <li><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Same shape as Sarvam's /speech-to-text</li>
+          <li><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Draft first, checked transcript after</li>
+          <li><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Evidence and a verdict for every change</li>
         </ul>
-        <div style="display:flex;gap:10px;margin-top:24px;flex-wrap:wrap"><a class="btn primary" href="#/app/developers" style="color:#fff">Get an API key</a><a class="btn ghost" href="/docs" target="_blank" rel="noopener">API reference</a></div>
+        <div style="display:flex;gap:10px;margin-top:26px;flex-wrap:wrap"><a class="btn primary" href="#/app/developers" style="color:#fff">Get a free key</a><a class="btn ghost" href="/docs" target="_blank" rel="noopener">API reference</a></div>
       </div>
       <pre class="code" id="site-curl"></pre>
     </div>
   </section>
 
-  <section class="sec" style="padding-top:0">
-    <div class="wrap">
-      <div class="cta-band">
-        <h2>Hear it for yourself.</h2>
-        <p>Play one of three real trade calls, or record your own voice. Every check runs live.</p>
-        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><a class="btn brand lg" href="#/app">Open Parakh</a><a class="btn ghost lg" href="#/app/developers">Developer access</a></div>
-      </div>
+  <section class="wrap">
+    <div class="cta-band">
+      <h2>Hear it for yourself.</h2>
+      <p>Play a real trade call, or record your own voice.</p>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><a class="btn brand lg" href="#/app">Open Parakh</a><a class="btn ghost lg" href="#/app/results">See every result</a></div>
     </div>
   </section>
 
-  <footer class="site-foot"><div class="wrap"><span>Parakh (परख) · the jeweller's test for real gold. Built for Equal AI Builders '26.</span>
-    <span>Audio goes to Sarvam and OpenAI to be transcribed. Uploaded recordings are deleted after a day.</span></div></footer>
+  <footer class="site-foot"><div class="wrap">
+    <a class="logo" href="#/" style="font-size:15px"><span class="mk" style="width:24px;height:24px;border-radius:7px"><svg viewBox="0 0 24 24" fill="none" style="width:14px;height:14px"><path d="M6 9.5 8.5 6h7L18 9.5 12 18z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg></span>Parakh</a>
+    <span>The jeweller's test for real gold. Built for Equal AI Builders '26.</span>
+    <span>Audio is deleted a day after upload.</span></div></footer>
 </div>
 
 <!-- ======================= APP ======================= -->
@@ -1403,56 +1534,97 @@ $("getkey").onclick = async () => {
 
 /* ---------------- the site: hero scene and live results ---------------- */
 function scene() {
-  $("wave").innerHTML = Array.from({ length: 22 }, (_, i) => `<i style="--i:${i}"></i>`).join("");
-  const root = $("scene");
-  const steps = root.querySelectorAll(".steps-row span");
+  const root = $("scene"), fix = $("w-fix"), ask = $("w-ask"), nums = root.querySelectorAll("[data-to]");
+  const verdict = $("sv-verdict"), pick = $("sv-pick"), yes = $("sv-yes");
   const reset = () => {
-    steps.forEach((s) => s.classList.remove("on"));
-    root.querySelectorAll("[data-fix]").forEach((b) => { b.textContent = "Aishar"; b.className = ""; });
-    root.querySelectorAll("[data-num]").forEach((b) => { b.textContent = b.dataset.num === "40" ? "chaalis" : "bayalis"; b.className = ""; });
-    root.querySelectorAll("[data-ask]").forEach((b) => { b.textContent = "Mohan bhai"; b.className = ""; });
-    ["n-for", "n-truck", "n-sets"].forEach((id) => ($(id).innerHTML = "")); $("n-stamp").classList.remove("on");
+    fix.textContent = "Aishar"; fix.className = "";
+    ask.textContent = "Mohan bhai"; ask.className = "";
+    nums.forEach((b) => { b.textContent = b.dataset.to === "40" ? "chaalis" : "bayalis"; b.className = ""; });
+    ["f-evidence", "f-math"].forEach((id) => $(id).classList.remove("on"));
+    verdict.className = "sv ask"; $("sv-icon").textContent = "?"; $("sv-text").textContent = "2 things to confirm before you act";
+    pick.className = "opt"; yes.className = "opt solid";
+    $("sv-for").className = "q-mark"; $("sv-for").textContent = "Mohan bhai ?";
   };
-  const at = [
-    () => { steps[0].classList.add("on"); root.querySelector("[data-fix]").className = "asked"; },
-    () => { steps[1].classList.add("on"); const b = root.querySelector("[data-fix]"); b.textContent = "Eicher"; b.className = "fixed"; },
-    () => { steps[2].classList.add("on"); root.querySelectorAll("[data-num]").forEach((b) => { b.textContent = b.dataset.num; b.className = "digit"; }); },
-    () => { steps[3].classList.add("on"); root.querySelector("[data-ask]").className = "asked"; },
-    () => { steps[4].classList.add("on"); const b = root.querySelector("[data-ask]"); b.textContent = "Mohammad bhai"; b.className = "fixed"; },
-    () => { $("n-for").innerHTML = `<span class="good">Mohammad bhai</span>`; $("n-truck").innerHTML = `<span class="good">Eicher</span>`; $("n-sets").textContent = "40 or 42 (asked)"; $("n-stamp").classList.add("on"); },
+  const steps = [
+    [900, () => { fix.className = "k-ask"; }],
+    [1800, () => $("f-evidence").classList.add("on")],
+    [2900, () => { fix.textContent = "Eicher"; fix.className = "k-fix"; }],
+    [4300, () => { $("f-evidence").classList.remove("on"); nums.forEach((b) => { b.textContent = b.dataset.to; b.className = "k-num"; }); }],
+    [5200, () => $("f-math").classList.add("on")],
+    [6800, () => { $("f-math").classList.remove("on"); ask.className = "k-ask"; }],
+    [7900, () => { pick.className = "opt tap"; }],
+    [8400, () => {
+      pick.className = "opt done"; yes.className = "opt done";
+      ask.textContent = "Mohammad bhai"; ask.className = "k-fix";
+      $("sv-for").className = "ok-mark"; $("sv-for").textContent = "Mohammad bhai";
+      verdict.className = "sv ok"; $("sv-icon").textContent = "✓"; $("sv-text").textContent = "All clear · safe to act";
+    }],
   ];
-  if (calm) { at.forEach((f) => f()); return; }
-  let timers = [], running = false;
+  if (calm) { steps.forEach(([, f]) => f()); return; }
+  let timers = [], running = false, visible = false;
   const play = () => {
     timers.forEach(clearTimeout); reset(); running = true;
-    timers = at.map((f, i) => setTimeout(f, 900 + i * 1300));
-    timers.push(setTimeout(() => { running = false; if (visible) play(); }, 900 + at.length * 1300 + 5000));
+    timers = steps.map(([ms, f]) => setTimeout(f, ms));
+    timers.push(setTimeout(() => { running = false; if (visible && !$("site").hidden) play(); }, 13000));
   };
-  let visible = false;
-  new IntersectionObserver((en) => { visible = en[en.length - 1].isIntersecting; if (visible && !running && !$("site").hidden) play(); }, { threshold: 0.3 }).observe(root);
+  new IntersectionObserver((en) => {
+    visible = en[en.length - 1].isIntersecting;
+    if (visible && !running && !$("site").hidden) play();
+  }, { threshold: 0.25 }).observe(root);
 }
+
+/* Bars grow when they scroll into view. */
+function growWhenSeen(container, selector) {
+  new IntersectionObserver((es, ob) => {
+    if (!es.some((e) => e.isIntersecting)) return;
+    container.querySelectorAll(selector).forEach((b) => (b.style.width = b.dataset.w + "%"));
+    ob.disconnect();
+  }, { threshold: 0.2 }).observe(container);
+}
+
 function siteResults() {
-  const b = basesRows();
-  if (b.length) bars($("site-bars"), b.flatMap((r) => [{ name: r.base, width: r.base_names, text: `${r.base_names}%` }, { name: `Parakh on ${r.base}`, width: r.names_right, text: `${r.names_right}%`, us: true }]));
-  else $("site-bars").innerHTML = `<p style="color:var(--muted)">No saved results on this server.</p>`;
-  const f = sb.fresh, s = sb.stress, c = sb.calls, honest = [];
-  if (b.length) honest.push(`On all three speech models, Parakh fixed names the model missed (${b.map((r) => r.only_parakh_right).join(", ")}) and lost none it had right.`);
-  if (f) honest.push(`Against the speech models' own keyword features, the difference in names right is within chance. Parakh's edge is the fewest word errors and no weak column.`);
-  if (s) honest.push(`Planted look-alike names: Parakh wrote ${row(s.rows, "Parakh")?.sound_alikes_written ?? "a few"} of ${s.planted}. It is not immune, and OpenAI's keyword feature did better.`);
-  if (c) honest.push(`Three real trade calls: ${c.rows[0].right} of ${c.mentions} confirmed words right, best baseline ${c.rows[1].right}. Rules were built on these calls, so this is not a held-out result.`);
-  $("site-honest").innerHTML = honest.map((x) => `<li>${esc(x)}</li>`).join("");
-  if (b.length && sb.latency) {
-    const v3 = b.find((r) => r.base === "Saaras v3") || b[0], l = sb.latency;
-    $("strip-in").innerHTML = [
-      [`${v3.base_names}<small>% → </small>${v3.names_right}<small>%</small>`, `Names right on ${esc(v3.base)}, on recordings Parakh never saw`],
-      [`${b.reduce((n, r) => n + r.only_parakh_right, 0)}<small> fixed · </small>0<small> lost</small>`, "Names fixed across three speech models, none broken"],
-      [`${(l.draft_ms.median / 1000).toFixed(1)}<small> s</small>`, "To the first transcript. The checked one follows."],
-      [`${f ? f.clips : sb.fleurs.clips}`, "Public Hindi recordings, run once after the rules were frozen"],
-    ].map(([n, p]) => `<div><div class="num">${n}</div><p>${p}</p></div>`).join("");
-    $("strip").hidden = false;
+  const b = basesRows(), f = sb.fresh, l = sb.latency, fu = sb.funnel;
+  if (b.length) {
+    const v3 = b.find((r) => r.base === "Saaras v3") || b[0];
+    const fixed = b.reduce((n, r) => n + r.only_parakh_right, 0), lost = b.reduce((n, r) => n + r.only_other_right, 0);
+    const cells = [
+      [`<small>${v3.base_names}% → </small><span class="to">${v3.names_right}%</span>`, `Names right on ${esc(v3.base)}`],
+      [`${fixed}<small> fixed · </small>${lost}<small> lost</small>`, "Names, across three speech models"],
+      l ? [`${(l.verified_ms.median / 1000).toFixed(1)}<small> s</small>`, `To a checked transcript. Draft in ${(l.draft_ms.median / 1000).toFixed(1)} s.`] : null,
+      [`${f ? f.clips : sb.fleurs.clips}`, "Unseen public recordings, run once"],
+    ].filter(Boolean);
+    $("metrics").innerHTML = cells.map(([n, p]) => `<div><div class="num">${n}</div><p>${p}</p></div>`).join("");
+
+    const max = Math.max(...b.map((r) => r.names_right));
+    const lo = Math.floor(Math.min(...b.map((r) => r.base_names)) / 10) * 10 - 10;  // start the axis below the lowest bar so the gap is visible
+    const w = (v) => Math.max(2, ((v - lo) / (100 - lo)) * 100).toFixed(1);
+    $("res-groups").innerHTML = b.map((r) => `<div class="res-g">
+      <div class="lbl"><b>${esc(r.base)}</b><small>${r.only_parakh_right} names fixed · ${r.only_other_right} lost</small></div>
+      <div class="pair">
+        <div class="ln"><div class="tr"><div class="fl" data-w="${w(r.base_names)}"></div></div><span class="v">${r.base_names}%</span></div>
+        <div class="ln"><div class="tr"><div class="fl us" data-w="${w(r.names_right)}"></div></div><span class="v">${r.names_right}%</span></div>
+      </div></div>`).join("");
+    $("proof-sub").textContent = `Names right on ${f ? f.clips : ""} public Hindi recordings Parakh was never tuned on. Axis starts at ${lo}%.`;
+    growWhenSeen($("res-groups"), ".fl");
+  } else {
+    $("res-groups").innerHTML = `<p style="color:var(--muted)">No saved results on this server.</p>`;
   }
-  const fu = sb.funnel;
-  if (fu) $("funnel").textContent = `On ${fu.recordings} held-out recordings: ${fu.words.toLocaleString("en-IN")} words went in, ${fu.doubted} were in doubt, ${fu.recordings_heard_again} recordings were heard a second time, ${fu.names_written} names were written${fu.names_fixed != null ? ` (${fu.names_fixed} of them fixing a name the base model had wrong)` : ""} and ${fu.flagged_unsure} words were flagged to ask. Every other word is exactly what the base model wrote.`;
+
+  if (fu) {
+    const rows = [
+      ["Words heard", fu.words, false],
+      ["Words in doubt", fu.doubted, false],
+      ["Recordings heard again", fu.recordings_heard_again, false],
+      ["Names written", fu.names_written, true],
+      fu.names_fixed != null ? ["Names fixed", fu.names_fixed, true] : null,
+      ["Words asked about", fu.flagged_unsure, false],
+    ].filter(Boolean);
+    const top = Math.log10(fu.words + 1);
+    $("funnel-h").textContent = `What happened on ${fu.recordings} unseen recordings`;
+    $("funnel").innerHTML = rows.map(([k, v, us]) => `<div class="frow${us ? " us" : ""}"><span>${k}</span><div><div class="bar" data-w="${((Math.log10(v + 1) / top) * 100).toFixed(1)}"></div></div><span class="v">${v.toLocaleString("en-IN")}</span></div>`).join("");
+    $("funnel-card").hidden = false;
+    growWhenSeen($("funnel"), ".bar");
+  }
   curl($("site-curl"), "");
 }
 
