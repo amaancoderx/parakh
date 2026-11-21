@@ -1,0 +1,4388 @@
+{
+ "summary": {
+  "saaras-v4": {
+   "clips": 21,
+   "ref_tokens": 580,
+   "wer": 0.07413793103448275,
+   "entity_acc": 0.8837209302325582,
+   "entity_n": 129,
+   "format_acc": null,
+   "format_n": 0,
+   "errors_by_cat": {
+    "entity": 14,
+    "format": 0,
+    "other": 18,
+    "insertion": 11
+   },
+   "error_rate_by_cat": {
+    "entity": 0.12389380530973451,
+    "format": null,
+    "other": 0.03854389721627409
+   },
+   "non_latin_share": 1.0,
+   "false_insertions": 0,
+   "rare_acc": 0.8974358974358975,
+   "rare_n": 78
+  },
+  "saaras-v3": {
+   "clips": 21,
+   "ref_tokens": 580,
+   "wer": 0.07586206896551724,
+   "entity_acc": 0.8682170542635659,
+   "entity_n": 129,
+   "format_acc": null,
+   "format_n": 0,
+   "errors_by_cat": {
+    "entity": 16,
+    "format": 0,
+    "other": 21,
+    "insertion": 7
+   },
+   "error_rate_by_cat": {
+    "entity": 0.1415929203539823,
+    "format": null,
+    "other": 0.044967880085653104
+   },
+   "non_latin_share": 1.0,
+   "false_insertions": 0,
+   "rare_acc": 0.8974358974358975,
+   "rare_n": 78
+  },
+  "gpt-transcribe": {
+   "clips": 21,
+   "ref_tokens": 580,
+   "wer": 0.12241379310344827,
+   "entity_acc": 0.7984496124031008,
+   "entity_n": 129,
+   "format_acc": null,
+   "format_n": 0,
+   "errors_by_cat": {
+    "entity": 34,
+    "format": 0,
+    "other": 29,
+    "insertion": 8
+   },
+   "error_rate_by_cat": {
+    "entity": 0.3008849557522124,
+    "format": null,
+    "other": 0.06209850107066381
+   },
+   "non_latin_share": 0.9740004492362982,
+   "false_insertions": 0,
+   "rare_acc": 0.8974358974358975,
+   "rare_n": 78
+  },
+  "gpt-transcribe + its keyword list": {
+   "clips": 21,
+   "ref_tokens": 580,
+   "wer": 0.1206896551724138,
+   "entity_acc": 0.8294573643410853,
+   "entity_n": 129,
+   "format_acc": null,
+   "format_n": 0,
+   "errors_by_cat": {
+    "entity": 34,
+    "format": 0,
+    "other": 28,
+    "insertion": 8
+   },
+   "error_rate_by_cat": {
+    "entity": 0.3008849557522124,
+    "format": null,
+    "other": 0.059957173447537475
+   },
+   "non_latin_share": 0.9511445611630187,
+   "false_insertions": 4,
+   "rare_acc": 0.9487179487179487,
+   "rare_n": 78
+  },
+  "saaras-v4 + its keyword list": {
+   "clips": 21,
+   "ref_tokens": 580,
+   "wer": 0.07586206896551724,
+   "entity_acc": 0.875968992248062,
+   "entity_n": 129,
+   "format_acc": null,
+   "format_n": 0,
+   "errors_by_cat": {
+    "entity": 15,
+    "format": 0,
+    "other": 18,
+    "insertion": 11
+   },
+   "error_rate_by_cat": {
+    "entity": 0.13274336283185842,
+    "format": null,
+    "other": 0.03854389721627409
+   },
+   "non_latin_share": 1.0,
+   "false_insertions": 0,
+   "rare_acc": 0.8846153846153846,
+   "rare_n": 78
+  },
+  "Parakh": {
+   "clips": 21,
+   "ref_tokens": 580,
+   "wer": 0.07413793103448275,
+   "entity_acc": 0.8837209302325582,
+   "entity_n": 129,
+   "format_acc": null,
+   "format_n": 0,
+   "errors_by_cat": {
+    "entity": 14,
+    "format": 0,
+    "other": 18,
+    "insertion": 11
+   },
+   "error_rate_by_cat": {
+    "entity": 0.12389380530973451,
+    "format": null,
+    "other": 0.03854389721627409
+   },
+   "non_latin_share": 1.0,
+   "false_insertions": 0,
+   "rare_acc": 0.8974358974358975,
+   "rare_n": 78
+  }
+ },
+ "clips": {
+  "saaras-v4": [
+   {
+    "ref_norm": "yah phichar shabdon ko rut priphiks saphiks men todakar samajhana unnat spenish sikhane valo ke lie phayademand hai kyonki yah kathin",
+    "hyp_norm": "yah fichar shabdon ko rut prifiks safiks men todakar samajhana unnat spainish sikhane valon ke lie fayademand hai kyonki yah kathin",
+    "ref_tokens": 21,
+    "tokens_by_cat": {
+     "other": 16,
+     "entity": 5
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.047619047619047616,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394505020_0_0",
+    "hyp": "यह फ़ीचर शब्दों को रूट प्रीफ़िक्स सफ़िक्स में तोड़कर समझाना उन्नत स्पैनिश सीखने वालों के लिए फ़ायदेमंद है क्योंकि यह कठिन।",
+    "latency_s": 1.847
+   },
+   {
+    "ref_norm": "shabdon ka arth anuman lagane vard phaimalij pahachanane aur ekedamik aupacharik shabdavali samajhane men madad karata hai udaharan se",
+    "hyp_norm": "shabdon ka arth anuman lagane vard phaimiliza pahachanane aur ekedamik aupacharik shabdavali samajhane men madad karata hai udaharan se",
+    "ref_tokens": 19,
+    "tokens_by_cat": {
+     "other": 16,
+     "entity": 3
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     false,
+     true
+    ],
+    "id": "7318349394505020_0_1",
+    "hyp": "शब्दों का अर्थ अनुमान लगाने, वर्ड फैमिलीज़ पहचानने और एकेडमिक औपचारिक शब्दावली समझने में मदद करता है। उदाहरण से।",
+    "latency_s": 2.537
+   },
+   {
+    "ref_norm": "inakomapresibal yani in nakaratmak plas komprenadar samajhana plas saksham jo samajha na ja sake",
+    "hyp_norm": "inakomprihensibal yani in nakaratmak plas komprihendar samajhana plas ebal yani saksham jo samajha na ja sake",
+    "ref_tokens": 14,
+    "tokens_by_cat": {
+     "entity": 3,
+     "other": 11
+    },
+    "errors_by_cat": {
+     "entity": 1,
+     "insertion": 2
+    },
+    "errors": 3,
+    "wer": 0.21428571428571427,
+    "entity_hits": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394505020_0_2",
+    "hyp": "इनकॉम्प्रिहेंसिबल यानी इन नकारात्मक प्लस कॉम्प्रिहेंडर समझना प्लस एबल यानी सक्षम जो समझा ना जा सके।",
+    "latency_s": 1.561
+   },
+   {
+    "ref_norm": "garbhavati jisaka litaral arth avarodhit ho sakata hai yah takanik sabase upayukt hai laitin yani grik mul ki spasht upasarg pratyay vale aur kai shabdon se jude rut vale shabdon ke lie",
+    "hyp_norm": "garbhavati jisaka litaral arth avarodhit ho sakata hai yah takanik sabase upayukt hai laitin yani grik mul ke spasht upasarg pratyay vale aur kai shabdon se jude rut vale shabdon ke lie",
+    "ref_tokens": 32,
+    "tokens_by_cat": {
+     "other": 28,
+     "entity": 4
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.03125,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true
+    ],
+    "id": "7318349394505020_0_4",
+    "hyp": "गर्भवती जिसका लिटरल अर्थ अवरोधित हो सकता है, यह तकनीक सबसे उपयुक्त है लैटिन यानी ग्रीक मूल के स्पष्ट उपसर्ग प्रत्यय वाले और कई शब्दों से जुड़े रूट वाले शब्दों के लिए।",
+    "latency_s": 1.785
+   },
+   {
+    "ref_norm": "jab ham ilektronik divais ka pej dra map karate mapana chahate hain to maltimidiya ka upayog kiya jata hai taki sahi karan ka pata chal sake kisi sarkit men karant ki adhikata hone par",
+    "hyp_norm": "jab ham ilektronik divais ka em ar piza dro map karate mapana chahate hain to maltimitar ka upayog kiya jata hai taki sahi karant ka pata chal sake kisi sarkit men karant ki adhikata hone par",
+    "ref_tokens": 34,
+    "tokens_by_cat": {
+     "other": 27,
+     "entity": 7
+    },
+    "errors_by_cat": {
+     "insertion": 2,
+     "entity": 3,
+     "other": 1
+    },
+    "errors": 6,
+    "wer": 0.17647058823529413,
+    "entity_hits": [
+     true,
+     true,
+     false,
+     false,
+     false,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     false,
+     true,
+     true
+    ],
+    "id": "7318349394501010_0_0",
+    "hyp": "जब हम इलेक्ट्रॉनिक डिवाइस का एम आर पीज़ ड्रॉ माप करते मापना चाहते हैं तो मल्टीमीटर का उपयोग किया जाता है ताकि सही करंट का पता चल सके किसी सर्किट में करंट की अधिकता होने पर",
+    "latency_s": 1.772
+   },
+   {
+    "ref_norm": "phyuj painal suraksha pradan karata hai sarkit ko nukasan se bachata hai isake alava kai divaises men slip mod hota hai jo bijali ki khapat ka kam karata hai aur baitari bachane men madad karata hai",
+    "hyp_norm": "fyuza painal suraksha pradan karata hai aur sarkit ko nuqasan se bachata hai isake alava kai divaises men slip mod hota hai jo bijali ki khapat kam karata hai aur baitari bachane men madad karata hai",
+    "ref_tokens": 36,
+    "tokens_by_cat": {
+     "entity": 7,
+     "other": 29
+    },
+    "errors_by_cat": {
+     "insertion": 1,
+     "other": 1
+    },
+    "errors": 2,
+    "wer": 0.05555555555555555,
+    "entity_hits": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394501010_0_1",
+    "hyp": "फ़्यूज़ पैनल सुरक्षा प्रदान करता है और सर्किट को नुक़सान से बचाता है। इसके अलावा कई डिवाइसेस में स्लीप मोड होता है जो बिजली की खपत कम करता है और बैटरी बचाने में मदद करता है।",
+    "latency_s": 2.002
+   },
+   {
+    "ref_norm": "diphyujan modal men vibhinn noiza shedyulars kaise janaret kie gae sainpalon ki gunavatta aur unaki visheshataon par prabhav dalate hain yah samajhane ke lie hamen pahale yah samajhana hoga ki noiza shedyulars karate kya hain",
+    "hyp_norm": "diphyujan modal men vibhinn noiza shedyulars kaise janaret kie gae saimpalon ki gunavatta aur unaki visheshataon par prabhav dalate hain yah samajhane ke lie hamen pahale yah samajhana hoga ki noiza shedyulars karate kya hain",
+    "ref_tokens": 35,
+    "tokens_by_cat": {
+     "entity": 5,
+     "other": 30
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.02857142857142857,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_0",
+    "hyp": "डिफ्यूजन मॉडल में विभिन्न नॉइज़ शेड्यूलर्स कैसे जनरेट किए गए सैम्पलों की गुणवत्ता और उनकी विशेषताओं पर प्रभाव डालते हैं, यह समझने के लिए हमें पहले यह समझना होगा कि नॉइज़ शेड्यूलर्स करते क्या हैं।",
+    "latency_s": 2.083
+   },
+   {
+    "ref_norm": "noiza shedyulars yah tay karate hain ki data par kab aur kitana shor dala jaega yah age ke proses yani ki pharavard proses men deta ko kaise sankramit karana hai aur phir rivars proses men shor ko kaise hatana hai isaka nirdharan karata hai",
+    "hyp_norm": "noiza shedyulars yah tay karate hain ki data par kab aur kitana shor dala jaega yah age ke proses yani ki phoravard proses men data ko kaise sankramit karana hai aur phir rivars proses men shor ko kaise hatana hai isaka nirdharit nirdharan karata hai",
+    "ref_tokens": 44,
+    "tokens_by_cat": {
+     "entity": 7,
+     "other": 37
+    },
+    "errors_by_cat": {
+     "insertion": 1
+    },
+    "errors": 1,
+    "wer": 0.022727272727272728,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_1",
+    "hyp": "नॉइज़ शेड्यूलर्स यह तय करते हैं कि डाटा पर कब और कितना शोर डाला जाएगा, यह आगे के प्रोसेस यानी कि फॉरवर्ड प्रोसेस में डाटा को कैसे संक्रमित करना है और फिर रिवर्स प्रोसेस में शोर को कैसे हटाना है इसका निर्धारित निर्धारण करता है।",
+    "latency_s": 4.986
+   },
+   {
+    "ref_norm": "sahi shedyul na hone par modal achche se sikh nahin pata aur autaput ki gunavatta ghat jati hai",
+    "hyp_norm": "sahi shedyul na hone par modal achche se sikh nahin pata aur autaput ki gunavatta ghat jati hai",
+    "ref_tokens": 18,
+    "tokens_by_cat": {
+     "other": 15,
+     "entity": 3
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_2",
+    "hyp": "सही शेड्यूल ना होने पर मॉडल अच्छे से सीख नहीं पाता और आउटपुट की गुणवत्ता घट जाती है।",
+    "latency_s": 1.573
+   },
+   {
+    "ref_norm": "vairiyans eksploding aur vairiyans prijarving shedyul shor ke vitaran ke alag alag paitarn hote hain jo ki autaput ki visheshataon ko prabhavit karate hain",
+    "hyp_norm": "veriens eksaploding aur verients prijarving shedyul shor ke vitaran ke alag alag paitarn hote hain jo ki autaput ki visheshataon ko prabhavit karate hain",
+    "ref_tokens": 24,
+    "tokens_by_cat": {
+     "entity": 6,
+     "other": 18
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.041666666666666664,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_3",
+    "hyp": "वेरिएन्स एक्सप्लोडिंग और वेरिएंट्स प्रिजर्विंग शेड्यूल शोर के वितरण के अलग अलग पैटर्न होते हैं जो कि आउटपुट की विशेषताओं को प्रभावित करते हैं।",
+    "latency_s": 1.416
+   },
+   {
+    "ref_norm": "non liniyar shedyul jaise ki kosain behatar gunavatta aur ditel vale sainpal dete hain jabaki liniyar shedyul kam prabhavi hote hain",
+    "hyp_norm": "nan liniyar sidul jaise ki kosain aur sigmoid behatar gunavatta aur ditel vale sainpal dete hain jabaki liniyar sidul kam prabhavi hote hain",
+    "ref_tokens": 21,
+    "tokens_by_cat": {
+     "entity": 6,
+     "other": 15
+    },
+    "errors_by_cat": {
+     "entity": 1,
+     "insertion": 2
+    },
+    "errors": 3,
+    "wer": 0.14285714285714285,
+    "entity_hits": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_4",
+    "hyp": "नान लिनियर सिडूल जैसे कि कोसाइन और सिग्मोइड बेहतर गुणवत्ता और डिटेल वाले सैंपल देते हैं जबकि लिनियर सिडूल कम प्रभावी होते हैं।",
+    "latency_s": 1.933
+   },
+   {
+    "ref_norm": "di di em jaise tej sainpaling takanikon men shedyul ki shaili sainpaling ki sthirata aur kvaliti donon par mahatvapurn prabhav dalati hai",
+    "hyp_norm": "di di em jaise tej sainpaling takanikon men shedyul ki shaili sainpaling ki sthirata aur kvaliti donon par mahatvapurn prabhav dalati hai",
+    "ref_tokens": 22,
+    "tokens_by_cat": {
+     "entity": 5,
+     "other": 17
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_5",
+    "hyp": "डी डी एम जैसे तेज सैंपलिंग तकनीकों में शेड्यूल की शैली सैंपलिंग की स्थिरता और क्वालिटी दोनों पर महत्वपूर्ण प्रभाव डालती है",
+    "latency_s": 3.298
+   },
+   {
+    "ref_norm": "kuch jamin ko apaki adhigrahit kiya gaya hai jisake lie apako ek pura ligal prosijar hota hai usako pura karana padega",
+    "hyp_norm": "kuch jamin ko apaki adhigrahit kiya gaya hai jisake lie apako ek pura ligal prosijar hota hai usako pura karana padega",
+    "ref_tokens": 21,
+    "tokens_by_cat": {
+     "other": 19,
+     "entity": 2
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true
+    ],
+    "id": "7318349394484289_0_1",
+    "hyp": "कुछ जमीन को आपकी अधिग्रहित किया गया है जिसके लिए आपको एक पूरा लीगल प्रोसीजर होता है उसको पूरा करना पड़ेगा।",
+    "latency_s": 1.154
+   },
+   {
+    "ref_norm": "kisi bhi nirman men lod beyaring kaipesiti ka sahi akalan avashyak hota hai jo bhumi ki soil stebiliti par nirbhar karata hai majabut aur sthir mitti",
+    "hyp_norm": "kisi bhi nirman men lod beyaring kaipesiti ka sahi akalan avashyak hota hai jo bhumi ki soil stebiliti par nirbhar karata hai majabut aur sthir mitti",
+    "ref_tokens": 26,
+    "tokens_by_cat": {
+     "other": 21,
+     "entity": 5
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394501011_0_0",
+    "hyp": "किसी भी निर्माण में लोड बेयरिंग कैपेसिटी का सही आकलन आवश्यक होता है, जो भूमि की सोइल स्टेबिलिटी पर निर्भर करता है। मजबूत और स्थिर मिट्टी।",
+    "latency_s": 2.554
+   },
+   {
+    "ref_norm": "ki sanrachana ko sahi samarthan deta hai isake hi ye isake sath hi konsitret strenth aur uchit renaphor siment resio ka chunav bhi nirman ki majabuti aur dirghayu ke jaruri hota hai",
+    "hyp_norm": "is sanrachana ko sahi samarthan deta hai isake hi isake sath hi konsentret strenth aur uchit renaphorsament reshiyo ka chunav bhi nirman ki majabuti aur dirghayu ke lie zaruri hota hai",
+    "ref_tokens": 32,
+    "tokens_by_cat": {
+     "other": 27,
+     "entity": 5
+    },
+    "errors_by_cat": {
+     "other": 2,
+     "entity": 4,
+     "insertion": 1
+    },
+    "errors": 7,
+    "wer": 0.21875,
+    "entity_hits": [
+     false,
+     true,
+     false,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     false,
+     true,
+     false,
+     false,
+     true
+    ],
+    "id": "7318349394501011_0_1",
+    "hyp": "इस संरचना को सही समर्थन देता है, इसके ही इसके साथ ही कॉन्सेंट्रेट स्ट्रेंथ और उचित रेनफोर्समेंट रेशियो का चुनाव भी निर्माण की मजबूती और दीर्घायु के लिए ज़रूरी होता है।",
+    "latency_s": 3.37
+   },
+   {
+    "ref_norm": "vaishvik vyakti ya pranali men hue badalavon ne vishesh rup se global sauth ke rashtriy rajyon ki sanprabhuta par gahara prabhav dala hai antarrashtriy mudra kosh ai em eph vishv baink jaisi sansthaon ki",
+    "hyp_norm": "vaishvik vittiy pranali men hue badalavon ne vishesh rup se global sauth ke rashtr rajyon ki sanprabhuta par gahara prabhav dala hai antarrashtriy mudra kosh aiemaeph vishv baink jaisi sansthaon ki",
+    "ref_tokens": 34,
+    "tokens_by_cat": {
+     "other": 28,
+     "entity": 6
+    },
+    "errors_by_cat": {
+     "other": 2,
+     "entity": 3
+    },
+    "errors": 5,
+    "wer": 0.14705882352941177,
+    "entity_hits": [
+     true,
+     true,
+     false,
+     false,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [],
+    "id": "7318349394491764_0_0",
+    "hyp": "वैश्विक वित्तीय प्रणाली में हुए बदलावों ने विशेष रूप से ग्लोबल साउथ के राष्ट्र राज्यों की संप्रभुता पर गहरा प्रभाव डाला है। अंतर्राष्ट्रीय मुद्रा कोष आईएमएफ, विश्व बैंक जैसी संस्थाओं की।",
+    "latency_s": 0.956
+   },
+   {
+    "ref_norm": "ki svatantrata simit hui hai in prabhavon se nipatane ke lie global sauth ke deshon ke pas kuch rananitiyan upalabdh hain pahala kshetriy arthik sahayog jaise ki",
+    "hyp_norm": "ki svatantrata simit hui hai in prabhavon se nipatane ke lie global sauth ke deshon ke pas kuch rananitiyan upalabdh hain pahala kshetriy arthik sahayog jaise ki",
+    "ref_tokens": 27,
+    "tokens_by_cat": {
+     "other": 25,
+     "entity": 2
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [],
+    "id": "7318349394491764_0_2",
+    "hyp": "की स्वतंत्रता सीमित हुई है। इन प्रभावों से निपटने के लिए ग्लोबल साउथ के देशों के पास कुछ रणनीतियाँ उपलब्ध हैं। पहला क्षेत्रीय आर्थिक सहयोग जैसे कि।",
+    "latency_s": 2.136
+   },
+   {
+    "ref_norm": "vi ar ai si es ya e es i e en jaisi sanrachanaon ko majabut karana jisase vaikalpik vyakti ya sahayog mil sake dusara vyakti ya vividhata",
+    "hyp_norm": "bi ar ai si es ya e es i e en jaisi sanrachanaon ko majabut karana jisase vaikalpik vittiy sahayog mil sake dusara vittiy vividhata",
+    "ref_tokens": 27,
+    "tokens_by_cat": {
+     "entity": 8,
+     "other": 19
+    },
+    "errors_by_cat": {
+     "entity": 1,
+     "other": 4
+    },
+    "errors": 5,
+    "wer": 0.18518518518518517,
+    "entity_hits": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [],
+    "id": "7318349394491764_0_3",
+    "hyp": "बी आर आई सी एस या ए एस ई ए एन जैसी संरचनाओं को मजबूत करना जिससे वैकल्पिक वित्तीय सहयोग मिल सके दूसरा वित्तीय विविधता",
+    "latency_s": 1.901
+   },
+   {
+    "ref_norm": "gharelu utpadan takaniki vikas aur samajik suraksha netavark ko majabut banati hai",
+    "hyp_norm": "gharelu utpadan takaniki vikas aur samajik suraksha netavark ko majabut banati hai",
+    "ref_tokens": 12,
+    "tokens_by_cat": {
+     "other": 11,
+     "entity": 1
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [],
+    "id": "7318349394491764_0_6",
+    "hyp": "घरेलू उत्पादन तकनीकी विकास और सामाजिक सुरक्षा नेटवर्क को मजबूत बनाती है।",
+    "latency_s": 1.889
+   },
+   {
+    "ref_norm": "renaforsament larning ka kor aidiya hai trayal enalisis sikhana ki ek sinpal streteji hai ki ek ejent apane invayarament se se intarekt karata hai aur vo invayarament ek stet men hota hai to phir ek ejent us pe ekshan leta hai aur phir us ekshan ke badale men ek rivard signal milata hai",
+    "hyp_norm": "rinphorsament larning ka kor aidiya hai trayal end erar se sikhana ki ek sinpal straiteji hai ki ek ejent apane enavayarament se intarekt karata hai aur vo enavayarament ek stet men hota hai to phir ek ejent usape ekshan leta hai aur phir us ekshan ke badale men ek rivord signal milata hai",
+    "ref_tokens": 53,
+    "tokens_by_cat": {
+     "entity": 15,
+     "other": 38
+    },
+    "errors_by_cat": {
+     "insertion": 2,
+     "entity": 1,
+     "other": 3
+    },
+    "errors": 6,
+    "wer": 0.11320754716981132,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394500593_0_0",
+    "hyp": "रिन्फोर्समेंट लर्निंग का कोर आइडिया है ट्रायल एंड एरर से सीखना कि एक सिंपल स्ट्रैटेजी है कि एक एजेंट अपने एनवायरमेंट से इंटरेक्ट करता है और वो एनवायरमेंट एक स्टेट में होता है तो फिर एक एजेंट उसपे एक्शन लेता है और फिर उस एक्शन के बदले में एक रिवॉर्ड सिग्नल मिलता है।",
+    "latency_s": 3.106
+   },
+   {
+    "ref_norm": "aur us rivard ke ekording jo ejent hain vo apani palisi ya streteji ko apadet karata rahata hai taki vo maiksimam rivard har apane ekshan par kar sake",
+    "hyp_norm": "aur us rivord ke akording jo ejent hai vo apani polisi ya straitaji ko apadet karata rahata hai taki vo maiksimam rivord har apane ekshan par kar sake",
+    "ref_tokens": 28,
+    "tokens_by_cat": {
+     "other": 20,
+     "entity": 8
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.03571428571428571,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394500593_0_1",
+    "hyp": "और उस रिवॉर्ड के अकॉर्डिंग जो एजेंट है वो अपनी पॉलिसी या स्ट्रैटजी को अपडेट करता रहता है ताकि वो मैक्सिमम रिवॉर्ड हर अपने एक्शन पर कर सके।",
+    "latency_s": 3.195
+   }
+  ],
+  "saaras-v3": [
+   {
+    "ref_norm": "yah phichar shabdon ko rut priphiks saphiks men todakar samajhana unnat spenish sikhane valo ke lie phayademand hai kyonki yah kathin",
+    "hyp_norm": "yah fichar shabdon ko rut prifiks safiks men todakar samajhana unnat spainish sikhane valon ke lie fayademand hai kyonki yah kathin",
+    "ref_tokens": 21,
+    "tokens_by_cat": {
+     "other": 16,
+     "entity": 5
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.047619047619047616,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394505020_0_0",
+    "hyp": "यह फ़ीचर शब्दों को रूट प्रीफ़िक्स सफ़िक्स में तोड़कर समझाना उन्नत स्पैनिश सीखने वालों के लिए फ़ायदेमंद है क्योंकि यह कठिन।",
+    "latency_s": 3.967
+   },
+   {
+    "ref_norm": "shabdon ka arth anuman lagane vard phaimalij pahachanane aur ekedamik aupacharik shabdavali samajhane men madad karata hai udaharan se",
+    "hyp_norm": "shabdon ka arth anuman lagane vard faimiliza pahachanane aur akaidamik aupacharik shabdavali samajhane men madad karata hai udaharan se",
+    "ref_tokens": 19,
+    "tokens_by_cat": {
+     "other": 16,
+     "entity": 3
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     false,
+     true
+    ],
+    "id": "7318349394505020_0_1",
+    "hyp": "शब्दों का अर्थ अनुमान लगाने, वर्ड फ़ैमिलीज़ पहचानने और अकैडमिक औपचारिक शब्दावली समझने में मदद करता है, उदाहरण से।",
+    "latency_s": 3.438
+   },
+   {
+    "ref_norm": "inakomapresibal yani in nakaratmak plas komprenadar samajhana plas saksham jo samajha na ja sake",
+    "hyp_norm": "inakomprihensibal yani in nakaratmak plas komprihendar samajhana plas ebal yani saksham jo samajhana ja sake",
+    "ref_tokens": 14,
+    "tokens_by_cat": {
+     "entity": 3,
+     "other": 11
+    },
+    "errors_by_cat": {
+     "entity": 1,
+     "insertion": 2,
+     "other": 2
+    },
+    "errors": 5,
+    "wer": 0.35714285714285715,
+    "entity_hits": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394505020_0_2",
+    "hyp": "इनकॉम्प्रिहेंसिबल यानी इन नकारात्मक प्लस कॉम्प्रिहेंडर समझना प्लस एबल यानी सक्षम जो समझाना जा सके।",
+    "latency_s": 2.283
+   },
+   {
+    "ref_norm": "garbhavati jisaka litaral arth avarodhit ho sakata hai yah takanik sabase upayukt hai laitin yani grik mul ki spasht upasarg pratyay vale aur kai shabdon se jude rut vale shabdon ke lie",
+    "hyp_norm": "garbhavati jisaka litaral arth avarodhit ho sakata hai yah takanik sabase upayukt hai laitin yani grik mul ke spasht upasarg pratyay vale aur kai shabdon se jude rut vale shabdon ke lie",
+    "ref_tokens": 32,
+    "tokens_by_cat": {
+     "other": 28,
+     "entity": 4
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.03125,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true
+    ],
+    "id": "7318349394505020_0_4",
+    "hyp": "गर्भवती जिसका लिटरल अर्थ अवरोधित हो सकता है, यह तकनीक सबसे उपयुक्त है लैटिन यानी ग्रीक मूल के स्पष्ट उपसर्ग प्रत्यय वाले और कई शब्दों से जुड़े रूट वाले शब्दों के लिए।",
+    "latency_s": 1.193
+   },
+   {
+    "ref_norm": "jab ham ilektronik divais ka pej dra map karate mapana chahate hain to maltimidiya ka upayog kiya jata hai taki sahi karan ka pata chal sake kisi sarkit men karant ki adhikata hone par",
+    "hyp_norm": "jab ham ilektronik divais ka emarapi dro mapana chahate hain to maltimitar ka upayog kiya jata hai taki sahi karant ka pata chal sake kisi sarkit men karant ki adhikata hone par",
+    "ref_tokens": 34,
+    "tokens_by_cat": {
+     "other": 27,
+     "entity": 7
+    },
+    "errors_by_cat": {
+     "entity": 3,
+     "other": 3
+    },
+    "errors": 6,
+    "wer": 0.17647058823529413,
+    "entity_hits": [
+     true,
+     true,
+     false,
+     false,
+     false,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     false,
+     true,
+     true
+    ],
+    "id": "7318349394501010_0_0",
+    "hyp": "जब हम इलेक्ट्रॉनिक डिवाइस का एमआरपी ड्रॉ मापना चाहते हैं, तो मल्टीमीटर का उपयोग किया जाता है ताकि सही करंट का पता चल सके, किसी सर्किट में करंट की अधिकता होने पर।",
+    "latency_s": 1.204
+   },
+   {
+    "ref_norm": "phyuj painal suraksha pradan karata hai sarkit ko nukasan se bachata hai isake alava kai divaises men slip mod hota hai jo bijali ki khapat ka kam karata hai aur baitari bachane men madad karata hai",
+    "hyp_norm": "phyuza painal suraksha pradan karata hai aur sarkit ko nukasan se bachata hai isake alava kai divaises men slip mod hota hai jo bijali ki khapat kam karata hai aur baitari bachane men madad karata hai",
+    "ref_tokens": 36,
+    "tokens_by_cat": {
+     "entity": 7,
+     "other": 29
+    },
+    "errors_by_cat": {
+     "insertion": 1,
+     "other": 1
+    },
+    "errors": 2,
+    "wer": 0.05555555555555555,
+    "entity_hits": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394501010_0_1",
+    "hyp": "फ्यूज़ पैनल सुरक्षा प्रदान करता है और सर्किट को नुकसान से बचाता है, इसके अलावा कई डिवाइसेस में स्लीप मोड होता है जो बिजली की खपत कम करता है और बैटरी बचाने में मदद करता है।",
+    "latency_s": 3.497
+   },
+   {
+    "ref_norm": "diphyujan modal men vibhinn noiza shedyulars kaise janaret kie gae sainpalon ki gunavatta aur unaki visheshataon par prabhav dalate hain yah samajhane ke lie hamen pahale yah samajhana hoga ki noiza shedyulars karate kya hain",
+    "hyp_norm": "diphyujan modal men vibhinn noiza shedyulars kaise jenaret kie gae sainpalon ki gunavatta aur unaki visheshataon par prabhav dalate hain yah samajhane ke lie hamen pahale yah samajhana hoga ki noiza shedyulars karate kya hain",
+    "ref_tokens": 35,
+    "tokens_by_cat": {
+     "entity": 5,
+     "other": 30
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_0",
+    "hyp": "डिफ्यूजन मॉडल में विभिन्न नॉइज़ शेड्यूलर्स कैसे जेनरेट किए गए सैंपलों की गुणवत्ता और उनकी विशेषताओं पर प्रभाव डालते हैं, यह समझने के लिए हमें पहले यह समझना होगा कि नॉइज़ शेड्यूलर्स करते क्या हैं।",
+    "latency_s": 3.455
+   },
+   {
+    "ref_norm": "noiza shedyulars yah tay karate hain ki data par kab aur kitana shor dala jaega yah age ke proses yani ki pharavard proses men deta ko kaise sankramit karana hai aur phir rivars proses men shor ko kaise hatana hai isaka nirdharan karata hai",
+    "hyp_norm": "noiza shedyulars yah tay karate hain ki data par kab aur kitana shor dala jaega yah age ke proses yani ki phoravard proses men deta ko kaise sankramit karana hai aur phir rivars proses men shor ko kaise hatana hai isaka nirdharan karata hai",
+    "ref_tokens": 44,
+    "tokens_by_cat": {
+     "entity": 7,
+     "other": 37
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_1",
+    "hyp": "नॉइज़ शेड्यूलर्स यह तय करते हैं कि डाटा पर कब और कितना शोर डाला जाएगा, यह आगे के प्रोसेस यानी कि फॉरवर्ड प्रोसेस में डेटा को कैसे संक्रमित करना है और फिर रिवर्स प्रोसेस में शोर को कैसे हटाना है इसका निर्धारण करता है।",
+    "latency_s": 1.433
+   },
+   {
+    "ref_norm": "sahi shedyul na hone par modal achche se sikh nahin pata aur autaput ki gunavatta ghat jati hai",
+    "hyp_norm": "sahi shedyul na hone par modal achche se sikh nahin pata aur autaput ki gunavatta ghat jati hai",
+    "ref_tokens": 18,
+    "tokens_by_cat": {
+     "other": 15,
+     "entity": 3
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_2",
+    "hyp": "सही शेड्यूल ना होने पर मॉडल अच्छे से सीख नहीं पाता और आउटपुट की गुणवत्ता घट जाती है।",
+    "latency_s": 2.323
+   },
+   {
+    "ref_norm": "vairiyans eksploding aur vairiyans prijarving shedyul shor ke vitaran ke alag alag paitarn hote hain jo ki autaput ki visheshataon ko prabhavit karate hain",
+    "hyp_norm": "veriyans eksaploding aur veriyans prijarving shedyul shor ke vitaran ke alag alag paitarn hote hain jo ki autaput ki visheshataon ko prabhavit karate hain",
+    "ref_tokens": 24,
+    "tokens_by_cat": {
+     "entity": 6,
+     "other": 18
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_3",
+    "hyp": "वेरियंस एक्सप्लोडिंग और वेरियंस प्रिजर्विंग शेड्यूल शोर के वितरण के अलग अलग पैटर्न होते हैं जो कि आउटपुट की विशेषताओं को प्रभावित करते हैं।",
+    "latency_s": 3.959
+   },
+   {
+    "ref_norm": "non liniyar shedyul jaise ki kosain behatar gunavatta aur ditel vale sainpal dete hain jabaki liniyar shedyul kam prabhavi hote hain",
+    "hyp_norm": "non liniyar shedyul jaise ki kosain aur sigmoid behatar gunavatta aur ditel vale sainpal dete hain jabaki liniyar shedyul kam prabhavi hote hain",
+    "ref_tokens": 21,
+    "tokens_by_cat": {
+     "entity": 6,
+     "other": 15
+    },
+    "errors_by_cat": {
+     "insertion": 2
+    },
+    "errors": 2,
+    "wer": 0.09523809523809523,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_4",
+    "hyp": "नॉन लीनियर शेड्यूल जैसे कि कोसाइन और सिग्मोइड बेहतर गुणवत्ता और डिटेल वाले सैंपल देते हैं जबकि लीनियर शेड्यूल कम प्रभावी होते हैं।",
+    "latency_s": 3.365
+   },
+   {
+    "ref_norm": "di di em jaise tej sainpaling takanikon men shedyul ki shaili sainpaling ki sthirata aur kvaliti donon par mahatvapurn prabhav dalati hai",
+    "hyp_norm": "didiem jaise teza sainpaling takanikon men shedyul ki shaili sainpaling ki sthirata aur kvaliti donon par mahatvapurn prabhav dalati hai",
+    "ref_tokens": 22,
+    "tokens_by_cat": {
+     "entity": 5,
+     "other": 17
+    },
+    "errors_by_cat": {
+     "entity": 2,
+     "other": 1
+    },
+    "errors": 3,
+    "wer": 0.13636363636363635,
+    "entity_hits": [
+     false,
+     false,
+     false,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_5",
+    "hyp": "डीडीएम जैसे तेज़ सैंपलिंग तकनीकों में शेड्यूल की शैली सैंपलिंग की स्थिरता और क्वालिटी दोनों पर महत्वपूर्ण प्रभाव डालती है।",
+    "latency_s": 1.155
+   },
+   {
+    "ref_norm": "kuch jamin ko apaki adhigrahit kiya gaya hai jisake lie apako ek pura ligal prosijar hota hai usako pura karana padega",
+    "hyp_norm": "kuch jamin ko apaki adhigrahit kiya gaya hai jisake lie apako ek pura ligal prosizar hota hai usako pura karana padega",
+    "ref_tokens": 21,
+    "tokens_by_cat": {
+     "other": 19,
+     "entity": 2
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true
+    ],
+    "id": "7318349394484289_0_1",
+    "hyp": "कुछ जमीन को आपकी अधिग्रहित किया गया है, जिसके लिए आपको एक पूरा लीगल प्रोसीज़र होता है, उसको पूरा करना पड़ेगा।",
+    "latency_s": 2.451
+   },
+   {
+    "ref_norm": "kisi bhi nirman men lod beyaring kaipesiti ka sahi akalan avashyak hota hai jo bhumi ki soil stebiliti par nirbhar karata hai majabut aur sthir mitti",
+    "hyp_norm": "kisi bhi nirman men lod beyaring kaipesiti ka sahi akalan avashyak hota hai jo bhumi ki soil stebiliti par nirbhar karata hai majabut aur sthir mitti",
+    "ref_tokens": 26,
+    "tokens_by_cat": {
+     "other": 21,
+     "entity": 5
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394501011_0_0",
+    "hyp": "किसी भी निर्माण में लोड बेयरिंग कैपेसिटी का सही आकलन आवश्यक होता है, जो भूमि की सोइल स्टेबिलिटी पर निर्भर करता है, मजबूत और स्थिर मिट्टी।",
+    "latency_s": 2.254
+   },
+   {
+    "ref_norm": "ki sanrachana ko sahi samarthan deta hai isake hi ye isake sath hi konsitret strenth aur uchit renaphor siment resio ka chunav bhi nirman ki majabuti aur dirghayu ke jaruri hota hai",
+    "hyp_norm": "ki sanrachana ko sahi samarthan deta hai isake sath hi konsentret strenth aur uchit renaphorsament reshyo ka chunav bhi nirman ki majabuti aur dirghayu ke lie zaruri hota hai",
+    "ref_tokens": 32,
+    "tokens_by_cat": {
+     "other": 27,
+     "entity": 5
+    },
+    "errors_by_cat": {
+     "other": 3,
+     "entity": 4,
+     "insertion": 1
+    },
+    "errors": 8,
+    "wer": 0.25,
+    "entity_hits": [
+     false,
+     true,
+     false,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     false,
+     true,
+     false,
+     false,
+     true
+    ],
+    "id": "7318349394501011_0_1",
+    "hyp": "की संरचना को सही समर्थन देता है, इसके साथ ही कॉन्सेंट्रेट स्ट्रेंथ और उचित रेनफोर्समेंट रेश्यो का चुनाव भी निर्माण की मजबूती और दीर्घायु के लिए ज़रूरी होता है।",
+    "latency_s": 2.863
+   },
+   {
+    "ref_norm": "vaishvik vyakti ya pranali men hue badalavon ne vishesh rup se global sauth ke rashtriy rajyon ki sanprabhuta par gahara prabhav dala hai antarrashtriy mudra kosh ai em eph vishv baink jaisi sansthaon ki",
+    "hyp_norm": "vaishvik vittiy pranali men hue badalavon ne vishesh rup se global sauth ke rashtr rajyon ki sanprabhuta par gahara prabhav dala hai antarrashtriy mudra kosh aiemaeph vishv baink jaisi sansthaon ki",
+    "ref_tokens": 34,
+    "tokens_by_cat": {
+     "other": 28,
+     "entity": 6
+    },
+    "errors_by_cat": {
+     "other": 2,
+     "entity": 3
+    },
+    "errors": 5,
+    "wer": 0.14705882352941177,
+    "entity_hits": [
+     true,
+     true,
+     false,
+     false,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [],
+    "id": "7318349394491764_0_0",
+    "hyp": "वैश्विक वित्तीय प्रणाली में हुए बदलावों ने विशेष रूप से ग्लोबल साउथ के राष्ट्र राज्यों की संप्रभुता पर गहरा प्रभाव डाला है। अंतर्राष्ट्रीय मुद्रा कोष, आईएमएफ, विश्व बैंक जैसी संस्थाओं की",
+    "latency_s": 2.234
+   },
+   {
+    "ref_norm": "ki svatantrata simit hui hai in prabhavon se nipatane ke lie global sauth ke deshon ke pas kuch rananitiyan upalabdh hain pahala kshetriy arthik sahayog jaise ki",
+    "hyp_norm": "ki svatantrata simit hui hai in prabhavon se nipatane ke lie global sauth ke deshon ke pas kuch rananitiyan upalabdh hain pahala kshetriy arthik sahayog jaise ki",
+    "ref_tokens": 27,
+    "tokens_by_cat": {
+     "other": 25,
+     "entity": 2
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [],
+    "id": "7318349394491764_0_2",
+    "hyp": "की स्वतंत्रता सीमित हुई है। इन प्रभावों से निपटने के लिए ग्लोबल साउथ के देशों के पास कुछ रणनीतियाँ उपलब्ध हैं। पहला क्षेत्रीय आर्थिक सहयोग जैसे कि।",
+    "latency_s": 2.38
+   },
+   {
+    "ref_norm": "vi ar ai si es ya e es i e en jaisi sanrachanaon ko majabut karana jisase vaikalpik vyakti ya sahayog mil sake dusara vyakti ya vividhata",
+    "hyp_norm": "bi ar ai si es ya e es i e en jaisi sanrachanaon ko majabut karana jisase vaikalpik vittiy sahayog mil sake dusara vittiy vividhata",
+    "ref_tokens": 27,
+    "tokens_by_cat": {
+     "entity": 8,
+     "other": 19
+    },
+    "errors_by_cat": {
+     "entity": 1,
+     "other": 4
+    },
+    "errors": 5,
+    "wer": 0.18518518518518517,
+    "entity_hits": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [],
+    "id": "7318349394491764_0_3",
+    "hyp": "बी आर आई सी एस या ए एस ई ए एन जैसी संरचनाओं को मजबूत करना जिससे वैकल्पिक वित्तीय सहयोग मिल सके दूसरा वित्तीय विविधता",
+    "latency_s": 1.229
+   },
+   {
+    "ref_norm": "gharelu utpadan takaniki vikas aur samajik suraksha netavark ko majabut banati hai",
+    "hyp_norm": "gharelu utpadan takaniki vikas aur samajik suraksha netavark ko majabut banati hai",
+    "ref_tokens": 12,
+    "tokens_by_cat": {
+     "other": 11,
+     "entity": 1
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [],
+    "id": "7318349394491764_0_6",
+    "hyp": "घरेलू उत्पादन तकनीकी विकास और सामाजिक सुरक्षा नेटवर्क को मजबूत बनाती है।",
+    "latency_s": 3.212
+   },
+   {
+    "ref_norm": "renaforsament larning ka kor aidiya hai trayal enalisis sikhana ki ek sinpal streteji hai ki ek ejent apane invayarament se se intarekt karata hai aur vo invayarament ek stet men hota hai to phir ek ejent us pe ekshan leta hai aur phir us ekshan ke badale men ek rivard signal milata hai",
+    "hyp_norm": "rinphorsament larning ka kor aidiya hai trayal end erars sikhana ki ek sinpal stretaji hai ki ek ejent apane enavayarament se intaraikt karata hai aur vo enavayarament ek stet men hota hai to phir ek ejent us par ekshan leta hai aur phir us ekshan ke badale men ek rivord signal milata hai",
+    "ref_tokens": 53,
+    "tokens_by_cat": {
+     "entity": 15,
+     "other": 38
+    },
+    "errors_by_cat": {
+     "insertion": 1,
+     "entity": 2,
+     "other": 2
+    },
+    "errors": 5,
+    "wer": 0.09433962264150944,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394500593_0_0",
+    "hyp": "रीइंफोर्समेंट लर्निंग का कोर आइडिया है ट्रायल एंड एरर्स सीखना कि एक सिंपल स्ट्रेटजी है कि एक एजेंट अपने एनवायरमेंट से इंटरैक्ट करता है और वो एनवायरमेंट एक स्टेट में होता है तो फिर एक एजेंट उस पर एक्शन लेता है और फिर उस एक्शन के बदले में एक रिवॉर्ड सिग्नल मिलता है।",
+    "latency_s": 3.524
+   },
+   {
+    "ref_norm": "aur us rivard ke ekording jo ejent hain vo apani palisi ya streteji ko apadet karata rahata hai taki vo maiksimam rivard har apane ekshan par kar sake",
+    "hyp_norm": "aur us rivord ke akording jo ejent hai vo apani polisi ya streteji ko apadet karata rahata hai taki vo maiksimam rivord har apane ekshan par kar sake",
+    "ref_tokens": 28,
+    "tokens_by_cat": {
+     "other": 20,
+     "entity": 8
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.03571428571428571,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394500593_0_1",
+    "hyp": "और उस रिवॉर्ड के अकॉर्डिंग जो एजेंट है वो अपनी पॉलिसी या स्ट्रेटेजी को अपडेट करता रहता है ताकि वो मैक्सिमम रिवॉर्ड हर अपने एक्शन पर कर सके।",
+    "latency_s": 3.497
+   }
+  ],
+  "gpt-transcribe": [
+   {
+    "ref_norm": "yah phichar shabdon ko rut priphiks saphiks men todakar samajhana unnat spenish sikhane valo ke lie phayademand hai kyonki yah kathin",
+    "hyp_norm": "yah phichar shabdon ko rut priphiks saphiks men todakar samajhana unnat spainish sikhane valon ke lie phayademand hai kyonki yah kathin",
+    "ref_tokens": 21,
+    "tokens_by_cat": {
+     "other": 16,
+     "entity": 5
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.047619047619047616,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394505020_0_0",
+    "hyp": "यह फीचर शब्दों को रूट, प्रिफिक्स, सफिक्स में तोड़कर समझाना उन्नत स्पैनिश सीखने वालों के लिए फायदेमंद है, क्योंकि यह कठिन",
+    "latency_s": 1.869
+   },
+   {
+    "ref_norm": "shabdon ka arth anuman lagane vard phaimalij pahachanane aur ekedamik aupacharik shabdavali samajhane men madad karata hai udaharan se",
+    "hyp_norm": "shabdon ka arth anuman lagane vard phaimilij pahachanane aur akadamik aupacharik shabdavali samajhane men madad karata hai udaharan se",
+    "ref_tokens": 19,
+    "tokens_by_cat": {
+     "other": 16,
+     "entity": 3
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true
+    ],
+    "id": "7318349394505020_0_1",
+    "hyp": "शब्दों का अर्थ अनुमान लगाने, वर्ड फैमिलीज पहचानने और अकादमिक औपचारिक शब्दावली समझने में मदद करता है। उदाहरण से।",
+    "latency_s": 2.215
+   },
+   {
+    "ref_norm": "inakomapresibal yani in nakaratmak plas komprenadar samajhana plas saksham jo samajha na ja sake",
+    "hyp_norm": "incomprehensible yani in nakaratmak plas comprehender samajhana plas able yani saksham jo samajha na ja sake",
+    "ref_tokens": 14,
+    "tokens_by_cat": {
+     "entity": 3,
+     "other": 11
+    },
+    "errors_by_cat": {
+     "entity": 1,
+     "insertion": 2
+    },
+    "errors": 3,
+    "wer": 0.21428571428571427,
+    "entity_hits": [
+     false,
+     true,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 0.8125,
+    "false_insertions": [],
+    "rare_hits": [
+     false,
+     true,
+     false,
+     true
+    ],
+    "id": "7318349394505020_0_2",
+    "hyp": "Incomprehensible यानी इन नकारात्मक प्लस comprehender, समझना प्लस able यानी सक्षम, जो समझा ना जा सके।",
+    "latency_s": 1.634
+   },
+   {
+    "ref_norm": "garbhavati jisaka litaral arth avarodhit ho sakata hai yah takanik sabase upayukt hai laitin yani grik mul ki spasht upasarg pratyay vale aur kai shabdon se jude rut vale shabdon ke lie",
+    "hyp_norm": "garbhavati jisaka litaral arth avarodhit ho sakata hai yah takanik sabase upayukt hai laitin yani grik mul ke spasht upasarg pratyay vale aur kai shabdon se jude rut vale shabdon ke lie",
+    "ref_tokens": 32,
+    "tokens_by_cat": {
+     "other": 28,
+     "entity": 4
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.03125,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true
+    ],
+    "id": "7318349394505020_0_4",
+    "hyp": "गर्भवती, जिसका लिटरल अर्थ अवरोधित हो सकता है, यह तकनीक सबसे उपयुक्त है लैटिन यानी ग्रीक मूल के स्पष्ट उपसर्ग प्रत्यय वाले और कई शब्दों से जुड़े रूट वाले शब्दों के लिए।",
+    "latency_s": 1.501
+   },
+   {
+    "ref_norm": "jab ham ilektronik divais ka pej dra map karate mapana chahate hain to maltimidiya ka upayog kiya jata hai taki sahi karan ka pata chal sake kisi sarkit men karant ki adhikata hone par",
+    "hyp_norm": "jab ham ilektronik divais ka emaemar pej dro mapana chahate hain to maltimitar ka upayog kiya jata hai taki sahi karant ka pata chal sake kisi sarkit men karant ki adhikata hone par",
+    "ref_tokens": 34,
+    "tokens_by_cat": {
+     "other": 27,
+     "entity": 7
+    },
+    "errors_by_cat": {
+     "insertion": 1,
+     "entity": 2,
+     "other": 3
+    },
+    "errors": 6,
+    "wer": 0.17647058823529413,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     false,
+     false,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     false,
+     true,
+     true
+    ],
+    "id": "7318349394501010_0_0",
+    "hyp": "जब हम इलेक्ट्रॉनिक डिवाइस का एमएमआर पेज ड्रॉ मापना चाहते हैं तो मल्टीमीटर का उपयोग किया जाता है ताकि सही करंट का पता चल सके। किसी सर्किट में करंट की अधिकता होने पर",
+    "latency_s": 1.072
+   },
+   {
+    "ref_norm": "phyuj painal suraksha pradan karata hai sarkit ko nukasan se bachata hai isake alava kai divaises men slip mod hota hai jo bijali ki khapat ka kam karata hai aur baitari bachane men madad karata hai",
+    "hyp_norm": "phyuj painal suraksha pradan karata hai sarkit ko nukasan se bachata hai isake alava kai divaises men slip mod hota hai jo bijali ki khapat kam karata hai aur baitari bachane men madad karata hai",
+    "ref_tokens": 36,
+    "tokens_by_cat": {
+     "entity": 7,
+     "other": 29
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.027777777777777776,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394501010_0_1",
+    "hyp": "फ्यूज पैनल सुरक्षा प्रदान करता है, सर्किट को नुकसान से बचाता है। इसके अलावा कई डिवाइसेस में स्लीप मोड होता है जो बिजली की खपत कम करता है और बैटरी बचाने में मदद करता है।",
+    "latency_s": 1.54
+   },
+   {
+    "ref_norm": "diphyujan modal men vibhinn noiza shedyulars kaise janaret kie gae sainpalon ki gunavatta aur unaki visheshataon par prabhav dalate hain yah samajhane ke lie hamen pahale yah samajhana hoga ki noiza shedyulars karate kya hain",
+    "hyp_norm": "diphyujan modal men vibhinn noiza sedyulars kaise jenaret kie gae sainpalon ki gunavatta aur unaki visheshataon par prabhav dalate hain yah samajhane ke lie hamen pahale yah samajhana hoga ki noiza shedyulars karate kya hain",
+    "ref_tokens": 35,
+    "tokens_by_cat": {
+     "entity": 5,
+     "other": 30
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_0",
+    "hyp": "डिफ्यूजन मॉडल में विभिन्न नॉइज़ सेड्यूलर्स कैसे जेनरेट किए गए सैंपलों की गुणवत्ता और उनकी विशेषताओं पर प्रभाव डालते हैं, यह समझने के लिए हमें पहले यह समझना होगा कि नॉइज़ शेड्यूलर्स करते क्या हैं।",
+    "latency_s": 1.678
+   },
+   {
+    "ref_norm": "noiza shedyulars yah tay karate hain ki data par kab aur kitana shor dala jaega yah age ke proses yani ki pharavard proses men deta ko kaise sankramit karana hai aur phir rivars proses men shor ko kaise hatana hai isaka nirdharan karata hai",
+    "hyp_norm": "noiza shedyulars yah tay karate hain ki deta par kab aur kitana shor dala jaega yah age ke proses yani ki phoravard proses men deta ko kaise sankramit karana hai aur phir rivars proses men shor ko kaise hatana hai isaka nirdharan karata hai",
+    "ref_tokens": 44,
+    "tokens_by_cat": {
+     "entity": 7,
+     "other": 37
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_1",
+    "hyp": "नॉइज़ शेड्यूलर्स यह तय करते हैं कि डेटा पर कब और कितना शोर डाला जाएगा। यह आगे के प्रोसेस, यानी कि फॉरवर्ड प्रोसेस में डेटा को कैसे संक्रमित करना है और फिर रिवर्स प्रोसेस में शोर को कैसे हटाना है, इसका निर्धारण करता है।",
+    "latency_s": 1.604
+   },
+   {
+    "ref_norm": "sahi shedyul na hone par modal achche se sikh nahin pata aur autaput ki gunavatta ghat jati hai",
+    "hyp_norm": "sahi shedyul na hone par modal achche se sikh nahin pata aur autaput ki gunavatta ghat jati hai",
+    "ref_tokens": 18,
+    "tokens_by_cat": {
+     "other": 15,
+     "entity": 3
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_2",
+    "hyp": "सही शेड्यूल न होने पर मॉडल अच्छे से सीख नहीं पाता और आउटपुट की गुणवत्ता घट जाती है।",
+    "latency_s": 1.097
+   },
+   {
+    "ref_norm": "vairiyans eksploding aur vairiyans prijarving shedyul shor ke vitaran ke alag alag paitarn hote hain jo ki autaput ki visheshataon ko prabhavit karate hain",
+    "hyp_norm": "veriens eksaploding aur veriens prijarving shedyul shor ke vitaran ke alag alag paitarn hote hain jo ki autaput ki visheshataon ko prabhavit karate hain",
+    "ref_tokens": 24,
+    "tokens_by_cat": {
+     "entity": 6,
+     "other": 18
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_3",
+    "hyp": "वेरिएंस एक्सप्लोडिंग और वेरिएंस प्रिजर्विंग शेड्यूल शोर के वितरण के अलग-अलग पैटर्न होते हैं, जो कि आउटपुट की विशेषताओं को प्रभावित करते हैं।",
+    "latency_s": 1.017
+   },
+   {
+    "ref_norm": "non liniyar shedyul jaise ki kosain behatar gunavatta aur ditel vale sainpal dete hain jabaki liniyar shedyul kam prabhavi hote hain",
+    "hyp_norm": "nonaliniyar sidyul jaise ki kosain aur sigmoid behatar gunavatta aur ditel vale sainpal dete hain jabaki liniyar shedyul kam prabhavi hote hain",
+    "ref_tokens": 21,
+    "tokens_by_cat": {
+     "entity": 6,
+     "other": 15
+    },
+    "errors_by_cat": {
+     "entity": 3,
+     "insertion": 2
+    },
+    "errors": 5,
+    "wer": 0.23809523809523808,
+    "entity_hits": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_4",
+    "hyp": "नॉनलीनियर सिड्यूल जैसे कि कोसाइन और सिग्मॉइड बेहतर गुणवत्ता और डिटेल वाले सैंपल देते हैं, जबकि लीनियर शेड्यूल कम प्रभावी होते हैं।",
+    "latency_s": 1.349
+   },
+   {
+    "ref_norm": "di di em jaise tej sainpaling takanikon men shedyul ki shaili sainpaling ki sthirata aur kvaliti donon par mahatvapurn prabhav dalati hai",
+    "hyp_norm": "didiem jaise tej sainpaling takanikon men shedyul ki sthirata aur kvaliti donon par mahatvapurn prabhav dalati hai",
+    "ref_tokens": 22,
+    "tokens_by_cat": {
+     "entity": 5,
+     "other": 17
+    },
+    "errors_by_cat": {
+     "entity": 2,
+     "other": 4
+    },
+    "errors": 6,
+    "wer": 0.2727272727272727,
+    "entity_hits": [
+     false,
+     false,
+     false,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_5",
+    "hyp": "डीडीएम जैसे तेज सैंपलिंग तकनीकों में शेड्यूल की स्थिरता और क्वालिटी दोनों पर महत्वपूर्ण प्रभाव डालती है।",
+    "latency_s": 0.948
+   },
+   {
+    "ref_norm": "kuch jamin ko apaki adhigrahit kiya gaya hai jisake lie apako ek pura ligal prosijar hota hai usako pura karana padega",
+    "hyp_norm": "kuch jamin ko apake adhigrahit kiya gaya hai jisake lie apako ek pura ligal prosejar hota hai usako pura karana padega",
+    "ref_tokens": 21,
+    "tokens_by_cat": {
+     "other": 19,
+     "entity": 2
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true
+    ],
+    "id": "7318349394484289_0_1",
+    "hyp": "कुछ जमीन को आपके अधिग्रहित किया गया है, जिसके लिए आपको एक पूरा लीगल प्रोसेजर होता है, उसको पूरा करना पड़ेगा।",
+    "latency_s": 1.168
+   },
+   {
+    "ref_norm": "kisi bhi nirman men lod beyaring kaipesiti ka sahi akalan avashyak hota hai jo bhumi ki soil stebiliti par nirbhar karata hai majabut aur sthir mitti",
+    "hyp_norm": "kisi bhi nirman men lod beyaring kaipesiti ka sahi akalan avashyak hota hai jo bhumi ki soyal stebiliti par nirbhar karata hai majabut aur sthir mitti",
+    "ref_tokens": 26,
+    "tokens_by_cat": {
+     "other": 21,
+     "entity": 5
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394501011_0_0",
+    "hyp": "किसी भी निर्माण में लोड बेयरिंग कैपेसिटी का सही आकलन आवश्यक होता है, जो भूमि की सॉयल स्टेबिलिटी पर निर्भर करता है। मजबूत और स्थिर मिट्टी",
+    "latency_s": 1.623
+   },
+   {
+    "ref_norm": "ki sanrachana ko sahi samarthan deta hai isake hi ye isake sath hi konsitret strenth aur uchit renaphor siment resio ka chunav bhi nirman ki majabuti aur dirghayu ke jaruri hota hai",
+    "hyp_norm": "is sanrachana ko sahi samarthan deta hai isake sath hi konstityut sthaint aur uchit renaphorsament reshiyo ka chunav bhi nirman ki majabuti aur dirghayu ke lie jaruri hota hai",
+    "ref_tokens": 32,
+    "tokens_by_cat": {
+     "other": 27,
+     "entity": 5
+    },
+    "errors_by_cat": {
+     "other": 4,
+     "entity": 5,
+     "insertion": 1
+    },
+    "errors": 10,
+    "wer": 0.3125,
+    "entity_hits": [
+     false,
+     false,
+     false,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     false,
+     false,
+     false,
+     false,
+     true
+    ],
+    "id": "7318349394501011_0_1",
+    "hyp": "इस संरचना को सही समर्थन देता है। इसके साथ ही कॉन्स्टिट्यूट, स्थैंत और उचित रेनफोर्समेंट रेशियो का चुनाव भी निर्माण की मजबूती और दीर्घायु के लिए जरूरी होता है।",
+    "latency_s": 1.478
+   },
+   {
+    "ref_norm": "vaishvik vyakti ya pranali men hue badalavon ne vishesh rup se global sauth ke rashtriy rajyon ki sanprabhuta par gahara prabhav dala hai antarrashtriy mudra kosh ai em eph vishv baink jaisi sansthaon ki",
+    "hyp_norm": "vaishvik vittiy pranali men hue badalavon ne vishesh rup se global sauth ke rashtr rajyon ki sanprabhuta par gahara prabhav dala hai antarrashtriy mudra kosh aiemaeph vishv baink jaisi sansthaon ki",
+    "ref_tokens": 34,
+    "tokens_by_cat": {
+     "other": 28,
+     "entity": 6
+    },
+    "errors_by_cat": {
+     "other": 2,
+     "entity": 3
+    },
+    "errors": 5,
+    "wer": 0.14705882352941177,
+    "entity_hits": [
+     true,
+     true,
+     false,
+     false,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [],
+    "id": "7318349394491764_0_0",
+    "hyp": "वैश्विक वित्तीय प्रणाली में हुए बदलावों ने विशेष रूप से ग्लोबल साउथ के राष्ट्र-राज्यों की संप्रभुता पर गहरा प्रभाव डाला है। अंतर्राष्ट्रीय मुद्रा कोष, आईएमएफ, विश्व बैंक जैसी संस्थाओं की",
+    "latency_s": 3.277
+   },
+   {
+    "ref_norm": "ki svatantrata simit hui hai in prabhavon se nipatane ke lie global sauth ke deshon ke pas kuch rananitiyan upalabdh hain pahala kshetriy arthik sahayog jaise ki",
+    "hyp_norm": "ki svatantrata simit hui hai in prabhavon se nipatane ke lie global sauth ke deshon ke pas kuch rananitiyan upalabdh hain pahala kshetriy arthik sahayog jaise ki",
+    "ref_tokens": 27,
+    "tokens_by_cat": {
+     "other": 25,
+     "entity": 2
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [],
+    "id": "7318349394491764_0_2",
+    "hyp": "की स्वतंत्रता सीमित हुई है। इन प्रभावों से निपटने के लिए ग्लोबल साउथ के देशों के पास कुछ रणनीतियाँ उपलब्ध हैं। पहला, क्षेत्रीय आर्थिक सहयोग, जैसे कि",
+    "latency_s": 1.004
+   },
+   {
+    "ref_norm": "vi ar ai si es ya e es i e en jaisi sanrachanaon ko majabut karana jisase vaikalpik vyakti ya sahayog mil sake dusara vyakti ya vividhata",
+    "hyp_norm": "biaraisies ya isain jaisi sanrachanaon ko majabut karana jisase vaikalpik vittiy sahayog mil sake dusara vittiy vividhata",
+    "ref_tokens": 27,
+    "tokens_by_cat": {
+     "entity": 8,
+     "other": 19
+    },
+    "errors_by_cat": {
+     "entity": 8,
+     "other": 6
+    },
+    "errors": 14,
+    "wer": 0.5185185185185185,
+    "entity_hits": [
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [],
+    "id": "7318349394491764_0_3",
+    "hyp": "बीआरआईसीएस या एएसईएएन जैसी संरचनाओं को मजबूत करना, जिससे वैकल्पिक वित्तीय सहयोग मिल सके। दूसरा, वित्तीय विविधता।",
+    "latency_s": 1.358
+   },
+   {
+    "ref_norm": "gharelu utpadan takaniki vikas aur samajik suraksha netavark ko majabut banati hai",
+    "hyp_norm": "gharelu utpadan takaniki vikas aur samajik suraksha netavark ko majabut banati hai",
+    "ref_tokens": 12,
+    "tokens_by_cat": {
+     "other": 11,
+     "entity": 1
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [],
+    "id": "7318349394491764_0_6",
+    "hyp": "घरेलू उत्पादन तकनीकी विकास और सामाजिक सुरक्षा नेटवर्क को मजबूत बनाती है।",
+    "latency_s": 0.901
+   },
+   {
+    "ref_norm": "renaforsament larning ka kor aidiya hai trayal enalisis sikhana ki ek sinpal streteji hai ki ek ejent apane invayarament se se intarekt karata hai aur vo invayarament ek stet men hota hai to phir ek ejent us pe ekshan leta hai aur phir us ekshan ke badale men ek rivard signal milata hai",
+    "hyp_norm": "reinforcement learning ka core idea hai trial and error se sikhana ki ek simple strategy hai ki ek agent apane environment se interact karata hai aur vo environment ek state men hota hai to phir ek agent usape action leta hai aur phir us action ke badale men ek revard signal milata hai",
+    "ref_tokens": 53,
+    "tokens_by_cat": {
+     "entity": 15,
+     "other": 38
+    },
+    "errors_by_cat": {
+     "entity": 10,
+     "insertion": 2,
+     "other": 6
+    },
+    "errors": 18,
+    "wer": 0.33962264150943394,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 0.6415094339622641,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394500593_0_0",
+    "hyp": "Reinforcement learning का core idea है trial and error से सीखना, कि एक simple strategy है कि एक agent अपने environment से interact करता है, और वो environment एक state में होता है, तो फिर एक agent उसपे action लेता है, और फिर उस action के बदले में एक reward signal मिलता है।",
+    "latency_s": 1.155
+   },
+   {
+    "ref_norm": "aur us rivard ke ekording jo ejent hain vo apani palisi ya streteji ko apadet karata rahata hai taki vo maiksimam rivard har apane ekshan par kar sake",
+    "hyp_norm": "aur us rivord ke akording jo ejent hai vo apani polisi ya streteji ko apadet karata rahata hai taki vo maiksimam rivord har apane ekshan par kar sake",
+    "ref_tokens": 28,
+    "tokens_by_cat": {
+     "other": 20,
+     "entity": 8
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.03571428571428571,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394500593_0_1",
+    "hyp": "और उस रिवॉर्ड के अकॉर्डिंग जो एजेंट है, वो अपनी पॉलिसी या स्ट्रेटेजी को अपडेट करता रहता है, ताकि वो मैक्सिमम रिवॉर्ड हर अपने एक्शन पर कर सके।",
+    "latency_s": 1.565
+   }
+  ],
+  "gpt-transcribe + its keyword list": [
+   {
+    "ref_norm": "yah phichar shabdon ko rut priphiks saphiks men todakar samajhana unnat spenish sikhane valo ke lie phayademand hai kyonki yah kathin",
+    "hyp_norm": "yah phichar shabdon ko rut priphiks saphiks men todakar samajhana unnat spainish sikhane valon ke lie phayademand hai kyonki yah kathin",
+    "ref_tokens": 21,
+    "tokens_by_cat": {
+     "other": 16,
+     "entity": 5
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.047619047619047616,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394505020_0_0",
+    "hyp": "यह फीचर शब्दों को रूट, प्रिफिक्स, सफिक्स में तोड़कर समझाना उन्नत स्पैनिश सीखने वालों के लिए फायदेमंद है, क्योंकि यह कठिन।",
+    "latency_s": 1.182
+   },
+   {
+    "ref_norm": "shabdon ka arth anuman lagane vard phaimalij pahachanane aur ekedamik aupacharik shabdavali samajhane men madad karata hai udaharan se",
+    "hyp_norm": "shabdon ka arth anuman lagane vard phaimilij pahachanane aur akadamik aupacharik shabdavali samajhane men madad karata hai udaharan se",
+    "ref_tokens": 19,
+    "tokens_by_cat": {
+     "other": 16,
+     "entity": 3
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true
+    ],
+    "id": "7318349394505020_0_1",
+    "hyp": "शब्दों का अर्थ अनुमान लगाने, वर्ड फैमिलीज पहचानने और अकादमिक औपचारिक शब्दावली समझने में मदद करता है। उदाहरण से।",
+    "latency_s": 1.074
+   },
+   {
+    "ref_norm": "inakomapresibal yani in nakaratmak plas komprenadar samajhana plas saksham jo samajha na ja sake",
+    "hyp_norm": "incomprehensible yani in nakaratmak plas comprehender samajhana plas able yani saksham jo samajha na ja sake",
+    "ref_tokens": 14,
+    "tokens_by_cat": {
+     "entity": 3,
+     "other": 11
+    },
+    "errors_by_cat": {
+     "entity": 1,
+     "insertion": 2
+    },
+    "errors": 3,
+    "wer": 0.21428571428571427,
+    "entity_hits": [
+     false,
+     true,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 0.8125,
+    "false_insertions": [],
+    "rare_hits": [
+     false,
+     true,
+     false,
+     true
+    ],
+    "id": "7318349394505020_0_2",
+    "hyp": "Incomprehensible यानी इन नकारात्मक प्लस comprehender, समझना प्लस able यानी सक्षम, जो समझा ना जा सके।",
+    "latency_s": 2.169
+   },
+   {
+    "ref_norm": "garbhavati jisaka litaral arth avarodhit ho sakata hai yah takanik sabase upayukt hai laitin yani grik mul ki spasht upasarg pratyay vale aur kai shabdon se jude rut vale shabdon ke lie",
+    "hyp_norm": "garbhavati jisaka litaral arth avarodhit ho sakata hai yah takanik sabase upayukt hai laitin yani grik mul ke spasht upasarg pratyay vale aur kai shabdon se jude rut vale shabdon ke lie",
+    "ref_tokens": 32,
+    "tokens_by_cat": {
+     "other": 28,
+     "entity": 4
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.03125,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true
+    ],
+    "id": "7318349394505020_0_4",
+    "hyp": "गर्भवती, जिसका लिटरल अर्थ अवरोधित हो सकता है, यह तकनीक सबसे उपयुक्त है लैटिन यानी ग्रीक मूल के स्पष्ट उपसर्ग प्रत्यय वाले और कई शब्दों से जुड़े रूट वाले शब्दों के लिए।",
+    "latency_s": 1.389
+   },
+   {
+    "ref_norm": "jab ham ilektronik divais ka pej dra map karate mapana chahate hain to maltimidiya ka upayog kiya jata hai taki sahi karan ka pata chal sake kisi sarkit men karant ki adhikata hone par",
+    "hyp_norm": "jab ham ilektronik divais ka emar pej dro mapana chahate hain to maltimitar ka upayog kiya jata hai taki sahi karant ka pata chal sake kisi sarkit men karant ki adhikata hone par",
+    "ref_tokens": 34,
+    "tokens_by_cat": {
+     "other": 27,
+     "entity": 7
+    },
+    "errors_by_cat": {
+     "insertion": 1,
+     "entity": 2,
+     "other": 3
+    },
+    "errors": 6,
+    "wer": 0.17647058823529413,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     false,
+     false,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     false,
+     true,
+     true
+    ],
+    "id": "7318349394501010_0_0",
+    "hyp": "जब हम इलेक्ट्रॉनिक डिवाइस का एमआर पेज ड्रॉ मापना चाहते हैं तो मल्टीमीटर का उपयोग किया जाता है ताकि सही करंट का पता चल सके। किसी सर्किट में करंट की अधिकता होने पर",
+    "latency_s": 0.989
+   },
+   {
+    "ref_norm": "phyuj painal suraksha pradan karata hai sarkit ko nukasan se bachata hai isake alava kai divaises men slip mod hota hai jo bijali ki khapat ka kam karata hai aur baitari bachane men madad karata hai",
+    "hyp_norm": "phyuj painal suraksha pradan karata hai sarkit ko nukasan se bachata hai isake alava kai divaises men slip mod hota hai jo bijali ki khapat kam karata hai aur baitari bachane men madad karata hai",
+    "ref_tokens": 36,
+    "tokens_by_cat": {
+     "entity": 7,
+     "other": 29
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.027777777777777776,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394501010_0_1",
+    "hyp": "फ्यूज पैनल सुरक्षा प्रदान करता है, सर्किट को नुकसान से बचाता है। इसके अलावा कई डिवाइसेस में स्लीप मोड होता है जो बिजली की खपत कम करता है और बैटरी बचाने में मदद करता है।",
+    "latency_s": 1.178
+   },
+   {
+    "ref_norm": "diphyujan modal men vibhinn noiza shedyulars kaise janaret kie gae sainpalon ki gunavatta aur unaki visheshataon par prabhav dalate hain yah samajhane ke lie hamen pahale yah samajhana hoga ki noiza shedyulars karate kya hain",
+    "hyp_norm": "diphyujan modal men vibhinn noiza shedyulars kaise jenaret kie gae sainpalon ki gunavatta aur unaki visheshataon par prabhav dalate hain yah samajhane ke lie hamen pahale yah samajhana hoga ki noiza shedyulars karate kya hain",
+    "ref_tokens": 35,
+    "tokens_by_cat": {
+     "entity": 5,
+     "other": 30
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_0",
+    "hyp": "डिफ्यूजन मॉडल में विभिन्न नॉइज़ शेड्यूलर्स कैसे जेनरेट किए गए सैंपलों की गुणवत्ता और उनकी विशेषताओं पर प्रभाव डालते हैं, यह समझने के लिए हमें पहले यह समझना होगा कि नॉइज़ शेड्यूलर्स करते क्या हैं।",
+    "latency_s": 1.26
+   },
+   {
+    "ref_norm": "noiza shedyulars yah tay karate hain ki data par kab aur kitana shor dala jaega yah age ke proses yani ki pharavard proses men deta ko kaise sankramit karana hai aur phir rivars proses men shor ko kaise hatana hai isaka nirdharan karata hai",
+    "hyp_norm": "noiza schedulers yah tay karate hain ki deta par kab aur kitana shor dala jaega yah age ke proses yani ki phoravard proses men deta ko kaise sankramit karana hai aur phir rivars proses men shor ko kaise hatana hai isaka nirdharan karata hai",
+    "ref_tokens": 44,
+    "tokens_by_cat": {
+     "entity": 7,
+     "other": 37
+    },
+    "errors_by_cat": {
+     "entity": 1
+    },
+    "errors": 1,
+    "wer": 0.022727272727272728,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 0.9772727272727273,
+    "false_insertions": [
+     "Schedulers"
+    ],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_1",
+    "hyp": "नॉइज़ Schedulers यह तय करते हैं कि डेटा पर कब और कितना शोर डाला जाएगा। यह आगे के प्रोसेस, यानी कि फॉरवर्ड प्रोसेस में डेटा को कैसे संक्रमित करना है और फिर रिवर्स प्रोसेस में शोर को कैसे हटाना है, इसका निर्धारण करता है।",
+    "latency_s": 1.139
+   },
+   {
+    "ref_norm": "sahi shedyul na hone par modal achche se sikh nahin pata aur autaput ki gunavatta ghat jati hai",
+    "hyp_norm": "sahi shedyul na hone par modal achche se sikh nahin pata aur autaput ki gunavatta ghat jati hai",
+    "ref_tokens": 18,
+    "tokens_by_cat": {
+     "other": 15,
+     "entity": 3
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_2",
+    "hyp": "सही शेड्यूल न होने पर मॉडल अच्छे से सीख नहीं पाता और आउटपुट की गुणवत्ता घट जाती है।",
+    "latency_s": 1.152
+   },
+   {
+    "ref_norm": "vairiyans eksploding aur vairiyans prijarving shedyul shor ke vitaran ke alag alag paitarn hote hain jo ki autaput ki visheshataon ko prabhavit karate hain",
+    "hyp_norm": "variance exploding aur variance preserving shedyul shor ke vitaran ke alag alag paitarn hote hain jo ki autaput ke visheshataon ko prabhavit karate hain",
+    "ref_tokens": 24,
+    "tokens_by_cat": {
+     "entity": 6,
+     "other": 18
+    },
+    "errors_by_cat": {
+     "entity": 1,
+     "other": 1
+    },
+    "errors": 2,
+    "wer": 0.08333333333333333,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 0.8260869565217391,
+    "false_insertions": [
+     "Preserving"
+    ],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_3",
+    "hyp": "Variance Exploding और Variance Preserving शेड्यूल शोर के वितरण के अलग-अलग पैटर्न होते हैं, जो कि आउटपुट के विशेषताओं को प्रभावित करते हैं।",
+    "latency_s": 1.232
+   },
+   {
+    "ref_norm": "non liniyar shedyul jaise ki kosain behatar gunavatta aur ditel vale sainpal dete hain jabaki liniyar shedyul kam prabhavi hote hain",
+    "hyp_norm": "nonaliniyar sidyul jaise ki kosain aur sigmoid behatar gunavatta aur ditel vale sainpal dete hain jabaki liniyar shedyul kam prabhavi hote hain",
+    "ref_tokens": 21,
+    "tokens_by_cat": {
+     "entity": 6,
+     "other": 15
+    },
+    "errors_by_cat": {
+     "entity": 3,
+     "insertion": 2
+    },
+    "errors": 5,
+    "wer": 0.23809523809523808,
+    "entity_hits": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_4",
+    "hyp": "नॉनलीनियर सिड्यूल जैसे कि कोसाइन और सिग्मॉइड बेहतर गुणवत्ता और डिटेल वाले सैंपल देते हैं, जबकि लीनियर शेड्यूल कम प्रभावी होते हैं।",
+    "latency_s": 1.404
+   },
+   {
+    "ref_norm": "di di em jaise tej sainpaling takanikon men shedyul ki shaili sainpaling ki sthirata aur kvaliti donon par mahatvapurn prabhav dalati hai",
+    "hyp_norm": "ddm jaise tej sampling takanikon men shedyul ki shaili sampling ki sthirata aur kvaliti donon par mahatvapurn prabhav dalati hai",
+    "ref_tokens": 22,
+    "tokens_by_cat": {
+     "entity": 5,
+     "other": 17
+    },
+    "errors_by_cat": {
+     "entity": 3,
+     "other": 2
+    },
+    "errors": 5,
+    "wer": 0.22727272727272727,
+    "entity_hits": [
+     false,
+     false,
+     false,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 0.85,
+    "false_insertions": [
+     "Sampling"
+    ],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_5",
+    "hyp": "DDM जैसे तेज Sampling तकनीकों में शेड्यूल की शैली Sampling की स्थिरता और क्वालिटी दोनों पर महत्वपूर्ण प्रभाव डालती है।",
+    "latency_s": 0.869
+   },
+   {
+    "ref_norm": "kuch jamin ko apaki adhigrahit kiya gaya hai jisake lie apako ek pura ligal prosijar hota hai usako pura karana padega",
+    "hyp_norm": "kuch jamin ko apake adhigrahit kiya gaya hai jisake lie apako ek pura ligal prosijar hota hai usako pura karana padega",
+    "ref_tokens": 21,
+    "tokens_by_cat": {
+     "other": 19,
+     "entity": 2
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true
+    ],
+    "id": "7318349394484289_0_1",
+    "hyp": "कुछ जमीन को आपके अधिग्रहित किया गया है, जिसके लिए आपको एक पूरा लीगल प्रोसीजर होता है, उसको पूरा करना पड़ेगा।",
+    "latency_s": 1.073
+   },
+   {
+    "ref_norm": "kisi bhi nirman men lod beyaring kaipesiti ka sahi akalan avashyak hota hai jo bhumi ki soil stebiliti par nirbhar karata hai majabut aur sthir mitti",
+    "hyp_norm": "kisi bhi nirman men lod beyaring kaipesiti ka sahi akalan avashyak hota hai jo bhumi ki soyal stebiliti par nirbhar karata hai majabut aur sthir mitti",
+    "ref_tokens": 26,
+    "tokens_by_cat": {
+     "other": 21,
+     "entity": 5
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394501011_0_0",
+    "hyp": "किसी भी निर्माण में लोड बेयरिंग कैपेसिटी का सही आकलन आवश्यक होता है, जो भूमि की सॉयल स्टेबिलिटी पर निर्भर करता है। मजबूत और स्थिर मिट्टी",
+    "latency_s": 1.108
+   },
+   {
+    "ref_norm": "ki sanrachana ko sahi samarthan deta hai isake hi ye isake sath hi konsitret strenth aur uchit renaphor siment resio ka chunav bhi nirman ki majabuti aur dirghayu ke jaruri hota hai",
+    "hyp_norm": "is sanrachana ko sahi samarthan deta hai isake sath hi concentrate strength aur uchit renfor cement reshiyo ka chunav bhi nirman ki majabuti aur dirghayu ke lie zaruri hota hai",
+    "ref_tokens": 32,
+    "tokens_by_cat": {
+     "other": 27,
+     "entity": 5
+    },
+    "errors_by_cat": {
+     "other": 4,
+     "entity": 2,
+     "insertion": 1
+    },
+    "errors": 7,
+    "wer": 0.21875,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 0.8666666666666667,
+    "false_insertions": [
+     "Concentrate"
+    ],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394501011_0_1",
+    "hyp": "इस संरचना को सही समर्थन देता है। इसके साथ ही Concentrate, strength और उचित Renfor cement रेशियो का चुनाव भी निर्माण की मजबूती और दीर्घायु के लिए ज़रूरी होता है।",
+    "latency_s": 1.796
+   },
+   {
+    "ref_norm": "vaishvik vyakti ya pranali men hue badalavon ne vishesh rup se global sauth ke rashtriy rajyon ki sanprabhuta par gahara prabhav dala hai antarrashtriy mudra kosh ai em eph vishv baink jaisi sansthaon ki",
+    "hyp_norm": "vaishvik vittiy pranali men hue badalavon ne vishesh rup se global sauth ke rashtr rajyon ki sanprabhuta par gahara prabhav dala hai antarrashtriy mudra kosh aiemaeph vishv baink jaisi sansthaon ki",
+    "ref_tokens": 34,
+    "tokens_by_cat": {
+     "other": 28,
+     "entity": 6
+    },
+    "errors_by_cat": {
+     "other": 2,
+     "entity": 3
+    },
+    "errors": 5,
+    "wer": 0.14705882352941177,
+    "entity_hits": [
+     true,
+     true,
+     false,
+     false,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [],
+    "id": "7318349394491764_0_0",
+    "hyp": "वैश्विक वित्तीय प्रणाली में हुए बदलावों ने विशेष रूप से ग्लोबल साउथ के राष्ट्र-राज्यों की संप्रभुता पर गहरा प्रभाव डाला है। अंतर्राष्ट्रीय मुद्रा कोष, आईएमएफ, विश्व बैंक जैसी संस्थाओं की",
+    "latency_s": 1.157
+   },
+   {
+    "ref_norm": "ki svatantrata simit hui hai in prabhavon se nipatane ke lie global sauth ke deshon ke pas kuch rananitiyan upalabdh hain pahala kshetriy arthik sahayog jaise ki",
+    "hyp_norm": "ki svatantrata simit hui hai in prabhavon se nipatane ke lie global sauth ke deshon ke pas kuch rananitiyan upalabdh hain pahala kshetriy arthik sahayog jaise ki",
+    "ref_tokens": 27,
+    "tokens_by_cat": {
+     "other": 25,
+     "entity": 2
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [],
+    "id": "7318349394491764_0_2",
+    "hyp": "की स्वतंत्रता सीमित हुई है। इन प्रभावों से निपटने के लिए ग्लोबल साउथ के देशों के पास कुछ रणनीतियाँ उपलब्ध हैं। पहला, क्षेत्रीय आर्थिक सहयोग, जैसे कि",
+    "latency_s": 1.285
+   },
+   {
+    "ref_norm": "vi ar ai si es ya e es i e en jaisi sanrachanaon ko majabut karana jisase vaikalpik vyakti ya sahayog mil sake dusara vyakti ya vividhata",
+    "hyp_norm": "biaraisies ya isain jaisi sanrachanaon ko majabut karana jisase vaikalpik vittiy sahayog mil sake dusara vittiy vividhata",
+    "ref_tokens": 27,
+    "tokens_by_cat": {
+     "entity": 8,
+     "other": 19
+    },
+    "errors_by_cat": {
+     "entity": 8,
+     "other": 6
+    },
+    "errors": 14,
+    "wer": 0.5185185185185185,
+    "entity_hits": [
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false,
+     false
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [],
+    "id": "7318349394491764_0_3",
+    "hyp": "बीआरआईसीएस या एएसईएएन जैसी संरचनाओं को मजबूत करना, जिससे वैकल्पिक वित्तीय सहयोग मिल सके। दूसरा वित्तीय विविधता।",
+    "latency_s": 0.963
+   },
+   {
+    "ref_norm": "gharelu utpadan takaniki vikas aur samajik suraksha netavark ko majabut banati hai",
+    "hyp_norm": "gharelu utpadan takaniki vikas aur samajik suraksha netavark ko majabut banati hai",
+    "ref_tokens": 12,
+    "tokens_by_cat": {
+     "other": 11,
+     "entity": 1
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [],
+    "id": "7318349394491764_0_6",
+    "hyp": "घरेलू उत्पादन तकनीकी विकास और सामाजिक सुरक्षा नेटवर्क को मजबूत बनाती है।",
+    "latency_s": 1.263
+   },
+   {
+    "ref_norm": "renaforsament larning ka kor aidiya hai trayal enalisis sikhana ki ek sinpal streteji hai ki ek ejent apane invayarament se se intarekt karata hai aur vo invayarament ek stet men hota hai to phir ek ejent us pe ekshan leta hai aur phir us ekshan ke badale men ek rivard signal milata hai",
+    "hyp_norm": "reinforcement learning ka core idea hai trial and error se sikhana ki ek simple strategy hai ki ek agent apane environment se interact karata hai aur vo environment ek state men hota hai to phir ek agent usape action leta hai aur phir us action ke badale men ek revard signal milata hai",
+    "ref_tokens": 53,
+    "tokens_by_cat": {
+     "entity": 15,
+     "other": 38
+    },
+    "errors_by_cat": {
+     "entity": 10,
+     "insertion": 2,
+     "other": 6
+    },
+    "errors": 18,
+    "wer": 0.33962264150943394,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 0.6415094339622641,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394500593_0_0",
+    "hyp": "Reinforcement learning का core idea है trial and error से सीखना, कि एक simple strategy है कि एक agent अपने environment से interact करता है, और वो environment एक state में होता है, तो फिर एक agent उसपे action लेता है, और फिर उस action के बदले में एक reward signal मिलता है।",
+    "latency_s": 1.043
+   },
+   {
+    "ref_norm": "aur us rivard ke ekording jo ejent hain vo apani palisi ya streteji ko apadet karata rahata hai taki vo maiksimam rivard har apane ekshan par kar sake",
+    "hyp_norm": "aur us rivord ke akording jo ejent hai vo apani polisi ya streteji ko apadet karata rahata hai taki vo maiksimam rivord har apane ekshan par kar sake",
+    "ref_tokens": 28,
+    "tokens_by_cat": {
+     "other": 20,
+     "entity": 8
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.03571428571428571,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394500593_0_1",
+    "hyp": "और उस रिवॉर्ड के अकॉर्डिंग जो एजेंट है, वो अपनी पॉलिसी या स्ट्रेटेजी को अपडेट करता रहता है, ताकि वो मैक्सिमम रिवॉर्ड हर अपने एक्शन पर कर सके।",
+    "latency_s": 1.095
+   }
+  ],
+  "saaras-v4 + its keyword list": [
+   {
+    "ref_norm": "yah phichar shabdon ko rut priphiks saphiks men todakar samajhana unnat spenish sikhane valo ke lie phayademand hai kyonki yah kathin",
+    "hyp_norm": "yah fichar shabdon ko rut prifiks safiks men todakar samajhana unnat spainish sikhane valon ke lie fayademand hai kyonki yah kathin",
+    "ref_tokens": 21,
+    "tokens_by_cat": {
+     "other": 16,
+     "entity": 5
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.047619047619047616,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394505020_0_0",
+    "hyp": "यह फ़ीचर शब्दों को रूट प्रीफ़िक्स सफ़िक्स में तोड़कर समझाना उन्नत स्पैनिश सीखने वालों के लिए फ़ायदेमंद है क्योंकि यह कठिन।",
+    "latency_s": 1.398
+   },
+   {
+    "ref_norm": "shabdon ka arth anuman lagane vard phaimalij pahachanane aur ekedamik aupacharik shabdavali samajhane men madad karata hai udaharan se",
+    "hyp_norm": "shabdon ka arth anuman lagane vard phaimiliza pahachanane aur akaidamik aupacharik shabdavali samajhane men madad karata hai udaharan se",
+    "ref_tokens": 19,
+    "tokens_by_cat": {
+     "other": 16,
+     "entity": 3
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     false,
+     true
+    ],
+    "id": "7318349394505020_0_1",
+    "hyp": "शब्दों का अर्थ अनुमान लगाने, वर्ड फैमिलीज़ पहचानने और अकैडमिक औपचारिक शब्दावली समझने में मदद करता है। उदाहरण से।",
+    "latency_s": 0.495
+   },
+   {
+    "ref_norm": "inakomapresibal yani in nakaratmak plas komprenadar samajhana plas saksham jo samajha na ja sake",
+    "hyp_norm": "inakomprihensibal yani in nakaratmak plas komprihendar samajhana plas ebal yani saksham jo samajha na ja sake",
+    "ref_tokens": 14,
+    "tokens_by_cat": {
+     "entity": 3,
+     "other": 11
+    },
+    "errors_by_cat": {
+     "entity": 1,
+     "insertion": 2
+    },
+    "errors": 3,
+    "wer": 0.21428571428571427,
+    "entity_hits": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394505020_0_2",
+    "hyp": "इनकॉम्प्रिहेंसिबल यानी इन नकारात्मक प्लस कॉम्प्रिहेंडर समझना प्लस एबल यानी सक्षम जो समझा ना जा सके।",
+    "latency_s": 1.583
+   },
+   {
+    "ref_norm": "garbhavati jisaka litaral arth avarodhit ho sakata hai yah takanik sabase upayukt hai laitin yani grik mul ki spasht upasarg pratyay vale aur kai shabdon se jude rut vale shabdon ke lie",
+    "hyp_norm": "garbhavati jisaka litaral arth avarodhit ho sakata hai yah takanik sabase upayukt hai laitin yani grik mul ke spasht upasarg pratyay vale aur kai shabdon se jude rut vale shabdon ke lie",
+    "ref_tokens": 32,
+    "tokens_by_cat": {
+     "other": 28,
+     "entity": 4
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.03125,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true
+    ],
+    "id": "7318349394505020_0_4",
+    "hyp": "गर्भवती जिसका लिटरल अर्थ अवरोधित हो सकता है, यह तकनीक सबसे उपयुक्त है लैटिन यानी ग्रीक मूल के स्पष्ट उपसर्ग प्रत्यय वाले और कई शब्दों से जुड़े रूट वाले शब्दों के लिए।",
+    "latency_s": 1.728
+   },
+   {
+    "ref_norm": "jab ham ilektronik divais ka pej dra map karate mapana chahate hain to maltimidiya ka upayog kiya jata hai taki sahi karan ka pata chal sake kisi sarkit men karant ki adhikata hone par",
+    "hyp_norm": "jab ham ilektronik divais ka em ar piza dro map karate mapana chahate hain to maltimitar ka upayog kiya jata hai taki sahi karant ka pata chal sake kisi sarkit men karant ki adhikata hone par",
+    "ref_tokens": 34,
+    "tokens_by_cat": {
+     "other": 27,
+     "entity": 7
+    },
+    "errors_by_cat": {
+     "insertion": 2,
+     "entity": 3,
+     "other": 1
+    },
+    "errors": 6,
+    "wer": 0.17647058823529413,
+    "entity_hits": [
+     true,
+     true,
+     false,
+     false,
+     false,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     false,
+     true,
+     true
+    ],
+    "id": "7318349394501010_0_0",
+    "hyp": "जब हम इलेक्ट्रॉनिक डिवाइस का एम आर पीज़ ड्रॉ माप करते मापना चाहते हैं तो मल्टीमीटर का उपयोग किया जाता है ताकि सही करंट का पता चल सके किसी सर्किट में करंट की अधिकता होने पर",
+    "latency_s": 2.305
+   },
+   {
+    "ref_norm": "phyuj painal suraksha pradan karata hai sarkit ko nukasan se bachata hai isake alava kai divaises men slip mod hota hai jo bijali ki khapat ka kam karata hai aur baitari bachane men madad karata hai",
+    "hyp_norm": "fyuza painal suraksha pradan karata hai aur sarkit ko nuqasan se bachata hai isake alava kai divaises men slip mod hota hai jo bijali ki khapat kam karata hai aur baitari bachane men madad karata hai",
+    "ref_tokens": 36,
+    "tokens_by_cat": {
+     "entity": 7,
+     "other": 29
+    },
+    "errors_by_cat": {
+     "insertion": 1,
+     "other": 1
+    },
+    "errors": 2,
+    "wer": 0.05555555555555555,
+    "entity_hits": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394501010_0_1",
+    "hyp": "फ़्यूज़ पैनल सुरक्षा प्रदान करता है और सर्किट को नुक़सान से बचाता है। इसके अलावा कई डिवाइसेस में स्लीप मोड होता है जो बिजली की खपत कम करता है और बैटरी बचाने में मदद करता है।",
+    "latency_s": 0.892
+   },
+   {
+    "ref_norm": "diphyujan modal men vibhinn noiza shedyulars kaise janaret kie gae sainpalon ki gunavatta aur unaki visheshataon par prabhav dalate hain yah samajhane ke lie hamen pahale yah samajhana hoga ki noiza shedyulars karate kya hain",
+    "hyp_norm": "diphyujan modal men vibhinn noiza shedyulars kaise janaret kie gae saimpalon ki gunavatta aur unaki visheshataon par prabhav dalate hain yah samajhane ke lie hamen pahale yah samajhana hoga ki noiza shedyulars karate kya hain",
+    "ref_tokens": 35,
+    "tokens_by_cat": {
+     "entity": 5,
+     "other": 30
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.02857142857142857,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_0",
+    "hyp": "डिफ्यूजन मॉडल में विभिन्न नॉइज़ शेड्यूलर्स कैसे जनरेट किए गए सैम्पलों की गुणवत्ता और उनकी विशेषताओं पर प्रभाव डालते हैं, यह समझने के लिए हमें पहले यह समझना होगा कि नॉइज़ शेड्यूलर्स करते क्या हैं।",
+    "latency_s": 1.864
+   },
+   {
+    "ref_norm": "noiza shedyulars yah tay karate hain ki data par kab aur kitana shor dala jaega yah age ke proses yani ki pharavard proses men deta ko kaise sankramit karana hai aur phir rivars proses men shor ko kaise hatana hai isaka nirdharan karata hai",
+    "hyp_norm": "nois shedyulars yah tay karate hain ki data par kab aur kitana shor dala jaega yah age ke proses yani ki phoravard proses men data ko kaise sankramit karana hai aur phir rivars proses men shor ko kaise hatana hai isaka nirdharit nirdharan karata hai",
+    "ref_tokens": 44,
+    "tokens_by_cat": {
+     "entity": 7,
+     "other": 37
+    },
+    "errors_by_cat": {
+     "entity": 1,
+     "insertion": 1
+    },
+    "errors": 2,
+    "wer": 0.045454545454545456,
+    "entity_hits": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_1",
+    "hyp": "नॉइस शेड्यूलर्स यह तय करते हैं कि डाटा पर कब और कितना शोर डाला जाएगा, यह आगे के प्रोसेस यानी कि फॉरवर्ड प्रोसेस में डाटा को कैसे संक्रमित करना है और फिर रिवर्स प्रोसेस में शोर को कैसे हटाना है इसका निर्धारित निर्धारण करता है।",
+    "latency_s": 0.881
+   },
+   {
+    "ref_norm": "sahi shedyul na hone par modal achche se sikh nahin pata aur autaput ki gunavatta ghat jati hai",
+    "hyp_norm": "sahi shedyul na hone par modal achche se sikh nahin pata aur autaput ki gunavatta ghat jati hai",
+    "ref_tokens": 18,
+    "tokens_by_cat": {
+     "other": 15,
+     "entity": 3
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_2",
+    "hyp": "सही शेड्यूल ना होने पर मॉडल अच्छे से सीख नहीं पाता और आउटपुट की गुणवत्ता घट जाती है।",
+    "latency_s": 0.714
+   },
+   {
+    "ref_norm": "vairiyans eksploding aur vairiyans prijarving shedyul shor ke vitaran ke alag alag paitarn hote hain jo ki autaput ki visheshataon ko prabhavit karate hain",
+    "hyp_norm": "veriens eksaploding aur verients prijarving shedyul shor ke vitaran ke alag alag paitarn hote hain jo ki autaput ki visheshataon ko prabhavit karate hain",
+    "ref_tokens": 24,
+    "tokens_by_cat": {
+     "entity": 6,
+     "other": 18
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.041666666666666664,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_3",
+    "hyp": "वेरिएन्स एक्सप्लोडिंग और वेरिएंट्स प्रिजर्विंग शेड्यूल शोर के वितरण के अलग अलग पैटर्न होते हैं, जो कि आउटपुट की विशेषताओं को प्रभावित करते हैं।",
+    "latency_s": 0.562
+   },
+   {
+    "ref_norm": "non liniyar shedyul jaise ki kosain behatar gunavatta aur ditel vale sainpal dete hain jabaki liniyar shedyul kam prabhavi hote hain",
+    "hyp_norm": "nan liniyar sidul jaise ki kosain aur sigmoid behatar gunavatta aur ditel vale sainpal dete hain jabaki liniyar sidul kam prabhavi hote hain",
+    "ref_tokens": 21,
+    "tokens_by_cat": {
+     "entity": 6,
+     "other": 15
+    },
+    "errors_by_cat": {
+     "entity": 1,
+     "insertion": 2
+    },
+    "errors": 3,
+    "wer": 0.14285714285714285,
+    "entity_hits": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_4",
+    "hyp": "नान लिनियर सिडूल जैसे कि कोसाइन और सिग्मोइड बेहतर गुणवत्ता और डिटेल वाले सैंपल देते हैं जबकि लिनियर सिडूल कम प्रभावी होते हैं।",
+    "latency_s": 0.721
+   },
+   {
+    "ref_norm": "di di em jaise tej sainpaling takanikon men shedyul ki shaili sainpaling ki sthirata aur kvaliti donon par mahatvapurn prabhav dalati hai",
+    "hyp_norm": "di di em jaise tej sainpaling takanikon men shedyul ki shaili sainpaling ki sthirata aur kvaliti donon par mahatvapurn prabhav dalati hai",
+    "ref_tokens": 22,
+    "tokens_by_cat": {
+     "entity": 5,
+     "other": 17
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_5",
+    "hyp": "डी डी एम जैसे तेज सैंपलिंग तकनीकों में शेड्यूल की शैली सैंपलिंग की स्थिरता और क्वालिटी दोनों पर महत्वपूर्ण प्रभाव डालती है।",
+    "latency_s": 1.836
+   },
+   {
+    "ref_norm": "kuch jamin ko apaki adhigrahit kiya gaya hai jisake lie apako ek pura ligal prosijar hota hai usako pura karana padega",
+    "hyp_norm": "kuch jamin ko apaki adhigrrihat kiya gaya hai jisake lie apako ek pura ligal prosijar hota hai usako pura karana padega",
+    "ref_tokens": 21,
+    "tokens_by_cat": {
+     "other": 19,
+     "entity": 2
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true
+    ],
+    "id": "7318349394484289_0_1",
+    "hyp": "कुछ जमीन को आपकी अधिगृहत किया गया है जिसके लिए आपको एक पूरा लीगल प्रोसीजर होता है उसको पूरा करना पड़ेगा।",
+    "latency_s": 0.968
+   },
+   {
+    "ref_norm": "kisi bhi nirman men lod beyaring kaipesiti ka sahi akalan avashyak hota hai jo bhumi ki soil stebiliti par nirbhar karata hai majabut aur sthir mitti",
+    "hyp_norm": "kisi bhi nirman men lod beyaring kaipesiti ka sahi akalan avashyak hota hai jo bhumi ki soil stebiliti par nirbhar karata hai majabut aur sthir mitti",
+    "ref_tokens": 26,
+    "tokens_by_cat": {
+     "other": 21,
+     "entity": 5
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394501011_0_0",
+    "hyp": "किसी भी निर्माण में लोड बेयरिंग कैपेसिटी का सही आकलन आवश्यक होता है, जो भूमि की सोइल स्टेबिलिटी पर निर्भर करता है। मजबूत और स्थिर मिट्टी।",
+    "latency_s": 1.98
+   },
+   {
+    "ref_norm": "ki sanrachana ko sahi samarthan deta hai isake hi ye isake sath hi konsitret strenth aur uchit renaphor siment resio ka chunav bhi nirman ki majabuti aur dirghayu ke jaruri hota hai",
+    "hyp_norm": "is sanrachana ko sahi samarthan deta hai isake hi isake sath hi konsentret strenth aur uchit renphorsament reshiyo ka chunav bhi nirman ki majabuti aur dirghayu ke lie zaruri hota hai",
+    "ref_tokens": 32,
+    "tokens_by_cat": {
+     "other": 27,
+     "entity": 5
+    },
+    "errors_by_cat": {
+     "other": 2,
+     "entity": 4,
+     "insertion": 1
+    },
+    "errors": 7,
+    "wer": 0.21875,
+    "entity_hits": [
+     false,
+     true,
+     false,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     false,
+     true,
+     false,
+     false,
+     true
+    ],
+    "id": "7318349394501011_0_1",
+    "hyp": "इस संरचना को सही समर्थन देता है, इसके ही इसके साथ ही कॉन्सेंट्रेट स्ट्रेंथ और उचित रेन्फोर्समेंट रेशियो का चुनाव भी निर्माण की मजबूती और दीर्घायु के लिए ज़रूरी होता है।",
+    "latency_s": 1.972
+   },
+   {
+    "ref_norm": "vaishvik vyakti ya pranali men hue badalavon ne vishesh rup se global sauth ke rashtriy rajyon ki sanprabhuta par gahara prabhav dala hai antarrashtriy mudra kosh ai em eph vishv baink jaisi sansthaon ki",
+    "hyp_norm": "vaishvik vittiy pranali men hue badalavon ne vishesh rup se global sauth ke rashtr rajyon ki sanprabhuta par gahara prabhav dala hai antarrashtriy mudra kosh aiemaeph vishv baink jaisi sansthaon ki",
+    "ref_tokens": 34,
+    "tokens_by_cat": {
+     "other": 28,
+     "entity": 6
+    },
+    "errors_by_cat": {
+     "other": 2,
+     "entity": 3
+    },
+    "errors": 5,
+    "wer": 0.14705882352941177,
+    "entity_hits": [
+     true,
+     true,
+     false,
+     false,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [],
+    "id": "7318349394491764_0_0",
+    "hyp": "वैश्विक वित्तीय प्रणाली में हुए बदलावों ने विशेष रूप से ग्लोबल साउथ के राष्ट्र राज्यों की संप्रभुता पर गहरा प्रभाव डाला है। अंतर्राष्ट्रीय मुद्रा कोष आईएमएफ, विश्व बैंक जैसी संस्थाओं की।",
+    "latency_s": 0.991
+   },
+   {
+    "ref_norm": "ki svatantrata simit hui hai in prabhavon se nipatane ke lie global sauth ke deshon ke pas kuch rananitiyan upalabdh hain pahala kshetriy arthik sahayog jaise ki",
+    "hyp_norm": "ki svatantrata simit hui hai in prabhavon se nipatane ke lie global sauth ke deshon ke pas kuch rananitiyan upalabdh hain pahala kshetriy arthik sahayog jaise ki",
+    "ref_tokens": 27,
+    "tokens_by_cat": {
+     "other": 25,
+     "entity": 2
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [],
+    "id": "7318349394491764_0_2",
+    "hyp": "की स्वतंत्रता सीमित हुई है। इन प्रभावों से निपटने के लिए ग्लोबल साउथ के देशों के पास कुछ रणनीतियाँ उपलब्ध हैं। पहला क्षेत्रीय आर्थिक सहयोग जैसे कि।",
+    "latency_s": 2.084
+   },
+   {
+    "ref_norm": "vi ar ai si es ya e es i e en jaisi sanrachanaon ko majabut karana jisase vaikalpik vyakti ya sahayog mil sake dusara vyakti ya vividhata",
+    "hyp_norm": "bi ar ai si es ya e es i e en jaisi sanrachanaon ko majabut karana jisase vaikalpik vittiy sahayog mil sake dusara vittiy vividhata",
+    "ref_tokens": 27,
+    "tokens_by_cat": {
+     "entity": 8,
+     "other": 19
+    },
+    "errors_by_cat": {
+     "entity": 1,
+     "other": 4
+    },
+    "errors": 5,
+    "wer": 0.18518518518518517,
+    "entity_hits": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [],
+    "id": "7318349394491764_0_3",
+    "hyp": "बी आर आई सी एस या ए एस ई ए एन जैसी संरचनाओं को मजबूत करना जिससे वैकल्पिक वित्तीय सहयोग मिल सके दूसरा वित्तीय विविधता",
+    "latency_s": 2.298
+   },
+   {
+    "ref_norm": "gharelu utpadan takaniki vikas aur samajik suraksha netavark ko majabut banati hai",
+    "hyp_norm": "gharelu utpadan takaniki vikas aur samajik suraksha netavark ko majabut banati hai",
+    "ref_tokens": 12,
+    "tokens_by_cat": {
+     "other": 11,
+     "entity": 1
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [],
+    "id": "7318349394491764_0_6",
+    "hyp": "घरेलू उत्पादन तकनीकी विकास और सामाजिक सुरक्षा नेटवर्क को मजबूत बनाती है।",
+    "latency_s": 0.782
+   },
+   {
+    "ref_norm": "renaforsament larning ka kor aidiya hai trayal enalisis sikhana ki ek sinpal streteji hai ki ek ejent apane invayarament se se intarekt karata hai aur vo invayarament ek stet men hota hai to phir ek ejent us pe ekshan leta hai aur phir us ekshan ke badale men ek rivard signal milata hai",
+    "hyp_norm": "rinphorsament larning ka kor aidiya hai trayal end erar se sikhana ki ek sinpal straiteji hai ki ek ejent apane enavayarament se intarekt karata hai aur vo enavayarament ek stet men hota hai to phir ek ejent usape ekshan leta hai aur phir us ekshan ke badale men ek rivord signal milata hai",
+    "ref_tokens": 53,
+    "tokens_by_cat": {
+     "entity": 15,
+     "other": 38
+    },
+    "errors_by_cat": {
+     "insertion": 2,
+     "entity": 1,
+     "other": 3
+    },
+    "errors": 6,
+    "wer": 0.11320754716981132,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394500593_0_0",
+    "hyp": "रीन्फोर्समेंट लर्निंग का कोर आइडिया है ट्रायल एंड एरर से सीखना कि एक सिंपल स्ट्रैटेजी है कि एक एजेंट अपने एनवायरमेंट से इंटरेक्ट करता है और वो एनवायरमेंट एक स्टेट में होता है, तो फिर एक एजेंट उसपे एक्शन लेता है और फिर उस एक्शन के बदले में एक रिवॉर्ड सिग्नल मिलता है।",
+    "latency_s": 1.744
+   },
+   {
+    "ref_norm": "aur us rivard ke ekording jo ejent hain vo apani palisi ya streteji ko apadet karata rahata hai taki vo maiksimam rivard har apane ekshan par kar sake",
+    "hyp_norm": "aur us rivord ke akording jo ejent hai vo apani polisi ya straitaji ko apadet karata rahata hai taki vo maiksimam rivord har apane ekshan par kar sake",
+    "ref_tokens": 28,
+    "tokens_by_cat": {
+     "other": 20,
+     "entity": 8
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.03571428571428571,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394500593_0_1",
+    "hyp": "और उस रिवॉर्ड के अकॉर्डिंग जो एजेंट है वो अपनी पॉलिसी या स्ट्रैटजी को अपडेट करता रहता है ताकि वो मैक्सिमम रिवॉर्ड हर अपने एक्शन पर कर सके।",
+    "latency_s": 2.134
+   }
+  ],
+  "Parakh": [
+   {
+    "ref_norm": "yah phichar shabdon ko rut priphiks saphiks men todakar samajhana unnat spenish sikhane valo ke lie phayademand hai kyonki yah kathin",
+    "hyp_norm": "yah fichar shabdon ko rut prifiks safiks men todakar samajhana unnat spainish sikhane valon ke lie fayademand hai kyonki yah kathin",
+    "ref_tokens": 21,
+    "tokens_by_cat": {
+     "other": 16,
+     "entity": 5
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.047619047619047616,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394505020_0_0",
+    "hyp": "यह फ़ीचर शब्दों को रूट प्रीफ़िक्स सफ़िक्स में तोड़कर समझाना उन्नत स्पैनिश सीखने वालों के लिए फ़ायदेमंद है क्योंकि यह कठिन।",
+    "latency_s": 3.967
+   },
+   {
+    "ref_norm": "shabdon ka arth anuman lagane vard phaimalij pahachanane aur ekedamik aupacharik shabdavali samajhane men madad karata hai udaharan se",
+    "hyp_norm": "shabdon ka arth anuman lagane vard phaimiliza pahachanane aur ekedamik aupacharik shabdavali samajhane men madad karata hai udaharan se",
+    "ref_tokens": 19,
+    "tokens_by_cat": {
+     "other": 16,
+     "entity": 3
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     false,
+     true
+    ],
+    "id": "7318349394505020_0_1",
+    "hyp": "शब्दों का अर्थ अनुमान लगाने, वर्ड फैमिलीज़ पहचानने और एकेडमिक औपचारिक शब्दावली समझने में मदद करता है। उदाहरण से।",
+    "latency_s": 3.438
+   },
+   {
+    "ref_norm": "inakomapresibal yani in nakaratmak plas komprenadar samajhana plas saksham jo samajha na ja sake",
+    "hyp_norm": "inakomprihensibal yani in nakaratmak plas komprihendar samajhana plas ebal yani saksham jo samajha na ja sake",
+    "ref_tokens": 14,
+    "tokens_by_cat": {
+     "entity": 3,
+     "other": 11
+    },
+    "errors_by_cat": {
+     "entity": 1,
+     "insertion": 2
+    },
+    "errors": 3,
+    "wer": 0.21428571428571427,
+    "entity_hits": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394505020_0_2",
+    "hyp": "इनकॉम्प्रिहेंसिबल यानी इन नकारात्मक प्लस कॉम्प्रिहेंडर समझना प्लस एबल यानी सक्षम जो समझा ना जा सके।",
+    "latency_s": 3.503
+   },
+   {
+    "ref_norm": "garbhavati jisaka litaral arth avarodhit ho sakata hai yah takanik sabase upayukt hai laitin yani grik mul ki spasht upasarg pratyay vale aur kai shabdon se jude rut vale shabdon ke lie",
+    "hyp_norm": "garbhavati jisaka litaral arth avarodhit ho sakata hai yah takanik sabase upayukt hai laitin yani grik mul ke spasht upasarg pratyay vale aur kai shabdon se jude rut vale shabdon ke lie",
+    "ref_tokens": 32,
+    "tokens_by_cat": {
+     "other": 28,
+     "entity": 4
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.03125,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true
+    ],
+    "id": "7318349394505020_0_4",
+    "hyp": "गर्भवती जिसका लिटरल अर्थ अवरोधित हो सकता है, यह तकनीक सबसे उपयुक्त है लैटिन यानी ग्रीक मूल के स्पष्ट उपसर्ग प्रत्यय वाले और कई शब्दों से जुड़े रूट वाले शब्दों के लिए।",
+    "latency_s": 1.785
+   },
+   {
+    "ref_norm": "jab ham ilektronik divais ka pej dra map karate mapana chahate hain to maltimidiya ka upayog kiya jata hai taki sahi karan ka pata chal sake kisi sarkit men karant ki adhikata hone par",
+    "hyp_norm": "jab ham ilektronik divais ka em ar piza dro map karate mapana chahate hain to maltimitar ka upayog kiya jata hai taki sahi karant ka pata chal sake kisi sarkit men karant ki adhikata hone par",
+    "ref_tokens": 34,
+    "tokens_by_cat": {
+     "other": 27,
+     "entity": 7
+    },
+    "errors_by_cat": {
+     "insertion": 2,
+     "entity": 3,
+     "other": 1
+    },
+    "errors": 6,
+    "wer": 0.17647058823529413,
+    "entity_hits": [
+     true,
+     true,
+     false,
+     false,
+     false,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     false,
+     true,
+     true
+    ],
+    "id": "7318349394501010_0_0",
+    "hyp": "जब हम इलेक्ट्रॉनिक डिवाइस का एम आर पीज़ ड्रॉ माप करते मापना चाहते हैं तो मल्टीमीटर का उपयोग किया जाता है ताकि सही करंट का पता चल सके किसी सर्किट में करंट की अधिकता होने पर",
+    "latency_s": 1.772
+   },
+   {
+    "ref_norm": "phyuj painal suraksha pradan karata hai sarkit ko nukasan se bachata hai isake alava kai divaises men slip mod hota hai jo bijali ki khapat ka kam karata hai aur baitari bachane men madad karata hai",
+    "hyp_norm": "fyuza painal suraksha pradan karata hai aur sarkit ko nuqasan se bachata hai isake alava kai divaises men slip mod hota hai jo bijali ki khapat kam karata hai aur baitari bachane men madad karata hai",
+    "ref_tokens": 36,
+    "tokens_by_cat": {
+     "entity": 7,
+     "other": 29
+    },
+    "errors_by_cat": {
+     "insertion": 1,
+     "other": 1
+    },
+    "errors": 2,
+    "wer": 0.05555555555555555,
+    "entity_hits": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394501010_0_1",
+    "hyp": "फ़्यूज़ पैनल सुरक्षा प्रदान करता है और सर्किट को नुक़सान से बचाता है। इसके अलावा कई डिवाइसेस में स्लीप मोड होता है जो बिजली की खपत कम करता है और बैटरी बचाने में मदद करता है।",
+    "latency_s": 3.497
+   },
+   {
+    "ref_norm": "diphyujan modal men vibhinn noiza shedyulars kaise janaret kie gae sainpalon ki gunavatta aur unaki visheshataon par prabhav dalate hain yah samajhane ke lie hamen pahale yah samajhana hoga ki noiza shedyulars karate kya hain",
+    "hyp_norm": "diphyujan modal men vibhinn noiza shedyulars kaise janaret kie gae saimpalon ki gunavatta aur unaki visheshataon par prabhav dalate hain yah samajhane ke lie hamen pahale yah samajhana hoga ki noiza shedyulars karate kya hain",
+    "ref_tokens": 35,
+    "tokens_by_cat": {
+     "entity": 5,
+     "other": 30
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.02857142857142857,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_0",
+    "hyp": "डिफ्यूजन मॉडल में विभिन्न नॉइज़ शेड्यूलर्स कैसे जनरेट किए गए सैम्पलों की गुणवत्ता और उनकी विशेषताओं पर प्रभाव डालते हैं, यह समझने के लिए हमें पहले यह समझना होगा कि नॉइज़ शेड्यूलर्स करते क्या हैं।",
+    "latency_s": 4.763
+   },
+   {
+    "ref_norm": "noiza shedyulars yah tay karate hain ki data par kab aur kitana shor dala jaega yah age ke proses yani ki pharavard proses men deta ko kaise sankramit karana hai aur phir rivars proses men shor ko kaise hatana hai isaka nirdharan karata hai",
+    "hyp_norm": "noiza shedyulars yah tay karate hain ki data par kab aur kitana shor dala jaega yah age ke proses yani ki phoravard proses men data ko kaise sankramit karana hai aur phir rivars proses men shor ko kaise hatana hai isaka nirdharit nirdharan karata hai",
+    "ref_tokens": 44,
+    "tokens_by_cat": {
+     "entity": 7,
+     "other": 37
+    },
+    "errors_by_cat": {
+     "insertion": 1
+    },
+    "errors": 1,
+    "wer": 0.022727272727272728,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_1",
+    "hyp": "नॉइज़ शेड्यूलर्स यह तय करते हैं कि डाटा पर कब और कितना शोर डाला जाएगा, यह आगे के प्रोसेस यानी कि फॉरवर्ड प्रोसेस में डाटा को कैसे संक्रमित करना है और फिर रिवर्स प्रोसेस में शोर को कैसे हटाना है इसका निर्धारित निर्धारण करता है।",
+    "latency_s": 4.986
+   },
+   {
+    "ref_norm": "sahi shedyul na hone par modal achche se sikh nahin pata aur autaput ki gunavatta ghat jati hai",
+    "hyp_norm": "sahi shedyul na hone par modal achche se sikh nahin pata aur autaput ki gunavatta ghat jati hai",
+    "ref_tokens": 18,
+    "tokens_by_cat": {
+     "other": 15,
+     "entity": 3
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_2",
+    "hyp": "सही शेड्यूल ना होने पर मॉडल अच्छे से सीख नहीं पाता और आउटपुट की गुणवत्ता घट जाती है।",
+    "latency_s": 2.323
+   },
+   {
+    "ref_norm": "vairiyans eksploding aur vairiyans prijarving shedyul shor ke vitaran ke alag alag paitarn hote hain jo ki autaput ki visheshataon ko prabhavit karate hain",
+    "hyp_norm": "veriens eksaploding aur verients prijarving shedyul shor ke vitaran ke alag alag paitarn hote hain jo ki autaput ki visheshataon ko prabhavit karate hain",
+    "ref_tokens": 24,
+    "tokens_by_cat": {
+     "entity": 6,
+     "other": 18
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.041666666666666664,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_3",
+    "hyp": "वेरिएन्स एक्सप्लोडिंग और वेरिएंट्स प्रिजर्विंग शेड्यूल शोर के वितरण के अलग अलग पैटर्न होते हैं जो कि आउटपुट की विशेषताओं को प्रभावित करते हैं।",
+    "latency_s": 3.959
+   },
+   {
+    "ref_norm": "non liniyar shedyul jaise ki kosain behatar gunavatta aur ditel vale sainpal dete hain jabaki liniyar shedyul kam prabhavi hote hain",
+    "hyp_norm": "nan liniyar sidul jaise ki kosain aur sigmoid behatar gunavatta aur ditel vale sainpal dete hain jabaki liniyar sidul kam prabhavi hote hain",
+    "ref_tokens": 21,
+    "tokens_by_cat": {
+     "entity": 6,
+     "other": 15
+    },
+    "errors_by_cat": {
+     "entity": 1,
+     "insertion": 2
+    },
+    "errors": 3,
+    "wer": 0.14285714285714285,
+    "entity_hits": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_4",
+    "hyp": "नान लिनियर सिडूल जैसे कि कोसाइन और सिग्मोइड बेहतर गुणवत्ता और डिटेल वाले सैंपल देते हैं जबकि लिनियर सिडूल कम प्रभावी होते हैं।",
+    "latency_s": 3.365
+   },
+   {
+    "ref_norm": "di di em jaise tej sainpaling takanikon men shedyul ki shaili sainpaling ki sthirata aur kvaliti donon par mahatvapurn prabhav dalati hai",
+    "hyp_norm": "di di em jaise tej sainpaling takanikon men shedyul ki shaili sainpaling ki sthirata aur kvaliti donon par mahatvapurn prabhav dalati hai",
+    "ref_tokens": 22,
+    "tokens_by_cat": {
+     "entity": 5,
+     "other": 17
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394488989_0_5",
+    "hyp": "डी डी एम जैसे तेज सैंपलिंग तकनीकों में शेड्यूल की शैली सैंपलिंग की स्थिरता और क्वालिटी दोनों पर महत्वपूर्ण प्रभाव डालती है",
+    "latency_s": 3.298
+   },
+   {
+    "ref_norm": "kuch jamin ko apaki adhigrahit kiya gaya hai jisake lie apako ek pura ligal prosijar hota hai usako pura karana padega",
+    "hyp_norm": "kuch jamin ko apaki adhigrahit kiya gaya hai jisake lie apako ek pura ligal prosijar hota hai usako pura karana padega",
+    "ref_tokens": 21,
+    "tokens_by_cat": {
+     "other": 19,
+     "entity": 2
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true
+    ],
+    "id": "7318349394484289_0_1",
+    "hyp": "कुछ जमीन को आपकी अधिग्रहित किया गया है जिसके लिए आपको एक पूरा लीगल प्रोसीजर होता है उसको पूरा करना पड़ेगा।",
+    "latency_s": 2.451
+   },
+   {
+    "ref_norm": "kisi bhi nirman men lod beyaring kaipesiti ka sahi akalan avashyak hota hai jo bhumi ki soil stebiliti par nirbhar karata hai majabut aur sthir mitti",
+    "hyp_norm": "kisi bhi nirman men lod beyaring kaipesiti ka sahi akalan avashyak hota hai jo bhumi ki soil stebiliti par nirbhar karata hai majabut aur sthir mitti",
+    "ref_tokens": 26,
+    "tokens_by_cat": {
+     "other": 21,
+     "entity": 5
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394501011_0_0",
+    "hyp": "किसी भी निर्माण में लोड बेयरिंग कैपेसिटी का सही आकलन आवश्यक होता है, जो भूमि की सोइल स्टेबिलिटी पर निर्भर करता है। मजबूत और स्थिर मिट्टी।",
+    "latency_s": 2.554
+   },
+   {
+    "ref_norm": "ki sanrachana ko sahi samarthan deta hai isake hi ye isake sath hi konsitret strenth aur uchit renaphor siment resio ka chunav bhi nirman ki majabuti aur dirghayu ke jaruri hota hai",
+    "hyp_norm": "is sanrachana ko sahi samarthan deta hai isake hi isake sath hi konsentret strenth aur uchit renaphorsament reshiyo ka chunav bhi nirman ki majabuti aur dirghayu ke lie zaruri hota hai",
+    "ref_tokens": 32,
+    "tokens_by_cat": {
+     "other": 27,
+     "entity": 5
+    },
+    "errors_by_cat": {
+     "other": 2,
+     "entity": 4,
+     "insertion": 1
+    },
+    "errors": 7,
+    "wer": 0.21875,
+    "entity_hits": [
+     false,
+     true,
+     false,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     false,
+     true,
+     false,
+     false,
+     true
+    ],
+    "id": "7318349394501011_0_1",
+    "hyp": "इस संरचना को सही समर्थन देता है, इसके ही इसके साथ ही कॉन्सेंट्रेट स्ट्रेंथ और उचित रेनफोर्समेंट रेशियो का चुनाव भी निर्माण की मजबूती और दीर्घायु के लिए ज़रूरी होता है।",
+    "latency_s": 3.37
+   },
+   {
+    "ref_norm": "vaishvik vyakti ya pranali men hue badalavon ne vishesh rup se global sauth ke rashtriy rajyon ki sanprabhuta par gahara prabhav dala hai antarrashtriy mudra kosh ai em eph vishv baink jaisi sansthaon ki",
+    "hyp_norm": "vaishvik vittiy pranali men hue badalavon ne vishesh rup se global sauth ke rashtr rajyon ki sanprabhuta par gahara prabhav dala hai antarrashtriy mudra kosh aiemaeph vishv baink jaisi sansthaon ki",
+    "ref_tokens": 34,
+    "tokens_by_cat": {
+     "other": 28,
+     "entity": 6
+    },
+    "errors_by_cat": {
+     "other": 2,
+     "entity": 3
+    },
+    "errors": 5,
+    "wer": 0.14705882352941177,
+    "entity_hits": [
+     true,
+     true,
+     false,
+     false,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [],
+    "id": "7318349394491764_0_0",
+    "hyp": "वैश्विक वित्तीय प्रणाली में हुए बदलावों ने विशेष रूप से ग्लोबल साउथ के राष्ट्र राज्यों की संप्रभुता पर गहरा प्रभाव डाला है। अंतर्राष्ट्रीय मुद्रा कोष आईएमएफ, विश्व बैंक जैसी संस्थाओं की।",
+    "latency_s": 3.277
+   },
+   {
+    "ref_norm": "ki svatantrata simit hui hai in prabhavon se nipatane ke lie global sauth ke deshon ke pas kuch rananitiyan upalabdh hain pahala kshetriy arthik sahayog jaise ki",
+    "hyp_norm": "ki svatantrata simit hui hai in prabhavon se nipatane ke lie global sauth ke deshon ke pas kuch rananitiyan upalabdh hain pahala kshetriy arthik sahayog jaise ki",
+    "ref_tokens": 27,
+    "tokens_by_cat": {
+     "other": 25,
+     "entity": 2
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [],
+    "id": "7318349394491764_0_2",
+    "hyp": "की स्वतंत्रता सीमित हुई है। इन प्रभावों से निपटने के लिए ग्लोबल साउथ के देशों के पास कुछ रणनीतियाँ उपलब्ध हैं। पहला क्षेत्रीय आर्थिक सहयोग जैसे कि।",
+    "latency_s": 2.38
+   },
+   {
+    "ref_norm": "vi ar ai si es ya e es i e en jaisi sanrachanaon ko majabut karana jisase vaikalpik vyakti ya sahayog mil sake dusara vyakti ya vividhata",
+    "hyp_norm": "bi ar ai si es ya e es i e en jaisi sanrachanaon ko majabut karana jisase vaikalpik vittiy sahayog mil sake dusara vittiy vividhata",
+    "ref_tokens": 27,
+    "tokens_by_cat": {
+     "entity": 8,
+     "other": 19
+    },
+    "errors_by_cat": {
+     "entity": 1,
+     "other": 4
+    },
+    "errors": 5,
+    "wer": 0.18518518518518517,
+    "entity_hits": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [],
+    "id": "7318349394491764_0_3",
+    "hyp": "बी आर आई सी एस या ए एस ई ए एन जैसी संरचनाओं को मजबूत करना जिससे वैकल्पिक वित्तीय सहयोग मिल सके दूसरा वित्तीय विविधता",
+    "latency_s": 1.901
+   },
+   {
+    "ref_norm": "gharelu utpadan takaniki vikas aur samajik suraksha netavark ko majabut banati hai",
+    "hyp_norm": "gharelu utpadan takaniki vikas aur samajik suraksha netavark ko majabut banati hai",
+    "ref_tokens": 12,
+    "tokens_by_cat": {
+     "other": 11,
+     "entity": 1
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [],
+    "id": "7318349394491764_0_6",
+    "hyp": "घरेलू उत्पादन तकनीकी विकास और सामाजिक सुरक्षा नेटवर्क को मजबूत बनाती है।",
+    "latency_s": 3.212
+   },
+   {
+    "ref_norm": "renaforsament larning ka kor aidiya hai trayal enalisis sikhana ki ek sinpal streteji hai ki ek ejent apane invayarament se se intarekt karata hai aur vo invayarament ek stet men hota hai to phir ek ejent us pe ekshan leta hai aur phir us ekshan ke badale men ek rivard signal milata hai",
+    "hyp_norm": "rinphorsament larning ka kor aidiya hai trayal end erar se sikhana ki ek sinpal straiteji hai ki ek ejent apane enavayarament se intarekt karata hai aur vo enavayarament ek stet men hota hai to phir ek ejent usape ekshan leta hai aur phir us ekshan ke badale men ek rivord signal milata hai",
+    "ref_tokens": 53,
+    "tokens_by_cat": {
+     "entity": 15,
+     "other": 38
+    },
+    "errors_by_cat": {
+     "insertion": 2,
+     "entity": 1,
+     "other": 3
+    },
+    "errors": 6,
+    "wer": 0.11320754716981132,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     false,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394500593_0_0",
+    "hyp": "रिन्फोर्समेंट लर्निंग का कोर आइडिया है ट्रायल एंड एरर से सीखना कि एक सिंपल स्ट्रैटेजी है कि एक एजेंट अपने एनवायरमेंट से इंटरेक्ट करता है और वो एनवायरमेंट एक स्टेट में होता है तो फिर एक एजेंट उसपे एक्शन लेता है और फिर उस एक्शन के बदले में एक रिवॉर्ड सिग्नल मिलता है।",
+    "latency_s": 3.524
+   },
+   {
+    "ref_norm": "aur us rivard ke ekording jo ejent hain vo apani palisi ya streteji ko apadet karata rahata hai taki vo maiksimam rivard har apane ekshan par kar sake",
+    "hyp_norm": "aur us rivord ke akording jo ejent hai vo apani polisi ya straitaji ko apadet karata rahata hai taki vo maiksimam rivord har apane ekshan par kar sake",
+    "ref_tokens": 28,
+    "tokens_by_cat": {
+     "other": 20,
+     "entity": 8
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.03571428571428571,
+    "entity_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "rare_hits": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "id": "7318349394500593_0_1",
+    "hyp": "और उस रिवॉर्ड के अकॉर्डिंग जो एजेंट है वो अपनी पॉलिसी या स्ट्रैटजी को अपडेट करता रहता है ताकि वो मैक्सिमम रिवॉर्ड हर अपने एक्शन पर कर सके।",
+    "latency_s": 3.497
+   }
+  ]
+ }
+}

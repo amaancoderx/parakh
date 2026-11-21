@@ -1,0 +1,915 @@
+{
+ "fleurs": {
+  "title": "FLEURS Hindi (Google), held-out",
+  "note": "Real read speech. One rule changed after the first full run: when two recognisers agree on a word, their spelling is now offered to the second listen in the transcript's own script. That cut the planted sound-alikes Parakh wrote from 10 to 6 and cost two right names here (97.9% before, 96.4% now).",
+  "clips": 91,
+  "mentions": 140,
+  "rows": [
+   {
+    "system": "Parakh",
+    "names_right": 96.4,
+    "wer": 5.1,
+    "written_not_said": 0
+   },
+   {
+    "system": "Saaras v4 + its keyword list",
+    "names_right": 95.7,
+    "wer": 5.3,
+    "written_not_said": 2
+   },
+   {
+    "system": "gpt-transcribe + its keyword list",
+    "names_right": 92.1,
+    "wer": 7.0,
+    "written_not_said": 0
+   },
+   {
+    "system": "Saaras v4",
+    "names_right": 89.3,
+    "wer": 5.8,
+    "written_not_said": 0
+   },
+   {
+    "system": "gpt-transcribe",
+    "names_right": 87.9,
+    "wer": 7.4,
+    "written_not_said": 0
+   },
+   {
+    "system": "Saaras v3",
+    "names_right": 85.0,
+    "wer": 7.4,
+    "written_not_said": 0
+   }
+  ],
+  "versus": [
+   {
+    "against": "Saaras v4",
+    "names_points": 7.1,
+    "names_ci": [
+     3.0,
+     12.1
+    ],
+    "wer_points": -0.8,
+    "wer_ci": [
+     -1.4,
+     -0.3
+    ],
+    "only_parakh_right": 10,
+    "only_other_right": 0,
+    "p": 0.002
+   },
+   {
+    "against": "gpt-transcribe + its keyword list",
+    "names_points": 4.3,
+    "names_ci": [
+     -0.7,
+     10.3
+    ],
+    "wer_points": -1.9,
+    "wer_ci": [
+     -3.4,
+     -0.5
+    ],
+    "only_parakh_right": 7,
+    "only_other_right": 1,
+    "p": 0.0703
+   },
+   {
+    "against": "Saaras v4 + its keyword list",
+    "names_points": 0.7,
+    "names_ci": [
+     -2.3,
+     3.7
+    ],
+    "wer_points": -0.2,
+    "wer_ci": [
+     -0.8,
+     0.4
+    ],
+    "only_parakh_right": 3,
+    "only_other_right": 2,
+    "p": 1.0
+   }
+  ],
+  "extra_listens": 15
+ },
+ "ice": {
+  "title": "IndicContextEval Hindi (AI4Bharat), held-out",
+  "note": "Lecture speech with English technical terms, 26 speakers. The benchmark's own term lists rarely contain what the recognisers miss.",
+  "clips": 109,
+  "mentions": 605,
+  "rows": [
+   {
+    "system": "Saaras v3",
+    "names_right": 82.6,
+    "wer": 11.4,
+    "written_not_said": 1
+   },
+   {
+    "system": "Saaras v4",
+    "names_right": 82.3,
+    "wer": 11.0,
+    "written_not_said": 1
+   },
+   {
+    "system": "Saaras v4 + its keyword list",
+    "names_right": 82.3,
+    "wer": 11.0,
+    "written_not_said": 2
+   },
+   {
+    "system": "Parakh",
+    "names_right": 82.0,
+    "wer": 11.1,
+    "written_not_said": 1
+   },
+   {
+    "system": "gpt-transcribe + its keyword list",
+    "names_right": 78.8,
+    "wer": 13.3,
+    "written_not_said": 20
+   },
+   {
+    "system": "gpt-transcribe",
+    "names_right": 78.5,
+    "wer": 12.4,
+    "written_not_said": 9
+   }
+  ],
+  "versus": [
+   {
+    "against": "Saaras v4",
+    "names_points": -0.3,
+    "names_ci": [
+     -1.8,
+     0.8
+    ],
+    "wer_points": 0.1,
+    "wer_ci": [
+     -0.2,
+     0.4
+    ],
+    "only_parakh_right": 3,
+    "only_other_right": 5,
+    "p": 0.7266
+   },
+   {
+    "against": "gpt-transcribe + its keyword list",
+    "names_points": 3.1,
+    "names_ci": [
+     -0.7,
+     7.0
+    ],
+    "wer_points": -2.2,
+    "wer_ci": [
+     -3.6,
+     -0.9
+    ],
+    "only_parakh_right": 45,
+    "only_other_right": 26,
+    "p": 0.0319
+   },
+   {
+    "against": "Saaras v4 + its keyword list",
+    "names_points": -0.3,
+    "names_ci": [
+     -1.9,
+     1.0
+    ],
+    "wer_points": 0.0,
+    "wer_ci": [
+     -0.3,
+     0.4
+    ],
+    "only_parakh_right": 4,
+    "only_other_right": 6,
+    "p": 0.7539
+   }
+  ],
+  "extra_listens": 0
+ },
+ "bases": {
+  "rows": [
+   {
+    "base": "Saaras v3",
+    "base_names": 85.0,
+    "base_wer": 7.4,
+    "names_right": 95.7,
+    "wer": 6.2,
+    "names_points": 10.7,
+    "names_ci": [
+     5.5,
+     16.8
+    ],
+    "wer_points": -1.2,
+    "wer_ci": [
+     -1.9,
+     -0.6
+    ],
+    "only_parakh_right": 15,
+    "only_other_right": 0,
+    "p": 0.0001
+   },
+   {
+    "base": "Saaras v4",
+    "base_names": 89.3,
+    "base_wer": 5.8,
+    "names_right": 96.4,
+    "wer": 5.1,
+    "names_points": 7.1,
+    "names_ci": [
+     3.0,
+     12.1
+    ],
+    "wer_points": -0.8,
+    "wer_ci": [
+     -1.4,
+     -0.3
+    ],
+    "only_parakh_right": 10,
+    "only_other_right": 0,
+    "p": 0.002
+   },
+   {
+    "base": "gpt-transcribe",
+    "base_names": 87.9,
+    "base_wer": 7.4,
+    "names_right": 94.3,
+    "wer": 6.4,
+    "names_points": 6.4,
+    "names_ci": [
+     2.2,
+     11.4
+    ],
+    "wer_points": -1.0,
+    "wer_ci": [
+     -1.7,
+     -0.5
+    ],
+    "only_parakh_right": 9,
+    "only_other_right": 0,
+    "p": 0.0039
+   }
+  ],
+  "note": "The same checks written onto each recogniser's own transcript, as if that were the one you already run."
+ },
+ "stress": {
+  "clips": 91,
+  "planted": 119,
+  "rows": [
+   {
+    "system": "Saaras v4",
+    "sound_alikes_written": 0,
+    "names_right": 89.3,
+    "wer": 5.8
+   },
+   {
+    "system": "gpt-transcribe + its keyword list",
+    "sound_alikes_written": 0,
+    "names_right": 89.3,
+    "wer": 7.4
+   },
+   {
+    "system": "gpt-transcribe",
+    "sound_alikes_written": 0,
+    "names_right": 87.9,
+    "wer": 7.4
+   },
+   {
+    "system": "Saaras v3",
+    "sound_alikes_written": 0,
+    "names_right": 85.0,
+    "wer": 7.4
+   },
+   {
+    "system": "Parakh",
+    "sound_alikes_written": 6,
+    "names_right": 88.6,
+    "wer": 5.8
+   },
+   {
+    "system": "Saaras v4 + its keyword list",
+    "sound_alikes_written": 10,
+    "names_right": 85.0,
+    "wer": 6.6
+   }
+  ],
+  "right_names_lost": {
+   "Parakh": 1,
+   "Saaras v4 + its keyword list": 11,
+   "gpt-transcribe + its keyword list": 1
+  },
+  "note": "The same recordings. Each one's own names were taken off the list and a sound-alike put in for each (ईरान -> इराक). Writing one means writing the wrong person or place."
+ },
+ "phone": {
+  "clips": 91,
+  "mentions": 140,
+  "rows": [
+   {
+    "system": "Saaras v4 + its keyword list",
+    "names_right": 95.7,
+    "wer": 5.8,
+    "written_not_said": 0
+   },
+   {
+    "system": "Parakh",
+    "names_right": 94.3,
+    "wer": 5.6,
+    "written_not_said": 1
+   },
+   {
+    "system": "gpt-transcribe + its keyword list",
+    "names_right": 92.1,
+    "wer": 7.5,
+    "written_not_said": 0
+   },
+   {
+    "system": "Saaras v4",
+    "names_right": 86.4,
+    "wer": 6.5,
+    "written_not_said": 0
+   },
+   {
+    "system": "gpt-transcribe",
+    "names_right": 86.4,
+    "wer": 8.3,
+    "written_not_said": 0
+   },
+   {
+    "system": "Saaras v3",
+    "names_right": 82.1,
+    "wer": 7.6,
+    "written_not_said": 0
+   }
+  ],
+  "versus": [
+   {
+    "against": "Saaras v4",
+    "names_points": 7.9,
+    "names_ci": [
+     3.1,
+     14.0
+    ],
+    "wer_points": -0.8,
+    "wer_ci": [
+     -1.4,
+     -0.4
+    ],
+    "only_parakh_right": 11,
+    "only_other_right": 0,
+    "p": 0.001
+   },
+   {
+    "against": "gpt-transcribe + its keyword list",
+    "names_points": 2.1,
+    "names_ci": [
+     -1.6,
+     6.3
+    ],
+    "wer_points": -1.8,
+    "wer_ci": [
+     -3.3,
+     -0.5
+    ],
+    "only_parakh_right": 5,
+    "only_other_right": 2,
+    "p": 0.4531
+   },
+   {
+    "against": "Saaras v4 + its keyword list",
+    "names_points": -1.4,
+    "names_ci": [
+     -7.2,
+     3.1
+    ],
+    "wer_points": -0.2,
+    "wer_ci": [
+     -1.0,
+     0.8
+    ],
+    "only_parakh_right": 3,
+    "only_other_right": 5,
+    "p": 0.7266
+   }
+  ],
+  "extra_listens": 16,
+  "bases": [
+   {
+    "base": "Saaras v3",
+    "base_names": 82.1,
+    "base_wer": 7.6,
+    "names_right": 94.3,
+    "wer": 6.3,
+    "names_points": 12.1,
+    "names_ci": [
+     6.8,
+     17.9
+    ],
+    "wer_points": -1.3,
+    "wer_ci": [
+     -2.1,
+     -0.6
+    ],
+    "only_parakh_right": 17,
+    "only_other_right": 0,
+    "p": 0.0
+   },
+   {
+    "base": "Saaras v4",
+    "base_names": 86.4,
+    "base_wer": 6.5,
+    "names_right": 94.3,
+    "wer": 5.6,
+    "names_points": 7.9,
+    "names_ci": [
+     3.1,
+     14.0
+    ],
+    "wer_points": -0.8,
+    "wer_ci": [
+     -1.4,
+     -0.4
+    ],
+    "only_parakh_right": 11,
+    "only_other_right": 0,
+    "p": 0.001
+   },
+   {
+    "base": "gpt-transcribe",
+    "base_names": 86.4,
+    "base_wer": 8.3,
+    "names_right": 93.6,
+    "wer": 7.3,
+    "names_points": 7.1,
+    "names_ci": [
+     2.7,
+     12.8
+    ],
+    "wer_points": -1.0,
+    "wer_ci": [
+     -1.7,
+     -0.3
+    ],
+    "only_parakh_right": 10,
+    "only_other_right": 0,
+    "p": 0.002
+   }
+  ],
+  "note": "The same recordings passed through a phone line first: 300-3400 Hz, 8 kHz, G.711 mu-law."
+ },
+ "funnel": {
+  "recordings": 189,
+  "words": 4742,
+  "doubted": 276,
+  "names_considered": 344,
+  "recordings_heard_again": 35,
+  "extra_listens": 35,
+  "names_written": 77,
+  "flagged_unsure": 11,
+  "names_fixed": 17
+ },
+ "numbers": {
+  "first": {
+   "recordings": 18,
+   "numbers": 31,
+   "base_right": 31,
+   "parakh_right": 31,
+   "fixed": 0,
+   "broken": 0,
+   "asked": 0,
+   "edits": []
+  },
+  "fresh": {
+   "recordings": 57,
+   "numbers": 80,
+   "base_right": 77,
+   "parakh_right": 77,
+   "fixed": 0,
+   "broken": 0,
+   "asked": 0,
+   "edits": []
+  },
+  "note": "Every number in a reference, counted right when its value is in the transcript. Parakh writes digits by rule, fixes a number only when both other recognisers heard another value or the speakers' own multiplication settles it, and asks otherwise."
+ },
+ "latency": {
+  "clips": 40,
+  "median_seconds": 13.6,
+  "draft_ms": {
+   "median": 868.5,
+   "p90": 1447
+  },
+  "verified_ms": {
+   "median": 1798.0,
+   "p90": 3712
+  },
+  "added_ms": {
+   "median": 617.0,
+   "p90": 2332
+  },
+  "no_extra_listen": {
+   "clips": 24,
+   "verified_ms_median": 1228.0
+  },
+  "extra_listen": {
+   "clips": 16,
+   "verified_ms_median": 2906.0
+  },
+  "recognisers_ms_median": {
+   "Saaras v3": 880.5,
+   "Saaras v4": 850.5,
+   "gpt-transcribe": 1166.0
+  },
+  "all_heard_ms": {
+   "median": 1188.5
+  },
+  "check_ms": {
+   "median": 94.5
+  },
+  "hear_again_ms": {
+   "median": 1570.5
+  },
+  "example": {
+   "draft_ms": 1104,
+   "verified_ms": 1795,
+   "extra_listens": 0,
+   "edits": [
+    [
+     "Aishar",
+     "Eicher"
+    ]
+   ],
+   "replayed": false
+  }
+ },
+ "fresh": {
+  "clips": 189,
+  "mentions": 313,
+  "rows": [
+   {
+    "system": "Saaras v4 + its keyword list",
+    "names_right": 97.1,
+    "wer": 3.8,
+    "written_not_said": 2
+   },
+   {
+    "system": "Parakh",
+    "names_right": 96.5,
+    "wer": 3.5,
+    "written_not_said": 2
+   },
+   {
+    "system": "gpt-transcribe + its keyword list",
+    "names_right": 95.8,
+    "wer": 6.8,
+    "written_not_said": 3
+   },
+   {
+    "system": "Saaras v4 + its keyword list, A to Z",
+    "names_right": 95.2,
+    "wer": 4.1,
+    "written_not_said": 2
+   },
+   {
+    "system": "Saaras v4",
+    "names_right": 91.1,
+    "wer": 4.6,
+    "written_not_said": 3
+   },
+   {
+    "system": "gpt-transcribe",
+    "names_right": 90.7,
+    "wer": 7.4,
+    "written_not_said": 3
+   },
+   {
+    "system": "Saaras v3",
+    "names_right": 89.1,
+    "wer": 7.0,
+    "written_not_said": 4
+   }
+  ],
+  "versus": [
+   {
+    "against": "Saaras v4",
+    "names_points": 5.4,
+    "names_ci": [
+     3.1,
+     8.0
+    ],
+    "wer_points": -1.0,
+    "wer_ci": [
+     -1.4,
+     -0.7
+    ],
+    "only_parakh_right": 17,
+    "only_other_right": 0,
+    "p": 0.0
+   },
+   {
+    "against": "gpt-transcribe + its keyword list",
+    "names_points": 0.6,
+    "names_ci": [
+     -1.0,
+     2.5
+    ],
+    "wer_points": -3.2,
+    "wer_ci": [
+     -4.1,
+     -2.3
+    ],
+    "only_parakh_right": 5,
+    "only_other_right": 3,
+    "p": 0.7266
+   },
+   {
+    "against": "Saaras v4 + its keyword list",
+    "names_points": -0.6,
+    "names_ci": [
+     -2.8,
+     1.3
+    ],
+    "wer_points": -0.2,
+    "wer_ci": [
+     -0.6,
+     0.2
+    ],
+    "only_parakh_right": 3,
+    "only_other_right": 5,
+    "p": 0.7266
+   },
+   {
+    "against": "Saaras v4 + its keyword list, A to Z",
+    "names_points": 1.3,
+    "names_ci": [
+     -0.6,
+     3.2
+    ],
+    "wer_points": -0.6,
+    "wer_ci": [
+     -1.0,
+     -0.3
+    ],
+    "only_parakh_right": 8,
+    "only_other_right": 4,
+    "p": 0.3877
+   }
+  ],
+  "extra_listens": 35,
+  "bases": [
+   {
+    "base": "Saaras v3",
+    "base_names": 89.1,
+    "base_wer": 7.0,
+    "names_right": 95.8,
+    "wer": 5.5,
+    "names_points": 6.7,
+    "names_ci": [
+     4.2,
+     9.5
+    ],
+    "wer_points": -1.5,
+    "wer_ci": [
+     -2.0,
+     -1.1
+    ],
+    "only_parakh_right": 21,
+    "only_other_right": 0,
+    "p": 0.0
+   },
+   {
+    "base": "Saaras v4",
+    "base_names": 91.1,
+    "base_wer": 4.6,
+    "names_right": 96.5,
+    "wer": 3.5,
+    "names_points": 5.4,
+    "names_ci": [
+     3.1,
+     8.0
+    ],
+    "wer_points": -1.0,
+    "wer_ci": [
+     -1.4,
+     -0.7
+    ],
+    "only_parakh_right": 17,
+    "only_other_right": 0,
+    "p": 0.0
+   },
+   {
+    "base": "gpt-transcribe",
+    "base_names": 90.7,
+    "base_wer": 7.4,
+    "names_right": 96.8,
+    "wer": 6.2,
+    "names_points": 6.1,
+    "names_ci": [
+     3.4,
+     9.1
+    ],
+    "wer_points": -1.2,
+    "wer_ci": [
+     -1.6,
+     -0.8
+    ],
+    "only_parakh_right": 19,
+    "only_other_right": 0,
+    "p": 0.0
+   }
+  ],
+  "whole": {
+   "base": 85.7,
+   "parakh": 94.7,
+   "recordings": 189,
+   "fixed": 17,
+   "broken": 0
+  },
+  "whole_v3": {
+   "base": 83.1,
+   "parakh": 93.1,
+   "recordings": 189,
+   "fixed": 19,
+   "broken": 0
+  },
+  "note": "The FLEURS Hindi test split: no sentence in common with the other set, and first run after the rules were frozen. The list is every name in it.",
+  "stress": {
+   "clips": 189,
+   "planted": 251,
+   "rows": [
+    {
+     "system": "gpt-transcribe",
+     "sound_alikes_written": 0,
+     "names_right": 90.7,
+     "wer": 7.4
+    },
+    {
+     "system": "Saaras v3",
+     "sound_alikes_written": 0,
+     "names_right": 89.1,
+     "wer": 7.0
+    },
+    {
+     "system": "Saaras v4",
+     "sound_alikes_written": 1,
+     "names_right": 91.1,
+     "wer": 4.6
+    },
+    {
+     "system": "gpt-transcribe + its keyword list",
+     "sound_alikes_written": 2,
+     "names_right": 91.4,
+     "wer": 7.4
+    },
+    {
+     "system": "Parakh",
+     "sound_alikes_written": 6,
+     "names_right": 90.4,
+     "wer": 4.7
+    },
+    {
+     "system": "Saaras v4 + its keyword list, A to Z",
+     "sound_alikes_written": 12,
+     "names_right": 87.9,
+     "wer": 4.9
+    },
+    {
+     "system": "Saaras v4 + its keyword list",
+     "sound_alikes_written": 35,
+     "names_right": 80.8,
+     "wer": 5.2
+    }
+   ],
+   "right_names_lost": {
+    "Parakh": 2,
+    "Saaras v4 + its keyword list": 34,
+    "gpt-transcribe + its keyword list": 2,
+    "Saaras v4 + its keyword list, A to Z": 12
+   }
+  },
+  "loop": {
+   "orders": 3,
+   "recordings": 189,
+   "known": 96.7,
+   "known_base": 93.1,
+   "known_mentions": 120,
+   "new": 89.8,
+   "new_base": 89.8,
+   "new_mentions": 193,
+   "fixed": 4,
+   "lost": 0
+  },
+  "clear": {
+   "recordings": 179,
+   "right": 170,
+   "asked": 10,
+   "asked_right": 9
+  }
+ },
+ "fleurs_nocontext": {
+  "rows": [
+   {
+    "system": "Parakh, own lookup",
+    "names_right": 90.7,
+    "wer": 5.6
+   },
+   {
+    "system": "Saaras v4",
+    "names_right": 89.3,
+    "wer": 5.8
+   },
+   {
+    "system": "gpt-transcribe",
+    "names_right": 87.9,
+    "wer": 7.4
+   },
+   {
+    "system": "Saaras v3",
+    "names_right": 85.0,
+    "wer": 7.4
+   }
+  ],
+  "best_possible": 93.6,
+  "versus": {
+   "against": "Saaras v4",
+   "names_points": 1.4,
+   "names_ci": [
+    0.0,
+    3.6
+   ],
+   "wer_points": -0.2,
+   "wer_ci": [
+    -0.5,
+    0.0
+   ],
+   "only_parakh_right": 2,
+   "only_other_right": 0,
+   "p": 0.5
+  },
+  "written": 12,
+  "note": "The same recordings with no name list given to any system. Parakh looks names up itself and writes one only if two of three extra listens write it."
+ },
+ "calls_nocontext": {
+  "mentions": 14,
+  "rows": [
+   {
+    "system": "Parakh, with its own topic search",
+    "right": 10
+   },
+   {
+    "system": "gpt-transcribe",
+    "right": 7
+   },
+   {
+    "system": "Saaras v4",
+    "right": 6
+   },
+   {
+    "system": "Parakh, recognisers only",
+    "right": 6
+   },
+   {
+    "system": "Saaras v3",
+    "right": 5
+   }
+  ]
+ },
+ "calls": {
+  "title": "Three real trade calls",
+  "note": "Names and numbers confirmed by the caller's family. Rules were developed on these calls, so this is not a held-out test.",
+  "mentions": 14,
+  "calls": 3,
+  "rows": [
+   {
+    "system": "Parakh",
+    "right": 14,
+    "wrong_names": 0
+   },
+   {
+    "system": "gpt-transcribe + its keyword list",
+    "right": 11,
+    "wrong_names": 0
+   },
+   {
+    "system": "gpt-transcribe",
+    "right": 7,
+    "wrong_names": 0
+   },
+   {
+    "system": "Saaras v4",
+    "right": 6,
+    "wrong_names": 0
+   },
+   {
+    "system": "Saaras v4 + its keyword list",
+    "right": 6,
+    "wrong_names": 1
+   },
+   {
+    "system": "Saaras v3",
+    "right": 5,
+    "wrong_names": 0
+   }
+  ]
+ }
+}

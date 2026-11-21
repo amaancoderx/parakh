@@ -1,0 +1,16 @@
+.env
+.venv/
+.cache/
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+node_modules/
+data/external/
+data/real/
+data/samples/
+data/uploads/
+data/memory/
+data/calls/
+data/keys.json
+data/logs/

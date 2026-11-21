@@ -1,0 +1,26 @@
+{
+  "_note": "Simulated personal context (contacts, places, brands). Includes sound-alike distractors that never appear in the clips, so context-biased systems can be wrong, not just right.",
+  "contacts": [
+    "Akhilesh Damaraju", "Akhil Damera", "Keshav Reddy", "Keshava Reddi", "Prathyusha Yerra", "Pratyusha Yerram",
+    "Sandeep Kumar Sahu", "Sandeep Sahoo", "Anil Kusuma", "Anil Kumar", "Namya Naresh", "Namrata Naresh",
+    "Dr Mehta", "Dr Mehra", "Sushant Kumar", "Sushanth Kumar Reddy", "Bingi Ravi Teja", "Raviteja Bandi",
+    "Kanna Uppalapati", "Kiran Uppalapati", "Swati Mair", "Swathi Nair", "Sai Ganesh", "Sai Ganesh Rao",
+    "Lakshmi Narasimha Rao", "Lakshmi Narayana Rao", "Ajay Sawhney", "Vijay Sawhney", "Abhishek Singh", "Abhishek Sinha",
+    "Venkata Subramaniam", "Venkat Subramanian", "Sai Sreenidhi", "Sreenidhi Rao", "Shankar", "Shekhar",
+    "Gurpreet Kaur Ahluwalia", "Gurpreet Kaur", "Amit Nanda", "Amit Nandy", "Mohammed Irfan", "Mohammed Imran",
+    "Priyanka Chaturvedi", "Priyanka Chopra", "Karan M V", "Karan Mehra", "Devanshi Dhingra", "Devansh Dhingra",
+    "Rahul Sharma", "Sneha Iyer", "Vikram Rathore", "Arjun Mehta", "Meera Nair", "Rohit Verma", "Divya Menon",
+    "Harish Goud", "Naveen Yadav", "Srinivas Rao"
+  ],
+  "places": [
+    "Gachibowli", "Gandipet", "Kondapur", "Kothapet", "Rajiv Gandhi International Airport", "Hitech City",
+    "Ameerpet", "Ameenpur", "Ratnadeep", "Ratnagiri", "Kukatpally", "Kompally", "JNTU", "Vijayawada", "Vizianagaram",
+    "Secunderabad", "Visakhapatnam", "Jubilee Hills", "Film Nagar", "Madhapur", "Miyapur", "Thiruvananthapuram",
+    "Thiruvalla", "Banjara Hills", "Punjagutta", "Chutneys", "IIT Madras", "IIT Bombay", "Inorbit Mall", "Forum Mall",
+    "Chandrasekhar Azad Vidyalaya", "Tirupati", "Tirupur", "Paradise", "Begumpet", "Manikonda"
+  ],
+  "brands": [
+    "Swiggy", "Zomato", "Paytm", "PhonePe", "Google Pay", "OpenAI", "HDFC", "ICICI", "Rapido", "Uber", "Ola",
+    "BigBasket", "Blinkit", "Zepto", "Instamart", "Jio", "Airtel"
+  ]
+}

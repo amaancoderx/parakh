@@ -1,0 +1,654 @@
+{
+ "summary": {
+  "clips": 40,
+  "median_seconds": 13.6,
+  "draft_ms": {
+   "median": 868.5,
+   "p90": 1447
+  },
+  "verified_ms": {
+   "median": 1798.0,
+   "p90": 3712
+  },
+  "added_ms": {
+   "median": 617.0,
+   "p90": 2332
+  },
+  "no_extra_listen": {
+   "clips": 24,
+   "verified_ms_median": 1228.0
+  },
+  "extra_listen": {
+   "clips": 16,
+   "verified_ms_median": 2906.0
+  },
+  "recognisers_ms_median": {
+   "Saaras v3": 880.5,
+   "Saaras v4": 850.5,
+   "gpt-transcribe": 1166.0
+  },
+  "all_heard_ms": {
+   "median": 1188.5
+  },
+  "check_ms": {
+   "median": 94.5
+  },
+  "hear_again_ms": {
+   "median": 1570.5
+  },
+  "example": {
+   "draft_ms": 1104,
+   "verified_ms": 1795,
+   "extra_listens": 0,
+   "edits": [
+    [
+     "Aishar",
+     "Eicher"
+    ]
+   ],
+   "replayed": false
+  }
+ },
+ "clips": [
+  {
+   "kind": "call",
+   "seconds": 22.7,
+   "draft_ms": 1357,
+   "verified_ms": 2077,
+   "extra_listens": 0,
+   "edits": 1,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v3": 1181,
+    "Saaras v4": 1311,
+    "gpt-transcribe": 1903
+   },
+   "left_out": []
+  },
+  {
+   "kind": "call",
+   "seconds": 19.2,
+   "draft_ms": 784,
+   "verified_ms": 1406,
+   "extra_listens": 0,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v4": 774,
+    "Saaras v3": 1290,
+    "gpt-transcribe": 1348
+   },
+   "left_out": []
+  },
+  {
+   "kind": "call",
+   "seconds": 19.0,
+   "draft_ms": 1194,
+   "verified_ms": 1773,
+   "extra_listens": 0,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v4": 1184,
+    "Saaras v3": 1329,
+    "gpt-transcribe": 1530
+   },
+   "left_out": []
+  },
+  {
+   "kind": "call",
+   "seconds": 23.4,
+   "draft_ms": 1178,
+   "verified_ms": 3936,
+   "extra_listens": 1,
+   "edits": 1,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v4": 1164,
+    "gpt-transcribe": 2138,
+    "Saaras v3": 2167
+   },
+   "left_out": []
+  },
+  {
+   "kind": "call",
+   "seconds": 23.8,
+   "draft_ms": 1447,
+   "verified_ms": 3125,
+   "extra_listens": 1,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v3": 1390,
+    "Saaras v4": 1437,
+    "gpt-transcribe": 1535
+   },
+   "left_out": []
+  },
+  {
+   "kind": "call",
+   "seconds": 22.8,
+   "draft_ms": 3004,
+   "verified_ms": 4782,
+   "extra_listens": 1,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "gpt-transcribe": 1700,
+    "Saaras v3": 2390,
+    "Saaras v4": 2987
+   },
+   "left_out": []
+  },
+  {
+   "kind": "call",
+   "seconds": 23.7,
+   "draft_ms": 1221,
+   "verified_ms": 1598,
+   "extra_listens": 0,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v4": 1211,
+    "Saaras v3": 1221,
+    "gpt-transcribe": 1480
+   },
+   "left_out": []
+  },
+  {
+   "kind": "call",
+   "seconds": 19.6,
+   "draft_ms": 1803,
+   "verified_ms": 1883,
+   "extra_listens": 0,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v3": 1038,
+    "gpt-transcribe": 1551,
+    "Saaras v4": 1796
+   },
+   "left_out": []
+  },
+  {
+   "kind": "call",
+   "seconds": 23.2,
+   "draft_ms": 1588,
+   "verified_ms": 1987,
+   "extra_listens": 0,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v3": 1476,
+    "Saaras v4": 1576,
+    "gpt-transcribe": 1874
+   },
+   "left_out": []
+  },
+  {
+   "kind": "call",
+   "seconds": 10.6,
+   "draft_ms": 772,
+   "verified_ms": 1003,
+   "extra_listens": 0,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v3": 762,
+    "Saaras v4": 762,
+    "gpt-transcribe": 964
+   },
+   "left_out": []
+  },
+  {
+   "kind": "call",
+   "seconds": 22.8,
+   "draft_ms": 1315,
+   "verified_ms": 3647,
+   "extra_listens": 1,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v3": 1303,
+    "Saaras v4": 1304,
+    "gpt-transcribe": 1852
+   },
+   "left_out": []
+  },
+  {
+   "kind": "call",
+   "seconds": 19.5,
+   "draft_ms": 941,
+   "verified_ms": 1387,
+   "extra_listens": 0,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v4": 932,
+    "Saaras v3": 980,
+    "gpt-transcribe": 1279
+   },
+   "left_out": []
+  },
+  {
+   "kind": "call",
+   "seconds": 23.5,
+   "draft_ms": 2140,
+   "verified_ms": 3712,
+   "extra_listens": 1,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "gpt-transcribe": 1553,
+    "Saaras v3": 1620,
+    "Saaras v4": 2128
+   },
+   "left_out": []
+  },
+  {
+   "kind": "call",
+   "seconds": 13.2,
+   "draft_ms": 989,
+   "verified_ms": 3746,
+   "extra_listens": 3,
+   "edits": 3,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v3": 912,
+    "Saaras v4": 979,
+    "gpt-transcribe": 1184
+   },
+   "left_out": []
+  },
+  {
+   "kind": "call",
+   "seconds": 19.4,
+   "draft_ms": 1145,
+   "verified_ms": 3601,
+   "extra_listens": 1,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v4": 1134,
+    "Saaras v3": 1222,
+    "gpt-transcribe": 1481
+   },
+   "left_out": []
+  },
+  {
+   "kind": "call",
+   "seconds": 22.7,
+   "draft_ms": 1438,
+   "verified_ms": 3903,
+   "extra_listens": 1,
+   "edits": 4,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v3": 1235,
+    "Saaras v4": 1381,
+    "gpt-transcribe": 1749
+   },
+   "left_out": []
+  },
+  {
+   "kind": "call",
+   "seconds": 7.1,
+   "draft_ms": 507,
+   "verified_ms": 854,
+   "extra_listens": 0,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v3": 498,
+    "Saaras v4": 498,
+    "gpt-transcribe": 811
+   },
+   "left_out": []
+  },
+  {
+   "kind": "public",
+   "seconds": 5.2,
+   "draft_ms": 539,
+   "verified_ms": 1475,
+   "extra_listens": 1,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v3": 416,
+    "Saaras v4": 529,
+    "gpt-transcribe": 693
+   },
+   "left_out": []
+  },
+  {
+   "kind": "public",
+   "seconds": 7.8,
+   "draft_ms": 514,
+   "verified_ms": 1970,
+   "extra_listens": 1,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v4": 501,
+    "Saaras v3": 503,
+    "gpt-transcribe": 813
+   },
+   "left_out": []
+  },
+  {
+   "kind": "public",
+   "seconds": 11.4,
+   "draft_ms": 516,
+   "verified_ms": 1882,
+   "extra_listens": 1,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v4": 494,
+    "Saaras v3": 851,
+    "gpt-transcribe": 933
+   },
+   "left_out": []
+  },
+  {
+   "kind": "public",
+   "seconds": 11.4,
+   "draft_ms": 685,
+   "verified_ms": 1035,
+   "extra_listens": 0,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v4": 672,
+    "Saaras v3": 942,
+    "gpt-transcribe": 968
+   },
+   "left_out": []
+  },
+  {
+   "kind": "public",
+   "seconds": 9.8,
+   "draft_ms": 740,
+   "verified_ms": 1012,
+   "extra_listens": 0,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v3": 642,
+    "Saaras v4": 732,
+    "gpt-transcribe": 986
+   },
+   "left_out": []
+  },
+  {
+   "kind": "public",
+   "seconds": 10.1,
+   "draft_ms": 1314,
+   "verified_ms": 1422,
+   "extra_listens": 0,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v3": 778,
+    "gpt-transcribe": 1096,
+    "Saaras v4": 1303
+   },
+   "left_out": []
+  },
+  {
+   "kind": "public",
+   "seconds": 14.2,
+   "draft_ms": 883,
+   "verified_ms": 2656,
+   "extra_listens": 1,
+   "edits": 2,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v4": 874,
+    "Saaras v3": 874,
+    "gpt-transcribe": 1401
+   },
+   "left_out": []
+  },
+  {
+   "kind": "public",
+   "seconds": 9.8,
+   "draft_ms": 763,
+   "verified_ms": 2344,
+   "extra_listens": 1,
+   "edits": 2,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v3": 652,
+    "Saaras v4": 754,
+    "gpt-transcribe": 1146
+   },
+   "left_out": []
+  },
+  {
+   "kind": "public",
+   "seconds": 14.0,
+   "draft_ms": 870,
+   "verified_ms": 1125,
+   "extra_listens": 0,
+   "edits": 1,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v3": 765,
+    "Saaras v4": 844,
+    "gpt-transcribe": 1021
+   },
+   "left_out": []
+  },
+  {
+   "kind": "public",
+   "seconds": 6.8,
+   "draft_ms": 470,
+   "verified_ms": 1017,
+   "extra_listens": 0,
+   "edits": 1,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v4": 459,
+    "Saaras v3": 711,
+    "gpt-transcribe": 929
+   },
+   "left_out": []
+  },
+  {
+   "kind": "public",
+   "seconds": 16.0,
+   "draft_ms": 1216,
+   "verified_ms": 1387,
+   "extra_listens": 0,
+   "edits": 1,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v3": 914,
+    "gpt-transcribe": 1193,
+    "Saaras v4": 1193
+   },
+   "left_out": []
+  },
+  {
+   "kind": "public",
+   "seconds": 9.8,
+   "draft_ms": 595,
+   "verified_ms": 1207,
+   "extra_listens": 0,
+   "edits": 1,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v3": 584,
+    "Saaras v4": 584,
+    "gpt-transcribe": 1096
+   },
+   "left_out": []
+  },
+  {
+   "kind": "public",
+   "seconds": 10.8,
+   "draft_ms": 739,
+   "verified_ms": 1124,
+   "extra_listens": 0,
+   "edits": 1,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v3": 600,
+    "Saaras v4": 710,
+    "gpt-transcribe": 1060
+   },
+   "left_out": []
+  },
+  {
+   "kind": "public",
+   "seconds": 8.9,
+   "draft_ms": 697,
+   "verified_ms": 1018,
+   "extra_listens": 0,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v3": 639,
+    "Saaras v4": 690,
+    "gpt-transcribe": 947
+   },
+   "left_out": []
+  },
+  {
+   "kind": "public",
+   "seconds": 9.5,
+   "draft_ms": 791,
+   "verified_ms": 1171,
+   "extra_listens": 0,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v3": 654,
+    "Saaras v4": 777,
+    "gpt-transcribe": 1065
+   },
+   "left_out": []
+  },
+  {
+   "kind": "public",
+   "seconds": 9.5,
+   "draft_ms": 692,
+   "verified_ms": 1151,
+   "extra_listens": 0,
+   "edits": 1,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v4": 683,
+    "Saaras v3": 887,
+    "gpt-transcribe": 1065
+   },
+   "left_out": []
+  },
+  {
+   "kind": "public",
+   "seconds": 14.8,
+   "draft_ms": 951,
+   "verified_ms": 2687,
+   "extra_listens": 1,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v3": 926,
+    "Saaras v4": 938,
+    "gpt-transcribe": 1130
+   },
+   "left_out": []
+  },
+  {
+   "kind": "public",
+   "seconds": 8.8,
+   "draft_ms": 601,
+   "verified_ms": 1823,
+   "extra_listens": 0,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v4": 592,
+    "Saaras v3": 633,
+    "gpt-transcribe": 1771
+   },
+   "left_out": []
+  },
+  {
+   "kind": "public",
+   "seconds": 12.2,
+   "draft_ms": 613,
+   "verified_ms": 1006,
+   "extra_listens": 0,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v4": 598,
+    "Saaras v3": 819,
+    "gpt-transcribe": 974
+   },
+   "left_out": []
+  },
+  {
+   "kind": "public",
+   "seconds": 10.6,
+   "draft_ms": 670,
+   "verified_ms": 2312,
+   "extra_listens": 1,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v3": 613,
+    "Saaras v4": 660,
+    "gpt-transcribe": 1090
+   },
+   "left_out": []
+  },
+  {
+   "kind": "public",
+   "seconds": 14.6,
+   "draft_ms": 867,
+   "verified_ms": 2635,
+   "extra_listens": 1,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v3": 857,
+    "Saaras v4": 857,
+    "gpt-transcribe": 1485
+   },
+   "left_out": []
+  },
+  {
+   "kind": "public",
+   "seconds": 26.4,
+   "draft_ms": 1129,
+   "verified_ms": 2537,
+   "extra_listens": 0,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v4": 1120,
+    "gpt-transcribe": 1586,
+    "Saaras v3": 2317
+   },
+   "left_out": []
+  },
+  {
+   "kind": "public",
+   "seconds": 6.5,
+   "draft_ms": 661,
+   "verified_ms": 1249,
+   "extra_listens": 0,
+   "edits": 0,
+   "replayed": false,
+   "recognisers_ms": {
+    "Saaras v4": 637,
+    "Saaras v3": 637,
+    "gpt-transcribe": 1148
+   },
+   "left_out": []
+  }
+ ]
+}

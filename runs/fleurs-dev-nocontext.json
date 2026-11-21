@@ -1,0 +1,2140 @@
+{
+ "summary": {
+  "saaras-v4": {
+   "clips": 20,
+   "ref_tokens": 463,
+   "wer": 0.07127429805615551,
+   "entity_acc": 0.8055555555555556,
+   "entity_n": 36,
+   "format_acc": null,
+   "format_n": 0,
+   "errors_by_cat": {
+    "entity": 14,
+    "format": 0,
+    "other": 17,
+    "insertion": 2
+   },
+   "error_rate_by_cat": {
+    "entity": 0.2153846153846154,
+    "format": null,
+    "other": 0.04271356783919598
+   },
+   "non_latin_share": 0.9862729303364512,
+   "false_insertions": 0
+  },
+  "saaras-v3": {
+   "clips": 20,
+   "ref_tokens": 463,
+   "wer": 0.06911447084233262,
+   "entity_acc": 0.8611111111111112,
+   "entity_n": 36,
+   "format_acc": null,
+   "format_n": 0,
+   "errors_by_cat": {
+    "entity": 13,
+    "format": 0,
+    "other": 15,
+    "insertion": 4
+   },
+   "error_rate_by_cat": {
+    "entity": 0.2,
+    "format": null,
+    "other": 0.03768844221105527
+   },
+   "non_latin_share": 0.998,
+   "false_insertions": 0
+  },
+  "gpt-transcribe": {
+   "clips": 20,
+   "ref_tokens": 463,
+   "wer": 0.0755939524838013,
+   "entity_acc": 0.8611111111111112,
+   "entity_n": 36,
+   "format_acc": null,
+   "format_n": 0,
+   "errors_by_cat": {
+    "entity": 13,
+    "format": 0,
+    "other": 18,
+    "insertion": 4
+   },
+   "error_rate_by_cat": {
+    "entity": 0.2,
+    "format": null,
+    "other": 0.04522613065326633
+   },
+   "non_latin_share": 0.998,
+   "false_insertions": 0
+  },
+  "Parakh": {
+   "clips": 20,
+   "ref_tokens": 463,
+   "wer": 0.07127429805615551,
+   "entity_acc": 0.8055555555555556,
+   "entity_n": 36,
+   "format_acc": null,
+   "format_n": 0,
+   "errors_by_cat": {
+    "entity": 14,
+    "format": 0,
+    "other": 17,
+    "insertion": 2
+   },
+   "error_rate_by_cat": {
+    "entity": 0.2153846153846154,
+    "format": null,
+    "other": 0.04271356783919598
+   },
+   "non_latin_share": 0.9862729303364512,
+   "false_insertions": 0
+  }
+ },
+ "clips": {
+  "saaras-v4": [
+   {
+    "ref_norm": "kanan desh men bade jangalo ke na hone ke chalate vahan lakadiyan bahut mahangi thi",
+    "hyp_norm": "kanan desh men bade jangalon ke na hone ke chalate vahan lakadiyan bahut mahangi thin",
+    "ref_tokens": 15,
+    "tokens_by_cat": {
+     "entity": 1,
+     "other": 14
+    },
+    "errors_by_cat": {
+     "other": 2
+    },
+    "errors": 2,
+    "wer": 0.13333333333333333,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "12888270866141269240",
+    "hyp": "कनान देश में बड़े जंगलों के न होने के चलते वहाँ लकड़ियाँ बहुत महंगी थीं।",
+    "latency_s": 1.504,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "mukhy lokal biyar number one hai yah ek kanpleks biyar nahin hai balki yah apako tajagi deti hai any lokal biyar ko manta kaha jata hai",
+    "hyp_norm": "mukhy lokal biyar nanbar 1 hai yah ek konpleks biyar nahin hai balki apako tajagi deti hai any lokal biyar ko manta kaha jata hai",
+    "ref_tokens": 26,
+    "tokens_by_cat": {
+     "other": 23,
+     "entity": 3
+    },
+    "errors_by_cat": {
+     "entity": 2,
+     "other": 1
+    },
+    "errors": 3,
+    "wer": 0.11538461538461539,
+    "entity_hits": [
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 0.96,
+    "false_insertions": [],
+    "id": "14346193671142070616",
+    "hyp": "मुख्य लोकल बियर नंबर 1 है, यह एक कॉम्प्लेक्स बियर नहीं है बल्कि आपको ताज़गी देती है। अन्य लोकल बियर को मंता कहा जाता है।",
+    "latency_s": 0.559,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "mukhy lokal biyar number one hai yah ek kanpleks biyar nahin hai balki yah apako tajagi deti hai any lokal biyar ko manta kaha jata hai",
+    "hyp_norm": "mukhy lokal biyar nanbar 1 hai yah ek konpleks biyar nahin hai balki yah apako tajagi deti hai any lokal biyaron ko manyata kaha jata hai",
+    "ref_tokens": 26,
+    "tokens_by_cat": {
+     "other": 23,
+     "entity": 3
+    },
+    "errors_by_cat": {
+     "entity": 2,
+     "other": 1
+    },
+    "errors": 3,
+    "wer": 0.11538461538461539,
+    "entity_hits": [
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 0.9615384615384616,
+    "false_insertions": [],
+    "id": "12421193312741550985",
+    "hyp": "मुख्य लोकल बियर नंबर 1 है। यह एक कॉम्प्लेक्स बियर नहीं है बल्कि यह आपको ताजगी देती है। अन्य लोकल बियरों को मान्यता कहा जाता है।",
+    "latency_s": 2.685,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "baba shyam ko chappan bhog hindu dharm men 56 alag alag khady padarth jaise mithai phal meva vyanjan adi jo devata ko chadhae jate hain ki 108 thali parosi gain",
+    "hyp_norm": "baba sham ko 56 bhog hindu dharm men 56 alag alag khady padarth jaise mithai phal meva vyanjan adi jo devata ko chadhae jate hain ki 108 thali parosi gai",
+    "ref_tokens": 30,
+    "tokens_by_cat": {
+     "entity": 2,
+     "other": 28
+    },
+    "errors_by_cat": {
+     "entity": 1,
+     "other": 2
+    },
+    "errors": 3,
+    "wer": 0.1,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 0.896551724137931,
+    "false_insertions": [],
+    "id": "13191264841575352445",
+    "hyp": "बाबा शाम को 56 भोग, हिंदू धर्म में 56 अलग-अलग खाद्य पदार्थ जैसे मिठाई, फल, मेवा, व्यंजन आदि जो देवता को चढ़ाए जाते हैं, की 108 थाली परोसी गई।",
+    "latency_s": 1.926,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "moldova men pramukh dharm rudhivadi isai dharm hai",
+    "hyp_norm": "moldova men pramukh dharm rudhivadi isai dharm hai",
+    "ref_tokens": 8,
+    "tokens_by_cat": {
+     "entity": 1,
+     "other": 7
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "1487893749760096307",
+    "hyp": "मोल्दोवा में प्रमुख धर्म रूढ़िवादी ईसाई धर्म है।",
+    "latency_s": 1.632,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "moldova men pramukh dharm rudhivadi isai dharm hai",
+    "hyp_norm": "moldova men pramukh dharm rudhivadi isai dharm hai",
+    "ref_tokens": 8,
+    "tokens_by_cat": {
+     "entity": 1,
+     "other": 7
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "1295622493382165331",
+    "hyp": "मोल्दोवा में प्रमुख धर्म रूढ़िवादी ईसाई धर्म है।",
+    "latency_s": 2.89,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "moldova men pramukh dharm rudhivadi isai dharm hai",
+    "hyp_norm": "moldova men pramukh dharm rudhivadi isai dharm hai",
+    "ref_tokens": 8,
+    "tokens_by_cat": {
+     "entity": 1,
+     "other": 7
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "5435772826667223809",
+    "hyp": "मोल्दोवा में प्रमुख धर्म रूढ़िवादी ईसाई धर्म है।",
+    "latency_s": 1.898,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "uttari hissa ya sentinel renj men antarkatika ke sabase unche pahad vinsan maisiph aur maunt vinsan hain jisaki sabase unchi choti 4892 mitar ki hai",
+    "hyp_norm": "uttari hissa ya sentinal renj men antarkatika ke sabase unche pahad visban maisiv aur maunt visban hai jisaki sabase unchi choti 4892 mitar ki hai",
+    "ref_tokens": 25,
+    "tokens_by_cat": {
+     "other": 18,
+     "entity": 7
+    },
+    "errors_by_cat": {
+     "entity": 3,
+     "other": 1
+    },
+    "errors": 4,
+    "wer": 0.16,
+    "entity_hits": [
+     true,
+     true,
+     false,
+     false
+    ],
+    "format_hits": [],
+    "non_latin_share": 0.96,
+    "false_insertions": [],
+    "id": "872106282640325323",
+    "hyp": "उत्तरी हिस्सा या सेंटिनल रेंज में अंटार्कटिका के सबसे ऊँचे पहाड़ विस्बन मैसिव और माउंट विस्बन है जिसकी सबसे ऊँची चोटी 4892 मीटर की है।",
+    "latency_s": 2.436,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "halanki jangal ka arth keval maingrov daladal nahin hain ve kuch antim shaktishali jangalon men se hain jo kabhi ganga pathar ko kavar karate the",
+    "hyp_norm": "halanki jangal ka arth keval maingrov daladal nahin hai ve kuch antim shaktishali jangalon men se hain jo kabhi ganga pathar ko kavar karate the",
+    "ref_tokens": 25,
+    "tokens_by_cat": {
+     "other": 23,
+     "entity": 2
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.04,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "15463559083048772488",
+    "hyp": "हालांकि जंगल का अर्थ केवल मैंग्रोव दलदल नहीं है, वे कुछ अंतिम शक्तिशाली जंगलों में से हैं जो कभी गंगा पठार को कवर करते थे।",
+    "latency_s": 3.418,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "java ke vyanjan ab pure dvipasamuh men vyapak rup se upalabdh hain jisamen paranparik vyanjanon ki ek visheshata hai java ke vyanjanon men pramukh svad mungaphali mirch chini vishesh rup se java ki nariyal chini aur vibhinn sugandhit masalon ka hota hai",
+    "hyp_norm": "java ke vyanjan ab pure dvip samuh men vyapak rup se upalabdh hain jisamen paranparik vyanjanon ki ek visheshata hai java ke vyanjanon men pramukh svad mungaphali mirch chini vishesh rup se java ki nariyal chini aur vibhinn sugandhit masalon ka hota hai",
+    "ref_tokens": 42,
+    "tokens_by_cat": {
+     "entity": 1,
+     "other": 41
+    },
+    "errors_by_cat": {
+     "insertion": 1,
+     "other": 1
+    },
+    "errors": 2,
+    "wer": 0.047619047619047616,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "7699670815019425568",
+    "hyp": "जावा के व्यंजन अब पूरे द्वीप समूह में व्यापक रूप से उपलब्ध हैं, जिसमें पारंपरिक व्यंजनों की एक विशेषता है। जावा के व्यंजनों में प्रमुख स्वाद मूंगफली, मिर्च, चीनी, विशेष रूप से जावा की नारियल चीनी और विभिन्न सुगंधित मसालों का होता है।",
+    "latency_s": 2.341,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "java ke vyanjan ab pure dvipasamuh men vyapak rup se upalabdh hain jisamen paranparik vyanjanon ki ek visheshata hai java ke vyanjanon men pramukh svad mungaphali mirch chini vishesh rup se java ki nariyal chini aur vibhinn sugandhit masalon ka hota hai",
+    "hyp_norm": "java ke vyanjan ab pure dvip samuh men vyapak rup se upalabdh hain jisamen paranparik vyanjanon ki ek visheshata hai java ke vyanjanon men pramukh svad mungaphali mirchi chini vishesh rup se java ke nariyal chini aur vibhinn sugandhit masalon ka hota hai",
+    "ref_tokens": 42,
+    "tokens_by_cat": {
+     "entity": 1,
+     "other": 41
+    },
+    "errors_by_cat": {
+     "insertion": 1,
+     "other": 2
+    },
+    "errors": 3,
+    "wer": 0.07142857142857142,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "6305371240681881803",
+    "hyp": "जावा के व्यंजन अब पूरे द्वीप समूह में व्यापक रूप से उपलब्ध हैं, जिसमें पारंपरिक व्यंजनों की एक विशेषता है। जावा के व्यंजनों में प्रमुख स्वाद मूंगफली, मिर्ची, चीनी, विशेष रूप से जावा के नारियल चीनी और विभिन्न सुगंधित मसालों का होता है।",
+    "latency_s": 0.859,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "arab ke log is dharati par islam bhi lekar ae aur use komoros aur meyote men bade paimane par phailaya",
+    "hyp_norm": "arab ke log is dharati par islam bhi lekar ae aur use komoros aur meyote men bade paimane par phailaya",
+    "ref_tokens": 20,
+    "tokens_by_cat": {
+     "other": 18,
+     "entity": 2
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "5050468056664703274",
+    "hyp": "अरब के लोग इस धरती पर इस्लाम भी लेकर आए और उसे कोमोरोस और मेयोटे में बड़े पैमाने पर फैलाया।",
+    "latency_s": 0.789,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "philipins ke rajadhani manila men ek purv philipino pulisakarmi ne unaki bas ko apaharan karake hangakang ke paryatakon ko bandhak bana rakha hai",
+    "hyp_norm": "philipins ke rajadhani manila men ek purv philipino pulisakarmi ne unaki bas ko apaharan karake hangakang ke paryatakon ko bandhak bana rakha hai",
+    "ref_tokens": 23,
+    "tokens_by_cat": {
+     "entity": 3,
+     "other": 20
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "2077468279370755481",
+    "hyp": "फिलीपींस के राजधानी मनीला में एक पूर्व फिलिपिनो पुलिसकर्मी ने उनकी बस को अपहरण करके हांगकांग के पर्यटकों को बंधक बना रखा है।",
+    "latency_s": 2.188,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "npvs aur ostreliya ke sporting shutars esosieshan nsv ke bich sajhedari men tailent hanting sho ke tahat kabil svayansevakon ki bharti ki gai thi",
+    "hyp_norm": "enapidablyues aur ostreliya ke sporting shutars esosieshan enaesadablyue ke bich sajhedari men tailent hanting sho ke tahat kabilatam sevakon ki bharti ki gai thi",
+    "ref_tokens": 24,
+    "tokens_by_cat": {
+     "entity": 10,
+     "other": 14
+    },
+    "errors_by_cat": {
+     "entity": 2,
+     "other": 2
+    },
+    "errors": 4,
+    "wer": 0.16666666666666666,
+    "entity_hits": [
+     true,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "7789968169627649168",
+    "hyp": "एनपीडब्ल्यूएस और ऑस्ट्रेलिया के स्पोर्टिंग शूटर्स एसोसिएशन एनएसडब्ल्यूए के बीच साझेदारी में टैलेंट हंटिंग शो के तहत काबिलतम सेवकों की भर्ती की गई थी।",
+    "latency_s": 1.384,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "npvs aur ostreliya ke sporting shutars esosieshan nsv ke bich sajhedari men tailent hanting sho ke tahat kabil svayansevakon ki bharti ki gai thi",
+    "hyp_norm": "enapidablyues ostreliya ke sporting shutars esosieshan enaesadablyu ke bich sajhedari men tailent hanting sho ke tahat kabil svayansevakon ki bharti ki gai thi",
+    "ref_tokens": 24,
+    "tokens_by_cat": {
+     "entity": 10,
+     "other": 14
+    },
+    "errors_by_cat": {
+     "entity": 2,
+     "other": 1
+    },
+    "errors": 3,
+    "wer": 0.125,
+    "entity_hits": [
+     true,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "18166264438718137474",
+    "hyp": "एनपीडब्ल्यूएस ऑस्ट्रेलिया के स्पोर्टिंग शूटर्स एसोसिएशन एनएसडब्ल्यू के बीच साझेदारी में टैलेंट हंटिंग शो के तहत काबिल स्वयंसेवकों की भर्ती की गई थी।",
+    "latency_s": 2.85,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "npvs aur ostreliya ke sporting shutars esosieshan nsv ke bich sajhedari men tailent hanting sho ke tahat kabil svayansevakon ki bharti ki gai thi",
+    "hyp_norm": "enapidablyues aur ostreliya ke sporting shutars esosieshan ke bich sajhedari men tailent hanting sho ke tahat kabil sansvakon ki bharti ki gai thi",
+    "ref_tokens": 24,
+    "tokens_by_cat": {
+     "entity": 10,
+     "other": 14
+    },
+    "errors_by_cat": {
+     "entity": 2,
+     "other": 1
+    },
+    "errors": 3,
+    "wer": 0.125,
+    "entity_hits": [
+     true,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "4009454275929853161",
+    "hyp": "एनपीडब्ल्यूएस और ऑस्ट्रेलिया के स्पोर्टिंग शूटर्स एसोसिएशन के बीच साझेदारी में टैलेंट हंटिंग शो के तहत काबिल संस्वकों की भर्ती की गई थी।",
+    "latency_s": 3.133,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "chunki bishakek ki galiyon men kanun lagu karane vale adhikari maujud nahin the to puri rat bade paimane par lut jari rahane ki suchana mili hai",
+    "hyp_norm": "chunki biskek ki galiyon men kanun lagu karane vale adhikari maujud nahin the to puri rat bade paimane par lut jari rahane ki suchana mili hai",
+    "ref_tokens": 26,
+    "tokens_by_cat": {
+     "other": 25,
+     "entity": 1
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "11955664484384129932",
+    "hyp": "चूँकि बिस्केक की गलियों में कानून लागू करने वाले अधिकारी मौजूद नहीं थे, तो पूरी रात बड़े पैमाने पर लूट जारी रहने की सूचना मिली है।",
+    "latency_s": 1.379,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "chunki bishakek ki galiyon men kanun lagu karane vale adhikari maujud nahin the to puri rat bade paimane par lut jari rahane ki suchana mili hai",
+    "hyp_norm": "chunki bishkek ki galiyon men kanun lagu karane vale adhikari maujud nahin the to puri rat bade paimane par lut jari rahane ki suchana mili hai",
+    "ref_tokens": 26,
+    "tokens_by_cat": {
+     "other": 25,
+     "entity": 1
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "4772500206433514802",
+    "hyp": "चूँकि बिश्केक की गलियों में कानून लागू करने वाले अधिकारी मौजूद नहीं थे, तो पूरी रात बड़े पैमाने पर लूट जारी रहने की सूचना मिली है।",
+    "latency_s": 2.395,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "nyu kingadam prachin misravasi apane purvavartiyon ke smarakon se ashcharyachakit the jo tab ek hajar varsh se adhik purane the",
+    "hyp_norm": "nyu kingadam prachin misravasi apane purvavartiyon ke smarakon se ashcharyachakit the jo tab 1000 varsh se adhik purane the",
+    "ref_tokens": 20,
+    "tokens_by_cat": {
+     "entity": 2,
+     "other": 18
+    },
+    "errors_by_cat": {
+     "other": 2
+    },
+    "errors": 2,
+    "wer": 0.1,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 0.9473684210526315,
+    "false_insertions": [],
+    "id": "13971367273404298857",
+    "hyp": "न्यू किंगडम प्राचीन मिस्रवासी अपने पूर्ववर्तियों के स्मारकों से आश्चर्यचकित थे जो तब 1000 वर्ष से अधिक पुराने थे।",
+    "latency_s": 2.464,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "prachin roman bhojan men bad ki shatabdiyon men amerika ya eshiya se yurop ae khady padarth shamil nahin ho sakate the",
+    "hyp_norm": "prachin roman bhojan men bad ki shatabdiyon men amerika ya eshiya se yurop ae khady padarth shamil nahin ho sakate the",
+    "ref_tokens": 21,
+    "tokens_by_cat": {
+     "other": 18,
+     "entity": 3
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "2540989595543465842",
+    "hyp": "प्राचीन रोमन भोजन में बाद की शताब्दियों में अमेरिका या एशिया से यूरोप आए खाद्य पदार्थ शामिल नहीं हो सकते थे।",
+    "latency_s": 1.928,
+    "extra_passes": 0,
+    "edits": []
+   }
+  ],
+  "saaras-v3": [
+   {
+    "ref_norm": "kanan desh men bade jangalo ke na hone ke chalate vahan lakadiyan bahut mahangi thi",
+    "hyp_norm": "kanan desh men bade jangalon ke na hone ke chalate vahan lakadiyan bahut mahangi thi",
+    "ref_tokens": 15,
+    "tokens_by_cat": {
+     "entity": 1,
+     "other": 14
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.06666666666666667,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "12888270866141269240",
+    "hyp": "कनान देश में बड़े जंगलों के न होने के चलते वहाँ लकड़ियाँ बहुत महँगी थी।",
+    "latency_s": 3.543,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "mukhy lokal biyar number one hai yah ek kanpleks biyar nahin hai balki yah apako tajagi deti hai any lokal biyar ko manta kaha jata hai",
+    "hyp_norm": "mukhy lokal biyar nanbar van hai yah ek konpleks biyar nahin hai balki apako tajagi deti hai any lokal biyar ko manta kaha jata hai",
+    "ref_tokens": 26,
+    "tokens_by_cat": {
+     "other": 23,
+     "entity": 3
+    },
+    "errors_by_cat": {
+     "entity": 2,
+     "other": 1
+    },
+    "errors": 3,
+    "wer": 0.11538461538461539,
+    "entity_hits": [
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "14346193671142070616",
+    "hyp": "मुख्य लोकल बियर नंबर वन है, यह एक कॉम्प्लेक्स बियर नहीं है बल्कि आपको ताज़गी देती है, अन्य लोकल बियर को मंता कहा जाता है।",
+    "latency_s": 3.353,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "mukhy lokal biyar number one hai yah ek kanpleks biyar nahin hai balki yah apako tajagi deti hai any lokal biyar ko manta kaha jata hai",
+    "hyp_norm": "mukhy lokal biyar nanbar van hai yah ek konpleks biyar nahin hai balki yah apako tajagi deti hai any lokal biyaron ko manata kaha jata hai",
+    "ref_tokens": 26,
+    "tokens_by_cat": {
+     "other": 23,
+     "entity": 3
+    },
+    "errors_by_cat": {
+     "entity": 2,
+     "other": 1
+    },
+    "errors": 3,
+    "wer": 0.11538461538461539,
+    "entity_hits": [
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "12421193312741550985",
+    "hyp": "मुख्य लोकल बियर नंबर वन है। यह एक कॉम्प्लेक्स बियर नहीं है बल्कि यह आपको ताजगी देती है। अन्य लोकल बियरों को मानता कहा जाता है।",
+    "latency_s": 3.467,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "baba shyam ko chappan bhog hindu dharm men 56 alag alag khady padarth jaise mithai phal meva vyanjan adi jo devata ko chadhae jate hain ki 108 thali parosi gain",
+    "hyp_norm": "baba shyam ko chappan bhog hindu dharm men chappan alag alag khady padarth jaise mithai phal meva vyanjan adi jo devata ko chadhae jate hain ki ek sau ath thali parosi gai",
+    "ref_tokens": 30,
+    "tokens_by_cat": {
+     "entity": 2,
+     "other": 28
+    },
+    "errors_by_cat": {
+     "other": 3,
+     "insertion": 2
+    },
+    "errors": 5,
+    "wer": 0.16666666666666666,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "13191264841575352445",
+    "hyp": "बाबा श्याम को छप्पन भोग, हिंदू धर्म में छप्पन अलग-अलग खाद्य पदार्थ जैसे मिठाई, फल, मेवा, व्यंजन आदि जो देवता को चढ़ाए जाते हैं की एक सौ आठ थाली परोसी गई।",
+    "latency_s": 3.603,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "moldova men pramukh dharm rudhivadi isai dharm hai",
+    "hyp_norm": "moldova men pramukh dharm rudhivadi isai dharm hain",
+    "ref_tokens": 8,
+    "tokens_by_cat": {
+     "entity": 1,
+     "other": 7
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.125,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "1487893749760096307",
+    "hyp": "मोल्दोवा में प्रमुख धर्म रूढ़िवादी ईसाई धर्म हैं",
+    "latency_s": 3.32,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "moldova men pramukh dharm rudhivadi isai dharm hai",
+    "hyp_norm": "moldova men pramukh dharm ruddivadi isai dharm hain",
+    "ref_tokens": 8,
+    "tokens_by_cat": {
+     "entity": 1,
+     "other": 7
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.125,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "1295622493382165331",
+    "hyp": "मोल्दोवा में प्रमुख धर्म रुद्दिवादी ईसाई धर्म हैं।",
+    "latency_s": 1.183,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "moldova men pramukh dharm rudhivadi isai dharm hai",
+    "hyp_norm": "moldova men pramukh dharm rudhivadi isai dharm hai",
+    "ref_tokens": 8,
+    "tokens_by_cat": {
+     "entity": 1,
+     "other": 7
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "5435772826667223809",
+    "hyp": "मोल्दोवा में प्रमुख धर्म रूढ़िवादी ईसाई धर्म है",
+    "latency_s": 1.971,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "uttari hissa ya sentinel renj men antarkatika ke sabase unche pahad vinsan maisiph aur maunt vinsan hain jisaki sabase unchi choti 4892 mitar ki hai",
+    "hyp_norm": "uttari hissa ya sentinel renj men antarktika ke sabase unche pahad vijaban mesi aur maunt vijaban hai jisaki sabase unchi choti 4892 mitar ki hai",
+    "ref_tokens": 25,
+    "tokens_by_cat": {
+     "other": 18,
+     "entity": 7
+    },
+    "errors_by_cat": {
+     "entity": 3,
+     "other": 1
+    },
+    "errors": 4,
+    "wer": 0.16,
+    "entity_hits": [
+     true,
+     true,
+     false,
+     false
+    ],
+    "format_hits": [],
+    "non_latin_share": 0.96,
+    "false_insertions": [],
+    "id": "872106282640325323",
+    "hyp": "उत्तरी हिस्सा या सेंटिनेल रेंज में अंटार्क्टिका के सबसे ऊँचे पहाड़ विजबन मेसी और माउंट विजबन है जिसकी सबसे ऊँची चोटी 4892 मीटर की है।",
+    "latency_s": 2.266,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "halanki jangal ka arth keval maingrov daladal nahin hain ve kuch antim shaktishali jangalon men se hain jo kabhi ganga pathar ko kavar karate the",
+    "hyp_norm": "halanki jangal ka arth keval maingrov daladal nahin hai ve kuch antim shaktishali jangalon men se hain jo kabhi ganga pathar ko kavar karate the",
+    "ref_tokens": 25,
+    "tokens_by_cat": {
+     "other": 23,
+     "entity": 2
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.04,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "15463559083048772488",
+    "hyp": "हालांकि जंगल का अर्थ केवल मैंग्रोव दलदल नहीं है, वे कुछ अंतिम शक्तिशाली जंगलों में से हैं जो कभी गंगा पठार को कवर करते थे।",
+    "latency_s": 3.383,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "java ke vyanjan ab pure dvipasamuh men vyapak rup se upalabdh hain jisamen paranparik vyanjanon ki ek visheshata hai java ke vyanjanon men pramukh svad mungaphali mirch chini vishesh rup se java ki nariyal chini aur vibhinn sugandhit masalon ka hota hai",
+    "hyp_norm": "java ke vyanjan ab pure dvip samuh men vyapak rup se upalabdh hain jisamen paranparik vyanjanon ki ek visheshata hai java ke vyanjanon men pramukh svad mungaphali mirch chini vishesh rup se java ki nariyal chini aur vibhinn sugandhit masalon ka hota hai",
+    "ref_tokens": 42,
+    "tokens_by_cat": {
+     "entity": 1,
+     "other": 41
+    },
+    "errors_by_cat": {
+     "insertion": 1,
+     "other": 1
+    },
+    "errors": 2,
+    "wer": 0.047619047619047616,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "7699670815019425568",
+    "hyp": "जावा के व्यंजन अब पूरे द्वीप समूह में व्यापक रूप से उपलब्ध हैं, जिसमें पारंपरिक व्यंजनों की एक विशेषता है। जावा के व्यंजनों में प्रमुख स्वाद मूंगफली, मिर्च, चीनी, विशेष रूप से जावा की नारियल चीनी और विभिन्न सुगंधित मसालों का होता है।",
+    "latency_s": 1.449,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "java ke vyanjan ab pure dvipasamuh men vyapak rup se upalabdh hain jisamen paranparik vyanjanon ki ek visheshata hai java ke vyanjanon men pramukh svad mungaphali mirch chini vishesh rup se java ki nariyal chini aur vibhinn sugandhit masalon ka hota hai",
+    "hyp_norm": "java ke vyanjan ab pure dvip samuh men vyapak rup se upalabdh hain jisamen paranparik vyanjanon ki ek visheshata hai java ke vyanjanon men pramukh svad mungaphali mirchi chini vishesh rup se java ke nariyal chini aur vibhinn sugandhit masalon ka hota hai",
+    "ref_tokens": 42,
+    "tokens_by_cat": {
+     "entity": 1,
+     "other": 41
+    },
+    "errors_by_cat": {
+     "insertion": 1,
+     "other": 2
+    },
+    "errors": 3,
+    "wer": 0.07142857142857142,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "6305371240681881803",
+    "hyp": "जावा के व्यंजन अब पूरे द्वीप समूह में व्यापक रूप से उपलब्ध हैं, जिसमें पारंपरिक व्यंजनों की एक विशेषता है। जावा के व्यंजनों में प्रमुख स्वाद मूंगफली, मिर्ची, चीनी, विशेष रूप से जावा के नारियल चीनी और विभिन्न सुगंधित मसालों का होता है।",
+    "latency_s": 3.496,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "arab ke log is dharati par islam bhi lekar ae aur use komoros aur meyote men bade paimane par phailaya",
+    "hyp_norm": "arab ke log is dharati par islam bhi lekar ae aur use komoros aur meyote men bade paimane par phailaya",
+    "ref_tokens": 20,
+    "tokens_by_cat": {
+     "other": 18,
+     "entity": 2
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "5050468056664703274",
+    "hyp": "अरब के लोग इस धरती पर इस्लाम भी लेकर आए और उसे कोमोरोस और मेयोटे में बड़े पैमाने पर फैलाया",
+    "latency_s": 3.453,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "philipins ke rajadhani manila men ek purv philipino pulisakarmi ne unaki bas ko apaharan karake hangakang ke paryatakon ko bandhak bana rakha hai",
+    "hyp_norm": "philipins ke rajadhani manila men ek purv philipino pulisakarmi ne unaki bas ko apaharan karake hangakang ke paryatakon ko bandhak bana rakha hai",
+    "ref_tokens": 23,
+    "tokens_by_cat": {
+     "entity": 3,
+     "other": 20
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "2077468279370755481",
+    "hyp": "फिलिपींस के राजधानी मनिला में एक पूर्व फिलिपीनो पुलिसकर्मी ने उनकी बस को अपहरण करके हांगकांग के पर्यटकों को बंधक बना रखा है।",
+    "latency_s": 1.133,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "npvs aur ostreliya ke sporting shutars esosieshan nsv ke bich sajhedari men tailent hanting sho ke tahat kabil svayansevakon ki bharti ki gai thi",
+    "hyp_norm": "enapidablyues aur ostreliya ke sporting shutars esosieshan enaesadablyue ke bich sajhedari men tailent hanting sho ke tahat kabil svayansevakon ki bharti ki gai thi",
+    "ref_tokens": 24,
+    "tokens_by_cat": {
+     "entity": 10,
+     "other": 14
+    },
+    "errors_by_cat": {
+     "entity": 2
+    },
+    "errors": 2,
+    "wer": 0.08333333333333333,
+    "entity_hits": [
+     true,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "7789968169627649168",
+    "hyp": "एनपीडब्ल्यूएस और ऑस्ट्रेलिया के स्पोर्टिंग शूटर्स एसोसिएशन एनएसडब्ल्यूए के बीच साझेदारी में टैलेंट हंटिंग शो के तहत काबिल स्वयंसेवकों की भर्ती की गई थी",
+    "latency_s": 3.517,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "npvs aur ostreliya ke sporting shutars esosieshan nsv ke bich sajhedari men tailent hanting sho ke tahat kabil svayansevakon ki bharti ki gai thi",
+    "hyp_norm": "enapidablyues ostreliya ke sporting shutars esosieshan enaesadablyu ke bich sajhedari men tailent hanting sho ke tahat kabil svayansevakon ki bharti ki gai thi",
+    "ref_tokens": 24,
+    "tokens_by_cat": {
+     "entity": 10,
+     "other": 14
+    },
+    "errors_by_cat": {
+     "entity": 2,
+     "other": 1
+    },
+    "errors": 3,
+    "wer": 0.125,
+    "entity_hits": [
+     true,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "18166264438718137474",
+    "hyp": "एनपीडब्ल्यूएस ऑस्ट्रेलिया के स्पोर्टिंग शूटर्स एसोसिएशन एनएसडब्ल्यू के बीच साझेदारी में टैलेंट हंटिंग शो के तहत काबिल स्वयंसेवकों की भर्ती की गई थी",
+    "latency_s": 3.311,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "npvs aur ostreliya ke sporting shutars esosieshan nsv ke bich sajhedari men tailent hanting sho ke tahat kabil svayansevakon ki bharti ki gai thi",
+    "hyp_norm": "enapidablyues aur ostreliya ke sporting shutars esosieshan ke bich sajhedari men tailent hanting sho ke tahat kabil sansvevakon ki bharti ki gai thi",
+    "ref_tokens": 24,
+    "tokens_by_cat": {
+     "entity": 10,
+     "other": 14
+    },
+    "errors_by_cat": {
+     "entity": 2,
+     "other": 1
+    },
+    "errors": 3,
+    "wer": 0.125,
+    "entity_hits": [
+     true,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "4009454275929853161",
+    "hyp": "एनपीडब्ल्यूएस और ऑस्ट्रेलिया के स्पोर्टिंग शूटर्स एसोसिएशन के बीच साझेदारी में टैलेंट हंटिंग शो के तहत काबिल संस्वेवकों की भर्ती की गई थी",
+    "latency_s": 1.876,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "chunki bishakek ki galiyon men kanun lagu karane vale adhikari maujud nahin the to puri rat bade paimane par lut jari rahane ki suchana mili hai",
+    "hyp_norm": "chunki biskek ki galiyon men kanun lagu karane vale adhikari maujud nahin the to puri rat bade paimane par lut jari rahane ki suchana mili hai",
+    "ref_tokens": 26,
+    "tokens_by_cat": {
+     "other": 25,
+     "entity": 1
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "11955664484384129932",
+    "hyp": "चूँकि बिस्केक की गलियों में कानून लागू करने वाले अधिकारी मौजूद नहीं थे, तो पूरी रात बड़े पैमाने पर लूट जारी रहने की सूचना मिली है।",
+    "latency_s": 3.306,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "chunki bishakek ki galiyon men kanun lagu karane vale adhikari maujud nahin the to puri rat bade paimane par lut jari rahane ki suchana mili hai",
+    "hyp_norm": "chunki bishkek ki galiyon men kanun lagu karane vale adhikari maujud nahin the to puri rat bade paimane par lut jari rahane ki suchana mili hai",
+    "ref_tokens": 26,
+    "tokens_by_cat": {
+     "other": 25,
+     "entity": 1
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "4772500206433514802",
+    "hyp": "चूँकि बिश्केक की गलियों में कानून लागू करने वाले अधिकारी मौजूद नहीं थे, तो पूरी रात बड़े पैमाने पर लूट जारी रहने की सूचना मिली है।",
+    "latency_s": 3.343,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "nyu kingadam prachin misravasi apane purvavartiyon ke smarakon se ashcharyachakit the jo tab ek hajar varsh se adhik purane the",
+    "hyp_norm": "nyu kingadam prachin misravasi apane purvavartiyon ke smarakon se ashcharyachakit the jo tab ek hajar varsh se adhik purane the",
+    "ref_tokens": 20,
+    "tokens_by_cat": {
+     "entity": 2,
+     "other": 18
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "13971367273404298857",
+    "hyp": "न्यू किंगडम प्राचीन मिस्रवासी अपने पूर्ववर्तियों के स्मारकों से आश्चर्यचकित थे जो तब एक हज़ार वर्ष से अधिक पुराने थे",
+    "latency_s": 3.608,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "prachin roman bhojan men bad ki shatabdiyon men amerika ya eshiya se yurop ae khady padarth shamil nahin ho sakate the",
+    "hyp_norm": "prachin roman bhojan men bad ki shatabdiyon men amerika ya eshiya se yurop ae khady padarth shamil nahin ho sakate the",
+    "ref_tokens": 21,
+    "tokens_by_cat": {
+     "other": 18,
+     "entity": 3
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "2540989595543465842",
+    "hyp": "प्राचीन रोमन भोजन में बाद की शताब्दियों में अमेरिका या एशिया से यूरोप आए खाद्य पदार्थ शामिल नहीं हो सकते थे",
+    "latency_s": 2.343,
+    "extra_passes": 0,
+    "edits": []
+   }
+  ],
+  "gpt-transcribe": [
+   {
+    "ref_norm": "kanan desh men bade jangalo ke na hone ke chalate vahan lakadiyan bahut mahangi thi",
+    "hyp_norm": "kanan desh men bade jangalon ke na hone ke chalate vahan lakadiyan bahut mahangi thi",
+    "ref_tokens": 15,
+    "tokens_by_cat": {
+     "entity": 1,
+     "other": 14
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.06666666666666667,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "12888270866141269240",
+    "hyp": "कनान देश में बड़े जंगलों के न होने के चलते वहाँ लकड़ियाँ बहुत महंगी थी।",
+    "latency_s": 0.91,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "mukhy lokal biyar number one hai yah ek kanpleks biyar nahin hai balki yah apako tajagi deti hai any lokal biyar ko manta kaha jata hai",
+    "hyp_norm": "mukhy lokal biyar nanbar van hai yah ek konpleks biyar nahin hai balki apako tajagi deti hai any lokal biyar ko manta kaha jata hai",
+    "ref_tokens": 26,
+    "tokens_by_cat": {
+     "other": 23,
+     "entity": 3
+    },
+    "errors_by_cat": {
+     "entity": 2,
+     "other": 1
+    },
+    "errors": 3,
+    "wer": 0.11538461538461539,
+    "entity_hits": [
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "14346193671142070616",
+    "hyp": "मुख्य लोकल बीयर नंबर वन है। यह एक कॉम्प्लेक्स बीयर नहीं है बल्कि आपको ताज़गी देती है। अन्य लोकल बीयर को मंटा कहा जाता है।",
+    "latency_s": 1.875,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "mukhy lokal biyar number one hai yah ek kanpleks biyar nahin hai balki yah apako tajagi deti hai any lokal biyar ko manta kaha jata hai",
+    "hyp_norm": "mukhy lokal biyar nanbar van hai yah ek konpleks biyar nahin hai balki yah apako tajagi deti hai any lokal biyaron ko manata kaha jata hai",
+    "ref_tokens": 26,
+    "tokens_by_cat": {
+     "other": 23,
+     "entity": 3
+    },
+    "errors_by_cat": {
+     "entity": 2,
+     "other": 1
+    },
+    "errors": 3,
+    "wer": 0.11538461538461539,
+    "entity_hits": [
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "12421193312741550985",
+    "hyp": "मुख्य लोकल बीयर नंबर वन है। यह एक कॉम्प्लेक्स बीयर नहीं है बल्कि यह आपको ताजगी देती है। अन्य लोकल बियरों को मानता कहा जाता है।",
+    "latency_s": 1.771,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "baba shyam ko chappan bhog hindu dharm men 56 alag alag khady padarth jaise mithai phal meva vyanjan adi jo devata ko chadhae jate hain ki 108 thali parosi gain",
+    "hyp_norm": "baba sham ko chappan bhog hindu dharm men chappan alag alag khady padarth jaise mithai phal meva vyanjan adi jo devata ko chadhae jate hain ki ek sau ath thali parosi gai",
+    "ref_tokens": 30,
+    "tokens_by_cat": {
+     "entity": 2,
+     "other": 28
+    },
+    "errors_by_cat": {
+     "entity": 1,
+     "other": 3,
+     "insertion": 2
+    },
+    "errors": 6,
+    "wer": 0.2,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "13191264841575352445",
+    "hyp": "बाबा शाम को छप्पन भोग, हिंदू धर्म में छप्पन अलग-अलग खाद्य पदार्थ जैसे मिठाई, फल, मेवा, व्यंजन आदि जो देवता को चढ़ाए जाते हैं कि एक सौ आठ थाली परोसी गई।",
+    "latency_s": 1.177,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "moldova men pramukh dharm rudhivadi isai dharm hai",
+    "hyp_norm": "moladova men pramukh dharm rudhivadi isai dharm hai",
+    "ref_tokens": 8,
+    "tokens_by_cat": {
+     "entity": 1,
+     "other": 7
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "1487893749760096307",
+    "hyp": "मोलदोवा में प्रमुख धर्म रूढ़िवादी ईसाई धर्म है।",
+    "latency_s": 0.739,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "moldova men pramukh dharm rudhivadi isai dharm hai",
+    "hyp_norm": "moldova men pramukh dharm rudhivadi isai dharm hai",
+    "ref_tokens": 8,
+    "tokens_by_cat": {
+     "entity": 1,
+     "other": 7
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "1295622493382165331",
+    "hyp": "मोल्दोवा में प्रमुख धर्म रूढ़िवादी ईसाई धर्म है।",
+    "latency_s": 0.935,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "moldova men pramukh dharm rudhivadi isai dharm hai",
+    "hyp_norm": "moldova men pramukh dharm rudhivadi isai dharm hai",
+    "ref_tokens": 8,
+    "tokens_by_cat": {
+     "entity": 1,
+     "other": 7
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "5435772826667223809",
+    "hyp": "मोल्दोवा में प्रमुख धर्म रूढ़िवादी ईसाई धर्म है।",
+    "latency_s": 0.826,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "uttari hissa ya sentinel renj men antarkatika ke sabase unche pahad vinsan maisiph aur maunt vinsan hain jisaki sabase unchi choti 4892 mitar ki hai",
+    "hyp_norm": "uttari hissa ya sentinal renj men antarkatika ke sabase unche pahad visban maisiph aur maunt visban hai jisaki sabase unchi choti 4892 mitar ki hai",
+    "ref_tokens": 25,
+    "tokens_by_cat": {
+     "other": 18,
+     "entity": 7
+    },
+    "errors_by_cat": {
+     "entity": 2,
+     "other": 1
+    },
+    "errors": 3,
+    "wer": 0.12,
+    "entity_hits": [
+     true,
+     true,
+     false,
+     false
+    ],
+    "format_hits": [],
+    "non_latin_share": 0.96,
+    "false_insertions": [],
+    "id": "872106282640325323",
+    "hyp": "उत्तरी हिस्सा या सेंटिनल रेंज में अंटार्कटिका के सबसे ऊँचे पहाड़ विस्बन मैसिफ और माउंट विस्बन है, जिसकी सबसे ऊँची चोटी 4,892 मीटर की है।",
+    "latency_s": 1.391,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "halanki jangal ka arth keval maingrov daladal nahin hain ve kuch antim shaktishali jangalon men se hain jo kabhi ganga pathar ko kavar karate the",
+    "hyp_norm": "halanki jangal ka arth keval maingrov daladal nahin hai ve kuch antim shaktishali jangalon men se hain jo kabhi ganga pathar ko kavar karate the",
+    "ref_tokens": 25,
+    "tokens_by_cat": {
+     "other": 23,
+     "entity": 2
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.04,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "15463559083048772488",
+    "hyp": "हालांकि जंगल का अर्थ केवल मैंग्रोव दलदल नहीं है, वे कुछ अंतिम शक्तिशाली जंगलों में से हैं जो कभी गंगा पठार को कवर करते थे।",
+    "latency_s": 1.063,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "java ke vyanjan ab pure dvipasamuh men vyapak rup se upalabdh hain jisamen paranparik vyanjanon ki ek visheshata hai java ke vyanjanon men pramukh svad mungaphali mirch chini vishesh rup se java ki nariyal chini aur vibhinn sugandhit masalon ka hota hai",
+    "hyp_norm": "java ke vyanjan pure dvip samuh men vyapak rup se upalabdh hain jisamen paranparik vyanjanon ki ek visheshata hai java ke vyanjanon men pramukh svad mungaphali mirch chini vishesh rup se java ki nariyal chini aur vibhinn sugandhit masalon ka hota hai",
+    "ref_tokens": 42,
+    "tokens_by_cat": {
+     "entity": 1,
+     "other": 41
+    },
+    "errors_by_cat": {
+     "other": 3
+    },
+    "errors": 3,
+    "wer": 0.07142857142857142,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "7699670815019425568",
+    "hyp": "जावा के व्यंजन पूरे द्वीप समूह में व्यापक रूप से उपलब्ध हैं, जिसमें पारंपरिक व्यंजनों की एक विशेषता है। जावा के व्यंजनों में प्रमुख स्वाद मूंगफली, मिर्च, चीनी, विशेष रूप से जावा की नारियल चीनी और विभिन्न सुगंधित मसालों का होता है।",
+    "latency_s": 1.281,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "java ke vyanjan ab pure dvipasamuh men vyapak rup se upalabdh hain jisamen paranparik vyanjanon ki ek visheshata hai java ke vyanjanon men pramukh svad mungaphali mirch chini vishesh rup se java ki nariyal chini aur vibhinn sugandhit masalon ka hota hai",
+    "hyp_norm": "java ke vyanjan ab pure dvip samuh men vyapak rup se upalabdh hain jisamen paranparik vyanjanon ki ek visheshata hai java ke vyanjanon men pramukh svad muphali mirchi chini vishesh rup se java ke nariyal chini aur vibhinn sugandhit masalon ka hota hai",
+    "ref_tokens": 42,
+    "tokens_by_cat": {
+     "entity": 1,
+     "other": 41
+    },
+    "errors_by_cat": {
+     "insertion": 1,
+     "other": 3
+    },
+    "errors": 4,
+    "wer": 0.09523809523809523,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "6305371240681881803",
+    "hyp": "जावा के व्यंजन अब पूरे द्वीप समूह में व्यापक रूप से उपलब्ध हैं, जिसमें पारंपरिक व्यंजनों की एक विशेषता है। जावा के व्यंजनों में प्रमुख स्वाद मूफली, मिर्ची, चीनी, विशेष रूप से जावा के नारियल चीनी और विभिन्न सुगंधित मसालों का होता है।",
+    "latency_s": 1.524,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "arab ke log is dharati par islam bhi lekar ae aur use komoros aur meyote men bade paimane par phailaya",
+    "hyp_norm": "arab ke log is dharati par islam bhi lekar ae aur use komoros aur meyote men bade paimane par phailaya",
+    "ref_tokens": 20,
+    "tokens_by_cat": {
+     "other": 18,
+     "entity": 2
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "5050468056664703274",
+    "hyp": "अरब के लोग इस धरती पर इस्लाम भी लेकर आए और उसे कोमोरोस और मेयोटे में बड़े पैमाने पर फैलाया।",
+    "latency_s": 1.003,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "philipins ke rajadhani manila men ek purv philipino pulisakarmi ne unaki bas ko apaharan karake hangakang ke paryatakon ko bandhak bana rakha hai",
+    "hyp_norm": "philipins ke rajadhani manila men ek purv philipino pulisakarmi ne unaki bas ko apaharan karake hangakang ke paryatakon ko bandhak bana rakha hai",
+    "ref_tokens": 23,
+    "tokens_by_cat": {
+     "entity": 3,
+     "other": 20
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "2077468279370755481",
+    "hyp": "फिलिपींस के राजधानी मनीला में एक पूर्व फिलिपिनो पुलिसकर्मी ने उनकी बस को अपहरण करके हांगकांग के पर्यटकों को बंधक बना रखा है।",
+    "latency_s": 1.12,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "npvs aur ostreliya ke sporting shutars esosieshan nsv ke bich sajhedari men tailent hanting sho ke tahat kabil svayansevakon ki bharti ki gai thi",
+    "hyp_norm": "enapidablyues aur ostreliya ke sporting shutars esosieshan enaesadablyue ke bich sajhedari men tailent hanting sho ke tahat kabil shaukinon ki bharti ki gai thi",
+    "ref_tokens": 24,
+    "tokens_by_cat": {
+     "entity": 10,
+     "other": 14
+    },
+    "errors_by_cat": {
+     "entity": 2,
+     "other": 1
+    },
+    "errors": 3,
+    "wer": 0.125,
+    "entity_hits": [
+     true,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "7789968169627649168",
+    "hyp": "एनपीडब्ल्यूएस और ऑस्ट्रेलिया के स्पोर्टिंग शूटर्स एसोसिएशन एनएसडब्ल्यूए के बीच साझेदारी में टैलेंट हंटिंग शो के तहत काबिल शौक़ीनों की भर्ती की गई थी।",
+    "latency_s": 1.105,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "npvs aur ostreliya ke sporting shutars esosieshan nsv ke bich sajhedari men tailent hanting sho ke tahat kabil svayansevakon ki bharti ki gai thi",
+    "hyp_norm": "enapidablyues ostreliya ke sporting shutars esosieshan enaesadablyu ke bich sajhedari men tailent hanting sho ke tahat kabil svayansevakon ki bharti ki gai thi",
+    "ref_tokens": 24,
+    "tokens_by_cat": {
+     "entity": 10,
+     "other": 14
+    },
+    "errors_by_cat": {
+     "entity": 2,
+     "other": 1
+    },
+    "errors": 3,
+    "wer": 0.125,
+    "entity_hits": [
+     true,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "18166264438718137474",
+    "hyp": "एनपीडब्ल्यूएस ऑस्ट्रेलिया के स्पोर्टिंग शूटर्स एसोसिएशन एनएसडब्ल्यू के बीच साझेदारी में टैलेंट हंटिंग शो के तहत काबिल स्वयंसेवकों की भर्ती की गई थी।",
+    "latency_s": 1.372,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "npvs aur ostreliya ke sporting shutars esosieshan nsv ke bich sajhedari men tailent hanting sho ke tahat kabil svayansevakon ki bharti ki gai thi",
+    "hyp_norm": "enapidablyues aur ostreliya ke sporting shutars esosieshan ke bich sajhedari men tailent hanting sho ke tahat kabil sansadon ko ki bharti ki gai thi",
+    "ref_tokens": 24,
+    "tokens_by_cat": {
+     "entity": 10,
+     "other": 14
+    },
+    "errors_by_cat": {
+     "entity": 2,
+     "insertion": 1,
+     "other": 1
+    },
+    "errors": 4,
+    "wer": 0.16666666666666666,
+    "entity_hits": [
+     true,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "4009454275929853161",
+    "hyp": "एनपीडब्ल्यूएस और ऑस्ट्रेलिया के स्पोर्टिंग शूटर्स एसोसिएशन के बीच साझेदारी में टैलेंट हंटिंग शो के तहत काबिल संसदों को की भर्ती की गई थी।",
+    "latency_s": 1.511,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "chunki bishakek ki galiyon men kanun lagu karane vale adhikari maujud nahin the to puri rat bade paimane par lut jari rahane ki suchana mili hai",
+    "hyp_norm": "chunki biskek ki galiyon men kanun lagu karane vale adhikari maujud nahin the to puri rat bade paimane par lut jari rahane ki suchana mili hai",
+    "ref_tokens": 26,
+    "tokens_by_cat": {
+     "other": 25,
+     "entity": 1
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "11955664484384129932",
+    "hyp": "चूंकि बिस्केक की गलियों में कानून लागू करने वाले अधिकारी मौजूद नहीं थे, तो पूरी रात बड़े पैमाने पर लूट जारी रहने की सूचना मिली है।",
+    "latency_s": 1.053,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "chunki bishakek ki galiyon men kanun lagu karane vale adhikari maujud nahin the to puri rat bade paimane par lut jari rahane ki suchana mili hai",
+    "hyp_norm": "chunki bishkek ki galiyon men kanun lagu karane vale adhikari maujud nahin the to puri rat bade paimane par lut jari rahane ki suchana mili hai",
+    "ref_tokens": 26,
+    "tokens_by_cat": {
+     "other": 25,
+     "entity": 1
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "4772500206433514802",
+    "hyp": "चूंकि बिश्केक की गलियों में कानून लागू करने वाले अधिकारी मौजूद नहीं थे तो पूरी रात बड़े पैमाने पर लूट जारी रहने की सूचना मिली है।",
+    "latency_s": 1.116,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "nyu kingadam prachin misravasi apane purvavartiyon ke smarakon se ashcharyachakit the jo tab ek hajar varsh se adhik purane the",
+    "hyp_norm": "nyu kingadam prachin misravasi apane purvavartiyon ke smarakon se ashcharyachakit the jo tab ek hajar varsh se adhik purane the",
+    "ref_tokens": 20,
+    "tokens_by_cat": {
+     "entity": 2,
+     "other": 18
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "13971367273404298857",
+    "hyp": "न्यू किंगडम प्राचीन मिस्रवासी अपने पूर्ववर्तियों के स्मारकों से आश्चर्यचकित थे, जो तब एक हज़ार वर्ष से अधिक पुराने थे।",
+    "latency_s": 1.508,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "prachin roman bhojan men bad ki shatabdiyon men amerika ya eshiya se yurop ae khady padarth shamil nahin ho sakate the",
+    "hyp_norm": "prachin roman bhojan men bhat ki satabdiyon men amerika ya eshiya se yurop ae khady padarth shamil nahin ho sakate the",
+    "ref_tokens": 21,
+    "tokens_by_cat": {
+     "other": 18,
+     "entity": 3
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.047619047619047616,
+    "entity_hits": [
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "2540989595543465842",
+    "hyp": "प्राचीन रोमन भोजन में भात की सताब्दियों में अमेरिका या एशिया से यूरोप आए खाद्य पदार्थ शामिल नहीं हो सकते थे।",
+    "latency_s": 0.906,
+    "extra_passes": 0,
+    "edits": []
+   }
+  ],
+  "Parakh": [
+   {
+    "ref_norm": "kanan desh men bade jangalo ke na hone ke chalate vahan lakadiyan bahut mahangi thi",
+    "hyp_norm": "kanan desh men bade jangalon ke na hone ke chalate vahan lakadiyan bahut mahangi thin",
+    "ref_tokens": 15,
+    "tokens_by_cat": {
+     "entity": 1,
+     "other": 14
+    },
+    "errors_by_cat": {
+     "other": 2
+    },
+    "errors": 2,
+    "wer": 0.13333333333333333,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "12888270866141269240",
+    "hyp": "कनान देश में बड़े जंगलों के न होने के चलते वहाँ लकड़ियाँ बहुत महंगी थीं।",
+    "latency_s": 3.543,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "mukhy lokal biyar number one hai yah ek kanpleks biyar nahin hai balki yah apako tajagi deti hai any lokal biyar ko manta kaha jata hai",
+    "hyp_norm": "mukhy lokal biyar nanbar 1 hai yah ek konpleks biyar nahin hai balki apako tajagi deti hai any lokal biyar ko manta kaha jata hai",
+    "ref_tokens": 26,
+    "tokens_by_cat": {
+     "other": 23,
+     "entity": 3
+    },
+    "errors_by_cat": {
+     "entity": 2,
+     "other": 1
+    },
+    "errors": 3,
+    "wer": 0.11538461538461539,
+    "entity_hits": [
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 0.96,
+    "false_insertions": [],
+    "id": "14346193671142070616",
+    "hyp": "मुख्य लोकल बियर नंबर 1 है, यह एक कॉम्प्लेक्स बियर नहीं है बल्कि आपको ताज़गी देती है। अन्य लोकल बियर को मंता कहा जाता है।",
+    "latency_s": 3.353,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "mukhy lokal biyar number one hai yah ek kanpleks biyar nahin hai balki yah apako tajagi deti hai any lokal biyar ko manta kaha jata hai",
+    "hyp_norm": "mukhy lokal biyar nanbar 1 hai yah ek konpleks biyar nahin hai balki yah apako tajagi deti hai any lokal biyaron ko manyata kaha jata hai",
+    "ref_tokens": 26,
+    "tokens_by_cat": {
+     "other": 23,
+     "entity": 3
+    },
+    "errors_by_cat": {
+     "entity": 2,
+     "other": 1
+    },
+    "errors": 3,
+    "wer": 0.11538461538461539,
+    "entity_hits": [
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 0.9615384615384616,
+    "false_insertions": [],
+    "id": "12421193312741550985",
+    "hyp": "मुख्य लोकल बियर नंबर 1 है। यह एक कॉम्प्लेक्स बियर नहीं है बल्कि यह आपको ताजगी देती है। अन्य लोकल बियरों को मान्यता कहा जाता है।",
+    "latency_s": 3.467,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "baba shyam ko chappan bhog hindu dharm men 56 alag alag khady padarth jaise mithai phal meva vyanjan adi jo devata ko chadhae jate hain ki 108 thali parosi gain",
+    "hyp_norm": "baba sham ko 56 bhog hindu dharm men 56 alag alag khady padarth jaise mithai phal meva vyanjan adi jo devata ko chadhae jate hain ki 108 thali parosi gai",
+    "ref_tokens": 30,
+    "tokens_by_cat": {
+     "entity": 2,
+     "other": 28
+    },
+    "errors_by_cat": {
+     "entity": 1,
+     "other": 2
+    },
+    "errors": 3,
+    "wer": 0.1,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 0.896551724137931,
+    "false_insertions": [],
+    "id": "13191264841575352445",
+    "hyp": "बाबा शाम को 56 भोग, हिंदू धर्म में 56 अलग-अलग खाद्य पदार्थ जैसे मिठाई, फल, मेवा, व्यंजन आदि जो देवता को चढ़ाए जाते हैं, की 108 थाली परोसी गई।",
+    "latency_s": 3.603,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "moldova men pramukh dharm rudhivadi isai dharm hai",
+    "hyp_norm": "moldova men pramukh dharm rudhivadi isai dharm hai",
+    "ref_tokens": 8,
+    "tokens_by_cat": {
+     "entity": 1,
+     "other": 7
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "1487893749760096307",
+    "hyp": "मोल्दोवा में प्रमुख धर्म रूढ़िवादी ईसाई धर्म है।",
+    "latency_s": 3.32,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "moldova men pramukh dharm rudhivadi isai dharm hai",
+    "hyp_norm": "moldova men pramukh dharm rudhivadi isai dharm hai",
+    "ref_tokens": 8,
+    "tokens_by_cat": {
+     "entity": 1,
+     "other": 7
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "1295622493382165331",
+    "hyp": "मोल्दोवा में प्रमुख धर्म रूढ़िवादी ईसाई धर्म है।",
+    "latency_s": 2.89,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "moldova men pramukh dharm rudhivadi isai dharm hai",
+    "hyp_norm": "moldova men pramukh dharm rudhivadi isai dharm hai",
+    "ref_tokens": 8,
+    "tokens_by_cat": {
+     "entity": 1,
+     "other": 7
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "5435772826667223809",
+    "hyp": "मोल्दोवा में प्रमुख धर्म रूढ़िवादी ईसाई धर्म है।",
+    "latency_s": 1.971,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "uttari hissa ya sentinel renj men antarkatika ke sabase unche pahad vinsan maisiph aur maunt vinsan hain jisaki sabase unchi choti 4892 mitar ki hai",
+    "hyp_norm": "uttari hissa ya sentinal renj men antarkatika ke sabase unche pahad visban maisiv aur maunt visban hai jisaki sabase unchi choti 4892 mitar ki hai",
+    "ref_tokens": 25,
+    "tokens_by_cat": {
+     "other": 18,
+     "entity": 7
+    },
+    "errors_by_cat": {
+     "entity": 3,
+     "other": 1
+    },
+    "errors": 4,
+    "wer": 0.16,
+    "entity_hits": [
+     true,
+     true,
+     false,
+     false
+    ],
+    "format_hits": [],
+    "non_latin_share": 0.96,
+    "false_insertions": [],
+    "id": "872106282640325323",
+    "hyp": "उत्तरी हिस्सा या सेंटिनल रेंज में अंटार्कटिका के सबसे ऊँचे पहाड़ विस्बन मैसिव और माउंट विस्बन है जिसकी सबसे ऊँची चोटी 4892 मीटर की है।",
+    "latency_s": 2.436,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "halanki jangal ka arth keval maingrov daladal nahin hain ve kuch antim shaktishali jangalon men se hain jo kabhi ganga pathar ko kavar karate the",
+    "hyp_norm": "halanki jangal ka arth keval maingrov daladal nahin hai ve kuch antim shaktishali jangalon men se hain jo kabhi ganga pathar ko kavar karate the",
+    "ref_tokens": 25,
+    "tokens_by_cat": {
+     "other": 23,
+     "entity": 2
+    },
+    "errors_by_cat": {
+     "other": 1
+    },
+    "errors": 1,
+    "wer": 0.04,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "15463559083048772488",
+    "hyp": "हालांकि जंगल का अर्थ केवल मैंग्रोव दलदल नहीं है, वे कुछ अंतिम शक्तिशाली जंगलों में से हैं जो कभी गंगा पठार को कवर करते थे।",
+    "latency_s": 3.418,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "java ke vyanjan ab pure dvipasamuh men vyapak rup se upalabdh hain jisamen paranparik vyanjanon ki ek visheshata hai java ke vyanjanon men pramukh svad mungaphali mirch chini vishesh rup se java ki nariyal chini aur vibhinn sugandhit masalon ka hota hai",
+    "hyp_norm": "java ke vyanjan ab pure dvip samuh men vyapak rup se upalabdh hain jisamen paranparik vyanjanon ki ek visheshata hai java ke vyanjanon men pramukh svad mungaphali mirch chini vishesh rup se java ki nariyal chini aur vibhinn sugandhit masalon ka hota hai",
+    "ref_tokens": 42,
+    "tokens_by_cat": {
+     "entity": 1,
+     "other": 41
+    },
+    "errors_by_cat": {
+     "insertion": 1,
+     "other": 1
+    },
+    "errors": 2,
+    "wer": 0.047619047619047616,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "7699670815019425568",
+    "hyp": "जावा के व्यंजन अब पूरे द्वीप समूह में व्यापक रूप से उपलब्ध हैं, जिसमें पारंपरिक व्यंजनों की एक विशेषता है। जावा के व्यंजनों में प्रमुख स्वाद मूंगफली, मिर्च, चीनी, विशेष रूप से जावा की नारियल चीनी और विभिन्न सुगंधित मसालों का होता है।",
+    "latency_s": 2.341,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "java ke vyanjan ab pure dvipasamuh men vyapak rup se upalabdh hain jisamen paranparik vyanjanon ki ek visheshata hai java ke vyanjanon men pramukh svad mungaphali mirch chini vishesh rup se java ki nariyal chini aur vibhinn sugandhit masalon ka hota hai",
+    "hyp_norm": "java ke vyanjan ab pure dvip samuh men vyapak rup se upalabdh hain jisamen paranparik vyanjanon ki ek visheshata hai java ke vyanjanon men pramukh svad mungaphali mirchi chini vishesh rup se java ke nariyal chini aur vibhinn sugandhit masalon ka hota hai",
+    "ref_tokens": 42,
+    "tokens_by_cat": {
+     "entity": 1,
+     "other": 41
+    },
+    "errors_by_cat": {
+     "insertion": 1,
+     "other": 2
+    },
+    "errors": 3,
+    "wer": 0.07142857142857142,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "6305371240681881803",
+    "hyp": "जावा के व्यंजन अब पूरे द्वीप समूह में व्यापक रूप से उपलब्ध हैं, जिसमें पारंपरिक व्यंजनों की एक विशेषता है। जावा के व्यंजनों में प्रमुख स्वाद मूंगफली, मिर्ची, चीनी, विशेष रूप से जावा के नारियल चीनी और विभिन्न सुगंधित मसालों का होता है।",
+    "latency_s": 3.496,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "arab ke log is dharati par islam bhi lekar ae aur use komoros aur meyote men bade paimane par phailaya",
+    "hyp_norm": "arab ke log is dharati par islam bhi lekar ae aur use komoros aur meyote men bade paimane par phailaya",
+    "ref_tokens": 20,
+    "tokens_by_cat": {
+     "other": 18,
+     "entity": 2
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "5050468056664703274",
+    "hyp": "अरब के लोग इस धरती पर इस्लाम भी लेकर आए और उसे कोमोरोस और मेयोटे में बड़े पैमाने पर फैलाया।",
+    "latency_s": 3.453,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "philipins ke rajadhani manila men ek purv philipino pulisakarmi ne unaki bas ko apaharan karake hangakang ke paryatakon ko bandhak bana rakha hai",
+    "hyp_norm": "philipins ke rajadhani manila men ek purv philipino pulisakarmi ne unaki bas ko apaharan karake hangakang ke paryatakon ko bandhak bana rakha hai",
+    "ref_tokens": 23,
+    "tokens_by_cat": {
+     "entity": 3,
+     "other": 20
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "2077468279370755481",
+    "hyp": "फिलीपींस के राजधानी मनीला में एक पूर्व फिलिपिनो पुलिसकर्मी ने उनकी बस को अपहरण करके हांगकांग के पर्यटकों को बंधक बना रखा है।",
+    "latency_s": 2.188,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "npvs aur ostreliya ke sporting shutars esosieshan nsv ke bich sajhedari men tailent hanting sho ke tahat kabil svayansevakon ki bharti ki gai thi",
+    "hyp_norm": "enapidablyues aur ostreliya ke sporting shutars esosieshan enaesadablyue ke bich sajhedari men tailent hanting sho ke tahat kabilatam sevakon ki bharti ki gai thi",
+    "ref_tokens": 24,
+    "tokens_by_cat": {
+     "entity": 10,
+     "other": 14
+    },
+    "errors_by_cat": {
+     "entity": 2,
+     "other": 2
+    },
+    "errors": 4,
+    "wer": 0.16666666666666666,
+    "entity_hits": [
+     true,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "7789968169627649168",
+    "hyp": "एनपीडब्ल्यूएस और ऑस्ट्रेलिया के स्पोर्टिंग शूटर्स एसोसिएशन एनएसडब्ल्यूए के बीच साझेदारी में टैलेंट हंटिंग शो के तहत काबिलतम सेवकों की भर्ती की गई थी।",
+    "latency_s": 3.517,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "npvs aur ostreliya ke sporting shutars esosieshan nsv ke bich sajhedari men tailent hanting sho ke tahat kabil svayansevakon ki bharti ki gai thi",
+    "hyp_norm": "enapidablyues ostreliya ke sporting shutars esosieshan enaesadablyu ke bich sajhedari men tailent hanting sho ke tahat kabil svayansevakon ki bharti ki gai thi",
+    "ref_tokens": 24,
+    "tokens_by_cat": {
+     "entity": 10,
+     "other": 14
+    },
+    "errors_by_cat": {
+     "entity": 2,
+     "other": 1
+    },
+    "errors": 3,
+    "wer": 0.125,
+    "entity_hits": [
+     true,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "18166264438718137474",
+    "hyp": "एनपीडब्ल्यूएस ऑस्ट्रेलिया के स्पोर्टिंग शूटर्स एसोसिएशन एनएसडब्ल्यू के बीच साझेदारी में टैलेंट हंटिंग शो के तहत काबिल स्वयंसेवकों की भर्ती की गई थी।",
+    "latency_s": 3.311,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "npvs aur ostreliya ke sporting shutars esosieshan nsv ke bich sajhedari men tailent hanting sho ke tahat kabil svayansevakon ki bharti ki gai thi",
+    "hyp_norm": "enapidablyues aur ostreliya ke sporting shutars esosieshan ke bich sajhedari men tailent hanting sho ke tahat kabil sansvakon ki bharti ki gai thi",
+    "ref_tokens": 24,
+    "tokens_by_cat": {
+     "entity": 10,
+     "other": 14
+    },
+    "errors_by_cat": {
+     "entity": 2,
+     "other": 1
+    },
+    "errors": 3,
+    "wer": 0.125,
+    "entity_hits": [
+     true,
+     false,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "4009454275929853161",
+    "hyp": "एनपीडब्ल्यूएस और ऑस्ट्रेलिया के स्पोर्टिंग शूटर्स एसोसिएशन के बीच साझेदारी में टैलेंट हंटिंग शो के तहत काबिल संस्वकों की भर्ती की गई थी।",
+    "latency_s": 3.133,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "chunki bishakek ki galiyon men kanun lagu karane vale adhikari maujud nahin the to puri rat bade paimane par lut jari rahane ki suchana mili hai",
+    "hyp_norm": "chunki biskek ki galiyon men kanun lagu karane vale adhikari maujud nahin the to puri rat bade paimane par lut jari rahane ki suchana mili hai",
+    "ref_tokens": 26,
+    "tokens_by_cat": {
+     "other": 25,
+     "entity": 1
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "11955664484384129932",
+    "hyp": "चूँकि बिस्केक की गलियों में कानून लागू करने वाले अधिकारी मौजूद नहीं थे, तो पूरी रात बड़े पैमाने पर लूट जारी रहने की सूचना मिली है।",
+    "latency_s": 3.306,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "chunki bishakek ki galiyon men kanun lagu karane vale adhikari maujud nahin the to puri rat bade paimane par lut jari rahane ki suchana mili hai",
+    "hyp_norm": "chunki bishkek ki galiyon men kanun lagu karane vale adhikari maujud nahin the to puri rat bade paimane par lut jari rahane ki suchana mili hai",
+    "ref_tokens": 26,
+    "tokens_by_cat": {
+     "other": 25,
+     "entity": 1
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "4772500206433514802",
+    "hyp": "चूँकि बिश्केक की गलियों में कानून लागू करने वाले अधिकारी मौजूद नहीं थे, तो पूरी रात बड़े पैमाने पर लूट जारी रहने की सूचना मिली है।",
+    "latency_s": 3.343,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "nyu kingadam prachin misravasi apane purvavartiyon ke smarakon se ashcharyachakit the jo tab ek hajar varsh se adhik purane the",
+    "hyp_norm": "nyu kingadam prachin misravasi apane purvavartiyon ke smarakon se ashcharyachakit the jo tab 1000 varsh se adhik purane the",
+    "ref_tokens": 20,
+    "tokens_by_cat": {
+     "entity": 2,
+     "other": 18
+    },
+    "errors_by_cat": {
+     "other": 2
+    },
+    "errors": 2,
+    "wer": 0.1,
+    "entity_hits": [
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 0.9473684210526315,
+    "false_insertions": [],
+    "id": "13971367273404298857",
+    "hyp": "न्यू किंगडम प्राचीन मिस्रवासी अपने पूर्ववर्तियों के स्मारकों से आश्चर्यचकित थे जो तब 1000 वर्ष से अधिक पुराने थे।",
+    "latency_s": 3.608,
+    "extra_passes": 0,
+    "edits": []
+   },
+   {
+    "ref_norm": "prachin roman bhojan men bad ki shatabdiyon men amerika ya eshiya se yurop ae khady padarth shamil nahin ho sakate the",
+    "hyp_norm": "prachin roman bhojan men bad ki shatabdiyon men amerika ya eshiya se yurop ae khady padarth shamil nahin ho sakate the",
+    "ref_tokens": 21,
+    "tokens_by_cat": {
+     "other": 18,
+     "entity": 3
+    },
+    "errors_by_cat": {},
+    "errors": 0,
+    "wer": 0.0,
+    "entity_hits": [
+     true,
+     true,
+     true
+    ],
+    "format_hits": [],
+    "non_latin_share": 1.0,
+    "false_insertions": [],
+    "id": "2540989595543465842",
+    "hyp": "प्राचीन रोमन भोजन में बाद की शताब्दियों में अमेरिका या एशिया से यूरोप आए खाद्य पदार्थ शामिल नहीं हो सकते थे।",
+    "latency_s": 2.343,
+    "extra_passes": 0,
+    "edits": []
+   }
+  ]
+ }
+}

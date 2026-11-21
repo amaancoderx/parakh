@@ -1,0 +1,1103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parakh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #ffffff; --ink: #141413; --ink-2: #3d3d3a; --muted: #73726c; --faint: #9c9a92;
+    --line: #dedcd1; --line-2: #c2c0b6;
+    --page: color-mix(in srgb, #dedcd1 22%, #ffffff);
+    --accent: #2c84db; --accent-ink: hsl(210 73.7% 40.2%); --accent-tint: hsl(211 72% 90%);
+    --brand: #d97757;
+    --pro: #5645a1; --pro-tint: hsl(253 33.3% 91.8%);
+    --warn: #b17506; --warn-tint: color-mix(in srgb, #da9e25 22%, #ffffff);
+    --danger-tint: #f9ecec;
+    --r: 8px; --r-lg: 16px;
+    --shadow-1: 0 1px 2px #0000000d;
+    --shadow-3: rgba(0, 0, 0, 0.05) 0 4px 24px, -8px 20px 48px #00000026;
+    --ease: cubic-bezier(.4, 0, .2, 1); --spring: cubic-bezier(.34, 1.56, .64, 1); --out: cubic-bezier(.16, 1, .3, 1);
+    --serif: "Anthropic Serif", "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --sans: "Anthropic Sans", "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "Anthropic Mono", "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+  main { overflow-x: clip; }
+  body { margin: 0; background: var(--page); color: var(--ink); font: 400 15px/1.55 var(--sans); -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: -0.025em; line-height: 1.05; margin: 0; }
+  p { margin: 0; }
+  .muted { color: var(--muted); }
+  .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .hidden { display: none !important; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  em { font-style: italic; color: var(--brand); }
+
+  /* Rhythm: each screen is one idea, centred, with air around it */
+  .screen { padding: 128px 24px; max-width: 1040px; margin: 0 auto; }
+  .screen.tight { padding-top: 96px; padding-bottom: 96px; }
+  .center { text-align: center; }
+  .headline { font-size: clamp(36px, 5.6vw, 64px); max-width: 18ch; margin: 0 auto; }
+  .headline.xl { font-size: clamp(44px, 7.4vw, 92px); letter-spacing: -0.035em; line-height: 1; max-width: 14ch; }
+  .deck { font-size: clamp(17px, 1.6vw, 21px); color: var(--muted); max-width: 44ch; margin: 24px auto 0; line-height: 1.5; }
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity .7s var(--out), transform .8s var(--out); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (max-width: 640px) { .screen { padding: 80px 20px; } }
+
+  /* Top bar: a wordmark and four words */
+  nav { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--page) 88%, transparent); backdrop-filter: saturate(1.2); border-bottom: 1px solid color-mix(in srgb, var(--line) 60%, transparent); }
+  nav .bar { max-width: 1040px; margin: 0 auto; padding: 0 24px; height: 52px; display: flex; align-items: center; gap: 24px; }
+  .brand { font: 500 19px/1 var(--serif); color: var(--ink); text-decoration: none; margin-right: auto; display: flex; align-items: center; gap: 8px; }
+  .brand svg { width: 18px; height: 18px; color: var(--brand); }
+  nav a.link, nav button.link { font: 500 13px var(--sans); color: var(--muted); text-decoration: none; background: none; border: 0; padding: 0; cursor: pointer; }
+  nav a.link:hover, nav button.link:hover { color: var(--ink); }
+  nav .count { display: inline-block; min-width: 18px; padding: 0 5px; border-radius: 9px; background: var(--ink); color: var(--white); font-size: 11px; line-height: 18px; text-align: center; margin-left: 4px; }
+  @media (max-width: 720px) { nav a.link { display: none; } }
+
+  /* Buttons */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font: 500 14px var(--sans); padding: 12px 22px; border-radius: 9999px; border: 1px solid transparent; cursor: pointer; text-decoration: none; transition: transform .15s var(--ease), background-color .15s var(--ease), border-color .15s var(--ease); }
+  .btn:active { transform: scale(.98); }
+  .btn.primary { background: var(--ink); color: var(--white); }
+  .btn.primary:hover { background: #000; }
+  .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line-2); }
+  .btn.ghost:hover { border-color: var(--ink); }
+  .btn.sm { font-size: 13px; padding: 8px 14px; }
+  .linkbtn { border: 0; background: none; color: var(--muted); font: inherit; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; padding: 0; }
+  .linkbtn:hover { color: var(--ink); }
+
+  /* Screen 1 */
+  .hero { padding-top: 136px; padding-bottom: 96px; }
+  .hero .actions { display: flex; gap: 12px; justify-content: center; margin-top: 40px; flex-wrap: wrap; }
+  .hero .note { margin-top: 56px; font-size: 13px; color: var(--faint); }
+
+  /* Screen 2: one line of a real call, changing */
+  .stage { max-width: 880px; margin: 56px auto 0; }
+  .utter { font: 400 clamp(26px, 3.6vw, 44px)/1.3 var(--serif); letter-spacing: -0.015em; text-align: center; color: var(--ink); }
+  .swap { display: inline-block; position: relative; white-space: nowrap; }
+  .swap .b { display: none; }
+  .swap.doubt .a { color: var(--warn); box-shadow: inset 0 -2px 0 var(--warn); }
+  .swap.on .a { display: none; }
+  .swap.on .b { display: inline-block; animation: pop .4s var(--spring) both; }
+  .swap .b.fix { color: var(--accent-ink); background: var(--accent-tint); border-radius: 6px; padding: 0 8px; }
+  .swap .b.num { color: var(--pro); background: var(--pro-tint); border-radius: 6px; padding: 0 8px; font-family: var(--mono); font-size: .9em; }
+  .swap .b.ask { color: var(--warn); background: var(--warn-tint); border-radius: 6px; padding: 0 8px; }
+  .swap .b.ask::after { content: "?"; font-weight: 600; margin-left: 2px; }
+  .caption { text-align: center; margin-top: 32px; font-size: 14px; color: var(--muted); min-height: 44px; max-width: 56ch; margin-inline: auto; transition: opacity .3s var(--ease); }
+  .who { display: flex; justify-content: center; gap: 24px; margin-top: 40px; font-size: 13px; color: var(--faint); }
+  .who b { font-weight: 500; color: var(--muted); }
+
+  /* Screen 3: try it */
+  .picker { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 48px; }
+  @media (max-width: 760px) { .picker { grid-template-columns: 1fr 1fr; } }
+  .sample { text-align: left; background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 20px; cursor: pointer; font: inherit; color: inherit; transition: transform .2s var(--out), border-color .2s var(--ease); }
+  .sample:hover { transform: translateY(-2px); border-color: var(--line-2); }
+  .sample.on { border-color: var(--ink); }
+  .sample b { display: block; font: 500 17px/1.3 var(--serif); }
+  .sample small { display: block; color: var(--muted); font-size: 12px; margin-top: 6px; }
+  .voice { display: flex; align-items: center; gap: 14px; background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 14px 16px; }
+  .mic { flex: none; width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--ink); color: var(--white); display: grid; place-items: center; cursor: pointer; transition: transform .2s var(--spring); }
+  .mic:hover { transform: scale(1.06); }
+  .mic svg { width: 18px; height: 18px; }
+  .mic.on { background: var(--brand); animation: ring 1.4s var(--ease) infinite; }
+  .voice b { display: block; font: 500 15px var(--sans); }
+  .voice .linkbtn { font-size: 12px; }
+  .meter { display: flex; align-items: center; gap: 2px; height: 16px; }
+  .meter i { width: 2px; height: 4px; border-radius: 2px; background: var(--brand); transition: height .1s linear; }
+  .earlier { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 16px; font-size: 12px; color: var(--faint); }
+  .fine { font-size: 12px; color: var(--faint); margin-top: 16px; max-width: 70ch; }
+  .err { color: var(--warn); background: var(--warn-tint); border-radius: var(--r); padding: 8px 12px; margin-top: 12px; }
+
+  /* The result: verdict, questions, what was agreed, then the words */
+  #result { margin-top: 72px; }
+  .verdict { text-align: center; }
+  .verdict h3 { font-size: clamp(28px, 3.6vw, 40px); }
+  .verdict h3.ok { color: var(--accent-ink); }
+  .verdict p { margin-top: 8px; color: var(--muted); }
+  .verdict .busy { background: linear-gradient(90deg, var(--ink) 30%, var(--faint) 50%, var(--ink) 70%) 0 0 / 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shimmertext 1.2s linear infinite; }
+  .asks, .agreed, .compare, .pop, .receipt, .said { text-align: left; }
+  .asks { max-width: 760px; margin: 32px auto 0; display: grid; gap: 10px; }
+  .ask { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 12px 16px; align-items: center; padding: 14px 18px; background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); animation: rise .4s var(--out) both; animation-delay: calc(var(--i, 0) * 60ms); }
+  .hear { flex: none; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line-2); background: var(--white); color: var(--ink); display: grid; place-items: center; cursor: pointer; transition: transform .2s var(--spring), background-color .2s var(--ease), color .2s var(--ease); }
+  .hear:hover, .hear.on { transform: scale(1.06); background: var(--ink); color: var(--white); }
+  .hear svg { width: 12px; height: 12px; }
+  .ask b { display: block; font-weight: 500; font-size: 16px; }
+  .ask small { color: var(--muted); font-size: 12px; }
+  .ask .opts { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+  .ask .opt { font: 500 14px var(--sans); padding: 8px 16px; border-radius: 9999px; border: 1px solid var(--line-2); background: var(--white); cursor: pointer; }
+  .ask .opt:hover { border-color: var(--ink); }
+  .ask .opt.yes { background: var(--ink); color: var(--white); border-color: var(--ink); }
+  .ask .field { font: inherit; border: 1px solid var(--line); border-radius: 9999px; padding: 8px 16px; min-width: 0; width: 150px; }
+  .ask .field:focus { outline: none; border-color: var(--ink); }
+  @media (max-width: 640px) { .ask { grid-template-columns: 40px 1fr; } .ask .opts { grid-column: 1 / -1; justify-content: flex-start; } }
+  .agreed { max-width: 760px; margin: 48px auto 0; }
+  .agreed h4 { font: 500 13px var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--faint); margin: 0 0 16px; text-align: center; }
+  dl.receipt { display: grid; grid-template-columns: max-content 1fr; gap: 10px 24px; margin: 0; background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 24px; }
+  dl.receipt dt { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .06em; padding-top: 4px; }
+  dl.receipt dd { margin: 0; font-size: 16px; }
+  dl.receipt dd span { display: block; }
+  .said { background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 24px; font: 400 20px/1.6 var(--serif); }
+  .actions-row { display: flex; gap: 10px; align-items: center; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
+  .actions-row audio { height: 36px; width: min(320px, 100%); }
+  .compare { max-width: 1040px; margin: 64px auto 0; }
+  .compare .head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+  .compare .head h4 { font: 500 13px var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--faint); margin: 0; }
+  .seg { display: inline-flex; background: var(--white); border: 1px solid var(--line); border-radius: 9999px; padding: 3px; }
+  .seg button { font: 500 12px var(--sans); color: var(--muted); background: none; border: 0; border-radius: 9999px; padding: 6px 12px; cursor: pointer; }
+  .seg button.on { background: var(--ink); color: var(--white); }
+  .sheet { background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; }
+  .cols.one { grid-template-columns: 1fr; }
+  .cols.one > .base { display: none; }
+  .cols > div { padding: 18px 22px; border-top: 1px solid var(--line); min-width: 0; overflow-wrap: anywhere; font-size: 16px; line-height: 1.8; }
+  .cols > .base { border-right: 1px solid var(--line); color: var(--ink-2); }
+  .cols > .th { border-top: 0; display: flex; align-items: center; justify-content: space-between; font: 500 12px var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--faint); padding: 12px 22px; }
+  .cols > .th.us { color: var(--brand); }
+  .cols select { font: 400 12px var(--sans); color: var(--ink); background: var(--white); border: 1px solid var(--line); border-radius: var(--r); padding: 3px 8px; }
+  @media (max-width: 768px) { .cols { grid-template-columns: 1fr; } .cols > .base { display: none; } }
+  .pending { color: var(--faint); font-style: italic; }
+  .legend { display: flex; gap: 18px; flex-wrap: wrap; justify-content: center; margin-top: 14px; font-size: 12px; color: var(--faint); }
+  .mark { border: 0; font: inherit; color: inherit; padding: 0 5px; margin: 0 -2px; border-radius: 5px; cursor: pointer; background: none; display: inline-block; line-height: 1.45; }
+  .mark.fix { background: var(--accent-tint); color: var(--accent-ink); font-weight: 500; }
+  .mark.num { background: var(--pro-tint); color: var(--pro); font-family: var(--mono); font-size: .92em; }
+  .mark.unsure { background: var(--warn-tint); color: var(--warn); box-shadow: inset 0 -1px 0 var(--warn); }
+  .mark.unsure::after { content: "?"; font-weight: 600; margin-left: 2px; }
+  .mark.wrong { background: var(--danger-tint) linear-gradient(var(--ink-2), var(--ink-2)) no-repeat left 56% / 100% 1px; color: var(--muted); }
+  .pop-in .mark.fix, .pop-in .mark.num, .pop-in .mark.unsure { animation: pop .35s var(--spring) both; animation-delay: calc(var(--i, 0) * 60ms); }
+  button.mark:hover { filter: saturate(1.4); }
+  .legend .mark { cursor: default; }
+  #cols .us-cell { cursor: text; }
+
+  /* Popovers */
+  .pop { position: absolute; z-index: 100; width: 320px; max-width: calc(100vw - 32px); background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow-3); padding: 18px; animation: pop .25s var(--spring) both; transform-origin: top left; }
+  .pop h4 { margin: 0 0 6px; font: 500 17px var(--serif); }
+  .pop p { color: var(--muted); font-size: 12px; margin-bottom: 12px; }
+  .pop table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .pop td { padding: 7px 0; border-top: 1px solid var(--line); vertical-align: top; }
+  .pop td:first-child { color: var(--muted); padding-right: 12px; white-space: nowrap; }
+  .pop td:last-child { font-size: 14px; }
+  .pop .acts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .pop .hear { width: 32px; height: 32px; float: right; margin: -4px 0 8px 8px; }
+  .field { font: inherit; color: var(--ink); background: var(--white); border: 1px solid var(--line); border-radius: 9999px; padding: 8px 14px; min-width: 0; flex: 1 1 120px; }
+  .field:focus { outline: none; border-color: var(--ink); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; max-height: 160px; overflow: auto; }
+  .chip { display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px 4px 12px; border-radius: 9999px; font-size: 12px; font-weight: 500; background: var(--accent-tint); color: var(--accent-ink); }
+  .chip.wait { background: var(--warn-tint); color: var(--warn); }
+  .chip button { border: 0; background: none; color: inherit; cursor: pointer; font-size: 14px; line-height: 1; padding: 0 4px; }
+  .imports { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+
+  /* Screen 4: numbers */
+  .bignum { text-align: center; margin-top: 56px; }
+  .bignum .n { font: 500 clamp(56px, 9vw, 120px)/1 var(--serif); letter-spacing: -0.04em; }
+  .bignum .n small { font-size: .45em; color: var(--faint); letter-spacing: -0.02em; vertical-align: .15em; margin-right: .1em; }
+  .bignum .n .to { color: var(--brand); }
+  .bignum p { margin-top: 16px; color: var(--muted); }
+  .models { max-width: 760px; margin: 64px auto 0; display: grid; gap: 22px; }
+  .model { display: grid; grid-template-columns: 150px 1fr; gap: 16px; align-items: center; }
+  .model .lbl { font: 500 15px var(--serif); }
+  .model .lbl small { display: block; font: 400 12px var(--sans); color: var(--faint); }
+  .model .track { position: relative; height: 36px; }
+  .model .bar { position: absolute; left: 0; height: 12px; border-radius: 6px; width: 0; transition: width 1.1s var(--out); }
+  .model .bar.base { top: 0; background: var(--line-2); }
+  .model .bar.us { bottom: 0; background: var(--brand); }
+  .model .v { position: absolute; font: 500 12px var(--mono); color: var(--muted); transform: translateX(calc(-100% - 8px)); white-space: nowrap; }
+  .model .v.base { top: -2px; } .model .v.us { bottom: -2px; color: var(--brand); }
+  @media (max-width: 560px) { .model { grid-template-columns: 1fr; } }
+  .keyline { display: flex; gap: 20px; justify-content: center; margin-top: 20px; font-size: 12px; color: var(--faint); }
+  .keyline i { display: inline-block; width: 18px; height: 6px; border-radius: 3px; vertical-align: middle; margin-right: 6px; }
+  details.more { max-width: 1040px; margin: 72px auto 0; border-top: 1px solid var(--line); padding-top: 20px; }
+  details.more > summary { cursor: pointer; font: 500 14px var(--sans); color: var(--ink-2); list-style: none; display: flex; align-items: center; gap: 8px; }
+  details.more > summary::before { content: "+"; font-size: 18px; color: var(--faint); width: 16px; }
+  details.more[open] > summary::before { content: "–"; }
+  .tests { margin-top: 24px; }
+  .tests .mhead { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+  .tests .seg { flex-wrap: wrap; }
+  .card { background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 28px; }
+  .big { font: 500 44px/1.1 var(--serif); letter-spacing: -0.03em; }
+  .big small { font-size: 22px; color: var(--faint); letter-spacing: -0.01em; }
+  .big .to { color: var(--brand); }
+  .lead { color: var(--ink-2); margin-top: 10px; max-width: 72ch; font-size: 15px; }
+  .bars { display: grid; grid-template-columns: max-content 1fr max-content; gap: 12px 16px; align-items: center; margin-top: 24px; }
+  .bars .track { height: 8px; border-radius: 4px; background: var(--page); overflow: hidden; }
+  .bars .fill { height: 100%; width: 0; border-radius: 4px; background: var(--line-2); transition: width 1s var(--out); }
+  .bars .fill.us { background: var(--brand); }
+  .bars .us-label { font-weight: 600; }
+  .bars .n { text-align: right; color: var(--muted); font-size: 12px; }
+  @media (max-width: 640px) { .bars { grid-template-columns: 1fr max-content; } .bars .track { grid-column: 1 / -1; order: 3; } }
+  .card details { margin-top: 24px; border-top: 1px solid var(--line); padding-top: 16px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+  .card summary { cursor: pointer; color: var(--ink-2); font-weight: 500; font-size: 13px; }
+  .card details p { margin-top: 12px; max-width: 90ch; }
+
+  /* Screen 5: the diagram */
+  .diagram { max-width: 880px; margin: 56px auto 0; }
+  .diagram svg { display: block; width: 100%; height: auto; font-family: var(--sans); }
+  .diagram .plate { fill: var(--white); stroke: var(--ink-2); stroke-width: 1; }
+  .diagram .plate.last { stroke: var(--brand); stroke-width: 1.4; }
+  .diagram .thread { stroke: var(--line-2); stroke-width: 1; stroke-dasharray: 2 4; fill: none; }
+  .diagram .exit { stroke: var(--line-2); stroke-width: 1; fill: none; marker-end: url(#arrow); }
+  .diagram .name { font: 500 16px var(--serif); fill: var(--ink); }
+  .diagram .what { font-size: 11px; fill: var(--muted); }
+  .diagram .count { font: 500 12px var(--mono); fill: var(--ink-2); }
+  .diagram .count.soft { fill: var(--muted); font-weight: 400; }
+  .diagram .num { fill: var(--ink); }
+  .diagram .num text { font: 500 12px var(--sans); fill: var(--white); text-anchor: middle; }
+  .diagram .num.last { fill: var(--brand); }
+  .diagram .bead { fill: var(--brand); }
+  .diagram .bead.ghost { fill: var(--faint); }
+  .diagram .arrowhead { fill: var(--line-2); }
+
+  /* Screen 6: builders */
+  pre.code { margin: 40px auto 0; max-width: 760px; background: var(--ink); color: #dedcd1; border-radius: var(--r-lg); padding: 24px; font: 400 12.5px/1.7 var(--mono); overflow-x: auto; white-space: pre; text-align: left; }
+  pre.code i { font-style: normal; color: #9c9a92; }
+  pre.code b { font-weight: 400; color: #e8a085; }
+  pre.code u { text-decoration: none; color: #ffffff; }
+  .facts { list-style: none; margin: 32px auto 0; padding: 0; max-width: 760px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; text-align: left; }
+  .facts b { display: block; font: 500 16px var(--serif); margin-bottom: 4px; }
+  .facts li { color: var(--muted); font-size: 13px; }
+  @media (max-width: 640px) { .facts { grid-template-columns: 1fr; } }
+  code { font: 400 12px var(--mono); background: var(--white); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; }
+  .keyrow { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; margin-top: 32px; font-size: 12px; color: var(--faint); }
+
+  footer { padding: 48px 24px 64px; text-align: center; color: var(--faint); font-size: 12px; }
+  footer p { max-width: 70ch; margin: 8px auto 0; }
+
+  /* Language */
+  :lang(hi) h1, :lang(hi) h2, :lang(hi) h3, :lang(hi) .utter { line-height: 1.3; letter-spacing: 0; }
+  :lang(hi) .headline.xl { line-height: 1.2; }
+
+  @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @keyframes pop { from { opacity: 0; transform: scale(.85); } to { opacity: 1; transform: scale(1); } }
+  @keyframes shimmertext { from { background-position: 200% 0; } to { background-position: 0 0; } }
+  @keyframes ring { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, #d97757 50%, transparent); } 100% { box-shadow: 0 0 0 16px color-mix(in srgb, #d97757 0%, transparent); } }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+    .verdict .busy { color: var(--muted); background: none; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="bar">
+    <a class="brand" href="#top" aria-label="Parakh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M9 3 7.5 9 12 21l4.5-12L15 3"/></svg>Parakh</a>
+    <a class="link" href="#try" data-t="nav_try"></a>
+    <a class="link" href="#numbers" data-t="nav_numbers"></a>
+    <a class="link" href="#how" data-t="nav_how"></a>
+    <a class="link" href="#api">API</a>
+    <button class="link" id="namesbtn" aria-haspopup="dialog"><span data-t="names"></span><span class="count" id="namescount">0</span></button>
+    <button class="link" id="langbtn" aria-label="Switch language / भाषा बदलिए">हिंदी</button>
+  </div>
+</nav>
+
+<main id="top">
+  <header class="screen hero center">
+    <h1 class="headline xl" data-t="h1"></h1>
+    <p class="deck" data-t="sub"></p>
+    <div class="actions">
+      <a class="btn primary" href="#try" data-t="cta_try"></a>
+      <a class="btn ghost" href="#numbers" data-t="cta_numbers"></a>
+    </div>
+    <p class="note" data-t="hero_note"></p>
+  </header>
+
+  <section class="screen center" id="see">
+    <h2 class="headline reveal" data-t="see_h"></h2>
+    <p class="deck reveal" data-t="see_p"></p>
+    <div class="stage reveal" id="scene" role="img" aria-label="One sentence from a real trade call. As a speech model heard it, then as Parakh writes it: Aishar becomes Eicher, the spoken numbers become digits, and the name Mohan bhai is marked as a question.">
+      <p class="utter">Kaun? <span class="swap" data-doubt="4" data-step="5"><span class="a">Mohan bhai</span><span class="b ask">Mohan bhai</span></span>? … Teen ka kyon lo phir? <span class="swap" data-doubt="1" data-step="2"><span class="a">Aishar</span><span class="b fix">Eicher</span></span> mein lo to chaar ka hi lo … humse <span class="swap" data-step="3"><span class="a">chaalis</span><span class="b num">40</span></span> set ya <span class="swap" data-step="3"><span class="a">bayalis</span><span class="b num">42</span></span> set.</p>
+      <p class="caption" id="caption"></p>
+      <div class="who"><span><b>Saaras v4</b> Aishar</span><span><b>Saaras v3</b> Aishwarya</span><span><b>gpt-transcribe</b> आईशर</span></div>
+    </div>
+  </section>
+
+  <section class="screen center" id="try">
+    <h2 class="headline reveal" data-t="try_h"></h2>
+    <p class="deck reveal" data-t="try_p"></p>
+    <div class="picker reveal">
+      <span id="samples" style="display:contents"></span>
+      <div class="voice">
+        <button class="mic" id="rec" aria-label="Record"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+        <div>
+          <b id="recinfo" data-t="voice"></b>
+          <div class="meter hidden" id="meter" aria-hidden="true"></div>
+          <button class="linkbtn" id="pick" data-t="upload"></button>
+          <input type="file" id="file" accept="audio/*,video/mp4" class="hidden">
+        </div>
+      </div>
+    </div>
+    <div class="earlier" id="earlier"></div>
+    <p class="fine" data-t="consent"></p>
+    <div class="err hidden" id="uploaderr"></div>
+
+    <div id="result" class="hidden">
+      <div class="verdict" id="verdict"></div>
+      <div class="asks" id="asks"></div>
+      <div class="agreed" id="agreed"></div>
+      <div class="actions-row hidden" id="share">
+        <a class="btn primary sm" id="wa" target="_blank" rel="noopener" data-t="whatsapp"></a>
+        <button class="btn ghost sm" id="copy" data-t="copy"></button>
+        <audio id="player" controls preload="metadata"></audio>
+      </div>
+      <div class="compare">
+        <div class="head">
+          <h4 data-t="word_for_word"></h4>
+          <div class="seg" id="view" role="tablist"><button data-view="two" class="on" data-t="side_by_side"></button><button data-view="one" data-t="only_parakh"></button></div>
+        </div>
+        <div class="sheet"><div class="cols" id="cols"></div></div>
+        <div class="legend">
+          <span><span class="mark wrong" data-t="legend_wrong"></span></span>
+          <span><span class="mark fix" data-t="legend_fix"></span></span>
+          <span><span class="mark num">6,600</span></span>
+          <span><span class="mark unsure" data-t="legend_unsure"></span></span>
+          <span data-t="legend_hint"></span>
+        </div>
+      </div>
+      <div class="err hidden" id="joberr"></div>
+    </div>
+  </section>
+
+  <section class="screen center" id="numbers">
+    <h2 class="headline reveal">Measured, not promised.</h2>
+    <p class="deck reveal">189 public Hindi recordings it had never seen. Run once, after the rules were frozen.</p>
+    <div class="bignum reveal" id="bignum"></div>
+    <div class="models reveal" id="models"></div>
+    <div class="keyline reveal"><span><i style="background:var(--line-2)"></i>model alone</span><span><i style="background:var(--brand)"></i>with Parakh</span></div>
+    <details class="more">
+      <summary>Every test, including where it ties or loses</summary>
+      <div class="tests">
+        <div class="mhead"><span class="muted" id="tests-note"></span><div class="seg" id="modes" role="tablist" aria-label="Which test to show"></div></div>
+        <div class="card">
+          <div class="big" id="big"></div>
+          <p class="lead" id="lead"></p>
+          <div class="bars" id="bars"></div>
+          <details><summary>How this was measured</summary><p id="fine5"></p><p id="fine1"></p><p id="fine2"></p><p id="fine3"></p><p id="fine4"></p></details>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <section class="screen center" id="how">
+    <h2 class="headline reveal">Five layers. Most words never notice.</h2>
+    <p class="deck reveal">A doubted name is caught, checked against the audio and the people you know, and written only when it holds. Everything else passes straight through.</p>
+    <div class="diagram reveal" id="diagram"></div>
+    <p class="fine center reveal" id="flow" style="margin-inline:auto"></p>
+  </section>
+
+  <section class="screen center" id="api">
+    <h2 class="headline reveal">One changed URL.</h2>
+    <p class="deck reveal">The same request and answer shape as Sarvam's <code>/speech-to-text</code>. The checks ride along under <code>parakh</code>.</p>
+    <pre class="code reveal" id="curl"></pre>
+    <ul class="facts reveal">
+      <li><b>Draft first</b>With <code>stream=true</code> the base transcript arrives at the model's own speed; the checked one follows about 0.6 s later.</li>
+      <li><b>Your model, kept</b>Send its text as <code>transcript</code> and Parakh checks that instead of producing its own.</li>
+      <li><b>Clear, or confirm</b>Every answer says whether anything is left to settle with the speaker, and what to ask.</li>
+    </ul>
+    <div class="keyrow reveal"><button class="btn ghost sm" id="getkey">Get a key</button><span>10 free minutes. About ₹1.4 a minute to run at list prices.</span><span id="keyinfo" class="mono"></span></div>
+  </section>
+</main>
+
+<footer>
+  <p id="health">Parakh · परख</p>
+  <p>Recordings go to Sarvam and OpenAI to be transcribed and are deleted from this server after a day. Names are kept only when you confirm them. The three sample calls are real, played with the callers' permission.</p>
+</footer>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const user = localStorage.parakhUser || (localStorage.parakhUser = "u-" + Math.random().toString(36).slice(2, 10));
+const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let lang = localStorage.parakhLang === "hi" ? "hi" : "en";
+let job = null, current = null, timer = null, last = null, baseChoice = 0, drawn = {}, infos = [], names = { verified: [], candidates: [] }, sb = {}, stopTimer = 0;
+let source = null, kept = {};  // answers given on this recording, so they survive when it is checked again
+
+/* ---- two languages for the part a trader uses; the measurements below stay in English ---- */
+const T = {
+  en: {
+    h1: "Names and numbers, <em>checked</em> before you act on them.",
+    sub: "Parakh sits after any speech model, without changing it. It checks every name and amount against the audio and the people you know, fixes what it can prove, and asks you about the rest. 60% fewer name errors on three models, none added.",
+    cta_try: "Try it", cta_numbers: "See the numbers", nav_try: "Try it", nav_numbers: "Numbers", nav_how: "How it works",
+    hero_note: "Measured on Saaras v3, Saaras v4 and gpt-transcribe, on 189 recordings it had never seen.",
+    see_h: "Hear it the way a model does.", see_p: "One sentence from a real trade call. First as the model wrote it, then as Parakh writes it.",
+    cap: ["", "Three recognisers heard it three ways: Aishar, Aishwarya, आईशर.", "It sounds like Eicher, a name you know, and the audio agrees. Written.", "Spoken numbers become digits, by rule. No language model touches them.", "Mohan bhai: no other recogniser backs it, and nothing you confirmed settles it.", "So Parakh asks instead of guessing. Your answer is kept for next time."],
+    try_p: "Three real calls, or your own voice.", side_by_side: "Side by side", only_parakh: "Parakh only", agreed: "What was agreed", said_h: "What was said",
+    scene_note: "Call 1, 0:05 to 1:10", scene_base: "The problem: a speech model on its own", scene_us: "The fix: the same model, with Parakh",
+    order: "Order note", o_for: "For", o_truck: "Truck", o_sets: "Sets", stamp_no: "Acted on · 2 names wrong", stamp_yes: "Checked, then acted on",
+    n_heard: "Three recognisers heard: Aishar · Aishwarya · आईशर", n_sounds: "Sounds like Eicher, a name you know", n_digits: "Numbers written as digits, by rule",
+    n_asks: "Asks: Mohan bhai or Mohammad bhai?", n_chosen: "You tapped Mohammad bhai",
+    try_h: "Try it.", earlier: "Earlier:",
+    consent: "The three calls are real, played with the callers' permission. Use your own recordings only if everyone on the call agreed to be recorded; the audio goes to Sarvam and OpenAI to be transcribed.", fix_word: "Wrong word? Type what was said, and Parakh will know it next time.",
+    clear_proof: (a, b) => `On recordings it had never seen, ${a} of ${b} like this had every name right.`,
+    voice: "Your voice", upload: "or upload a file", names: "Names I know", word_for_word: "The call, word for word",
+    base: "Base model", legend_wrong: "misheard", legend_fix: "checked", legend_unsure: "unsure", legend_hint: "Click any highlight for the evidence.",
+    busy: { queued: "Starting…", listening: "Listening…", searching: "Looking up what it could be…", checking: "Hearing again…", summarising: "Writing the summary…" },
+    failed: "Something went wrong", waiting: "The summary appears here when the call has been checked.",
+    fixed: (n) => `${n} ${n === 1 ? "name fixed" : "names fixed"}`, digits: (n) => `${n} ${n === 1 ? "number as digits" : "numbers as digits"}`,
+    heard_in: (s) => `heard in ${s} s`, checked_in: (s) => `checked in ${s} s`,
+    clear: "Nothing to confirm.", toconfirm: (n) => `${n} ${n === 1 ? "thing" : "things"} to confirm before you act`,
+    q_who: "Who was it?", q_name: (n) => `Is “${n}” right?`, q_name_sub: (h) => `heard as “${h}”`, q_number: "Which number was it?", q_word: "What was said here?",
+    listen: "Listen to it", yes: "Yes", no: "No", other: "someone else", type_it: "or type what was said", save: "Save", at: (c) => `at ${c} in the recording`,
+    whatsapp: "Send on WhatsApp", copy: "Copy", copied: "Copied",
+    rows: { about: "About", people: "People", items: "Items", transport: "Transport", when: "When", money: "Money", next: "Next", check: "Left open in the call" },
+    pop_which: "Which is it?", pop_disagree: "The recognisers disagree here, so Parakh asks instead of guessing.",
+    pop_digits: "Written as digits by rule, never by a language model.", pop_disagree_number: "The recognisers heard different numbers here; the speakers' own arithmetic settled it.", pop_chosen: "You chose this.", said: "Said", remember: "Yes, remember it", nothing: "nothing",
+    names_help: "Like the contacts on a phone. Parakh trusts a name only after you add or confirm it.", names_add: "Add a name, press Enter",
+    names_file: "Add from a contacts file", names_phone: "Pick from phone contacts", names_forget: "Forget everything about me",
+    names_added: (n) => `${n} ${n === 1 ? "name" : "names"} added. Only names are kept, never numbers.`, more: (n) => `and ${n} more`,
+    recording: (c) => `Recording ${c}`, nomic: "No microphone",
+  },
+  hi: {
+    h1: "नाम और रकम, काम करने से पहले <em>जाँचे हुए।</em>",
+    sub: "परख किसी भी स्पीच मॉडल के बाद बैठता है, उसे बदले बिना। हर नाम और रकम को आवाज़ और आपके जाने-पहचाने लोगों से मिलाता है, जो साबित हो उसे ठीक करता है, और बाकी आपसे पूछ लेता है। तीन मॉडलों पर नाम की गलतियाँ 60% कम, नई एक भी नहीं।",
+    cta_try: "खुद आज़माइए", cta_numbers: "आँकड़े देखिए", nav_try: "आज़माइए", nav_numbers: "आँकड़े", nav_how: "कैसे काम करता है",
+    hero_note: "Saaras v3, Saaras v4 और gpt-transcribe पर, 189 ऐसी रिकॉर्डिंग पर नापा गया जो इसने पहले कभी नहीं सुनी थीं।",
+    see_h: "जैसे मशीन सुनती है, वैसे सुनिए।", see_p: "एक असली व्यापारी कॉल का एक वाक्य। पहले जैसा मॉडल ने लिखा, फिर जैसा परख लिखता है।",
+    cap: ["", "तीन मॉडलों ने तीन तरह सुना: Aishar, Aishwarya, आईशर।", "यह Eicher जैसा लगता है, जो नाम आप जानते हैं, और आवाज़ भी यही कहती है। लिख दिया।", "बोली गई रकम नियम से अंकों में। कोई AI मॉडल इन्हें नहीं छूता।", "Mohan bhai: कोई दूसरा मॉडल इसकी पुष्टि नहीं करता, और आपने भी कुछ पक्का नहीं किया।", "इसलिए परख अंदाज़ा नहीं लगाता, पूछता है। आपका जवाब अगली बार याद रहेगा।"],
+    try_p: "तीन असली कॉल, या अपनी आवाज़।", side_by_side: "आमने-सामने", only_parakh: "सिर्फ़ परख", agreed: "क्या तय हुआ", said_h: "क्या कहा गया",
+    scene_note: "कॉल 1, 0:05 से 1:10", scene_base: "दिक्कत: अकेला स्पीच मॉडल", scene_us: "हल: वही मॉडल, परख के साथ",
+    order: "ऑर्डर की पर्ची", o_for: "किसके लिए", o_truck: "गाड़ी", o_sets: "सेट", stamp_no: "काम हो गया · 2 नाम गलत", stamp_yes: "जाँचा, फिर काम हुआ",
+    n_heard: "तीन मॉडलों ने सुना: Aishar · Aishwarya · आईशर", n_sounds: "Eicher जैसा सुनाई देता है, जो नाम आप जानते हैं", n_digits: "रकम नियम से अंकों में लिखी गई",
+    n_asks: "पूछता है: Mohan bhai या Mohammad bhai?", n_chosen: "आपने Mohammad bhai चुना",
+    try_h: "खुद आज़माइए।", earlier: "पहले की कॉल:",
+    consent: "ये तीनों कॉल असली हैं और बोलने वालों की इजाज़त से चलाई गई हैं। अपनी रिकॉर्डिंग तभी डालिए जब कॉल पर सबने रिकॉर्ड करने की हामी दी हो; आवाज़ लिखने के लिए Sarvam और OpenAI को भेजी जाती है।", fix_word: "गलत शब्द? जो कहा गया वह लिखिए, परख अगली बार याद रखेगा।",
+    clear_proof: (a, b) => `जिन रिकॉर्डिंग पर इसे कभी नहीं परखा गया था, उनमें ऐसी ${b} में से ${a} में हर नाम सही था।`,
+    voice: "बोलकर बताइए", upload: "या फ़ाइल चुनिए", names: "जाने-पहचाने नाम", word_for_word: "पूरी बातचीत, शब्द-दर-शब्द",
+    base: "साधारण मॉडल", legend_wrong: "गलत सुना", legend_fix: "जाँचा हुआ", legend_unsure: "पक्का नहीं", legend_hint: "किसी भी रंगीन शब्द को दबाकर सबूत देखिए।",
+    busy: { queued: "शुरू हो रहा है…", listening: "सुन रहा है…", searching: "नाम खोज रहा है…", checking: "दोबारा सुन रहा है…", summarising: "सार लिख रहा है…" },
+    failed: "कुछ गड़बड़ हो गई", waiting: "कॉल जाँच लेने के बाद उसका सार यहाँ आएगा।",
+    fixed: (n) => `${n} नाम सुधारे`, digits: (n) => `${n} रकम अंकों में`,
+    heard_in: (s) => `${s} सेकंड में सुना`, checked_in: (s) => `${s} सेकंड में जाँचा`,
+    clear: "पक्का करने को कुछ नहीं।", toconfirm: (n) => `काम से पहले ${n} ${n === 1 ? "बात" : "बातें"} पक्की कर लीजिए`,
+    q_who: "कौन था?", q_name: (n) => `क्या “${n}” सही है?`, q_name_sub: (h) => `सुनाई दिया “${h}”`, q_number: "कौन-सी संख्या थी?", q_word: "यहाँ क्या कहा गया?",
+    listen: "सुनिए", yes: "हाँ", no: "नहीं", other: "कोई और", type_it: "या जो कहा गया वह लिखिए", save: "ठीक है", at: (c) => `रिकॉर्डिंग में ${c} पर`,
+    whatsapp: "WhatsApp पर भेजें", copy: "कॉपी करें", copied: "कॉपी हो गया",
+    rows: { about: "बात", people: "लोग", items: "माल", transport: "गाड़ी", when: "कब", money: "पैसे", next: "आगे", check: "कॉल में तय नहीं हुआ" },
+    pop_which: "कौन-सा सही है?", pop_disagree: "यहाँ मॉडलों ने अलग-अलग सुना, इसलिए परख अंदाज़ा नहीं लगाता, आपसे पूछता है।",
+    pop_digits: "अंक नियम से लिखे गए हैं, किसी AI मॉडल ने नहीं।", pop_disagree_number: "यहाँ मॉडलों ने अलग-अलग रकम सुनी; बोलने वालों के अपने हिसाब ने इसे तय किया।", pop_chosen: "यह आपने चुना।", said: "कहा गया", remember: "हाँ, याद रखो", nothing: "कुछ नहीं",
+    names_help: "जैसे फ़ोन के कॉन्टैक्ट। परख किसी नाम पर तभी भरोसा करता है जब आप उसे जोड़ें या हाँ कहें।", names_add: "नाम लिखकर Enter दबाइए",
+    names_file: "कॉन्टैक्ट फ़ाइल से जोड़ें", names_phone: "फ़ोन के कॉन्टैक्ट से चुनें", names_forget: "मेरी सारी जानकारी मिटा दो",
+    names_added: (n) => `${n} नाम जुड़े। सिर्फ़ नाम रखे जाते हैं, नंबर नहीं।`, more: (n) => `और ${n}`,
+    recording: (c) => `रिकॉर्ड हो रहा है ${c}`, nomic: "माइक नहीं मिला",
+  },
+};
+const t = (k, ...a) => { const v = T[lang][k] ?? T.en[k]; return typeof v === "function" ? v(...a) : v; };
+const clock = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+function applyLang() {
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-t]").forEach((el) => (el.innerHTML = t(el.dataset.t)));
+  $("langbtn").textContent = lang === "en" ? "हिंदी" : "English";
+  drawn = {}; infos = []; $("cols").innerHTML = "";
+  if (job) render(job);
+}
+$("langbtn").onclick = () => {
+  lang = lang === "en" ? "hi" : "en";
+  localStorage.parakhLang = lang;
+  applyLang();
+  if (job && job.deal_sheet && last) last();  // the summary is written again, in this language
+};
+
+async function api(path, opts = {}) {
+  const r = await fetch(path, opts);
+  if (!r.ok) throw Object.assign(new Error((await r.json().catch(() => ({}))).detail || r.statusText), { status: r.status });
+  return r.json();
+}
+const post = (path, body) => api(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+
+/* ---- popovers ----------------------------------------------------------- */
+function closePop() { document.querySelector(".pop")?.remove(); }
+function openPop(anchor, html) {
+  closePop();
+  const pop = document.createElement("div");
+  pop.className = "pop"; pop.innerHTML = html;
+  document.body.appendChild(pop);
+  const r = anchor.getBoundingClientRect();
+  pop.style.top = scrollY + r.bottom + 8 + "px";
+  pop.style.left = Math.max(16, Math.min(scrollX + r.left, scrollX + innerWidth - pop.offsetWidth - 16)) + "px";
+  return pop;
+}
+document.addEventListener("keydown", (e) => e.key === "Escape" && closePop());
+document.addEventListener("click", (e) => {
+  const hear = e.target.closest(".hear");
+  if (hear) return listen(+hear.dataset.at, hear);
+  if (e.target.closest(".pop") || e.target.closest("#namesbtn")) return;
+  const m = e.target.closest("[data-info]");
+  if (m) return evidence(m);
+  closePop();
+});
+
+/* ---- listen and choose: play the few seconds around a doubtful word ----- */
+const PLAY = `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3.5v9l7-4.5z"/></svg>`;
+function listen(at, button) {
+  const p = $("player"), from = Math.max(0, at - 3);  // the time is an estimate, so play a generous seven seconds
+  const go = () => {
+    p.currentTime = from;
+    p.play().catch(() => {});
+    document.querySelectorAll(".hear.on").forEach((b) => b.classList.remove("on"));
+    button?.classList.add("on");
+    clearTimeout(stopTimer);
+    stopTimer = setTimeout(() => { p.pause(); button?.classList.remove("on"); }, 7000);
+  };
+  if (p.readyState >= 1) go(); else { p.addEventListener("loadedmetadata", go, { once: true }); p.load(); }
+}
+
+/* ---- names I know, typed in or brought from a contact list -------------- */
+async function loadNames() {
+  names = await api(`/api/users/${user}/memory`);
+  $("namescount").textContent = names.verified.length + names.candidates.length;
+}
+async function nameAction(name, action, rerun) {
+  closePop();
+  await post(`/api/users/${user}/names`, { name, action });
+  await loadNames();
+  if (rerun && last) last();
+  else if (job) render(job);
+}
+function parseContacts(text) {  // a phone's .vcf export, a CSV with a name column, or one name per line; names only
+  const out = [];
+  if (/BEGIN:VCARD/i.test(text)) {
+    const lines = text.replace(/=\r?\n/g, "").replace(/\r?\n[ \t]/g, "").split(/\r?\n/);
+    for (const line of lines) {
+      const m = line.match(/^FN([^:]*):(.*)$/i);
+      if (!m) continue;
+      let v = m[2];
+      if (/QUOTED-PRINTABLE/i.test(m[1])) {  // how Android writes names that are not plain ASCII
+        const bytes = [];
+        v.replace(/=([0-9A-F]{2})|([\s\S])/gi, (_, hex, ch) => { hex ? bytes.push(parseInt(hex, 16)) : bytes.push(...new TextEncoder().encode(ch)); return ""; });
+        v = new TextDecoder().decode(new Uint8Array(bytes));
+      }
+      out.push(v.replace(/\\([,;])/g, "$1").trim());
+    }
+  } else {
+    const rows = text.split(/\r?\n/).filter((r) => r.trim());
+    const cells = (r) => r.split(/[,;\t]/).map((c) => c.replace(/^"|"$/g, "").trim());
+    const col = cells(rows[0] || "").findIndex((c) => /^(full |display )?name$/i.test(c));
+    for (const r of rows.slice(col >= 0 ? 1 : 0)) out.push(cells(r)[Math.max(col, 0)]);
+  }
+  return out.filter(Boolean);
+}
+async function importNames(list) {
+  const r = await post(`/api/users/${user}/names/import`, { names: list });
+  await loadNames();
+  return r.added;
+}
+function namesPanel(note = "") {
+  const chip = (n, wait) => `<span class="chip${wait ? " wait" : ""}">${wait ? "" : "✓ "}${esc(n)}${wait ? " ?" : ""}<button data-drop="${esc(n)}" aria-label="Remove ${esc(n)}">×</button></span>`;
+  const shown = names.verified.slice(0, 30), hidden = names.verified.length - shown.length;
+  const phone = "contacts" in navigator && "ContactsManager" in window;  // Chrome on Android
+  const pop = openPop($("namesbtn"),
+    `<h4>${t("names")}</h4><p>${t("names_help")}</p>` +
+    `<div class="chips">${names.candidates.map((n) => chip(n, true)).join("")}${shown.map((n) => chip(n)).join("")}${hidden > 0 ? `<span class="chip">${t("more", hidden)}</span>` : ""}</div>` +
+    `<div class="acts"><input class="field" id="addname" placeholder="${t("names_add")}" aria-label="${t("names_add")}"></div>` +
+    `<div class="imports"><button class="btn ghost" id="fromfile">${t("names_file")}</button>${phone ? `<button class="btn ghost" id="fromphone">${t("names_phone")}</button>` : ""}` +
+    `<input type="file" id="contactsfile" accept=".vcf,.csv,.txt,text/vcard,text/x-vcard,text/csv,text/plain" class="hidden"></div>` +
+    (note ? `<p style="margin:12px 0 0">${esc(note)}</p>` : "") +
+    `<div class="acts"><button class="linkbtn" id="forget" style="font-size:12px">${t("names_forget")}</button></div>`);
+  const added = async (list) => { const n = await importNames(list); namesPanel(t("names_added", n)); if (job && last) last(); };
+  pop.querySelectorAll("[data-drop]").forEach((b) => (b.onclick = () => nameAction(b.dataset.drop, "forget").then(() => namesPanel())));
+  pop.querySelector("#addname").addEventListener("keydown", (ev) => {
+    if (ev.key === "Enter" && ev.target.value.trim()) nameAction(ev.target.value.trim(), "confirm", !!job);
+  });
+  pop.querySelector("#fromfile").onclick = () => pop.querySelector("#contactsfile").click();
+  pop.querySelector("#contactsfile").onchange = async (ev) => { const f = ev.target.files[0]; if (f) added(parseContacts(await f.text())); };
+  pop.querySelector("#fromphone")?.addEventListener("click", async () => {
+    try { added((await navigator.contacts.select(["name"], { multiple: true })).flatMap((c) => c.name || [])); } catch (e) { /* the picker was closed */ }
+  });
+  pop.querySelector("#forget").onclick = async () => { closePop(); await api(`/api/users/${user}`, { method: "DELETE" }); loadNames(); };
+  pop.querySelector("#addname").focus();
+}
+$("namesbtn").onclick = () => namesPanel();
+
+/* ---- starting a job ----------------------------------------------------- */
+function from(what) { if (source !== what) { source = what; kept = {}; } }
+async function startSample(id) {
+  from("sample:" + id);
+  last = () => startSample(id);
+  document.querySelectorAll(".sample").forEach((b) => b.classList.toggle("on", b.dataset.id === id));
+  begin(await post("/api/jobs/sample", { sample: id, user, lang }));
+}
+async function startUpload(blob, name) {
+  from(blob);
+  last = () => startUpload(blob, name);
+  document.querySelectorAll(".sample").forEach((b) => b.classList.remove("on"));
+  $("uploaderr").classList.add("hidden");
+  const body = new FormData();
+  body.append("file", blob, name);
+  body.append("user", user);
+  body.append("lang", lang);
+  try {
+    begin(await api("/api/jobs", { method: "POST", body, headers: localStorage.parakhCode ? { "X-Access-Code": localStorage.parakhCode } : {} }));
+  } catch (e) {
+    if (e.status === 401) {
+      const code = prompt("Access code for processing new audio:");
+      if (code) { localStorage.parakhCode = code; return startUpload(blob, name); }
+    }
+    $("uploaderr").textContent = e.message;
+    $("uploaderr").classList.remove("hidden");
+  }
+}
+function begin({ id }) {
+  clearInterval(timer);
+  current = id; baseChoice = 0; drawn = {}; infos = []; closePop();
+  $("cols").innerHTML = ""; $("verdict").innerHTML = ""; $("asks").innerHTML = ""; $("agreed").innerHTML = ""; $("share").classList.add("hidden");
+  $("result").classList.remove("hidden");
+  $("player").src = `/api/jobs/${id}/audio`;
+  const poll = async () => {
+    const fresh = await api(`/api/jobs/${id}`);
+    if (current !== id) return;  // a newer recording was started meanwhile
+    job = fresh;
+    render(job);
+    if (job.status === "done" || job.status === "error") {
+      clearInterval(timer);
+      for (const q of job.questions || []) {  // answers given before this re-check still stand
+        if (q.kind === "number" && !q.answer && kept[q.key]) job = await post(`/api/jobs/${id}/answers`, { question: q.id, value: kept[q.key] });
+      }
+      loadNames().then(() => current === id && render(job));
+      earlier();
+    }
+  };
+  poll();
+  timer = setInterval(poll, 300);
+  $("result").scrollIntoView({ behavior: calm ? "auto" : "smooth", block: "start" });
+}
+
+/* ---- recording, with a live level meter --------------------------------- */
+$("meter").innerHTML = "<i></i>".repeat(20);
+let recorder = null, chunks = [], raf = 0, started = 0;
+$("rec").onclick = async () => {
+  if (recorder) { recorder.stop(); return; }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const ctx = new AudioContext(), analyser = ctx.createAnalyser();
+    analyser.fftSize = 64;
+    ctx.createMediaStreamSource(stream).connect(analyser);
+    const levels = new Uint8Array(analyser.frequencyBinCount), meter = [...$("meter").children];
+    const draw = () => {
+      analyser.getByteFrequencyData(levels);
+      meter.forEach((b, i) => (b.style.height = 4 + Math.round((levels[i] / 255) * 12) + "px"));
+      $("recinfo").textContent = t("recording", clock((Date.now() - started) / 1000));
+      raf = requestAnimationFrame(draw);
+    };
+    recorder = new MediaRecorder(stream);
+    chunks = [];
+    recorder.ondataavailable = (e) => chunks.push(e.data);
+    recorder.onstop = () => {
+      cancelAnimationFrame(raf); ctx.close();
+      stream.getTracks().forEach((s) => s.stop());
+      const type = recorder.mimeType || "audio/webm";
+      recorder = null;
+      $("rec").classList.remove("on"); $("meter").classList.add("hidden"); $("pick").classList.remove("hidden");
+      $("recinfo").textContent = t("voice");
+      startUpload(new Blob(chunks, { type }), type.includes("mp4") ? "recording.mp4" : "recording.webm");
+    };
+    started = Date.now();
+    recorder.start();
+    $("rec").classList.add("on"); $("meter").classList.remove("hidden"); $("pick").classList.add("hidden");
+    draw();
+  } catch (e) { $("recinfo").textContent = `${t("nomic")}: ${e.message}`; }
+};
+$("pick").onclick = () => $("file").click();
+$("file").onchange = (e) => { const f = e.target.files[0]; if (f) startUpload(f, f.name); e.target.value = ""; };
+
+/* ---- rendering ---- */
+function words(list, seg) {  // each highlight also carries roughly when it is said, for "listen to it"
+  const total = Math.max(1, list.reduce((n, w) => n + w.t.length + 1, 0));
+  let n = 0, seen = 0;
+  return list.map((w) => {
+    const at = seg ? (seg.start_s + (seg.seconds * seen) / total).toFixed(1) : "";
+    seen += w.t.length + 1;
+    if (!w.c) return esc(w.t);
+    infos.push({ ...w, at });
+    const tail = w.c === "unsure" ? (w.tail || "").replace(/^\?/, "") : w.tail || "";  // the highlight already shows a question mark
+    return `<button class="mark ${w.c}" style="--i:${n++}" data-info="${infos.length - 1}">${esc(w.t)}</button>${esc(tail)}`;
+  }).join(" ");
+}
+function setHTML(el, key, html) {  // only touch the page when something changed, so animations play once
+  if (drawn[key] === html) return false;
+  drawn[key] = html;
+  el.innerHTML = html;
+  return true;
+}
+const waiting = (name) => (job?.to_confirm || []).includes(name) && !names.verified.includes(name);
+const openQuestions = (j) => (j.questions || []).filter((q) => (q.kind === "number" ? !q.answer : q.kind === "name" ? !names.verified.includes(q.name) : true));
+const plain = (x) => (x && typeof x === "object" ? Object.values(x).filter(Boolean).join(" · ") : x);  // the model sometimes returns small objects
+function sheetRows(d) {
+  const R = t("rows"), rows = [], add = (k, v) => { const list = (Array.isArray(v) ? v : [v]).map(plain).filter(Boolean); if (list.length) rows.push([k, list]); };
+  add(R.about, d.summary); add(R.people, d.people);
+  add(R.items, (d.items || []).map((i) => [i.what, i.details, i.quantity, i.rate].filter(Boolean).join(" · ")));
+  add(R.transport, d.transport); add(R.when, d.when); add(R.money, d.money); add(R.next, d.next_steps); add(R.check, d.to_check);
+  return rows;
+}
+const dictated = (j) => j.segments.map((s) => s.dictated || "").join(" ").trim();
+function shareText(j) {
+  const open = openQuestions(j), lines = [`*${j.title}*`];
+  if (j.deal_sheet) sheetRows(j.deal_sheet).forEach(([k, list]) => lines.push(`${k}: ${list.join("; ")}`));
+  else lines.push(dictated(j));
+  if (open.length) lines.push(`⚠ ${t("toconfirm", open.length)}: ` + open.map((q) => (q.kind === "name" ? q.name : q.options.join(" / ")) + "?").join("; "));
+  return [...lines, "— Parakh"].filter(Boolean).join("\n");
+}
+
+function render(j) {
+  const done = j.status === "done", busy = t("busy")[j.status];
+  const marks = j.segments.flatMap((s) => (s.view ? s.view.parakh : []));
+  const fixed = marks.filter((w) => w.c === "fix").length, nums = marks.filter((w) => w.c === "num").length;
+  const secs = Math.round(j.seconds), length = secs >= 60 ? `${Math.floor(secs / 60)} min ${secs % 60} s` : `${secs} s`;
+  const open = done ? openQuestions(j) : [];
+
+  // 1. the verdict
+  let v;
+  if (busy) v = `<h3><span class="busy">${esc(busy)}</span></h3><p>${esc(j.title)}</p>`;
+  else if (j.status === "error") v = `<h3>${t("failed")}</h3><p>${esc(j.error || "")}</p>`;
+  else {
+    const tm = j.timing || {}, speed = tm.replayed === false ? [t("heard_in", tm.heard_s), t("checked_in", tm.checked_s)] : [];
+    v = `<h3 class="${open.length ? "" : "ok"}">${open.length ? t("toconfirm", open.length) : t("clear")}</h3>` +
+      `<p>${esc(j.title)} · ${[t("fixed", fixed), t("digits", nums), length, ...speed].join(" · ")}` +
+      (!open.length && sb.fresh?.clear ? `<br><span style="font-size:12px">${t("clear_proof", sb.fresh.clear.right, sb.fresh.clear.recordings)}</span>` : "") + `</p>`;
+  }
+  setHTML($("verdict"), "verdict", v);
+  $("joberr").classList.add("hidden");
+
+  // 2. the questions
+  const ask = (q, i) => {
+    const head = q.kind === "who" ? t("q_who") : q.kind === "number" ? t("q_number") : q.kind === "name" ? t("q_name", q.name) : t("q_word");
+    const sub = [q.kind === "name" ? t("q_name_sub", q.heard_as) : "", t("at", clock(q.at_s))].filter(Boolean).join(" · ");
+    const opts = q.kind === "name"
+      ? `<button class="opt yes" data-q="${q.id}" data-v="yes">${t("yes")}</button><button class="opt" data-q="${q.id}" data-v="no">${t("no")}</button>`
+      : q.options.map((o) => `<button class="opt" data-q="${q.id}" data-v="${esc(o)}">${esc(o)}</button>`).join("") +
+        (q.kind === "number" ? "" : `<input class="field" data-q="${q.id}" placeholder="${t("other")}" aria-label="${t("other")}">`);
+    return `<div class="ask" style="--i:${i}"><button class="hear" data-at="${q.at_s}" aria-label="${t("listen")}" title="${t("listen")}">${PLAY}</button><div><b>${esc(head)}</b><small>${esc(sub)}</small></div><div class="opts">${opts}</div></div>`;
+  };
+  setHTML($("asks"), "asks", open.map(ask).join(""));
+
+  // 3. what was agreed
+  let agreed = "";
+  if (j.deal_sheet) agreed = `<h4>${t("agreed")}</h4><dl class="receipt">${sheetRows(j.deal_sheet).map(([k, list]) => `<dt>${esc(k)}</dt><dd>${list.map((x) => `<span>${esc(x)}</span>`).join("")}</dd>`).join("")}</dl>`;
+  else if (done) agreed = `<h4>${t("said_h")}</h4><div class="said">${esc(dictated(j))}</div>`;
+  setHTML($("agreed"), "agreed", agreed);
+  $("share").classList.toggle("hidden", !done);
+  if (done) $("wa").href = "https://wa.me/?text=" + encodeURIComponent(shareText(j));
+
+  // 4. the words, base model beside Parakh
+  const first = j.segments.find((s) => s.witnesses);
+  const models = first ? first.witnesses.map((w) => w.name) : [t("base")];
+  const cols = $("cols");
+  if (!cols.children.length) {
+    cols.innerHTML = `<div class="th base"><span>${t("base")}</span><select id="basepick" aria-label="${t("base")}"></select></div><div class="th us">Parakh</div>` +
+      j.segments.map((_, i) => `<div class="base" id="l${i}"></div><div class="us-cell" id="r${i}"></div>`).join("");
+    $("basepick").onchange = (e) => { baseChoice = +e.target.value; render(job); };
+  }
+  setHTML($("basepick"), "pick", models.map((n, i) => `<option value="${i}"${i === baseChoice ? " selected" : ""}>${esc(n)}</option>`).join(""));
+  j.segments.forEach((s, i) => {
+    const sig = [s.stage, baseChoice, (s.view?.parakh || []).filter((w) => w.c).map((w) => w.c + w.t).join("|")].join("/");
+    if (drawn["seg" + i] === sig) return;
+    drawn["seg" + i] = sig;
+    let left = `<span class="pending">${esc(t("busy").listening)}</span>`, right = `<span class="pending">…</span>`;
+    if (s.witnesses) {
+      left = baseChoice === 0 ? words(s.view.base, s) : esc((s.witnesses[baseChoice] || s.witnesses[0]).text);
+      right = s.stage === "checked" ? `<span class="pop-in">${words(s.view.parakh, s)}</span>` : `<span class="pending">${esc(t("busy").checking)}</span>`;
+    }
+    $("l" + i).innerHTML = left;
+    $("r" + i).innerHTML = right;
+  });
+}
+document.querySelectorAll("#view button").forEach((b) => (b.onclick = () => {
+  document.querySelectorAll("#view button").forEach((x) => x.classList.toggle("on", x === b));
+  $("cols").classList.toggle("one", b.dataset.view === "one");
+}));
+
+/* ---- answering: a tap on the answer card, or on a highlight ------------- */
+async function answerQuestion(id, value) {
+  const q = (job.questions || []).find((x) => x.id === id);
+  if (!q || !value) return;
+  closePop();
+  if (q.kind === "number") { kept[q.key] = value; job = await post(`/api/jobs/${job.id}/answers`, { question: id, value }); render(job); }
+  else if (q.kind === "name") nameAction(q.name, value === "yes" ? "confirm" : "reject", value !== "yes");
+  else nameAction(value, "confirm", true);  // remembered, and the recording is checked again with it
+}
+$("asks").addEventListener("click", (e) => { const b = e.target.closest("button[data-q]"); if (b) answerQuestion(+b.dataset.q, b.dataset.v); });
+$("asks").addEventListener("keydown", (e) => { if (e.key === "Enter" && e.target.matches("input[data-q]")) answerQuestion(+e.target.dataset.q, e.target.value.trim()); });
+$("copy").onclick = async () => {
+  await navigator.clipboard.writeText(shareText(job)).catch(() => {});
+  $("copy").textContent = t("copied");
+  setTimeout(() => ($("copy").textContent = t("copy")), 1600);
+};
+
+/* ---- evidence for one highlight, with the question if there is one ------ */
+function evidence(m) {
+  const w = infos[+m.dataset.info], i = w.info || {};
+  const table = (rows) => `<table>${Object.entries(rows || {}).map(([k, v]) => `<tr><td>${esc(k)}</td><td>${esc(v || t("nothing"))}</td></tr>`).join("")}</table>`;
+  const hear = w.at ? `<button class="hear" data-at="${w.at}" aria-label="${t("listen")}" title="${t("listen")}">${PLAY}</button>` : "";
+  const q = i.q != null ? (job.questions || []).find((x) => x.id === i.q) : null;
+  let html;
+  if (w.c === "num") html = `${hear}<h4>${esc(w.t)}</h4><p>${i.answered ? t("pop_chosen") : i.checked ? esc(i.checked) + ". " + t("pop_disagree_number") : t("pop_digits")}</p>${table(i.heard || { [t("said")]: i.said })}`;
+  else if (w.c === "unsure") {
+    const options = q ? q.options : i.options?.length ? i.options : [...new Set(Object.values(i.heard || {}).filter(Boolean))];
+    html = `${hear}<h4>${q?.kind === "number" ? t("q_number") : q?.kind === "who" ? t("q_who") : t("pop_which")}</h4><p>${t("pop_disagree")}</p>${table(q?.heard || i.heard)}` +
+      `<div class="acts">${options.map((o) => `<button class="btn ghost" data-use="${esc(o)}">${esc(o)}</button>`).join("")}</div>` +
+      (q?.kind === "number" ? "" : `<div class="acts"><input class="field" placeholder="${t("type_it")}" aria-label="${t("type_it")}"><button class="btn primary" data-save="1">${t("save")}</button></div>`);
+  } else {
+    html = `${hear}<h4>${i.answered ? esc(w.t) : `“${esc(i.from)}” → ${esc(i.to)}`}</h4><p>${i.answered ? t("pop_chosen") : esc(i.why)}</p>${i.answered ? "" : table(i.heard)}`;
+    if (!i.answered && waiting(i.to)) html += `<div class="acts"><button class="btn primary" data-yes="${esc(i.to)}">${t("remember")}</button><button class="btn ghost" data-no="${esc(i.to)}">${t("no")}</button></div>`;
+  }
+  const pop = openPop(m, html);
+  const choose = (value) => (q ? answerQuestion(q.id, value) : nameAction(value, "confirm", true));
+  pop.querySelectorAll("[data-use]").forEach((b) => (b.onclick = () => choose(b.dataset.use)));
+  pop.querySelector("[data-save]")?.addEventListener("click", (e) => { const v = e.target.previousElementSibling.value.trim(); if (v) choose(v); });
+  pop.querySelector("[data-yes]")?.addEventListener("click", (e) => nameAction(e.target.dataset.yes, "confirm"));
+  pop.querySelector("[data-no]")?.addEventListener("click", (e) => nameAction(e.target.dataset.no, "reject", true));
+}
+
+/* ---- how it works: a line diagram of the five layers, with the real counts ---- */
+function diagram() {
+  const f = sb.funnel || { words: 4742, doubted: 276, names_considered: 344, recordings_heard_again: 35, names_written: 77, flagged_unsure: 11, recordings: 189 };
+  const n = (x) => Number(x).toLocaleString("en-IN");
+  const L = [
+    ["Listen", "three recognisers, no hints", `${n(f.words)} words heard`],
+    ["Doubt", "where they disagree", `${n(f.doubted)} words in doubt`],
+    ["Look up", "names you know that sound like it", `${n(f.names_considered)} names considered`],
+    ["Hear again", "the audio has to back the name", `${n(f.recordings_heard_again)} recordings heard again`],
+    ["Decide", "write it, ask, or leave it", `${n(f.names_written)} written · ${n(f.flagged_unsure)} asked`],
+  ];
+  const X0 = 236, W0 = 330, STEP = 76, TOP = 48, SKEW = 36, D = 22, TX = 400, CX = X0 + W0 + 24;  // counts share one left edge
+  const plate = (i) => { const w = W0 - i * 28, x = X0 + i * 14, y = TOP + i * STEP; return { x, y, w, d: `M${x} ${y}h${w}l-${SKEW} ${D}h-${w}z` }; };
+  const stops = L.map((_, i) => TOP + i * STEP + D / 2);
+  const parts = [`<defs><marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0.5 7 4 0 7.5z" class="arrowhead"/></marker></defs>`];
+  parts.push(`<path class="thread" d="M${TX} 8V${TOP + 4 * STEP + D + 24}"/>`);
+  L.forEach(([name, what, count], i) => {
+    const p = plate(i), last = i === L.length - 1;
+    parts.push(`<path class="plate${last ? " last" : ""}" d="${p.d}"/>`);
+    parts.push(`<g class="num${last ? " last" : ""}"><circle cx="26" cy="${p.y + D / 2}" r="12"/><text x="26" y="${p.y + D / 2 + 4}">${i + 1}</text></g>`);
+    parts.push(`<text class="name" x="48" y="${p.y + 8}">${esc(name)}</text><text class="what" x="48" y="${p.y + 24}">${esc(what)}</text>`);
+    parts.push(`<text class="count" x="${CX}" y="${p.y + 15}">${esc(count)}</text>`);
+    if (i === 1) parts.push(`<path class="exit" d="M${TX + 14} ${p.y + D + 4}q40 10 80 10"/><text class="count soft" x="${TX + 100}" y="${p.y + D + 18}">${n(f.words - f.doubted)} pass through untouched</text>`);
+    if (i === 3) parts.push(`<path class="exit" d="M${TX + 14} ${p.y + D + 4}q40 10 80 10"/><text class="count soft" x="${TX + 100}" y="${p.y + D + 18}">the rest need no second listen</text>`);
+  });
+  const dwell = (i) => `${stops[i]};${stops[i]}`;
+  const ys = [8, ...L.flatMap((_, i) => [stops[i], stops[i]]), TOP + 4 * STEP + D + 24].join(";");
+  const bead = calm ? `<circle class="bead" cx="${TX}" cy="${stops[4]}" r="5"/>`
+    : `<circle class="bead" cx="${TX}" cy="8" r="5"><animate attributeName="cy" values="${ys}" keyTimes="0;0.08;0.16;0.26;0.34;0.44;0.52;0.62;0.70;0.80;0.90;1" dur="9s" repeatCount="indefinite" calcMode="spline" keySplines="${Array(11).fill("0.4 0 0.2 1").join(";")}"/></circle>` +
+      `<circle class="bead ghost" cx="${TX - 60}" cy="8" r="4"><animate attributeName="cy" values="8;${stops[0]};${stops[1]};${stops[1] + 10};${stops[1] + 10}" keyTimes="0;0.12;0.22;0.26;1" dur="9s" repeatCount="indefinite"/><animate attributeName="cx" values="${TX - 60};${TX - 60};${TX - 60};${TX + 90};${TX + 90}" keyTimes="0;0.12;0.22;0.3;1" dur="9s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;1;1;0;0" keyTimes="0;0.22;0.28;0.34;1" dur="9s" repeatCount="indefinite"/></circle>`;
+  $("diagram").innerHTML = `<svg viewBox="0 0 860 ${TOP + 4 * STEP + D + 40}" role="img" aria-label="Five stacked layers that a word falls through: listen, doubt, look up, hear again, decide. Most words leave at the second layer untouched.">${parts.join("")}${bead}</svg>`;
+  $("flow").textContent = `On ${f.recordings} recordings it had never seen: ${n(f.words)} words went in, ${n(f.doubted)} were in doubt, ${n(f.names_considered)} known names sounded like them, ${n(f.recordings_heard_again)} recordings needed a second listen, ${n(f.names_written)} names were written and ${n(f.flagged_unsure)} questions asked. Every other word is exactly what the base model wrote.`;
+}
+
+/* ---- screen two: one sentence, as the model heard it, then as Parakh writes it ---- */
+function scene() {
+  const root = $("scene"), at = [900, 2300, 3900, 5400, 6700], CYCLE = 11000;
+  let timers = [], visible = false, running = false;
+  const show = (n) => {
+    root.querySelectorAll(`[data-step="${n}"]`).forEach((el) => el.classList.add("on"));
+    root.querySelectorAll(`[data-doubt="${n}"]`).forEach((el) => el.classList.add("doubt"));
+    $("caption").textContent = t("cap")[n] || "";
+  };
+  const play = () => {
+    timers.forEach(clearTimeout);
+    root.querySelectorAll(".on, .doubt").forEach((el) => el.classList.remove("on", "doubt"));
+    $("caption").textContent = "";
+    running = true;
+    timers = at.map((ms, i) => setTimeout(() => show(i + 1), ms));
+    timers.push(setTimeout(() => { running = false; if (visible) play(); }, CYCLE));
+  };
+  if (calm) { at.forEach((_, i) => show(i + 1)); return; }
+  new IntersectionObserver((entries) => {
+    visible = entries[entries.length - 1].isIntersecting;
+    if (visible && !running) play();
+    else if (!visible) { timers.forEach(clearTimeout); running = false; }
+  }, { threshold: 0.3 }).observe(root);
+}
+
+/* ---- screen four: one number, then the three models ---- */
+function numbers() {
+  const f = sb.fresh;
+  if (!f) return;
+  const base = row(f.rows, "Saaras v4"), us = row(f.rows, "Parakh"), v = f.versus[0];
+  $("bignum").innerHTML = `<div class="n"><small>${base.names_right}% →</small><span class="to">${us.names_right}%</span></div><p>names right on Saaras v4 · ${v.only_parakh_right} fixed · ${v.only_other_right} lost · ${f.mentions} names</p>`;
+  $("models").innerHTML = f.bases.map((r) => `<div class="model"><div class="lbl">${esc(r.base)}<small>${r.only_parakh_right} fixed · ${r.only_other_right} lost</small></div>` +
+    `<div class="track"><div class="bar base" data-w="${r.base_names}"></div><span class="v base" style="left:${r.base_names}%">${r.base_names}%</span><div class="bar us" data-w="${r.names_right}"></div><span class="v us" style="left:${r.names_right}%">${r.names_right}%</span></div></div>`).join("");
+  $("tests-note").textContent = `${f.clips} fresh recordings unless marked`;
+  new IntersectionObserver((es, ob) => { if (es.some((e) => e.isIntersecting)) { $("models").querySelectorAll(".bar").forEach((b) => (b.style.width = b.dataset.w + "%")); ob.disconnect(); } }, { threshold: 0.3 }).observe($("models"));
+}
+
+/* ---- sections rise in as they arrive ---- */
+function reveal() {
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+}
+
+/* ---- measured: one card, one test at a time ------------------------------ */
+function bars(rows) {  // rows: {name, width 0-100, text, us}
+  $("bars").innerHTML = rows.map((r) => `<span class="${r.us ? "us-label" : ""}">${esc(r.name)}</span><div class="track"><div class="fill${r.us ? " us" : ""}" data-w="${r.width}"></div></div><span class="n mono">${r.text}</span>`).join("");
+  requestAnimationFrame(() => requestAnimationFrame(() => $("bars").querySelectorAll(".fill").forEach((f) => (f.style.width = f.dataset.w + "%"))));
+}
+const nameBars = (rows) => rows.map((r) => ({ name: r.system, width: r.names_right, text: `${r.names_right}% names · ${r.wer}% word errors`, us: r.system.startsWith("Parakh") }));
+const row = (rows, name) => rows.find((r) => r.system === name);
+const MODES = {
+  list: ["Names right", () => {
+    const f = sb.fresh || sb.fleurs, c = sb.calls, v = f.versus[0], sign = (x) => (x > 0 ? "+" : "") + x;
+    const against = f.versus.slice(1).map((k) => `${sign(k.names_points)} against ${k.against} (p = ${k.p})`).join(", ");
+    $("big").innerHTML = `<small>${row(f.rows, "Saaras v4").names_right}% →</small> <span class="to">${row(f.rows, "Parakh").names_right}%</span>`;
+    $("lead").textContent = `Names right on ${f.clips} ${sb.fresh ? "fresh " : ""}public recordings (${f.mentions} names): the base model, then Parakh on top of it. Parakh got ${v.only_parakh_right} names right that the base missed, and the base ${v.only_other_right} that Parakh missed. ` +
+      `Against the recognisers' own keyword features the differences are too small to call: ${against}. Parakh has the fewest word errors of any row.` +
+      (c ? ` On three real trade calls it got ${c.rows[0].right} of ${c.mentions} confirmed words right; the best baseline got ${c.rows[1].right}.` : "");
+    bars(nameBars(f.rows));
+  }],
+  bases: ["On any model", () => {
+    const b = sb.fresh?.bases || sb.bases.rows, low = b[0];
+    $("big").innerHTML = `<small>${low.base}: ${low.base_names}% →</small> <span class="to">${low.names_right}%</span>`;
+    $("lead").textContent = `The same checks written onto each recogniser's own transcript, as if that were the one you already run. On all three, Parakh fixed names the model had missed (${b.map((r) => r.only_parakh_right).join(", ")}) and lost none it had right.`;
+    bars(b.flatMap((r) => [{ name: r.base, width: r.base_names, text: `${r.base_names}% names · ${r.base_wer}% word errors` },
+      { name: `Parakh on ${r.base}`, width: r.names_right, text: `${r.names_right}% names · ${r.wer}% word errors`, us: true }]));
+  }],
+  trap: ["Sound-alike trap", () => {
+    const t = sb.fresh?.stress || sb.stress, most = Math.max(...t.rows.map((r) => r.sound_alikes_written)), us = row(t.rows, "Parakh"), lost = t.right_names_lost;
+    const shown = t.rows.filter((r) => r.system.includes("list") || r.system === "Parakh" || r.system === "Saaras v4");
+    const others = shown.filter((r) => r.system.includes("list")).map((r) => `${r.system.replace(" + its keyword list", "'s keyword feature").replace(", A to Z", " (list in alphabetical order)")} wrote ${r.sound_alikes_written}`).join("; ");
+    $("big").innerHTML = `${us.sound_alikes_written} <small>of ${t.planted} planted wrong names written</small>`;
+    $("lead").textContent = `${sb.stress.note} ${others}. Where a name sits in a keyword list changes how hard it is pushed, so Sarvam's is shown both ways; the row without "A to Z" has the planted names first. Parakh is not immune, and OpenAI's keyword feature did better here. Shorter bars are better.`;
+    bars(shown.map((r) => ({ name: r.system, width: 100 * r.sound_alikes_written / most,
+      text: `${r.sound_alikes_written} wrong names · ${lost[r.system] ?? 0} right names lost`, us: r.system === "Parakh" })));
+  }],
+  phone: ["Phone line", () => {
+    const f = sb.phone, v = f.versus[0];
+    $("big").innerHTML = `<small>${row(f.rows, "Saaras v4").names_right}% →</small> <span class="to">${row(f.rows, "Parakh").names_right}%</span>`;
+    $("lead").textContent = `${f.note} Parakh got ${v.only_parakh_right} names right that the base missed and the base ${v.only_other_right} that Parakh missed (p = ${v.p}).`;
+    bars(nameBars(f.rows));
+  }],
+  none: ["No context", () => {
+    const n = sb.fleurs_nocontext, cn = sb.calls_nocontext, nv = n.versus;
+    $("big").innerHTML = `<small>${row(n.rows, "Saaras v4").names_right}% →</small> ${row(n.rows, "Parakh, own lookup").names_right}%`;
+    $("lead").textContent = `With nothing given, Parakh looks names up itself and checks them by listening again. That got ${nv.only_parakh_right} more names right and lost none, a gain too small to tell from chance (p = ${nv.p}). Without context, most of the gain is gone.` +
+      (cn ? ` On the three real calls, which its rules were built on, its own topic search got ${cn.rows[0].right} of ${cn.mentions}; the best single recogniser got ${cn.rows[1].right}.` : "");
+    bars(nameBars(n.rows));
+  }],
+  numbers: ["Numbers", () => {
+    const n = sb.numbers, f = n.fresh, a = n.first, c = sb.calls;
+    $("big").innerHTML = `<small>${f.base_right} of ${f.numbers} →</small> <span class="to">${f.parakh_right} of ${f.numbers}</span>`;
+    $("lead").textContent = `Numbers right on the fresh recordings, base model then Parakh: no change, because the base model got them right (${f.numbers - f.base_right} wrong, and no recogniser had those right either). ${n.note} Across ${a.numbers + f.numbers} public numbers the rules fixed ${a.fixed + f.fixed} and broke ${a.broken + f.broken}. The gain is on real calls: in call 1 the recognisers heard 160 and 360 for the same quantity; "chaalis into chaar", said a sentence earlier, settles it at 160.`;
+    bars([{ name: "Saaras v4", width: 100 * f.base_right / f.numbers, text: `${f.base_right} of ${f.numbers} numbers` }, { name: "Parakh", width: 100 * f.parakh_right / f.numbers, text: `${f.parakh_right} of ${f.numbers} numbers · ${f.asked} asked`, us: true }]);
+  }],
+  speed: ["Speed", () => {
+    const l = sb.latency, secs = (ms) => (ms / 1000).toFixed(1), most = l.extra_listen.verified_ms_median || l.verified_ms.median;
+    $("big").innerHTML = `${secs(l.draft_ms.median)} s <small>to the draft ·</small> ${secs(l.verified_ms.median)} s <small>to the checked transcript</small>`;
+    $("lead").textContent = `Median wall-clock time over ${l.clips} clips the service had never seen, ${Math.round(l.median_seconds)} seconds of speech each, sent one at a time. The draft is the base model's own transcript at its own speed, so a voice agent can start on it and take the checked names when they arrive. Shorter bars are better here.`;
+    bars([{ name: "Base model alone: the draft", width: 100 * l.draft_ms.median / most, text: `${secs(l.draft_ms.median)} s` },
+      { name: `Parakh, no second listen (${l.no_extra_listen.clips} of ${l.clips} clips)`, width: 100 * l.no_extra_listen.verified_ms_median / most, text: `${secs(l.no_extra_listen.verified_ms_median)} s`, us: true },
+      { name: `Parakh, with a second listen (${l.extra_listen.clips} of ${l.clips})`, width: 100, text: `${secs(most)} s`, us: true }]);
+  }],
+};
+const HAS = { list: "fleurs", bases: "bases", trap: "stress", phone: "phone", none: "fleurs_nocontext", numbers: "numbers", speed: "latency" };
+function measured(mode) {
+  document.querySelectorAll("#modes button").forEach((b) => b.classList.toggle("on", b.dataset.mode === mode));
+  MODES[mode][1]();
+}
+function modes() {
+  $("modes").innerHTML = Object.entries(MODES).filter(([k]) => sb[HAS[k]]).map(([k, [label]]) => `<button data-mode="${k}">${label}</button>`).join("");
+  document.querySelectorAll("#modes button").forEach((b) => (b.onclick = () => measured(b.dataset.mode)));
+  measured("list");
+}
+
+/* ---- the endpoint, as you would call it ---------------------------------- */
+function endpoint(key) {
+  $("curl").innerHTML = `<i># the call you already make to Sarvam, plus the caller's names</i>
+curl -N <u>${esc(location.origin)}/speech-to-text</u> \\
+  -H "api-subscription-key: <b>${esc(key || "your key")}</b>" \\
+  -F file=@turn.wav \\
+  -F names=<b>"Eicher, Mohammad bhai"</b> \\
+  -F stream=true
+
+<i># 1. the base transcript, as soon as it exists</i>
+{"event": "draft", "ms": <u id="ms1">…</u>,
+ "transcript": "Teen ka kyon lo phir? <b>Aishar</b> mein lo ..."}
+
+<i># 2. the checked transcript, with the evidence</i>
+{"event": "verified",
+ "transcript": "Teen ka kyon lo phir? <b>Eicher</b> mein lo ...",
+ "parakh": {
+   "edits": [{"from": "Aishar", "to": "Eicher",
+              "heard": {"Saaras v3": "Aishwarya",
+                        "gpt-transcribe": "आईशर"}}],
+   "unsure": [], "extra_listens": 0,
+   "timing_ms": {"draft": <u id="ms2">…</u>, "verified": <u id="ms3">…</u>}}}`;
+  const e = sb.latency && sb.latency.example;
+  if (e) { $("ms1").textContent = $("ms2").textContent = e.draft_ms; $("ms3").textContent = e.verified_ms; }
+}
+
+/* ---- earlier calls: every finished call is kept and reopens as it was ---- */
+async function earlier() {
+  const list = await api(`/api/users/${user}/calls`).catch(() => []);
+  $("earlier").innerHTML = list.length ? `<span>${t("earlier")}</span>` + list.slice(0, 4).map((c) =>
+    `<button class="linkbtn" data-call="${esc(c.id)}">${esc(c.title)}${c.open ? ` · ${c.open} ?` : ""}</button>`).join("") : "";
+  $("earlier").querySelectorAll("[data-call]").forEach((b) => (b.onclick = () => { last = null; from("call:" + b.dataset.call); begin({ id: b.dataset.call }); }));
+}
+
+/* ---- a wrong word nobody flagged: tap it and say what it was ---- */
+$("cols").addEventListener("click", (e) => {
+  if (e.target.closest(".mark") || !e.target.closest(".us-cell") || !getSelection().isCollapsed || job?.status !== "done") return;
+  const range = document.caretRangeFromPoint?.(e.clientX, e.clientY), node = range?.startContainer;
+  if (!node || node.nodeType !== 3) return;
+  const text = node.textContent;
+  let a = range.startOffset, b = a;
+  while (a > 0 && !/\s/.test(text[a - 1])) a--;
+  while (b < text.length && !/\s/.test(text[b])) b++;
+  const word = text.slice(a, b).replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, "");
+  if (!word) return;
+  e.stopPropagation();
+  const spot = document.createRange();
+  spot.setStart(node, a); spot.setEnd(node, b);
+  const pop = openPop(spot, `<h4>“${esc(word)}”</h4><p>${t("fix_word")}</p><div class="acts"><input class="field" aria-label="${t("fix_word")}"><button class="btn primary">${t("save")}</button></div>`);
+  const save = () => { const v = pop.querySelector("input").value.trim(); if (v) nameAction(v, "confirm", !!last); };
+  pop.querySelector("button").onclick = save;
+  pop.querySelector("input").addEventListener("keydown", (ev) => ev.key === "Enter" && save());
+  pop.querySelector("input").focus();
+});
+
+/* ---- a key of your own, and what the server has done so far ---- */
+async function keyInfo() {
+  const key = localStorage.parakhKey, u = key ? await api(`/api/keys/${key}`).catch(() => null) : null;
+  const s = await api("/api/stats").catch(() => null);
+  $("keyinfo").textContent = (u ? `${u.minutes_left} of your free minutes left · ` : "") +
+    (s && s.requests ? `this server has checked ${s.audio_minutes} minutes of audio in ${s.requests} requests` : "");
+  if (u) { $("getkey").textContent = "Copy your key"; endpoint(key); }
+}
+$("getkey").onclick = async () => {
+  if (localStorage.parakhKey) { await navigator.clipboard.writeText(localStorage.parakhKey).catch(() => {}); $("getkey").textContent = "Copied"; return; }
+  try {
+    const made = await api("/api/keys", { method: "POST", headers: { "Content-Type": "application/json", ...(localStorage.parakhCode ? { "X-Access-Code": localStorage.parakhCode } : {}) }, body: JSON.stringify({ label: user }) });
+    localStorage.parakhKey = made.key;
+    keyInfo();
+  } catch (e) {
+    if (e.status === 401) { const code = prompt("Access code for this server:"); if (code) { localStorage.parakhCode = code; $("getkey").click(); } }
+    else $("keyinfo").textContent = e.message;
+  }
+};
+
+(async () => {
+  applyLang();
+  reveal();
+  scene();
+  api("/api/health").then((h) => ($("health").textContent = `Parakh · परख · ${h.recognisers.length} recognisers live`))
+    .catch(() => ($("health").textContent = "Parakh · परख · not reachable"));
+  const samples = await api("/api/samples").catch(() => []);
+  $("samples").innerHTML = samples.map((s) => `<button class="sample" data-id="${esc(s.id)}" title="${esc(s.note)}"><b>${esc(s.title.split(" · ")[1] || s.title)}</b><small>${esc(s.title.split(" · ")[0])} · ${esc((s.note.match(/[\d ]+min[\d s]*|\d+ s/) || [""])[0].trim())}</small></button>`).join("");
+  document.querySelectorAll(".sample").forEach((b) => (b.onclick = () => startSample(b.dataset.id)));
+  loadNames();
+  sb = await api("/api/scoreboard").catch(() => ({}));
+  if (sb.fleurs) {
+    const f = sb.fleurs, v = f.versus[0], ice = sb.ice, irow = (name) => ice.rows.find((r) => r.system === name);
+    $("fine1").textContent = `${f.title}: ${f.clips} recordings, ${f.mentions} name mentions, and every context-aware system got the same list of 100 names. ${f.note} The gain over the base is ${v.names_points} points (95% interval ${v.names_ci[0]} to ${v.names_ci[1]}, p = ${v.p}). Against Saaras v4 with its own keyword list, which was handed each recording's names, it is a tie.`;
+    if (ice) $("fine2").textContent = `Where it only ties: ${ice.title}, ${ice.clips} recordings. Parakh ${irow("Parakh").names_right}% of tagged terms, base ${irow("Saaras v4").names_right}%. ${ice.note} There, a keyword list made gpt-transcribe write ${irow("gpt-transcribe + its keyword list").written_not_said} listed terms that were not in the reference, against ${irow("gpt-transcribe").written_not_said} without the list; Parakh wrote ${irow("Parakh").written_not_said}.`;
+    if (sb.calls) $("fine3").textContent = `The three trade calls: ${sb.calls.note}`;
+    if (sb.fresh) $("fine5").textContent = `The fresh set: ${sb.fresh.note} ${sb.fresh.clips} recordings, ${sb.fresh.mentions} name mentions. Sarvam's keyword feature takes 50 terms and OpenAI's was given 100, each including the recording's own names; Parakh searched the whole list. The phone-line, no-context and speed tests were run on the first set of 91 recordings.`;
+    if (sb.latency) $("fine4").textContent = `Speed: ${sb.latency.clips} clips (segments of the three calls and public recordings), each given a little added silence so that no saved answer could be replayed, timed at the client from the request to each line of the stream.`;
+    modes();
+  }
+  numbers();
+  diagram();
+  endpoint(localStorage.parakhKey);
+  keyInfo();
+  earlier();
+})();
+</script>
+</body>
+</html>
