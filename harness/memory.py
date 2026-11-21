@@ -4,9 +4,15 @@
     candidates  names Parakh heard and checked against the audio, waiting for a yes.
                 Used only as suggestions that still need a recogniser to back them.
 
-Only a person promotes a name: nothing a transcript or a model writes can make a name
-verified. Production systems that learned on their own learned false equivalences, and
-memory written from model output can be poisoned; a confirmation tap costs a second.
+A name becomes verified when a person adds it or says yes to it, or, once a day, when the
+audio itself has backed it in AUTO_TRUST_AFTER separate recordings (see learn_daily in
+service.py). Nothing a single transcript or a model writes can make a name verified:
+systems that learned from one sighting learned false equivalences, and memory written from
+model output can be poisoned. Auto-trusted names are marked as such and can be undone.
+
+Also kept per user: settings (memory on or off), sources (each file the user fed in and the
+names it gave), heard_as (how the recognisers misheard each name, from the fixes made) and a
+log of what each daily learning run did.
 
 Stored as JSON under data/memory/<user>.json.
 
@@ -29,6 +35,8 @@ MEMORY_DIR = ROOT / "data" / "memory"
 # reach a recogniser as hints, so this is not a keyword-list limit; it is the size the accuracy tests
 # stop saying anything about (they used lists of 100).
 MAX_VERIFIED_HINTS = 300
+AUTO_TRUST_AFTER = 3  # separate recordings in which the audio backed a name before it is trusted without a tap
+DEFAULT_SETTINGS = {"enabled": True, "auto_learn": True}
 
 
 def path(user: str) -> Path:
@@ -40,12 +48,25 @@ def load(user: str) -> dict[str, dict]:
     data = json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
     if data and not {"verified", "candidates", "rejected"} & set(data):  # first format: a flat name map
         data = {"candidates": data}
-    return {"verified": data.get("verified", {}), "candidates": data.get("candidates", {}), "rejected": data.get("rejected", {})}
+    return {"verified": data.get("verified", {}), "candidates": data.get("candidates", {}), "rejected": data.get("rejected", {}),
+            "settings": {**DEFAULT_SETTINGS, **data.get("settings", {})}, "sources": data.get("sources", {}),
+            "log": data.get("log", [])}
 
 
 def _save(user: str, memory: dict[str, dict]) -> None:
     MEMORY_DIR.mkdir(parents=True, exist_ok=True)
     path(user).write_text(json.dumps(memory, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
+
+
+def enabled(user: str) -> bool:
+    return bool(user) and load(user)["settings"]["enabled"]
+
+
+def settings(user: str, **changes) -> dict:
+    memory = load(user)
+    memory["settings"].update({k: bool(v) for k, v in changes.items() if k in DEFAULT_SETTINGS and v is not None})
+    _save(user, memory)
+    return memory["settings"]
 
 
 def verified(user: str) -> list[str]:
@@ -65,8 +86,12 @@ def propose(user: str, names: dict[str, dict]) -> list[str]:
     for name, evidence in names.items():
         if name in memory["verified"] or name in memory["rejected"]:
             continue
-        entry = memory["candidates"].setdefault(name, {"first_seen": time.time(), "seen": 0, "evidence": []})
-        entry["seen"] += 1
+        entry = memory["candidates"].setdefault(name, {"first_seen": time.time(), "seen": 0, "evidence": [], "heard_in": []})
+        where = evidence.get("call") or evidence.get("from", "")
+        if where in entry.setdefault("heard_in", []):
+            continue  # the same recording checked again is not a second hearing
+        entry["heard_in"] = (entry["heard_in"] + [where])[-20:]
+        entry["seen"] = len(entry["heard_in"])
         entry["evidence"] = (entry["evidence"] + [evidence])[-5:]
         if entry["seen"] == 1:
             new.append(name)
@@ -82,7 +107,7 @@ def confirm(user: str, name: str, how: str = "confirmed by the user") -> None:
     _save(user, memory)
 
 
-def confirm_many(user: str, names: list[str], how: str = "from the user's contacts") -> int:
+def confirm_many(user: str, names: list[str], how: str = "from the user's contacts", source: str = "") -> int:
     """Verify a whole list in one write. Returns how many were new."""
     memory = load(user)
     new = 0
@@ -91,10 +116,60 @@ def confirm_many(user: str, names: list[str], how: str = "from the user's contac
             continue
         entry = memory["candidates"].pop(name, {})
         memory["rejected"].pop(name, None)
-        memory["verified"][name] = {**entry, "verified": how, "verified_at": time.time(), "last_used": time.time()}
+        memory["verified"][name] = {**entry, "verified": how, "verified_at": time.time(), "last_used": time.time(),
+                                    **({"source": source} if source else {})}
         new += 1
     _save(user, memory)
     return new
+
+
+def add_source(user: str, source_id: str, info: dict) -> None:
+    memory = load(user)
+    memory["sources"][source_id] = {**memory["sources"].get(source_id, {}), **info}
+    _save(user, memory)
+
+
+def drop_source(user: str, source_id: str) -> int:
+    """Forget a file the user fed in, and the names that came only from it. Returns how many names went."""
+    memory = load(user)
+    memory["sources"].pop(source_id, None)
+    gone = [n for n, e in memory["verified"].items() if e.get("source") == source_id]
+    for n in gone:
+        memory["verified"].pop(n)
+    _save(user, memory)
+    return len(gone)
+
+
+def heard_as(user: str, fixes: dict[str, str]) -> None:
+    """Remember how the recognisers misheard each known name: {"Eicher": "Aishar"}."""
+    memory = load(user)
+    changed = False
+    for name, said in fixes.items():
+        entry = memory["verified"].get(name) or memory["candidates"].get(name)
+        if entry is not None and said and said.lower() != name.lower() and said not in entry.get("heard_as", []):
+            entry["heard_as"] = (entry.get("heard_as", []) + [said])[-8:]
+            changed = True
+    if changed:
+        _save(user, memory)
+
+
+def auto_trust(user: str) -> list[str]:
+    """Trust names the audio backed in AUTO_TRUST_AFTER separate recordings. Returns the names promoted."""
+    memory = load(user)
+    ready = [n for n, e in memory["candidates"].items() if e.get("seen", 0) >= AUTO_TRUST_AFTER]
+    for name in ready:
+        entry = memory["candidates"].pop(name)
+        memory["verified"][name] = {**entry, "verified": f"heard and backed in {entry['seen']} separate recordings",
+                                    "auto": True, "verified_at": time.time(), "last_used": time.time()}
+    if ready:
+        _save(user, memory)
+    return ready
+
+
+def write_log(user: str, entry: dict) -> None:
+    memory = load(user)
+    memory["log"] = ([entry] + memory["log"])[:30]
+    _save(user, memory)
 
 
 def reject(user: str, name: str) -> None:

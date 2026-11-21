@@ -16,7 +16,7 @@
 [![Live demo](https://img.shields.io/badge/live%20demo-tryparakh.duckdns.org-c8553d?style=flat-square)](https://tryparakh.duckdns.org)
 [![Track](https://img.shields.io/badge/Equal%20AI%20Builders%20'26-Voice%20AI%20for%20India-24292f?style=flat-square)](#what-was-measured)
 [![Names right](https://img.shields.io/badge/names%20right-89.1%25%20%E2%86%92%2095.8%25-157a42?style=flat-square)](#what-was-measured)
-[![Tests](https://img.shields.io/badge/tests-73%20passing-157a42?style=flat-square)](#quick-start)
+[![Tests](https://img.shields.io/badge/tests-78%20passing-157a42?style=flat-square)](#quick-start)
 [![Python](https://img.shields.io/badge/python-3.10%2B-3776ab?style=flat-square&logo=python&logoColor=white)](pyproject.toml)
 [![FastAPI](https://img.shields.io/badge/FastAPI-service-009688?style=flat-square&logo=fastapi&logoColor=white)](harness/service.py)
 [![Models](https://img.shields.io/badge/runs%20on-Sarvam%20%7C%20OpenAI-24292f?style=flat-square)](#how-it-works)
@@ -52,6 +52,7 @@ Built solo for Equal AI Builders '26, track **Build Challenging: Voice AI for In
 - [See it](#see-it)
 - [Quick start](#quick-start)
 - [What the app does](#what-the-app-does)
+- [Memory that improves every day](#memory-that-improves-every-day)
 - [How it works](#how-it-works)
 - [What was measured](#what-was-measured)
 - [Use it from your own stack](#use-it-from-your-own-stack)
@@ -84,7 +85,7 @@ Then open `http://localhost:8000`.
 
 | Command | What it does |
 |---|---|
-| `uv run pytest` | Runs 73 tests with no network |
+| `uv run pytest` | Runs 78 tests with no network |
 | `uv run uvicorn harness.service:app --port 8000` | Starts the web app and the API |
 | `http://localhost:8000/#/app/reference` | API reference |
 | `http://localhost:8000/docs` | Interactive API explorer |
@@ -99,10 +100,40 @@ Then open `http://localhost:8000`.
 | **The answer first** | What was agreed (who, what, how many, what rate, when), and above it the few things to confirm before acting. Each question plays the seconds around the doubtful word and is answered in one tap. |
 | **Word for word** | The base model beside Parakh. Click any highlighted word for what each recogniser heard. Switch the base model to Saaras v4, Saaras v3 or gpt-transcribe. |
 | **Share** | Send the summary to WhatsApp or copy it. The interface also works in Hindi. |
-| **Known names** | Names you add or confirm. A phone's contact file (`.vcf` or `.csv`) can be added in one go; only names are kept, never numbers. Tap any word in Parakh's column to say what it should have been, and the call is checked again. |
+| **Memory** | Feed it contacts (`.vcf`), ledgers and stock lists (`.xlsx`, `.csv`) and voice notes (`.mp4`, `.m4a`, `.ogg`, `.opus`). Switch it on or off. See every name it knows, where it came from and how the models misheard it, and what each daily learning run fixed. |
 | **Calls** | Every finished call is saved with its answers and reopens exactly as it was. |
 | **Results** | Every measured test, including where Parakh only ties or loses. |
 | **Developers** | Create an API key with ten free minutes of audio, and see usage. |
+
+## Memory that improves every day
+
+A trader should not type the same names into every call. Memory is fed once and keeps learning.
+
+| | What happens |
+|---|---|
+| **Feed it** | A party ledger or stock list (`.xlsx`, `.csv`), a phone's contacts (`.vcf`), a plain list, or voice notes and calls. Sheets: names are read from columns like Name, Party, Customer, Item, Brand; phone numbers, amounts and dates are dropped. Audio: checked like a call, and the names the recognisers back become candidates. |
+| **Every call uses it** | In the app and through the API. A developer uploads once with their key and stops sending `names`; `user` gives each of their end users a separate memory that no other key can read. |
+| **It learns from the audio** | Each fix records how the models misheard the name (`Aishar` for Eicher). A name the recognisers back in 3 separate recordings is trusted without a tap; one tap trusts it sooner. One sighting is never enough, so a single bad transcript cannot poison memory. |
+| **Every day, on its own** | The daily learning run trusts what has been heard enough, learns how new names are said, and checks the week's calls again with today's memory, so a name learned on Tuesday fixes Monday's call. Each run is logged with the calls it improved. |
+| **Off means off** | With memory off, nothing is used and nothing is learned. A file can be taken back with the names that came only from it. |
+
+Measured with `scripts/memory_eval.py`, without memory and with it:
+
+| 189 unseen recordings (FLEURS fresh), names fed once from a CSV | Without memory | With memory |
+|---|---|---|
+| Names right | 285/313 (91.0%) | **304/313 (97.1%)** |
+| Recordings with every name right | 162/189 | **181/189** |
+| Word error rate | 4.85% | **3.61%** |
+| Names fixed by memory / made wrong by it | | **19 / 0** |
+
+| A trader's week, the three real calls | Call 1 | Call 2 | Call 3 |
+|---|---|---|---|
+| Day 1, memory empty | 4/5 | 0/3 | |
+| Night 1, after the ledger upload (16 parties, their transport and brands, with decoys) | **5/5** | 0/3 | |
+| Day 2, call 3 arrives; the tile's name is heard and the trader taps yes once | 5/5 | 0/3 | 5/5 |
+| Night 2, the learning run checks the week again | 5/5 | **3/3** | 5/5 |
+
+Call 2 is the one nobody on the line could name the tile in. No model and no list could fix it on the day; memory learned the name from the next call and fixed it that night. The FLEURS names reach Parakh through the same path an upload takes (parser, memory store, the index every request searches), with the recognisers' cached answers.
 
 ## How it works
 
@@ -206,6 +237,11 @@ The answer carries `transcript` (checked) and, under `parakh`: the base transcri
 | `GET /api/keys/{key}` | Minutes used and left. |
 | `GET /api/users/{user}/keys` | A workspace's keys, masked, with usage and when each was last used. |
 | `DELETE /api/users/{user}/keys/{id}` | Revoke a key. It stops working at once. |
+| `POST /v1/memory/sources` | Feed memory a file (contacts, sheet or voice note), by API key. `user` picks one of your end users. |
+| `POST /v1/memory/names` | Add names as JSON. |
+| `GET /v1/memory` | What memory holds: names, where each came from, how it was misheard, and the learning log. |
+| `PATCH /v1/memory/settings` | `{"enabled": false}` switches memory off; `auto_learn` switches the daily run. |
+| `POST /v1/memory/learn` | Run the learning run now. |
 | `GET /api/stats` | What the server has done so far. |
 | `POST /api/jobs` | A whole call: upload, then poll `GET /api/jobs/{id}`. Splits the call at pauses, searches the topic for names, and writes the summary. |
 | `GET /api/users/{user}/memory` | Names a person confirmed, and names waiting for a yes. |
@@ -231,6 +267,7 @@ uv run python -m harness.ice --split test                     # IndicContextEval
 uv run python -m harness.stats runs/fleurs-test.json Parakh saaras-v4
 uv run python scripts/numbers_table.py                         # numbers right, base against Parakh, both sets
 uv run python scripts/measure_latency.py                      # needs the service running
+uv run python scripts/memory_eval.py all                      # memory off against on, and the trader's week
 uv run python scripts/build_scoreboard.py                     # what the page shows
 ```
 
@@ -249,7 +286,7 @@ The three trade calls are private and are not in the repository, so their table 
 | `CONTEXT.md` | A hand-over file: every decision, every number, and what was tried and switched off |
 | `web/index.html` | The web app |
 | `runs/` | Every result table, as JSON and Markdown |
-| `tests/` | 73 tests, no network |
+| `tests/` | 78 tests, no network |
 | `research_notes/`, `reports/` | Research behind the design |
 | `deploy/` | One-command deploy to AWS |
 
@@ -272,7 +309,7 @@ The script prints the link. Run it again to push new code to the same server. Th
 
 ## Privacy
 
-Audio goes to Sarvam and OpenAI for transcription. Uploaded recordings are deleted from the server a day after they arrive; the checked text of a finished call is kept in `data/calls/`. Names are stored per user in `data/memory/` and only after a person adds or confirms them. `DELETE /api/users/{user}` removes that person's names and calls. Set `PARAKH_ACCESS_CODE` to require a code before new audio is processed.
+Audio goes to Sarvam and OpenAI for transcription. Uploaded recordings are deleted from the server a week after they arrive (the daily learning run re-checks calls up to then); the checked text of a finished call is kept in `data/calls/`. Names are stored per user in `data/memory/`: added by the person, from the files they feed in, or heard and backed in 3 separate recordings. Memory can be switched off, and any file taken back. `DELETE /api/users/{user}` removes that person's names and calls. Set `PARAKH_ACCESS_CODE` to require a code before new audio is processed.
 
 <br/>
 

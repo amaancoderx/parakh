@@ -1,0 +1,319 @@
+{
+ "fleurs": {
+  "recordings": 189,
+  "memory_names": 196,
+  "parsed_from_csv": 196,
+  "context_names": 196,
+  "without": {
+   "names": 313,
+   "names_right": 285,
+   "rate": 0.9105,
+   "whole_recordings_right": 162,
+   "recordings": 189,
+   "errors": {
+    "insertion": 29,
+    "other": 138,
+    "entity": 52
+   },
+   "wer": 0.0485,
+   "agg": {
+    "clips": 189,
+    "ref_tokens": 4770,
+    "wer": 0.04591194968553459,
+    "entity_acc": 0.9105431309904153,
+    "entity_n": 313,
+    "format_acc": null,
+    "format_n": 0,
+    "errors_by_cat": {
+     "entity": 52,
+     "format": 0,
+     "other": 138,
+     "insertion": 29
+    },
+    "error_rate_by_cat": {
+     "entity": 0.09719626168224299,
+     "format": null,
+     "other": 0.03258559622195986
+    },
+    "non_latin_share": 0.9871863099136694,
+    "false_insertions": 3
+   }
+  },
+  "with": {
+   "names": 313,
+   "names_right": 304,
+   "rate": 0.9712,
+   "whole_recordings_right": 181,
+   "recordings": 189,
+   "errors": {
+    "insertion": 18,
+    "other": 139,
+    "entity": 13
+   },
+   "wer": 0.0361,
+   "agg": {
+    "clips": 189,
+    "ref_tokens": 4770,
+    "wer": 0.03563941299790356,
+    "entity_acc": 0.9712460063897763,
+    "entity_n": 313,
+    "format_acc": null,
+    "format_n": 0,
+    "errors_by_cat": {
+     "entity": 13,
+     "format": 0,
+     "other": 139,
+     "insertion": 18
+    },
+    "error_rate_by_cat": {
+     "entity": 0.024299065420560748,
+     "format": null,
+     "other": 0.03282172373081464
+    },
+    "non_latin_share": 0.9849994039118378,
+    "false_insertions": 2
+   }
+  },
+  "fixed_by_memory": 19,
+  "broken_by_memory": 0,
+  "took_s": 209.5
+ },
+ "calls": {
+  "days": [
+   {
+    "when": "Day 1, memory empty",
+    "calls": {
+     "dad_call": {
+      "names_said": 5,
+      "right": 4,
+      "right_base": 3,
+      "per_name": {
+       "Mohammad bhai": "0/1",
+       "Eicher": "4/4"
+      },
+      "wrong_guess_written": [],
+      "open_questions": 2
+     },
+     "call2": {
+      "names_said": 3,
+      "right": 0,
+      "right_base": 0,
+      "per_name": {
+       "Arizona Bianco": "0/3"
+      },
+      "wrong_guess_written": [],
+      "open_questions": 1
+     }
+    },
+    "memory": {
+     "enabled": true,
+     "auto_learn": true,
+     "names": 0
+    }
+   },
+   {
+    "when": "Night 1, after the ledger upload",
+    "calls": {
+     "dad_call": {
+      "names_said": 5,
+      "right": 5,
+      "right_base": 3,
+      "per_name": {
+       "Mohammad bhai": "1/1",
+       "Eicher": "4/4"
+      },
+      "wrong_guess_written": [],
+      "open_questions": 0
+     },
+     "call2": {
+      "names_said": 3,
+      "right": 0,
+      "right_base": 0,
+      "per_name": {
+       "Arizona Bianco": "0/3"
+      },
+      "wrong_guess_written": [],
+      "open_questions": 1
+     }
+    },
+    "learning": {
+     "at": 1795296366.5969803,
+     "took_s": 4.6,
+     "promoted": [],
+     "names": 36,
+     "rechecked": 2,
+     "improved": [
+      {
+       "id": "e7fa123aefc7",
+       "title": "Call 1 · Steel drums order",
+       "fixed": [
+        {
+         "from": "Mohan bhai",
+         "to": "Mohammad bhai"
+        }
+       ],
+       "questions_before": 2,
+       "questions_after": 0
+      }
+     ]
+    },
+    "memory": {
+     "names": 36
+    }
+   },
+   {
+    "when": "Day 2, call 3 arrives",
+    "calls": {
+     "dad_call": {
+      "names_said": 5,
+      "right": 5,
+      "right_base": 3,
+      "per_name": {
+       "Mohammad bhai": "1/1",
+       "Eicher": "4/4"
+      },
+      "wrong_guess_written": [],
+      "open_questions": 0
+     },
+     "call2": {
+      "names_said": 3,
+      "right": 0,
+      "right_base": 0,
+      "per_name": {
+       "Arizona Bianco": "0/3"
+      },
+      "wrong_guess_written": [],
+      "open_questions": 1
+     },
+     "call3": {
+      "names_said": 5,
+      "right": 5,
+      "right_base": 1,
+      "per_name": {
+       "Arizona Bianco": "4/4",
+       "Jawar sahab": "1/1"
+      },
+      "wrong_guess_written": [],
+      "open_questions": 2
+     }
+    },
+    "heard_and_backed": [
+     "Arizona Bianco"
+    ],
+    "tapped_yes": [
+     "Arizona Bianco"
+    ],
+    "memory": {
+     "names": 37
+    }
+   },
+   {
+    "when": "Night 2, learning run",
+    "calls": {
+     "dad_call": {
+      "names_said": 5,
+      "right": 5,
+      "right_base": 3,
+      "per_name": {
+       "Mohammad bhai": "1/1",
+       "Eicher": "4/4"
+      },
+      "wrong_guess_written": [],
+      "open_questions": 0
+     },
+     "call2": {
+      "names_said": 3,
+      "right": 3,
+      "right_base": 0,
+      "per_name": {
+       "Arizona Bianco": "3/3"
+      },
+      "wrong_guess_written": [],
+      "open_questions": 0
+     },
+     "call3": {
+      "names_said": 5,
+      "right": 5,
+      "right_base": 1,
+      "per_name": {
+       "Arizona Bianco": "4/4",
+       "Jawar sahab": "1/1"
+      },
+      "wrong_guess_written": [],
+      "open_questions": 1
+     }
+    },
+    "learning": {
+     "at": 1795296373.1661727,
+     "took_s": 3.1,
+     "promoted": [],
+     "names": 37,
+     "rechecked": 3,
+     "improved": [
+      {
+       "id": "9845f473dcd5",
+       "title": "Call 3 · The call-back",
+       "fixed": [],
+       "questions_before": 2,
+       "questions_after": 1
+      },
+      {
+       "id": "c5347570b004",
+       "title": "Call 2 · Which tile was it?",
+       "fixed": [
+        {
+         "from": "Ajina Bank",
+         "to": "Arizona Bianco"
+        }
+       ],
+       "questions_before": 1,
+       "questions_after": 0
+      }
+     ]
+    },
+    "memory": {
+     "names": 37
+    }
+   }
+  ],
+  "ledger_names": [
+   "Mohammad bhai",
+   "Eicher",
+   "Steel drum",
+   "Jawar sahab",
+   "Tata 407",
+   "Vitrified tile",
+   "Gupta Traders",
+   "Ashok Leyland",
+   "Kajaria",
+   "Sharma Tiles",
+   "Mahindra Pickup",
+   "Somany",
+   "Ramesh Steel",
+   "MS sheet",
+   "Singh Hardware",
+   "Tata Ace",
+   "Johnson",
+   "Agarwal Paints",
+   "Bolero",
+   "Asian Paints",
+   "Pradeep Bhai",
+   "Nitco",
+   "Imran Traders",
+   "Orientbell",
+   "Verma Sanitary",
+   "Cera",
+   "Kishore Ji",
+   "Hindware",
+   "Babu Bhai",
+   "Jindal",
+   "Salim Ansari",
+   "Tata Tiscon",
+   "Deepak Marble",
+   "RAK Ceramics",
+   "Naresh Kumar",
+   "Simpolo"
+  ],
+  "took_s": 13.0
+ }
+}

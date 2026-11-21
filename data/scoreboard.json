@@ -933,5 +933,103 @@
     "after": 17
    }
   }
+ },
+ "memory": {
+  "fleurs": {
+   "recordings": 189,
+   "memory_names": 196,
+   "fixed_by_memory": 19,
+   "broken_by_memory": 0,
+   "without": {
+    "names": 313,
+    "names_right": 285,
+    "rate": 0.9105,
+    "whole_recordings_right": 162,
+    "recordings": 189,
+    "wer": 0.0485
+   },
+   "with": {
+    "names": 313,
+    "names_right": 304,
+    "rate": 0.9712,
+    "whole_recordings_right": 181,
+    "recordings": 189,
+    "wer": 0.0361
+   }
+  },
+  "calls": {
+   "days": [
+    {
+     "when": "Day 1, memory empty",
+     "calls": {
+      "dad_call": {
+       "right": 4,
+       "names_said": 5,
+       "open_questions": 2
+      },
+      "call2": {
+       "right": 0,
+       "names_said": 3,
+       "open_questions": 1
+      }
+     }
+    },
+    {
+     "when": "Night 1, after the ledger upload",
+     "calls": {
+      "dad_call": {
+       "right": 5,
+       "names_said": 5,
+       "open_questions": 0
+      },
+      "call2": {
+       "right": 0,
+       "names_said": 3,
+       "open_questions": 1
+      }
+     }
+    },
+    {
+     "when": "Day 2, call 3 arrives",
+     "calls": {
+      "dad_call": {
+       "right": 5,
+       "names_said": 5,
+       "open_questions": 0
+      },
+      "call2": {
+       "right": 0,
+       "names_said": 3,
+       "open_questions": 1
+      },
+      "call3": {
+       "right": 5,
+       "names_said": 5,
+       "open_questions": 2
+      }
+     }
+    },
+    {
+     "when": "Night 2, learning run",
+     "calls": {
+      "dad_call": {
+       "right": 5,
+       "names_said": 5,
+       "open_questions": 0
+      },
+      "call2": {
+       "right": 3,
+       "names_said": 3,
+       "open_questions": 0
+      },
+      "call3": {
+       "right": 5,
+       "names_said": 5,
+       "open_questions": 1
+      }
+     }
+    }
+   ]
+  }
  }
 }

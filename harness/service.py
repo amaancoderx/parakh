@@ -33,6 +33,7 @@ PARAKH_ACCESS_CODE environment variable is set.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import re
@@ -53,7 +54,7 @@ from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from harness import account, memory
+from harness import account, memory, sources
 from harness.context import ContextIndex, common_word_keys
 from harness.data import ROOT
 from harness.dealsheet import deal_sheet
@@ -91,7 +92,7 @@ def systems() -> dict:
     return _systems
 
 
-KEEP_UPLOADS_S = 24 * 3600  # uploaded audio is deleted a day after it arrives; the checked text of the call stays
+KEEP_UPLOADS_S = 7 * 24 * 3600  # uploaded audio is deleted a week after it arrives (the daily learning run re-checks calls up to then); the checked text stays
 
 
 def _sweep_uploads() -> None:
@@ -112,6 +113,7 @@ def warm_up() -> None:
     same_sound("नमस्ते", "namaste")
     systems()
     threading.Thread(target=_sweep_uploads, daemon=True).start()
+    threading.Thread(target=_learn_every_day, daemon=True).start()
 
 
 def _user(user: str | None) -> str:
@@ -160,8 +162,11 @@ def _work(job: dict) -> None:
 
         # 3. Check: a name is written only if the audio backs it.
         job["status"] = "checking"
-        trusted = [*typed, *memory.verified(user)]
-        index = ContextIndex.build({"contacts": trusted, "found": [*memory.candidates(user), *found["candidates"]]})
+        on = memory.enabled(user)
+        remembered = memory.verified(user) if on else []
+        trusted = [*typed, *remembered]
+        job["memory"] = {"on": on, "names": len(remembered), "version": _version(remembered)}
+        index = ContextIndex.build({"contacts": trusted, "found": [*(memory.candidates(user) if on else []), *found["candidates"]]})
         heard_and_backed: dict[str, dict] = {}
         traces = []
         everything = [h["text"] for heard in heard_all for h in heard.values()]
@@ -170,7 +175,7 @@ def _work(job: dict) -> None:
             t = r["trace"]
             traces.append(t)
             for name in t.get("found", []):
-                heard_and_backed[name] = {"from": job["title"], "evidence": "a recogniser wrote it unprompted and another backed it"}
+                heard_and_backed[name] = {"from": job["title"], "call": job["id"], "evidence": "a recogniser wrote it unprompted and another backed it"}
             base_text = t["witnesses"][t["base"]]
             job["segments"][n].update(
                 stage="checked",
@@ -187,8 +192,10 @@ def _work(job: dict) -> None:
             )
             first_run += r["latency_s"]
         job["to_confirm"] = [n for n in heard_and_backed if n not in trusted]
-        memory.propose(user, {n: heard_and_backed[n] for n in job["to_confirm"]})
-        memory.touch(user, [e["to"] for s in job["segments"] for e in s.get("edits", [])])
+        if on:  # memory off: nothing is used and nothing is learned
+            memory.propose(user, {n: heard_and_backed[n] for n in job["to_confirm"]})
+            memory.touch(user, [e["to"] for s in job["segments"] for e in s.get("edits", [])])
+            memory.heard_as(user, {e["to"]: e["from"] for s in job["segments"] for e in s.get("edits", [])})
         settled = [e["to"] for s in job["segments"] for e in s.get("edits", [])]
         people = [[v.strip() for h in ([p["heard"]] if isinstance(p["heard"], str) else p["heard"]) for v in str(h).split(" / ")]
                   for p in found.get("people", [])]
@@ -263,7 +270,11 @@ def _work(job: dict) -> None:
             job["deal_sheet"] = deal_sheet(transcript, job["_lang"])
         job["timing"]["total_s"] = round(time.perf_counter() - t0, 1)
         job["status"] = "done"
-        account.save_call(user, _public(job), job["_audio"])
+        account.save_call(user, _public(job), job["_audio"], when=job.get("_when"))
+        if job.get("_source"):  # a voice note fed into memory: what it taught
+            learned = sorted({*heard_and_backed, *(e["to"] for s in job["segments"] for e in s.get("edits", []))})
+            memory.add_source(user, job["_source"], {"status": "done", "names": learned, "call": job["id"],
+                                                     "summary": (job.get("deal_sheet") or {}).get("summary") or job.get("topic") or ""})
         calls = len(segments) * (1 if job["timing"]["replayed"] else 2)
         account.log("/api/jobs", user, job["seconds"], round(1000 * (time.perf_counter() - t0)),
                     0.0 if job["timing"]["replayed"] else account.cost_inr(job["seconds"], 2, 1 + job["extra_passes"] / max(1, len(segments))),
@@ -271,6 +282,8 @@ def _work(job: dict) -> None:
     except Exception as e:  # shown on the page; the job never hangs
         job["status"] = "error"
         job["error"] = f"{type(e).__name__}: {e}"[:400]
+        if job.get("_source"):
+            memory.add_source(job["_user"], job["_source"], {"status": "error", "error": job["error"]})
 
 
 def _when(base_text: str, word: int, start_s: float, seconds: float) -> float:
@@ -280,22 +293,34 @@ def _when(base_text: str, word: int, start_s: float, seconds: float) -> float:
     return round(start_s + seconds * before / total, 1)
 
 
-def _start(title: str, audio: Path, segments: list[Path], user: str, contacts: list[str], discover_names: bool,
-           lang: str = "en") -> dict:
-    job_id = uuid.uuid4().hex[:12]
+def _new_job(title: str, audio: Path, segments: list[Path], user: str, contacts: list[str], discover_names: bool,
+             lang: str = "en", job_id: str | None = None) -> dict:
+    job_id = job_id or uuid.uuid4().hex[:12]
     lengths = [_wav_seconds(s) for s in segments]
     job = {
         "id": job_id, "title": title, "status": "queued", "error": None, "topic": "", "failed": [],
         "segments": [{"seg": s.stem, "stage": "queued", "start_s": round(sum(lengths[:n]), 2), "seconds": round(lengths[n], 2)}
                      for n, s in enumerate(segments)],
         "to_confirm": [], "unsure_people": [], "questions": [], "deal_sheet": None, "timing": {}, "extra_passes": 0,
-        "seconds": round(sum(lengths), 1),
+        "seconds": round(sum(lengths), 1), "contacts": contacts, "lang": "hi" if lang == "hi" else "en", "discover": discover_names,
         "_audio": audio, "_segments": segments, "_user": user, "_contacts": contacts, "_discover": discover_names,
         "_lang": "hi" if lang == "hi" else "en",
     }
-    JOBS[job_id] = job
+    return job
+
+
+def _start(title: str, audio: Path, segments: list[Path], user: str, contacts: list[str], discover_names: bool,
+           lang: str = "en", source: str = "") -> dict:
+    job = _new_job(title, audio, segments, user, contacts, discover_names, lang)
+    if source:
+        job["_source"] = source
+    JOBS[job["id"]] = job
     threading.Thread(target=_work, args=(job,), daemon=True).start()
-    return {"id": job_id}
+    return {"id": job["id"]}
+
+
+def _version(names: list[str]) -> str:
+    return f"{len(names)}:" + hashlib.sha1("|".join(sorted(names)).encode()).hexdigest()[:8]
 
 
 def _check_code(*given: str | None) -> None:
@@ -379,11 +404,13 @@ def _verify(wav: Path, names: list[str], user: str, supplied: str, budget_ms: in
     def ms() -> int:
         return round(1000 * (time.perf_counter() - t0))
 
-    trusted = [*names, *(memory.verified(user) if user else [])]
+    on = memory.enabled(user)
+    remembered = memory.verified(user) if on else []
+    trusted = [*names, *remembered]
     calls = [w for w in cfg.witnesses if w in S and not (supplied and w == STANDS_IN_FOR)]
     pool = ThreadPoolExecutor(max_workers=len(calls) + 1)
     # Names are known before the audio is heard: work out how they sound while the recognisers run.
-    index_job = pool.submit(ContextIndex.build, {"contacts": trusted, "found": memory.candidates(user) if user else []})
+    index_job = pool.submit(ContextIndex.build, {"contacts": trusted, "found": memory.candidates(user) if on else []})
     done_at: dict[str, int] = {}
 
     def call(w: str) -> dict:
@@ -427,8 +454,12 @@ def _verify(wav: Path, names: list[str], user: str, supplied: str, budget_ms: in
         pool.shutdown(wait=False)
     t = r["trace"]
     text = r["text"].replace("\n", " ")
-    if user:
+    if on:
         memory.touch(user, [e["to"] for e in t.get("edits", [])])
+        memory.heard_as(user, {e["to"]: e["from"] for e in t.get("edits", [])})
+        memory.propose(user, {n: {"from": "API clip", "call": request_id, "evidence": "a recogniser wrote it unprompted and another backed it"}
+                              for n in t.get("found", []) if n not in trusted})
+    from_memory = sorted({e["to"] for e in t.get("edits", [])} & set(remembered) - set(names))
     replayed = all(h.get("cached") for w, h in heard.items() if w != SUPPLIED)
     yield {
         "event": "verified",
@@ -450,6 +481,8 @@ def _verify(wav: Path, names: list[str], user: str, supplied: str, budget_ms: in
                        + [{"kind": "number", "heard": d["value"], "options": d["options"]} for d in t.get("number_doubts", [])]
                        + [{"kind": "name", "heard": "", "options": group} for group in t.get("unresolved", [])],
             "names_considered": t.get("shortlist", []),
+            # What this caller's memory did: on, how many names it holds, and which fixes came from it alone.
+            "memory": {"on": on, "names": len(remembered), "fixed_from_memory": from_memory},
             "recognisers": [_short(w) for w in heard],
             "left_out": [_short(jobs[f]) for f in pending] + [_short(x.split(":")[0]) for x in failed],
             "extra_listens": t.get("extra_passes", 0),
@@ -507,7 +540,7 @@ async def speech_to_text(
         account.log("/speech-to-text", who, seconds, p["timing_ms"]["verified"], cost, replayed=p["replayed"],
                     draft_ms=p["timing_ms"]["draft"], extra_listens=p["extra_listens"], edits=len(p["edits"]), clear=p["clear"])
 
-    steps = metered(_verify(wav, _names(names), _user(user) if user.strip() else "", transcript.strip(), max(0, budget_ms), t0))
+    steps = metered(_verify(wav, _names(names), _memory_user(key, user), transcript.strip(), max(0, budget_ms), t0))
     if stream:
         return StreamingResponse((json.dumps(step, ensure_ascii=False) + "\n" for step in steps), media_type="application/x-ndjson")
     final = await run_in_threadpool(lambda: list(steps)[-1])
@@ -581,14 +614,18 @@ def answer(job_id: str, body: Answer):
     q = next((q for q in job["questions"] if q["id"] == body.question), None)
     if q is None or not value:
         raise HTTPException(400, "No such question.")
+    _apply_answer(job, q, value)
+    if job["status"] == "done" and job.get("_user"):
+        account.save_call(job["_user"], _public(job), job["_audio"])  # the answer is kept with the call
+    return _public(job)
+
+
+def _apply_answer(job: dict, q: dict, value: str) -> None:
     q["answer"] = value
     for seg in job["segments"]:
         for word in (seg.get("view") or {}).get("parakh", []):
             if (word.get("info") or {}).get("q") == q["id"]:
                 word.update(t=value, c="num" if q["kind"] == "number" else "fix", info={"said": q.get("text", ""), "answered": True})
-    if job["status"] == "done" and job.get("_user"):
-        account.save_call(job["_user"], _public(job), job["_audio"])  # the answer is kept with the call
-    return _public(job)
 
 
 class NamesImport(BaseModel):
@@ -613,6 +650,222 @@ def import_names(user: str, body: NamesImport):
     # Work out how the new names are said now, so the first recording after the import does not wait for it.
     threading.Thread(target=ContextIndex.build, args=({"contacts": names},), daemon=True).start()
     return {**get_memory(user), "added": added, "skipped": len(body.names) - len(names)}
+
+
+# ---------------------------------------------------------------- memory: what Parakh knows, and what it learned
+
+def _memory_view(user: str) -> dict:
+    m = memory.load(user)
+    trusted = sorted(({"name": n, "how": e.get("verified", ""), "auto": bool(e.get("auto")), "source": e.get("source", ""),
+                       "heard_as": e.get("heard_as", []), "last_used": e.get("last_used"), "added": e.get("verified_at")}
+                      for n, e in m["verified"].items()), key=lambda x: -(x["added"] or 0))
+    waiting = sorted(({"name": n, "seen": e.get("seen", 1), "need": memory.AUTO_TRUST_AFTER,
+                       "from": [x.get("from", "") for x in e.get("evidence", [])][-3:]}
+                      for n, e in m["candidates"].items()), key=lambda x: -x["seen"])
+    srcs = sorted(({"id": k, **v} for k, v in m["sources"].items()), key=lambda x: -(x.get("added") or 0))
+    learned_auto = sum(1 for x in trusted if x["auto"])
+    from_calls = sum(1 for x in trusted if not x["source"] and not x["auto"])
+    return {"verified": sorted(m["verified"]), "candidates": sorted(m["candidates"]),
+            "settings": m["settings"], "trusted": trusted, "waiting": waiting, "sources": srcs, "log": m["log"][:14],
+            "stats": {"names": len(trusted), "from_files": sum(1 for x in trusted if x["source"]), "from_calls": from_calls,
+                      "learned_alone": learned_auto, "waiting": len(waiting), "sources": len(srcs),
+                      "misheard_forms": sum(len(x["heard_as"]) for x in trusted), "auto_trust_after": memory.AUTO_TRUST_AFTER}}
+
+
+def _memory_user(key: str | None, user: str = "") -> str:
+    """Whose memory an API request uses: the key's workspace, or one of that workspace's own end users."""
+    if not key:
+        return _user(user) if user.strip() else ""
+    owner = account.owner(key)
+    return f"{owner}--{_user(user)}"[:80] if user.strip() else owner
+
+
+async def _feed(user: str, file: UploadFile, lang: str = "en") -> dict:
+    """Put one file into a user's memory. Contacts and sheets are read at once; audio is checked like a call."""
+    name = file.filename or "file"
+    kind = Path(name).suffix.lower()
+    source_id = uuid.uuid4().hex[:10]
+    if kind in sources.CONTACT_KINDS:
+        data = await file.read()
+        if len(data) > MAX_UPLOAD_BYTES:
+            raise HTTPException(413, "File is too large (12 MB limit).")
+        try:
+            found = sources.names_from_file(name, data)
+        except Exception as e:
+            raise HTTPException(400, f"Could not read that file: {type(e).__name__}")
+        if not found:
+            raise HTTPException(400, "No names found in that file. Put names in a column called Name, Party or Item.")
+        memory.add_source(user, source_id, {"kind": "contacts", "file": name, "added": time.time(), "status": "done", "names": found[:50],
+                                            "count": len(found)})
+        added = memory.confirm_many(user, found, how=f"from {name}", source=source_id)
+        threading.Thread(target=ContextIndex.build, args=({"contacts": found[:memory.MAX_VERIFIED_HINTS]},), daemon=True).start()
+        return {"id": source_id, "kind": "contacts", "file": name, "found": len(found), "added": added}
+    if kind in sources.AUDIO_KINDS or (file.content_type or "").startswith(("audio/", "video/")):
+        job_dir, wav, seconds = await _ingest(file, MAX_SECONDS_TOTAL)
+        segments = [wav] if seconds <= MAX_SECONDS else split(wav, job_dir / "segments")
+        memory.add_source(user, source_id, {"kind": "voice", "file": name, "added": time.time(), "status": "listening",
+                                            "seconds": round(seconds, 1), "names": []})
+        started = _start(f"Voice note · {Path(name).stem}"[:60], wav, segments, user, [], discover_names=True, lang=lang, source=source_id)
+        return {"id": source_id, "kind": "voice", "file": name, "call": started["id"], "seconds": round(seconds, 1)}
+    raise HTTPException(400, "Send contacts (.csv, .xlsx, .vcf, .txt) or a voice note or call (.mp4, .m4a, .ogg, .opus, .mp3, .wav).")
+
+
+def _recheck(call_id: str, user: str) -> dict | None:
+    """Check a saved call again with today's memory. Returns what changed, or None if it could not be."""
+    saved = account.load_call(call_id)
+    if not saved:
+        return None
+    old, audio = saved["job"], Path(saved["audio"])
+    segs = [audio.parent / "segments" / f"{s['seg']}.wav" if (audio.parent / "segments" / f"{s['seg']}.wav").exists()
+            else audio.parent / f"{s['seg']}.wav" for s in old["segments"]]
+    if not segs or not all(x.exists() for x in segs):
+        return None  # the recording is gone
+    job = _new_job(old["title"], audio, segs, user, old.get("contacts", []), old.get("discover", bool(old.get("deal_sheet"))),
+                   old.get("lang", "en"), job_id=old["id"])
+    job["_when"] = saved.get("when")
+    _work(job)
+    if job["status"] != "done":
+        return None
+    for q in old.get("questions", []):  # answers the person gave stay given
+        if q.get("answer"):
+            nq = next((x for x in job["questions"] if x["key"] == q["key"] and not x.get("answer")), None)
+            if nq:
+                _apply_answer(job, nq, q["answer"])
+    account.save_call(user, _public(job), audio, when=saved.get("when"))
+    JOBS[job["id"]] = job
+    pairs = lambda j: {(e["from"], e["to"]) for sg in j["segments"] for e in sg.get("edits", [])}
+    open_q = lambda j: sum(1 for q in j.get("questions", []) if not q.get("answer"))
+    fixed = sorted(pairs(job) - pairs(old))
+    return {"id": job["id"], "title": job["title"], "fixed": [{"from": f, "to": t} for f, t in fixed],
+            "questions_before": open_q(old), "questions_after": open_q(job)}
+
+
+def learn(user: str) -> dict:
+    """The daily learning run for one user.
+
+    1. Trust names the audio backed in AUTO_TRUST_AFTER separate recordings.
+    2. Learn how every known name is said (cached once per name).
+    3. Check the week's calls again with today's memory, where the memory changed since they were checked.
+    """
+    t0 = time.time()
+    m = memory.load(user)
+    if not m["settings"]["enabled"]:
+        return {"at": t0, "skipped": "memory is off"}
+    promoted = memory.auto_trust(user) if m["settings"]["auto_learn"] else []
+    names = memory.verified(user)
+    try:
+        ContextIndex.build({"contacts": names})  # pronunciations of new names, cached
+    except Exception:
+        pass
+    version = _version(names)
+    rechecked, improved = 0, []
+    for c in account.list_calls(user, limit=40):
+        if time.time() - c["when"] > KEEP_UPLOADS_S:
+            continue
+        saved = account.load_call(c["id"]) or {}
+        if (saved.get("job", {}).get("memory") or {}).get("version") == version:
+            continue  # checked with this memory already
+        r = _recheck(c["id"], user)
+        if r is None:
+            continue
+        rechecked += 1
+        if r["fixed"] or r["questions_after"] < r["questions_before"]:
+            improved.append(r)
+    entry = {"at": t0, "took_s": round(time.time() - t0, 1), "promoted": promoted, "names": len(names),
+             "rechecked": rechecked, "improved": improved}
+    memory.write_log(user, entry)
+    return entry
+
+
+LEARN_EVERY_S = 24 * 3600
+
+
+def _learn_every_day() -> None:
+    """Once a day for every user with a memory: the learning run. Checks every half hour who is due."""
+    time.sleep(60)
+    while True:
+        for f in sorted(memory.MEMORY_DIR.glob("*.json")) if memory.MEMORY_DIR.exists() else []:
+            if f.stem.startswith("eval-"):  # scripts/memory_eval.py runs its own learning, on its own schedule
+                continue
+            try:
+                m = memory.load(f.stem)
+                last = m["log"][0]["at"] if m["log"] else 0
+                if m["settings"]["enabled"] and m["settings"]["auto_learn"] and time.time() - last > LEARN_EVERY_S:
+                    learn(f.stem)
+            except Exception:
+                pass
+        time.sleep(1800)
+
+
+class MemorySettings(BaseModel):
+    enabled: bool | None = None
+    auto_learn: bool | None = None
+
+
+@app.get("/api/users/{user}/memory/full")
+def memory_full(user: str):
+    return _memory_view(_user(user))
+
+
+@app.patch("/api/users/{user}/memory/settings")
+def memory_settings(user: str, body: MemorySettings):
+    memory.settings(_user(user), **body.model_dump())
+    return _memory_view(_user(user))
+
+
+@app.post("/api/users/{user}/memory/sources")
+async def memory_feed(user: str, file: UploadFile = File(...), lang: str = Form("en")):
+    return await _feed(_user(user), file, lang)
+
+
+@app.delete("/api/users/{user}/memory/sources/{source_id}")
+def memory_drop_source(user: str, source_id: str):
+    return {"removed_names": memory.drop_source(_user(user), source_id)}
+
+
+@app.post("/api/users/{user}/memory/learn")
+async def memory_learn(user: str):
+    return await run_in_threadpool(learn, _user(user))
+
+
+# The same memory for developers, by API key. "user" picks one of your own end users; without it, the key's workspace.
+def _key_user(key: str | None, user: str) -> str:
+    if not key or not account.usage(key):
+        raise HTTPException(401, "Missing or revoked API key. Create one at /#/app/developers and send it as the api-subscription-key header.")
+    return _memory_user(key, user)
+
+
+@app.get("/v1/memory")
+def api_memory(user: str = "", api_subscription_key: str | None = Header(default=None)):
+    return _memory_view(_key_user(api_subscription_key, user))
+
+
+@app.post("/v1/memory/sources")
+async def api_memory_feed(file: UploadFile = File(...), user: str = Form(""), api_subscription_key: str | None = Header(default=None)):
+    return await _feed(_key_user(api_subscription_key, user), file)
+
+
+class ApiNames(BaseModel):
+    names: list[str]
+    user: str = ""
+
+
+@app.post("/v1/memory/names")
+def api_memory_names(body: ApiNames, api_subscription_key: str | None = Header(default=None)):
+    who = _key_user(api_subscription_key, body.user)
+    names = [n for n in map(sources.clean, body.names) if n][:sources.MAX_NAMES]
+    return {"added": memory.confirm_many(who, names, how="added through the API"), **_memory_view(who)["stats"]}
+
+
+@app.patch("/v1/memory/settings")
+def api_memory_settings(body: MemorySettings, user: str = "", api_subscription_key: str | None = Header(default=None)):
+    who = _key_user(api_subscription_key, user)
+    return memory.settings(who, **body.model_dump())
+
+
+@app.post("/v1/memory/learn")
+async def api_memory_learn(user: str = "", api_subscription_key: str | None = Header(default=None)):
+    return await run_in_threadpool(learn, _key_user(api_subscription_key, user))
 
 
 @app.get("/api/users/{user}/memory")

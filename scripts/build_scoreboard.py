@@ -44,6 +44,21 @@ def on_each_base(path: Path) -> list[dict]:
     return out
 
 
+def memory_summary(path: Path) -> dict:
+    """scripts/memory_eval.py, trimmed for the page: memory off vs on, and the trader's week."""
+    m = json.loads(path.read_text(encoding="utf-8"))
+    out = {}
+    if "fleurs" in m:
+        f = m["fleurs"]
+        out["fleurs"] = {k: f[k] for k in ("recordings", "memory_names", "fixed_by_memory", "broken_by_memory")}
+        for side in ("without", "with"):
+            out["fleurs"][side] = {k: f[side][k] for k in ("names", "names_right", "rate", "whole_recordings_right", "recordings", "wer")}
+    if "calls" in m:
+        out["calls"] = {"days": [{"when": d["when"], "calls": {k: {x: v[x] for x in ("right", "names_said", "open_questions")}
+                                                              for k, v in d["calls"].items()}} for d in m["calls"]["days"]]}
+    return out
+
+
 def edit_outcome(path: Path, ours: str = "Parakh", base: str = "saaras-v4") -> dict:
     """What Parakh's changes did, name by name against the base model alone: fixed, broken, and harm to other words."""
     clips = json.loads(path.read_text(encoding="utf-8"))["clips"]
@@ -221,6 +236,8 @@ def main() -> None:
         phone = benchmark(RUNS / "fleurs-test-bases-phone.json")
         out["phone"] = {**phone, "bases": on_each_base(RUNS / "fleurs-test-bases-phone.json"),
                         "note": "The same recordings passed through a phone line first: 300-3400 Hz, 8 kHz, G.711 mu-law."}
+    if (RUNS / "memory.json").exists():
+        out["memory"] = memory_summary(RUNS / "memory.json")
     if (RUNS / "fleurs-fresh-bases.json").exists():
         out["edit_outcome"] = edit_outcome(RUNS / "fleurs-fresh-bases.json")
     try:

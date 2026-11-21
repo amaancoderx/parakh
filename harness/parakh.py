@@ -313,7 +313,22 @@ def transplant(
     def sounds_like(lo: int, hi: int, term: Term) -> float:
         return term.similarity(key(" ".join(_clean(t) for t in base_toks[lo:hi])))
 
+    whole_by_text = {t.text: t for t in accepted if t.kind != "part"}
+
     def consider(bs: int, be: int, term: Term) -> None:
+        if term.kind == "part":
+            # One word of a contact's name, with the rest of the name garbled next to it
+            # ("Eruzela Baiyankho"): write the whole name over both words, not just the one.
+            for parent in (whole_by_text.get(p) for p in term.parents):
+                if parent is None:
+                    continue
+                n = len(parent.text.split())
+                for lo, hi in ((bs - n + be - bs, be), (bs, bs + n)):
+                    if lo >= 0 and hi <= len(base_toks) and (lo, hi) != (bs, be) and not overlaps(lo, hi)                             and sounds_like(lo, hi, parent) >= FLOOR_ECHO:
+                        bs, be, term = lo, hi, parent
+                        break
+                if term is parent:
+                    break
         if overlaps(bs, be) or sounds_like(bs, be, term) < 0.5:
             return
         old = " ".join(_clean(t) for t in base_toks[bs:be])
@@ -371,6 +386,12 @@ def transplant(
                     sim = sounds_like(i, i + size, term)
                     if sim >= FLOOR_ECHO:
                         repeats.append((sim, i, i + size, term))
+    # A word that matches one word of a contact's name ("Baiyankho" ~ "Bianco") gives way to the
+    # whole name where the whole name also matches there ("Eruzela Baiyankho" ~ "Arizona Bianco"):
+    # otherwise the closer single word wins and half the name is left garbled.
+    whole_at = [(i, j, t.text) for _, i, j, t in repeats if t.kind != "part"]
+    repeats = [r for r in repeats if r[3].kind != "part"
+               or not any(p in r[3].parents and i <= r[1] and r[2] <= j for i, j, p in whole_at)]
     for _, bs, be, term in sorted(repeats, key=lambda r: -r[0]):
         consider(bs, be, term)
     edits.sort(key=lambda e: e["span"])

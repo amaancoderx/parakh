@@ -78,6 +78,12 @@ def usage(key: str) -> dict | None:
     return None if entry is None else {"key": key, **_public(key, entry)}
 
 
+def owner(key: str) -> str:
+    """The workspace a key belongs to. Keys made before keys had owners get one of their own."""
+    entry = _keys().get(key) or {}
+    return entry.get("owner") or "k-" + key[3:11]
+
+
 def list_keys(owner: str) -> list[dict]:
     """A workspace's keys, newest first, never with the full key."""
     return sorted((_public(k, e) for k, e in _keys().items() if owner and e.get("owner") == owner),
@@ -129,11 +135,11 @@ def totals() -> dict:
             "median_ms_per_clip": took[len(took) // 2] if took else None}
 
 
-def save_call(user: str, job: dict, audio: Path) -> None:
+def save_call(user: str, job: dict, audio: Path, when: float | None = None) -> None:
     folder = CALLS / user
     folder.mkdir(parents=True, exist_ok=True)
     (folder / f"{job['id']}.json").write_text(
-        json.dumps({"when": time.time(), "user": user, "audio": str(audio), "job": job}, ensure_ascii=False), encoding="utf-8")
+        json.dumps({"when": when or time.time(), "user": user, "audio": str(audio), "job": job}, ensure_ascii=False), encoding="utf-8")
 
 
 def load_call(job_id: str) -> dict | None:
