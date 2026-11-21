@@ -255,15 +255,19 @@ input, select { font: inherit; color: inherit; }
 .mem-vis { display: grid; gap: 10px; }
 .mv-files { display: flex; flex-wrap: wrap; gap: 6px; }
 .mv-files span { display: inline-flex; align-items: center; gap: 7px; padding: 5px 10px 5px 6px; border-radius: 9px; background: var(--surface); box-shadow: 0 0 0 1px var(--line); font-size: 12.5px; font-weight: 500; }
-.mv-files i { width: 16px; height: 16px; border-radius: 5px; display: inline-block; }
+.mv-files i { width: 20px; height: 20px; border-radius: 6px; display: inline-grid; place-items: center; }
+.mv-files i svg { width: 12px; height: 12px; }
 .mv-files small { color: var(--muted); font-weight: 400; }
 .mv-night { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 13px; }
 .mv-night .moon { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #5b5fc7; background: #ecebfb; padding: 3px 8px; border-radius: 99px; }
 .mv-night s { color: var(--wrong); }
 .mv-night .mv-to { font: 600 13px var(--sans, inherit); color: var(--ok); background: var(--ok-soft); padding: 3px 9px; border-radius: 7px; }
-.mv-lift { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; padding-top: 8px; border-top: 1px dashed var(--line-2); }
-.mv-lift b { font-size: 18px; font-weight: 600; color: var(--ok); white-space: nowrap; }
-.mv-lift span { font-size: 12px; color: var(--muted); }
+.mv-lift { display: grid; grid-template-columns: 1.2fr 1.3fr .8fr; gap: 10px; padding-top: 10px; border-top: 1px dashed var(--line-2); }
+.mv-lift > div { display: grid; gap: 2px; align-content: start; }
+.mv-lift b { font-size: 17px; font-weight: 600; color: var(--ok); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.mv-lift span { font-size: 11.5px; line-height: 1.35; color: var(--muted); }
+.mv-lift .zero b { color: var(--ink); }
+@media (max-width: 480px) { .mv-lift { grid-template-columns: 1fr 1fr; } }
 .fs-err { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 4px; }
 .fs-err div { background: var(--sunken); border-radius: 10px; padding: 10px 12px; display: grid; gap: 3px; }
 .fs-err small { font-size: 12px; color: var(--muted); }
@@ -935,9 +939,9 @@ table.plain tr.us td { font-weight: 600; }
         <div class="card tile2">
           <div><h3>Memory that improves every day</h3><p>Feed it ledgers, contacts and voice notes. Each night it fixes past calls.</p></div>
           <div class="vis mem-vis">
-            <div class="mv-files"><span><i class="k-s"></i>party-ledger.xlsx<small>36 names</small></span><span><i class="k-v"></i>voice-note.mp4<small>learned Arizona Bianco</small></span></div>
+            <div class="mv-files"><span><i class="k-s"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="3.5" width="13" height="13" rx="2"/><path d="M3.5 8h13M3.5 12h13M8 3.5v13"/></svg></i>party-ledger.xlsx<small>36 names</small></span><span><i class="k-v"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="7.5" y="2.5" width="5" height="9" rx="2.5"/><path d="M4.5 9.5a5.5 5.5 0 0 0 11 0M10 15v2.5" stroke-linecap="round"/></svg></i>voice-note.mp4<small>learned Arizona Bianco</small></span></div>
             <div class="mv-night"><span class="moon">Overnight</span><span class="said"><s>Ajina Bank</s></span><span class="arrow">→</span><span class="mv-to">Arizona Bianco</span></div>
-            <div class="mv-lift" id="mv-lift"><b>91.0% → 97.1%</b><span>names right with memory on 189 unseen recordings · 0 made wrong</span></div>
+            <div class="mv-lift" id="mv-lift"><div><b>91.0% → 97.1%</b><span>names right</span></div><div><b>162 → 181</b><span>of 189 recordings with every name right</span></div><div class="zero"><b>0</b><span>names made wrong</span></div></div>
           </div>
         </div>
         <div class="card tile2">
@@ -2647,7 +2651,9 @@ function siteResults() {
     $("funnel-h").textContent = `What happened on ${fu.recordings} unseen recordings`;
     $("funnel").innerHTML = rows.map(([k, v, us]) => `<div class="frow${us ? " us" : ""}"><span>${k}</span><div><div class="bar" data-w="${((Math.log10(v + 1) / top) * 100).toFixed(1)}"></div></div><span class="v">${v.toLocaleString("en-IN")}</span></div>`).join("");
     const mf = sb.memory?.fleurs;
-    if (mf) $("mv-lift").innerHTML = `<b>${(mf.without.rate * 100).toFixed(1)}% → ${(mf.with.rate * 100).toFixed(1)}%</b><span>names right with memory on ${mf.recordings} unseen recordings · ${mf.broken_by_memory} made wrong</span>`;
+    if (mf) $("mv-lift").innerHTML = `<div><b>${(mf.without.rate * 100).toFixed(1)}% → ${(mf.with.rate * 100).toFixed(1)}%</b><span>names right</span></div>` +
+      `<div><b>${mf.without.whole_recordings_right} → ${mf.with.whole_recordings_right}</b><span>of ${mf.recordings} recordings with every name right</span></div>` +
+      `<div class="zero"><b>${mf.broken_by_memory}</b><span>names made wrong</span></div>`;
     const eo = sb.edit_outcome;
     if (eo) {
       const e = eo.errors;
