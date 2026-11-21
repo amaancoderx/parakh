@@ -569,7 +569,8 @@ table.codes code.c4 { color: var(--ask) !important; } table.codes code.c5 { colo
 .mem-cmp .h { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
 .mem-cmp p { font-size: 14px; line-height: 1.65; }
 .mem-cmp .why { font-size: 12.5px; color: var(--muted); }
-.mem-cmp .wide { grid-column: 1 / -1; font-size: 13px; color: var(--ink-2); }
+.mem-cmp .wide { grid-column: 1 / -1; display: block; font-size: 13.5px; line-height: 1.6; color: var(--ink-2); background: var(--ok-soft); border-color: transparent; }
+.mem-cmp .wide code { background: rgba(255,255,255,.7); padding: 1px 6px; border-radius: 5px; font-size: 12.5px; }
 @media (max-width: 760px) { .mem-cmp { grid-template-columns: 1fr; } }
 .codewin { border-radius: 14px; overflow: hidden; background: #16181c; min-width: 0; }
 .codewin .code { margin: 0; border-radius: 0; padding-top: 16px; }
@@ -2421,8 +2422,16 @@ function memSnippets(key) {
   $("mem-call").innerHTML = `${cmd} <u>${esc(o)}/speech-to-text</u>${nl}
   -H "api-subscription-key: <b>${k}</b>"${nl}
   -F file=@turn.wav`;
-  $("mem-user").innerHTML = `${cmd} <u>${esc(o)}/v1/memory/sources</u> -H "api-subscription-key: <b>${k}</b>" -F <b>user=amit</b> -F file=@amit-contacts.vcf
-${cmd} <u>${esc(o)}/speech-to-text</u> -H "api-subscription-key: <b>${k}</b>" -F <b>user=amit</b> -F file=@turn.wav`;
+  const c = win ? "#" : "#";
+  $("mem-user").innerHTML = `<span class="c">${c} once, with Amit's contacts</span>
+${cmd} <u>${esc(o)}/v1/memory/sources</u>${nl}
+  -H "api-subscription-key: <b>${k}</b>"${nl}
+  -F <b>user=amit</b> -F file=@amit-contacts.vcf
+
+<span class="c">${c} every call Amit makes</span>
+${cmd} <u>${esc(o)}/speech-to-text</u>${nl}
+  -H "api-subscription-key: <b>${k}</b>"${nl}
+  -F <b>user=amit</b> -F file=@turn.wav`;
 }
 $("mem-try").onclick = async () => {
   const btn = $("mem-try"), out = $("mem-cmp");
@@ -2452,7 +2461,7 @@ $("mem-try").onclick = async () => {
     const m = b.parakh.memory, fx = b.parakh.edits.filter((e) => m.fixed_from_memory.includes(e.to));
     out.innerHTML = box(`Without memory <span class="badge">0 names</span>`, show(a, "wrong") + `<span class="why">No names were sent and memory is empty, so the base model's “Aishar” stands.</span>`)
       + box(`With memory <span class="badge ok">${m.names} names</span>`, show(b, "fix") + `<span class="why">${fx.length ? fx.map((e) => `“${esc(e.from)}” → ${esc(e.to)}: ${esc(e.why)}`).join("<br>") : "Nothing changed."}</span>`)
-      + `<div class="wide">Read ${up.found} names from <b>contacts.csv</b>. The second request sent no names; <code class="mono">fixed_from_memory</code> was <code class="mono">${esc(JSON.stringify(m.fixed_from_memory))}</code>.</div>`;
+      + `<div class="wide">Memory read <b>${up.found} names</b> from contacts.csv. The second request sent no names, and the answer said <code class="mono">"fixed_from_memory": ${esc(JSON.stringify(m.fixed_from_memory))}</code>.</div>`;
     keyInfo();
   } catch (e) {
     out.innerHTML = `<div class="wide" style="color:var(--wrong)">${esc(e.message)}</div>`;
