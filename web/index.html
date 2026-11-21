@@ -2613,7 +2613,10 @@ function siteResults() {
       [`<small>${v3.base_names}% → </small><span class="to">${v3.names_right}%</span>`, `Names right on ${esc(v3.base)}`],
       [`${fixed}<small> fixed · </small>${lost}<small> lost</small>`, "Names, across three speech models"],
       l ? [`${(l.verified_ms.median / 1000).toFixed(1)}<small> s</small>`, `To a checked transcript. Draft in ${(l.draft_ms.median / 1000).toFixed(1)} s.`] : null,
-      [`${f ? f.clips : sb.fleurs.clips}`, "Unseen public recordings, run once"],
+      sb.memory?.fleurs
+        ? [`<small>${(sb.memory.fleurs.without.rate * 100).toFixed(1)}% → </small><span class="to">${(sb.memory.fleurs.with.rate * 100).toFixed(1)}%</span>`,
+           `Names right with memory. ${sb.memory.fleurs.broken_by_memory} made wrong.`]
+        : [`${f ? f.clips : sb.fleurs.clips}`, "Unseen public recordings, run once"],
     ].filter(Boolean);
     $("metrics").innerHTML = cells.map(([n, p]) => `<div><div class="num">${n}</div><p>${p}</p></div>`).join("");
 
