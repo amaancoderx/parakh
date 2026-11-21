@@ -3,500 +3,808 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Parakh</title>
+<title>Parakh · Voice AI you can act on</title>
+<meta name="description" content="Parakh checks every name and number a speech model hears against the audio and the people you know, fixes what it can prove, and asks about the rest.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23C8553D'/%3E%3Cpath d='M9 13l3-4h8l3 4-7 10z' fill='none' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E">
 <style>
-  :root {
-    --white: #ffffff; --ink: #141413; --ink-2: #3d3d3a; --muted: #73726c; --faint: #9c9a92;
-    --line: #dedcd1; --line-2: #c2c0b6;
-    --page: color-mix(in srgb, #dedcd1 22%, #ffffff);
-    --accent: #2c84db; --accent-ink: hsl(210 73.7% 40.2%); --accent-tint: hsl(211 72% 90%);
-    --brand: #d97757;
-    --pro: #5645a1; --pro-tint: hsl(253 33.3% 91.8%);
-    --warn: #b17506; --warn-tint: color-mix(in srgb, #da9e25 22%, #ffffff);
-    --danger-tint: #f9ecec;
-    --r: 8px; --r-lg: 16px;
-    --shadow-1: 0 1px 2px #0000000d;
-    --shadow-3: rgba(0, 0, 0, 0.05) 0 4px 24px, -8px 20px 48px #00000026;
-    --ease: cubic-bezier(.4, 0, .2, 1); --spring: cubic-bezier(.34, 1.56, .64, 1); --out: cubic-bezier(.16, 1, .3, 1);
-    --serif: "Anthropic Serif", "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-    --sans: "Anthropic Sans", "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-    --mono: "Anthropic Mono", "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
-  }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; scroll-padding-top: 64px; }
-  main { overflow-x: clip; }
-  body { margin: 0; background: var(--page); color: var(--ink); font: 400 15px/1.55 var(--sans); -webkit-font-smoothing: antialiased; }
-  h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: -0.025em; line-height: 1.05; margin: 0; }
-  p { margin: 0; }
-  .muted { color: var(--muted); }
-  .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
-  .hidden { display: none !important; }
-  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
-  em { font-style: italic; color: var(--brand); }
+/* Parakh: the jeweller's touchstone. Warm paper, ink, one terracotta accent.
+   Highlights carry meaning only: blue = checked, violet = number, amber = ask, red = misheard. */
+:root {
+  --bg: #f6f5f2; --surface: #ffffff; --sunken: #efede8; --hover: #f3f1ec;
+  --ink: #15171a; --ink-2: #444a52; --muted: #757b84; --line: #e6e3dd; --line-2: #d7d3cb;
+  --brand: #c8553d; --brand-ink: #a5432e; --brand-soft: #fbece7;
+  --fix: #1d5fd1; --fix-soft: #e7effd; --num: #6845e0; --num-soft: #efeafd;
+  --ask: #a85d06; --ask-soft: #fcf1dc; --wrong: #c0392b; --wrong-soft: #fbe8e5;
+  --ok: #157a42; --ok-soft: #e4f3ea;
+  --sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --mono: "Geist Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+  --r: 14px; --r-sm: 10px;
+  --shadow: 0 1px 2px rgba(21,23,26,.04), 0 8px 24px -12px rgba(21,23,26,.12);
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--ink); }
+body { font: 15px/1.55 var(--sans); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4 { margin: 0; letter-spacing: -0.02em; text-wrap: balance; }
+p { margin: 0; }
+a { color: inherit; }
+button { font: inherit; color: inherit; cursor: pointer; }
+input, select { font: inherit; color: inherit; }
+.hidden, [hidden] { display: none !important; }
+.mono { font-family: var(--mono); }
+.tab { font-variant-numeric: tabular-nums; }
+.eyebrow { font-size: 11.5px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 6px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 
-  /* Rhythm: each screen is one idea, centred, with air around it */
-  .screen { padding: 128px 24px; max-width: 1040px; margin: 0 auto; }
-  .screen.tight { padding-top: 96px; padding-bottom: 96px; }
-  .center { text-align: center; }
-  .headline { font-size: clamp(36px, 5.6vw, 64px); max-width: 18ch; margin: 0 auto; }
-  .headline.xl { font-size: clamp(44px, 7.4vw, 92px); letter-spacing: -0.035em; line-height: 1; max-width: 14ch; }
-  .deck { font-size: clamp(17px, 1.6vw, 21px); color: var(--muted); max-width: 44ch; margin: 24px auto 0; line-height: 1.5; }
-  .reveal { opacity: 0; transform: translateY(16px); transition: opacity .7s var(--out), transform .8s var(--out); }
-  .reveal.in { opacity: 1; transform: none; }
-  @media (max-width: 640px) { .screen { padding: 80px 20px; } }
+/* ---------- shared components ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 40px; padding: 0 16px;
+  border-radius: 10px; border: 1px solid transparent; font-weight: 500; font-size: 14px; white-space: nowrap; transition: background .15s, border-color .15s; text-decoration: none; }
+.btn.sm { height: 32px; padding: 0 12px; font-size: 13px; border-radius: 8px; }
+.btn.lg { height: 48px; padding: 0 22px; font-size: 15px; border-radius: 12px; }
+.btn.primary { background: var(--ink); color: #fff; }
+.btn.primary:hover { background: #2a2e34; }
+.btn.brand { background: var(--brand); color: #fff; }
+.btn.brand:hover { background: var(--brand-ink); }
+.btn.ghost { background: var(--surface); border-color: var(--line-2); }
+.btn.ghost:hover { background: var(--hover); }
+.btn.quiet { background: transparent; color: var(--ink-2); }
+.btn.quiet:hover { background: var(--sunken); }
+.btn.danger { background: var(--surface); border-color: var(--line-2); color: var(--wrong); }
+.btn.danger:hover { background: var(--wrong-soft); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.btn svg { width: 16px; height: 16px; flex: none; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); }
+.card-h { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+.card-h h3 { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+.card-h p { color: var(--muted); font-size: 13px; margin-top: 2px; }
+.card-b { padding: 18px 20px; }
+.badge { display: inline-flex; align-items: center; gap: 5px; height: 22px; padding: 0 8px; border-radius: 6px; font-size: 12px; font-weight: 500;
+  background: var(--sunken); color: var(--ink-2); white-space: nowrap; }
+.badge.ok { background: var(--ok-soft); color: var(--ok); }
+.badge.ask { background: var(--ask-soft); color: var(--ask); }
+.badge.brand { background: var(--brand-soft); color: var(--brand-ink); }
+.badge.fix { background: var(--fix-soft); color: var(--fix); }
+.badge.num { background: var(--num-soft); color: var(--num); }
+.field { height: 40px; width: 100%; padding: 0 12px; border-radius: 10px; border: 1px solid var(--line-2); background: var(--surface); outline: none; transition: border-color .15s, box-shadow .15s; }
+.field:focus { border-color: var(--ink-2); box-shadow: 0 0 0 3px rgba(21,23,26,.06); }
+.dot { width: 8px; height: 8px; border-radius: 99px; background: var(--ok); flex: none; box-shadow: 0 0 0 3px var(--ok-soft); }
+.dot.down { background: var(--wrong); box-shadow: 0 0 0 3px var(--wrong-soft); }
+.spinner { width: 14px; height: 14px; border-radius: 99px; border: 2px solid currentColor; border-right-color: transparent; animation: spin .8s linear infinite; flex: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.rise { animation: rise .35s ease both; }
 
-  /* Top bar: a wordmark and four words */
-  nav { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--page) 88%, transparent); backdrop-filter: saturate(1.2); border-bottom: 1px solid color-mix(in srgb, var(--line) 60%, transparent); }
-  nav .bar { max-width: 1040px; margin: 0 auto; padding: 0 24px; height: 52px; display: flex; align-items: center; gap: 24px; }
-  .brand { font: 500 19px/1 var(--serif); color: var(--ink); text-decoration: none; margin-right: auto; display: flex; align-items: center; gap: 8px; }
-  .brand svg { width: 18px; height: 18px; color: var(--brand); }
-  nav a.link, nav button.link { font: 500 13px var(--sans); color: var(--muted); text-decoration: none; background: none; border: 0; padding: 0; cursor: pointer; }
-  nav a.link:hover, nav button.link:hover { color: var(--ink); }
-  nav .count { display: inline-block; min-width: 18px; padding: 0 5px; border-radius: 9px; background: var(--ink); color: var(--white); font-size: 11px; line-height: 18px; text-align: center; margin-left: 4px; }
-  @media (max-width: 720px) { nav a.link { display: none; } }
+/* ---------- word highlights ---------- */
+.mark { border: 0; padding: 1px 4px; margin: 0 -1px; border-radius: 5px; background: transparent; font: inherit; line-height: inherit; cursor: pointer; }
+.mark.fix { background: var(--fix-soft); color: var(--fix); font-weight: 500; }
+.mark.num { background: var(--num-soft); color: var(--num); font-weight: 500; font-family: var(--mono); font-size: .93em; }
+.mark.unsure { background: var(--ask-soft); color: var(--ask); font-weight: 500; box-shadow: inset 0 -2px 0 rgba(168,93,6,.45); }
+.mark.wrong { background: var(--wrong-soft); color: var(--wrong); text-decoration: line-through; text-decoration-color: rgba(192,57,43,.5); }
+.mark:hover { filter: brightness(.96); }
 
-  /* Buttons */
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font: 500 14px var(--sans); padding: 12px 22px; border-radius: 9999px; border: 1px solid transparent; cursor: pointer; text-decoration: none; transition: transform .15s var(--ease), background-color .15s var(--ease), border-color .15s var(--ease); }
-  .btn:active { transform: scale(.98); }
-  .btn.primary { background: var(--ink); color: var(--white); }
-  .btn.primary:hover { background: #000; }
-  .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line-2); }
-  .btn.ghost:hover { border-color: var(--ink); }
-  .btn.sm { font-size: 13px; padding: 8px 14px; }
-  .linkbtn { border: 0; background: none; color: var(--muted); font: inherit; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; padding: 0; }
-  .linkbtn:hover { color: var(--ink); }
+/* ---------- popover, toast, modal ---------- */
+.pop { position: absolute; z-index: 60; width: min(360px, calc(100vw - 32px)); background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  box-shadow: 0 18px 48px -16px rgba(21,23,26,.28); padding: 16px; animation: rise .18s ease both; }
+.pop h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+.pop p { color: var(--ink-2); font-size: 13.5px; }
+.pop table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px; }
+.pop td { padding: 6px 0; border-top: 1px solid var(--line); vertical-align: top; }
+.pop td:first-child { color: var(--muted); width: 42%; padding-right: 8px; }
+.pop .acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.pop .acts .field { flex: 1; min-width: 140px; height: 32px; font-size: 13px; }
+.hear { width: 32px; height: 32px; flex: none; border-radius: 99px; border: 1px solid var(--line-2); background: var(--surface); display: grid; place-items: center; }
+.hear svg { width: 12px; height: 12px; }
+.hear:hover, .hear.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+#toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 80; background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 10px;
+  font-size: 14px; box-shadow: var(--shadow); opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
+#toast.on { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+.modal-bg { position: fixed; inset: 0; z-index: 70; background: rgba(21,23,26,.35); display: grid; place-items: center; padding: 16px; }
+.modal { width: min(420px, 100%); background: var(--surface); border-radius: 16px; padding: 22px; box-shadow: 0 24px 64px -20px rgba(21,23,26,.4); animation: rise .2s ease both; }
+.modal h3 { font-size: 18px; margin-bottom: 6px; }
+.modal p { color: var(--ink-2); font-size: 14px; margin-bottom: 14px; }
+.modal .row { display: flex; gap: 8px; justify-content: flex-end; margin-top: 14px; }
 
-  /* Screen 1 */
-  .hero { padding-top: 136px; padding-bottom: 96px; }
-  .hero .actions { display: flex; gap: 12px; justify-content: center; margin-top: 40px; flex-wrap: wrap; }
-  .hero .note { margin-top: 56px; font-size: 13px; color: var(--faint); }
+/* =========================================================================
+   SITE (marketing)
+   ========================================================================= */
+.wrap { max-width: 1160px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+.nav { position: sticky; top: 0; z-index: 40; background: rgba(246,245,242,.86); backdrop-filter: saturate(1.4) blur(12px); border-bottom: 1px solid transparent; transition: border-color .2s; }
+.nav.scrolled { border-bottom-color: var(--line); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+.logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 17px; letter-spacing: -0.02em; text-decoration: none; }
+.logo .mk { width: 30px; height: 30px; border-radius: 8px; background: var(--brand); display: grid; place-items: center; }
+.logo .mk svg { width: 17px; height: 17px; }
+.logo small { font-weight: 400; color: var(--muted); font-size: 14px; }
+.nav-links { display: flex; align-items: center; gap: 4px; }
+.nav-links a { text-decoration: none; color: var(--ink-2); font-size: 14px; padding: 8px 12px; border-radius: 8px; }
+.nav-links a:hover { background: var(--sunken); color: var(--ink); }
+@media (max-width: 820px) { .nav-links a.hide-m { display: none; } }
 
-  /* Screen 2: one line of a real call, changing */
-  .stage { max-width: 880px; margin: 56px auto 0; }
-  .utter { font: 400 clamp(26px, 3.6vw, 44px)/1.3 var(--serif); letter-spacing: -0.015em; text-align: center; color: var(--ink); }
-  .swap { display: inline-block; position: relative; white-space: nowrap; }
-  .swap .b { display: none; }
-  .swap.doubt .a { color: var(--warn); box-shadow: inset 0 -2px 0 var(--warn); }
-  .swap.on .a { display: none; }
-  .swap.on .b { display: inline-block; animation: pop .4s var(--spring) both; }
-  .swap .b.fix { color: var(--accent-ink); background: var(--accent-tint); border-radius: 6px; padding: 0 8px; }
-  .swap .b.num { color: var(--pro); background: var(--pro-tint); border-radius: 6px; padding: 0 8px; font-family: var(--mono); font-size: .9em; }
-  .swap .b.ask { color: var(--warn); background: var(--warn-tint); border-radius: 6px; padding: 0 8px; }
-  .swap .b.ask::after { content: "?"; font-weight: 600; margin-left: 2px; }
-  .caption { text-align: center; margin-top: 32px; font-size: 14px; color: var(--muted); min-height: 44px; max-width: 56ch; margin-inline: auto; transition: opacity .3s var(--ease); }
-  .who { display: flex; justify-content: center; gap: 24px; margin-top: 40px; font-size: 13px; color: var(--faint); }
-  .who b { font-weight: 500; color: var(--muted); }
+.hero { padding: 64px 0 56px; }
+.hero-grid { display: grid; grid-template-columns: 1fr 1.05fr; gap: 56px; align-items: center; }
+@media (max-width: 980px) { .hero-grid { grid-template-columns: 1fr; gap: 40px; } .hero { padding-top: 40px; } }
+.hero h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(44px, 6vw, 72px); line-height: 1; letter-spacing: -0.02em; }
+.hero h1 em { color: var(--brand); }
+.hero .lead { font-size: 18px; color: var(--ink-2); margin-top: 22px; max-width: 520px; }
+.hero .ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+.hero .fine { margin-top: 18px; font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.hero .fine span { display: inline-flex; align-items: center; gap: 6px; }
+.hero .fine svg { width: 14px; height: 14px; color: var(--ok); }
 
-  /* Screen 3: try it */
-  .picker { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 48px; }
-  @media (max-width: 760px) { .picker { grid-template-columns: 1fr 1fr; } }
-  .sample { text-align: left; background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 20px; cursor: pointer; font: inherit; color: inherit; transition: transform .2s var(--out), border-color .2s var(--ease); }
-  .sample:hover { transform: translateY(-2px); border-color: var(--line-2); }
-  .sample.on { border-color: var(--ink); }
-  .sample b { display: block; font: 500 17px/1.3 var(--serif); }
-  .sample small { display: block; color: var(--muted); font-size: 12px; margin-top: 6px; }
-  .voice { display: flex; align-items: center; gap: 14px; background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 14px 16px; }
-  .mic { flex: none; width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--ink); color: var(--white); display: grid; place-items: center; cursor: pointer; transition: transform .2s var(--spring); }
-  .mic:hover { transform: scale(1.06); }
-  .mic svg { width: 18px; height: 18px; }
-  .mic.on { background: var(--brand); animation: ring 1.4s var(--ease) infinite; }
-  .voice b { display: block; font: 500 15px var(--sans); }
-  .voice .linkbtn { font-size: 12px; }
-  .meter { display: flex; align-items: center; gap: 2px; height: 16px; }
-  .meter i { width: 2px; height: 4px; border-radius: 2px; background: var(--brand); transition: height .1s linear; }
-  .earlier { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 16px; font-size: 12px; color: var(--faint); }
-  .fine { font-size: 12px; color: var(--faint); margin-top: 16px; max-width: 70ch; }
-  .err { color: var(--warn); background: var(--warn-tint); border-radius: var(--r); padding: 8px 12px; margin-top: 12px; }
+.window { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 30px 80px -40px rgba(21,23,26,.35); overflow: hidden; }
+.window-top { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--line); background: #fbfaf8; font-size: 12.5px; color: var(--muted); }
+.window-top .wave { display: flex; align-items: center; gap: 2px; height: 18px; }
+.window-top .wave i { width: 2px; border-radius: 2px; background: var(--brand); opacity: .8; animation: bounce 1.2s ease-in-out infinite; animation-delay: calc(var(--i) * -0.09s); }
+@keyframes bounce { 0%,100% { height: 4px; } 50% { height: 16px; } }
+.duo { display: grid; grid-template-columns: 1fr 1fr; }
+.duo > div { padding: 18px; min-width: 0; }
+.duo > div + div { border-left: 1px solid var(--line); }
+@media (max-width: 560px) { .duo { grid-template-columns: 1fr; } .duo > div + div { border-left: 0; border-top: 1px solid var(--line); } }
+.duo h4 { font-size: 12.5px; font-weight: 600; color: var(--muted); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.duo h4.us { color: var(--brand-ink); }
+.duo .say { font-size: 15px; line-height: 1.75; min-height: 106px; }
+.duo .say b { font-weight: 500; border-radius: 5px; padding: 1px 3px; transition: background .35s, color .35s; }
+.duo .say b.bad { background: var(--wrong-soft); color: var(--wrong); }
+.duo .say b.fixed { background: var(--fix-soft); color: var(--fix); }
+.duo .say b.digit { background: var(--num-soft); color: var(--num); font-family: var(--mono); font-size: .93em; }
+.duo .say b.asked { background: var(--ask-soft); color: var(--ask); }
+.note { margin-top: 14px; border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; background: #fcfbf9; }
+.note .eyebrow { margin-bottom: 8px; }
+.note dl { display: grid; grid-template-columns: 64px 1fr; gap: 5px 10px; margin: 0; font-size: 13.5px; }
+.note dt { color: var(--muted); }
+.note dd { margin: 0; min-height: 21px; }
+.note dd span { border-radius: 5px; padding: 0 4px; }
+.note dd .bad { background: var(--wrong-soft); color: var(--wrong); }
+.note dd .good { background: var(--ok-soft); color: var(--ok); }
+.stamp { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; font-size: 12px; font-weight: 600; padding: 4px 9px; border-radius: 7px; opacity: 0; transition: opacity .4s; }
+.stamp.on { opacity: 1; }
+.stamp.bad { background: var(--wrong-soft); color: var(--wrong); }
+.stamp.good { background: var(--ok-soft); color: var(--ok); }
+.steps-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.steps-row span { font-size: 12px; padding: 4px 9px; border-radius: 99px; border: 1px solid var(--line); color: var(--ink-2); background: #fff; opacity: 0; transform: translateY(4px); transition: opacity .35s, transform .35s; }
+.steps-row span.on { opacity: 1; transform: none; }
 
-  /* The result: verdict, questions, what was agreed, then the words */
-  #result { margin-top: 72px; }
-  .verdict { text-align: center; }
-  .verdict h3 { font-size: clamp(28px, 3.6vw, 40px); }
-  .verdict h3.ok { color: var(--accent-ink); }
-  .verdict p { margin-top: 8px; color: var(--muted); }
-  .verdict .busy { background: linear-gradient(90deg, var(--ink) 30%, var(--faint) 50%, var(--ink) 70%) 0 0 / 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shimmertext 1.2s linear infinite; }
-  .asks, .agreed, .compare, .pop, .receipt, .said { text-align: left; }
-  .asks { max-width: 760px; margin: 32px auto 0; display: grid; gap: 10px; }
-  .ask { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 12px 16px; align-items: center; padding: 14px 18px; background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); animation: rise .4s var(--out) both; animation-delay: calc(var(--i, 0) * 60ms); }
-  .hear { flex: none; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line-2); background: var(--white); color: var(--ink); display: grid; place-items: center; cursor: pointer; transition: transform .2s var(--spring), background-color .2s var(--ease), color .2s var(--ease); }
-  .hear:hover, .hear.on { transform: scale(1.06); background: var(--ink); color: var(--white); }
-  .hear svg { width: 12px; height: 12px; }
-  .ask b { display: block; font-weight: 500; font-size: 16px; }
-  .ask small { color: var(--muted); font-size: 12px; }
-  .ask .opts { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
-  .ask .opt { font: 500 14px var(--sans); padding: 8px 16px; border-radius: 9999px; border: 1px solid var(--line-2); background: var(--white); cursor: pointer; }
-  .ask .opt:hover { border-color: var(--ink); }
-  .ask .opt.yes { background: var(--ink); color: var(--white); border-color: var(--ink); }
-  .ask .field { font: inherit; border: 1px solid var(--line); border-radius: 9999px; padding: 8px 16px; min-width: 0; width: 150px; }
-  .ask .field:focus { outline: none; border-color: var(--ink); }
-  @media (max-width: 640px) { .ask { grid-template-columns: 40px 1fr; } .ask .opts { grid-column: 1 / -1; justify-content: flex-start; } }
-  .agreed { max-width: 760px; margin: 48px auto 0; }
-  .agreed h4 { font: 500 13px var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--faint); margin: 0 0 16px; text-align: center; }
-  dl.receipt { display: grid; grid-template-columns: max-content 1fr; gap: 10px 24px; margin: 0; background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 24px; }
-  dl.receipt dt { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .06em; padding-top: 4px; }
-  dl.receipt dd { margin: 0; font-size: 16px; }
-  dl.receipt dd span { display: block; }
-  .said { background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 24px; font: 400 20px/1.6 var(--serif); }
-  .actions-row { display: flex; gap: 10px; align-items: center; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
-  .actions-row audio { height: 36px; width: min(320px, 100%); }
-  .compare { max-width: 1040px; margin: 64px auto 0; }
-  .compare .head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
-  .compare .head h4 { font: 500 13px var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--faint); margin: 0; }
-  .seg { display: inline-flex; background: var(--white); border: 1px solid var(--line); border-radius: 9999px; padding: 3px; }
-  .seg button { font: 500 12px var(--sans); color: var(--muted); background: none; border: 0; border-radius: 9999px; padding: 6px 12px; cursor: pointer; }
-  .seg button.on { background: var(--ink); color: var(--white); }
-  .sheet { background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; }
-  .cols { display: grid; grid-template-columns: 1fr 1fr; }
-  .cols.one { grid-template-columns: 1fr; }
-  .cols.one > .base { display: none; }
-  .cols > div { padding: 18px 22px; border-top: 1px solid var(--line); min-width: 0; overflow-wrap: anywhere; font-size: 16px; line-height: 1.8; }
-  .cols > .base { border-right: 1px solid var(--line); color: var(--ink-2); }
-  .cols > .th { border-top: 0; display: flex; align-items: center; justify-content: space-between; font: 500 12px var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--faint); padding: 12px 22px; }
-  .cols > .th.us { color: var(--brand); }
-  .cols select { font: 400 12px var(--sans); color: var(--ink); background: var(--white); border: 1px solid var(--line); border-radius: var(--r); padding: 3px 8px; }
-  @media (max-width: 768px) { .cols { grid-template-columns: 1fr; } .cols > .base { display: none; } }
-  .pending { color: var(--faint); font-style: italic; }
-  .legend { display: flex; gap: 18px; flex-wrap: wrap; justify-content: center; margin-top: 14px; font-size: 12px; color: var(--faint); }
-  .mark { border: 0; font: inherit; color: inherit; padding: 0 5px; margin: 0 -2px; border-radius: 5px; cursor: pointer; background: none; display: inline-block; line-height: 1.45; }
-  .mark.fix { background: var(--accent-tint); color: var(--accent-ink); font-weight: 500; }
-  .mark.num { background: var(--pro-tint); color: var(--pro); font-family: var(--mono); font-size: .92em; }
-  .mark.unsure { background: var(--warn-tint); color: var(--warn); box-shadow: inset 0 -1px 0 var(--warn); }
-  .mark.unsure::after { content: "?"; font-weight: 600; margin-left: 2px; }
-  .mark.wrong { background: var(--danger-tint) linear-gradient(var(--ink-2), var(--ink-2)) no-repeat left 56% / 100% 1px; color: var(--muted); }
-  .pop-in .mark.fix, .pop-in .mark.num, .pop-in .mark.unsure { animation: pop .35s var(--spring) both; animation-delay: calc(var(--i, 0) * 60ms); }
-  button.mark:hover { filter: saturate(1.4); }
-  .legend .mark { cursor: default; }
-  #cols .us-cell { cursor: text; }
+.strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--surface); }
+.strip .wrap { display: grid; grid-template-columns: repeat(4, 1fr); }
+.strip .wrap > div { padding: 26px 20px; }
+.strip .wrap > div + div { border-left: 1px solid var(--line); }
+.strip .num { font-family: var(--serif); font-size: 40px; line-height: 1; }
+.strip .num small { font-family: var(--sans); font-size: 15px; color: var(--muted); }
+.strip p { font-size: 13.5px; color: var(--ink-2); margin-top: 8px; }
+@media (max-width: 820px) { .strip .wrap { grid-template-columns: 1fr 1fr; } .strip .wrap > div:nth-child(3) { border-left: 0; } .strip .wrap > div:nth-child(n+3) { border-top: 1px solid var(--line); } }
 
-  /* Popovers */
-  .pop { position: absolute; z-index: 100; width: 320px; max-width: calc(100vw - 32px); background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow-3); padding: 18px; animation: pop .25s var(--spring) both; transform-origin: top left; }
-  .pop h4 { margin: 0 0 6px; font: 500 17px var(--serif); }
-  .pop p { color: var(--muted); font-size: 12px; margin-bottom: 12px; }
-  .pop table { width: 100%; border-collapse: collapse; font-size: 12px; }
-  .pop td { padding: 7px 0; border-top: 1px solid var(--line); vertical-align: top; }
-  .pop td:first-child { color: var(--muted); padding-right: 12px; white-space: nowrap; }
-  .pop td:last-child { font-size: 14px; }
-  .pop .acts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
-  .pop .hear { width: 32px; height: 32px; float: right; margin: -4px 0 8px 8px; }
-  .field { font: inherit; color: var(--ink); background: var(--white); border: 1px solid var(--line); border-radius: 9999px; padding: 8px 14px; min-width: 0; flex: 1 1 120px; }
-  .field:focus { outline: none; border-color: var(--ink); }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; max-height: 160px; overflow: auto; }
-  .chip { display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px 4px 12px; border-radius: 9999px; font-size: 12px; font-weight: 500; background: var(--accent-tint); color: var(--accent-ink); }
-  .chip.wait { background: var(--warn-tint); color: var(--warn); }
-  .chip button { border: 0; background: none; color: inherit; cursor: pointer; font-size: 14px; line-height: 1; padding: 0 4px; }
-  .imports { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.sec { padding: 88px 0; }
+.sec-h { max-width: 640px; margin-bottom: 40px; }
+.sec-h h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(32px, 4vw, 46px); line-height: 1.05; }
+.sec-h p { color: var(--ink-2); font-size: 16.5px; margin-top: 14px; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+@media (max-width: 980px) { .grid4 { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 760px) { .grid3, .grid4 { grid-template-columns: 1fr; } }
+.feature { padding: 22px; }
+.feature .ic { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: var(--sunken); margin-bottom: 16px; }
+.feature .ic svg { width: 19px; height: 19px; }
+.feature h3 { font-size: 16.5px; font-weight: 600; margin-bottom: 6px; }
+.feature p { color: var(--ink-2); font-size: 14.5px; }
+.step-card { padding: 22px; position: relative; }
+.step-card .n { font-family: var(--mono); font-size: 12px; color: var(--brand-ink); margin-bottom: 12px; display: block; }
+.step-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+.step-card p { color: var(--ink-2); font-size: 14px; }
+.proof-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px; }
+@media (max-width: 900px) { .proof-grid { grid-template-columns: 1fr; } }
+.big-num { font-family: var(--serif); font-size: 64px; line-height: 1; }
+.big-num small { font-size: 26px; color: var(--muted); }
+.big-num .to { color: var(--brand); }
+.dev { display: grid; grid-template-columns: 1fr 1.15fr; gap: 40px; align-items: center; }
+@media (max-width: 900px) { .dev { grid-template-columns: 1fr; } }
+.code { background: #16181c; color: #d6dae0; border-radius: 14px; padding: 18px 20px; font: 12.5px/1.75 var(--mono); overflow-x: auto; white-space: pre; }
+.code i { color: #7d8590; font-style: normal; }
+.code b { color: #f0b49f; font-weight: 400; }
+.code u { color: #9ecbff; text-decoration: none; }
+.checks { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 10px; }
+.checks li { display: flex; gap: 10px; color: var(--ink-2); font-size: 15px; }
+.checks svg { width: 18px; height: 18px; color: var(--ok); flex: none; margin-top: 3px; }
+.cta-band { background: var(--ink); color: #fff; border-radius: 22px; padding: 56px 40px; text-align: center; }
+.cta-band h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(32px, 4vw, 48px); line-height: 1.05; }
+.cta-band p { color: #b8bdc4; margin: 14px auto 26px; max-width: 520px; font-size: 16px; }
+.cta-band .btn.ghost { background: transparent; color: #fff; border-color: #3a3f46; }
+.cta-band .btn.ghost:hover { background: #22262b; }
+footer.site-foot { padding: 36px 0 48px; color: var(--muted); font-size: 13px; }
+footer.site-foot .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
 
-  /* Screen 4: numbers */
-  .bignum { text-align: center; margin-top: 56px; }
-  .bignum .n { font: 500 clamp(56px, 9vw, 120px)/1 var(--serif); letter-spacing: -0.04em; }
-  .bignum .n small { font-size: .45em; color: var(--faint); letter-spacing: -0.02em; vertical-align: .15em; margin-right: .1em; }
-  .bignum .n .to { color: var(--brand); }
-  .bignum p { margin-top: 16px; color: var(--muted); }
-  .models { max-width: 760px; margin: 64px auto 0; display: grid; gap: 22px; }
-  .model { display: grid; grid-template-columns: 150px 1fr; gap: 16px; align-items: center; }
-  .model .lbl { font: 500 15px var(--serif); }
-  .model .lbl small { display: block; font: 400 12px var(--sans); color: var(--faint); }
-  .model .track { position: relative; height: 36px; }
-  .model .bar { position: absolute; left: 0; height: 12px; border-radius: 6px; width: 0; transition: width 1.1s var(--out); }
-  .model .bar.base { top: 0; background: var(--line-2); }
-  .model .bar.us { bottom: 0; background: var(--brand); }
-  .model .v { position: absolute; font: 500 12px var(--mono); color: var(--muted); transform: translateX(calc(-100% - 8px)); white-space: nowrap; }
-  .model .v.base { top: -2px; } .model .v.us { bottom: -2px; color: var(--brand); }
-  @media (max-width: 560px) { .model { grid-template-columns: 1fr; } }
-  .keyline { display: flex; gap: 20px; justify-content: center; margin-top: 20px; font-size: 12px; color: var(--faint); }
-  .keyline i { display: inline-block; width: 18px; height: 6px; border-radius: 3px; vertical-align: middle; margin-right: 6px; }
-  details.more { max-width: 1040px; margin: 72px auto 0; border-top: 1px solid var(--line); padding-top: 20px; }
-  details.more > summary { cursor: pointer; font: 500 14px var(--sans); color: var(--ink-2); list-style: none; display: flex; align-items: center; gap: 8px; }
-  details.more > summary::before { content: "+"; font-size: 18px; color: var(--faint); width: 16px; }
-  details.more[open] > summary::before { content: "–"; }
-  .tests { margin-top: 24px; }
-  .tests .mhead { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
-  .tests .seg { flex-wrap: wrap; }
-  .card { background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 28px; }
-  .big { font: 500 44px/1.1 var(--serif); letter-spacing: -0.03em; }
-  .big small { font-size: 22px; color: var(--faint); letter-spacing: -0.01em; }
-  .big .to { color: var(--brand); }
-  .lead { color: var(--ink-2); margin-top: 10px; max-width: 72ch; font-size: 15px; }
-  .bars { display: grid; grid-template-columns: max-content 1fr max-content; gap: 12px 16px; align-items: center; margin-top: 24px; }
-  .bars .track { height: 8px; border-radius: 4px; background: var(--page); overflow: hidden; }
-  .bars .fill { height: 100%; width: 0; border-radius: 4px; background: var(--line-2); transition: width 1s var(--out); }
-  .bars .fill.us { background: var(--brand); }
-  .bars .us-label { font-weight: 600; }
-  .bars .n { text-align: right; color: var(--muted); font-size: 12px; }
-  @media (max-width: 640px) { .bars { grid-template-columns: 1fr max-content; } .bars .track { grid-column: 1 / -1; order: 3; } }
-  .card details { margin-top: 24px; border-top: 1px solid var(--line); padding-top: 16px; color: var(--muted); font-size: 12px; line-height: 1.6; }
-  .card summary { cursor: pointer; color: var(--ink-2); font-weight: 500; font-size: 13px; }
-  .card details p { margin-top: 12px; max-width: 90ch; }
+/* =========================================================================
+   APP (console)
+   ========================================================================= */
+.app { display: grid; grid-template-columns: 248px 1fr; min-height: 100vh; }
+.side { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; gap: 22px; padding: 18px 14px; border-right: 1px solid var(--line); background: var(--bg); }
+.side .logo { padding: 4px 8px; }
+.side nav { display: grid; gap: 2px; }
+.side nav a { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 9px; color: var(--ink-2); text-decoration: none; font-size: 14px; }
+.side nav a svg { width: 17px; height: 17px; color: var(--muted); flex: none; }
+.side nav a:hover { background: var(--sunken); color: var(--ink); }
+.side nav a.on { background: var(--surface); color: var(--ink); font-weight: 500; box-shadow: 0 0 0 1px var(--line); }
+.side nav a.on svg { color: var(--brand); }
+.side nav a .count { margin-left: auto; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.side .new { margin: 0 4px; }
+.side .foot { margin-top: auto; display: grid; gap: 10px; padding: 0 6px; }
+.side .status { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--ink-2); padding: 10px 12px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line); }
+.side .row { display: flex; gap: 6px; }
+.side .row .btn { flex: 1; }
+.main { min-width: 0; padding: 32px max(20px, env(safe-area-inset-right, 0px)) 64px max(20px, env(safe-area-inset-left, 0px)); }
+.page { max-width: 1120px; margin: 0 auto; }
+.page-h { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+.page-h h1 { font-size: 26px; font-weight: 600; }
+.page-h p { color: var(--muted); margin-top: 4px; font-size: 14.5px; max-width: 620px; }
+@media (max-width: 900px) {
+  .app { grid-template-columns: 1fr; }
+  .side { position: sticky; z-index: 30; height: auto; flex-direction: row; align-items: center; gap: 8px; padding: 10px 14px; border-right: 0; border-bottom: 1px solid var(--line); overflow-x: auto; }
+  .side .logo small, .side .foot, .side .new { display: none; }
+  .side nav { display: flex; gap: 2px; }
+  .side nav a { white-space: nowrap; padding: 7px 10px; }
+  .side nav a .count { display: none; }
+  .main { padding-top: 22px; }
+}
 
-  /* Screen 5: the diagram */
-  .diagram { max-width: 880px; margin: 56px auto 0; }
-  .diagram svg { display: block; width: 100%; height: auto; font-family: var(--sans); }
-  .diagram .plate { fill: var(--white); stroke: var(--ink-2); stroke-width: 1; }
-  .diagram .plate.last { stroke: var(--brand); stroke-width: 1.4; }
-  .diagram .thread { stroke: var(--line-2); stroke-width: 1; stroke-dasharray: 2 4; fill: none; }
-  .diagram .exit { stroke: var(--line-2); stroke-width: 1; fill: none; marker-end: url(#arrow); }
-  .diagram .name { font: 500 16px var(--serif); fill: var(--ink); }
-  .diagram .what { font-size: 11px; fill: var(--muted); }
-  .diagram .count { font: 500 12px var(--mono); fill: var(--ink-2); }
-  .diagram .count.soft { fill: var(--muted); font-weight: 400; }
-  .diagram .num { fill: var(--ink); }
-  .diagram .num text { font: 500 12px var(--sans); fill: var(--white); text-anchor: middle; }
-  .diagram .num.last { fill: var(--brand); }
-  .diagram .bead { fill: var(--brand); }
-  .diagram .bead.ghost { fill: var(--faint); }
-  .diagram .arrowhead { fill: var(--line-2); }
+/* new check */
+.starts { display: grid; grid-template-columns: 1.35fr 1fr; gap: 16px; }
+@media (max-width: 900px) { .starts { grid-template-columns: 1fr; } }
+.sample { display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); transition: border-color .15s, background .15s; }
+.sample:hover { border-color: var(--line-2); background: var(--hover); }
+.sample .pl { width: 38px; height: 38px; border-radius: 99px; display: grid; place-items: center; background: var(--brand-soft); color: var(--brand-ink); flex: none; }
+.sample .pl svg { width: 14px; height: 14px; }
+.sample b { display: block; font-weight: 600; font-size: 14.5px; }
+.sample small { color: var(--muted); font-size: 13px; display: block; margin-top: 1px; }
+.sample .len { margin-left: auto; font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.samples { display: grid; gap: 10px; }
+.drop { border: 1.5px dashed var(--line-2); border-radius: 12px; padding: 22px; text-align: center; transition: border-color .15s, background .15s; }
+.drop.over { border-color: var(--brand); background: var(--brand-soft); }
+.drop p { color: var(--muted); font-size: 13.5px; margin: 6px 0 14px; }
+.rec { display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 12px; background: var(--sunken); }
+.mic { width: 52px; height: 52px; border-radius: 99px; border: 0; background: var(--brand); color: #fff; display: grid; place-items: center; flex: none; transition: transform .15s; }
+.mic:hover { transform: scale(1.04); }
+.mic svg { width: 22px; height: 22px; }
+.mic.on { background: var(--wrong); animation: pulse 1.4s ease-out infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(192,57,43,.35); } 100% { box-shadow: 0 0 0 14px rgba(192,57,43,0); } }
+.meter { display: flex; align-items: center; gap: 3px; height: 22px; }
+.meter i { width: 3px; height: 4px; border-radius: 3px; background: var(--wrong); }
+.err { color: var(--wrong); font-size: 13.5px; margin-top: 10px; }
+.consent { color: var(--muted); font-size: 12.5px; margin-top: 14px; }
 
-  /* Screen 6: builders */
-  pre.code { margin: 40px auto 0; max-width: 760px; background: var(--ink); color: #dedcd1; border-radius: var(--r-lg); padding: 24px; font: 400 12.5px/1.7 var(--mono); overflow-x: auto; white-space: pre; text-align: left; }
-  pre.code i { font-style: normal; color: #9c9a92; }
-  pre.code b { font-weight: 400; color: #e8a085; }
-  pre.code u { text-decoration: none; color: #ffffff; }
-  .facts { list-style: none; margin: 32px auto 0; padding: 0; max-width: 760px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; text-align: left; }
-  .facts b { display: block; font: 500 16px var(--serif); margin-bottom: 4px; }
-  .facts li { color: var(--muted); font-size: 13px; }
-  @media (max-width: 640px) { .facts { grid-template-columns: 1fr; } }
-  code { font: 400 12px var(--mono); background: var(--white); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; }
-  .keyrow { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; margin-top: 32px; font-size: 12px; color: var(--faint); }
+/* list rows */
+.rows { display: grid; }
+.rowlink { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 16px; padding: 14px 20px; text-decoration: none; border-top: 1px solid var(--line); }
+.rowlink:first-child { border-top: 0; }
+.rowlink:hover { background: var(--hover); }
+.rowlink b { font-weight: 600; font-size: 14.5px; display: block; }
+.rowlink small { color: var(--muted); font-size: 13px; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 640px; }
+.rowlink .meta { color: var(--muted); font-size: 13px; text-align: right; white-space: nowrap; }
+@media (max-width: 640px) { .rowlink { grid-template-columns: 1fr auto; } .rowlink .meta { display: none; } }
+.empty { padding: 40px 20px; text-align: center; color: var(--muted); }
+.empty h4 { color: var(--ink); font-size: 15px; margin-bottom: 4px; }
+.empty .btn { margin-top: 14px; }
 
-  footer { padding: 48px 24px 64px; text-align: center; color: var(--faint); font-size: 12px; }
-  footer p { max-width: 70ch; margin: 8px auto 0; }
+/* call view */
+.call-h { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+.back { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 13.5px; text-decoration: none; margin-bottom: 10px; }
+.back:hover { color: var(--ink); }
+.call-h h1 { font-size: 24px; font-weight: 600; }
+.call-h .sub { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 8px; color: var(--muted); font-size: 13.5px; }
+.stepper { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 18px; }
+@media (max-width: 760px) { .stepper { grid-template-columns: 1fr 1fr; } }
+.stepper div { display: flex; align-items: center; gap: 9px; padding: 11px 12px; border-radius: 11px; border: 1px solid var(--line); background: var(--surface); font-size: 13px; color: var(--muted); }
+.stepper i { width: 20px; height: 20px; border-radius: 99px; border: 1.5px solid var(--line-2); display: grid; place-items: center; flex: none; font-style: normal; font-size: 11px; }
+.stepper .done { color: var(--ink); }
+.stepper .done i { background: var(--ok); border-color: var(--ok); color: #fff; }
+.stepper .now { color: var(--ink); border-color: var(--ink); }
+.stepper .now i { border: 0; color: var(--ink); }
+.player { display: flex; align-items: center; gap: 14px; padding: 12px 16px; margin-bottom: 18px; }
+.player audio { flex: 1; min-width: 0; height: 36px; }
+.answer-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 16px; margin-bottom: 18px; align-items: start; }
+@media (max-width: 980px) { .answer-grid { grid-template-columns: 1fr; } }
+.verdict { display: flex; align-items: center; gap: 12px; padding: 16px 18px; border-radius: 12px; font-weight: 600; font-size: 15px; }
+.verdict i { width: 28px; height: 28px; border-radius: 99px; display: grid; place-items: center; font-style: normal; font-size: 14px; flex: none; color: #fff; }
+.verdict.ok { background: var(--ok-soft); color: var(--ok); }
+.verdict.ok i { background: var(--ok); }
+.verdict.ask { background: var(--ask-soft); color: var(--ask); }
+.verdict.ask i { background: var(--ask); }
+.verdict.wait { background: var(--sunken); color: var(--ink-2); font-weight: 500; }
+.verdict small { display: block; font-weight: 400; font-size: 13px; opacity: .85; margin-top: 2px; }
+.ask-card { display: grid; grid-template-columns: auto 1fr; gap: 12px 14px; padding: 16px 18px; border-top: 1px solid var(--line); align-items: start; animation: rise .3s ease both; }
+.ask-card b { font-weight: 600; font-size: 14.5px; display: block; }
+.ask-card small { color: var(--muted); font-size: 12.5px; display: block; margin-top: 1px; }
+.ask-card .opts { grid-column: 2; display: flex; flex-wrap: wrap; gap: 8px; }
+.ask-card .opts .field { width: 170px; height: 32px; font-size: 13px; }
+.sheet { display: grid; grid-template-columns: 110px 1fr; gap: 0; margin: 0; }
+.sheet dt, .sheet dd { padding: 11px 0; border-top: 1px solid var(--line); margin: 0; font-size: 14px; }
+.sheet dt { color: var(--muted); padding-right: 12px; }
+.sheet dd span { display: block; }
+.sheet dd span + span { margin-top: 4px; }
+.sheet dt:first-of-type, .sheet dd:first-of-type { border-top: 0; padding-top: 2px; }
+.said { font-size: 15px; line-height: 1.7; }
+.share { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 20px; border-top: 1px solid var(--line); background: #fcfbf9; border-radius: 0 0 var(--r) var(--r); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.compare-h { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 20px; border-bottom: 1px solid var(--line); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12.5px; color: var(--muted); align-items: center; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 10px; height: 10px; border-radius: 3px; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; }
+.cols .th { padding: 12px 20px; font-size: 12.5px; font-weight: 600; color: var(--muted); background: #fcfbf9; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.cols .th.us { color: var(--brand-ink); border-left: 1px solid var(--line); }
+.cols .th select { height: 30px; border-radius: 8px; border: 1px solid var(--line-2); background: var(--surface); padding: 0 8px; font-size: 12.5px; }
+.cols .cell { padding: 16px 20px; font-size: 15px; line-height: 1.8; border-top: 1px solid var(--line); min-width: 0; overflow-wrap: anywhere; }
+.cols .cell.r { border-left: 1px solid var(--line); }
+.cols .th + .th + .cell, .cols .th + .th + .cell + .cell { border-top: 0; }
+.pending { color: var(--muted); display: inline-flex; align-items: center; gap: 8px; font-size: 14px; }
+@media (max-width: 760px) { .cols { grid-template-columns: 1fr; } .cols .th.us, .cols .cell.r { border-left: 0; } .cols .cell.r { background: #fdfcfa; } }
+.alert { padding: 12px 14px; border-radius: 10px; background: var(--wrong-soft); color: var(--wrong); font-size: 14px; margin-bottom: 16px; }
 
-  /* Language */
-  :lang(hi) h1, :lang(hi) h2, :lang(hi) h3, :lang(hi) .utter { line-height: 1.3; letter-spacing: 0; }
-  :lang(hi) .headline.xl { line-height: 1.2; }
+/* names */
+.name-chip { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 6px 0 12px; border-radius: 99px; border: 1px solid var(--line); background: var(--surface); font-size: 13.5px; }
+.name-chip button { width: 22px; height: 22px; border: 0; border-radius: 99px; background: transparent; color: var(--muted); display: grid; place-items: center; }
+.name-chip button:hover { background: var(--sunken); color: var(--ink); }
+.name-chip.wait { border-color: #efd8b1; background: var(--ask-soft); }
+.wait-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 20px; border-top: 1px solid var(--line); }
+.wait-row:first-child { border-top: 0; }
 
-  @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-  @keyframes pop { from { opacity: 0; transform: scale(.85); } to { opacity: 1; transform: scale(1); } }
-  @keyframes shimmertext { from { background-position: 200% 0; } to { background-position: 0 0; } }
-  @keyframes ring { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, #d97757 50%, transparent); } 100% { box-shadow: 0 0 0 16px color-mix(in srgb, #d97757 0%, transparent); } }
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation: none !important; transition: none !important; }
-    .reveal { opacity: 1; transform: none; }
-    .verdict .busy { color: var(--muted); background: none; }
-  }
+/* results */
+.tabs { display: inline-flex; flex-wrap: wrap; gap: 2px; padding: 3px; border-radius: 11px; background: var(--sunken); }
+.tabs button { border: 0; background: transparent; padding: 7px 12px; border-radius: 8px; font-size: 13px; color: var(--ink-2); }
+.tabs button.on { background: var(--surface); color: var(--ink); font-weight: 500; box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+.bars { display: grid; grid-template-columns: minmax(150px, 230px) 1fr auto; gap: 12px 16px; align-items: center; font-size: 13.5px; }
+@media (max-width: 640px) { .bars { grid-template-columns: 1fr auto; } .bars .track { grid-column: 1 / -1; order: 3; } }
+.bars .us-label { font-weight: 600; }
+.track { height: 10px; border-radius: 99px; background: var(--sunken); overflow: hidden; }
+.fill { height: 100%; width: 0; border-radius: 99px; background: #b9b4ab; transition: width .8s cubic-bezier(.2,.7,.2,1); }
+.fill.us { background: var(--brand); }
+.bars .n { font-family: var(--mono); font-size: 12.5px; color: var(--ink-2); white-space: nowrap; }
+.tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 900px) { .tiles { grid-template-columns: 1fr; } }
+.tile { padding: 20px; }
+.tile .num { font-family: var(--serif); font-size: 46px; line-height: 1; }
+.tile .num small { font-size: 20px; color: var(--muted); }
+.tile .num .to { color: var(--brand); }
+.tile p { color: var(--ink-2); font-size: 14px; margin-top: 12px; }
+.tile .src { display: block; color: var(--muted); font-size: 12px; margin-top: 10px; }
+.honest { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.honest li { display: flex; gap: 10px; font-size: 14px; color: var(--ink-2); }
+.honest li::before { content: ""; width: 6px; height: 6px; border-radius: 99px; background: var(--brand); margin-top: 9px; flex: none; }
+table.plain { width: 100%; border-collapse: collapse; font-size: 14px; }
+table.plain th { text-align: left; font-weight: 500; color: var(--muted); font-size: 12.5px; padding: 10px 20px; border-bottom: 1px solid var(--line); }
+table.plain td { padding: 11px 20px; border-top: 1px solid var(--line); }
+table.plain tr:first-child td { border-top: 0; }
+table.plain td.r, table.plain th.r { text-align: right; }
+table.plain tr.us td { font-weight: 600; }
+
+/* developers */
+.keybox { display: flex; gap: 8px; align-items: center; }
+.keybox code { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; height: 40px; display: flex; align-items: center; padding: 0 12px; border-radius: 10px; background: var(--sunken); font: 13px var(--mono); }
+.stat { padding: 18px 20px; }
+.stat .eyebrow { margin-bottom: 8px; }
+.stat .v { font-size: 26px; font-weight: 600; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.stat small { color: var(--muted); font-size: 12.5px; }
 </style>
 </head>
 <body>
-<nav>
-  <div class="bar">
-    <a class="brand" href="#top" aria-label="Parakh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M9 3 7.5 9 12 21l4.5-12L15 3"/></svg>Parakh</a>
-    <a class="link" href="#try" data-t="nav_try"></a>
-    <a class="link" href="#numbers" data-t="nav_numbers"></a>
-    <a class="link" href="#how" data-t="nav_how"></a>
-    <a class="link" href="#api">API</a>
-    <button class="link" id="namesbtn" aria-haspopup="dialog"><span data-t="names"></span><span class="count" id="namescount">0</span></button>
-    <button class="link" id="langbtn" aria-label="Switch language / भाषा बदलिए">हिंदी</button>
-  </div>
-</nav>
 
-<main id="top">
-  <header class="screen hero center">
-    <h1 class="headline xl" data-t="h1"></h1>
-    <p class="deck" data-t="sub"></p>
-    <div class="actions">
-      <a class="btn primary" href="#try" data-t="cta_try"></a>
-      <a class="btn ghost" href="#numbers" data-t="cta_numbers"></a>
+<!-- ======================= SITE ======================= -->
+<div id="site">
+  <header class="nav" id="nav">
+    <div class="wrap">
+      <a class="logo" href="#/"><span class="mk"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9.5 8.5 6h7L18 9.5 12 18z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><path d="M6 9.5h12M10 6l2 12m2-12-2 12" stroke="#fff" stroke-width="1.2" opacity=".7"/></svg></span>Parakh <small>परख</small></a>
+      <nav class="nav-links">
+        <a class="hide-m" href="#how">How it works</a>
+        <a class="hide-m" href="#proof">Results</a>
+        <a class="hide-m" href="#developers">Developers</a>
+        <a href="#/app" class="btn primary sm" style="color:#fff">Open app</a>
+      </nav>
     </div>
-    <p class="note" data-t="hero_note"></p>
   </header>
 
-  <section class="screen center" id="see">
-    <h2 class="headline reveal" data-t="see_h"></h2>
-    <p class="deck reveal" data-t="see_p"></p>
-    <div class="stage reveal" id="scene" role="img" aria-label="One sentence from a real trade call. As a speech model heard it, then as Parakh writes it: Aishar becomes Eicher, the spoken numbers become digits, and the name Mohan bhai is marked as a question.">
-      <p class="utter">Kaun? <span class="swap" data-doubt="4" data-step="5"><span class="a">Mohan bhai</span><span class="b ask">Mohan bhai</span></span>? … Teen ka kyon lo phir? <span class="swap" data-doubt="1" data-step="2"><span class="a">Aishar</span><span class="b fix">Eicher</span></span> mein lo to chaar ka hi lo … humse <span class="swap" data-step="3"><span class="a">chaalis</span><span class="b num">40</span></span> set ya <span class="swap" data-step="3"><span class="a">bayalis</span><span class="b num">42</span></span> set.</p>
-      <p class="caption" id="caption"></p>
-      <div class="who"><span><b>Saaras v4</b> Aishar</span><span><b>Saaras v3</b> Aishwarya</span><span><b>gpt-transcribe</b> आईशर</span></div>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="badge brand">Voice AI for India · Hindi &amp; Hinglish</span>
+        <h1 style="margin-top:18px">Voice AI hears.<br><em>Parakh checks.</em></h1>
+        <p class="lead">Speech models get names and amounts wrong, and sound just as sure when they do. Parakh sits between the model and whatever acts on it: it checks every name and number against the audio and the people you know, fixes what it can prove, and asks about the rest.</p>
+        <div class="ctas">
+          <a class="btn brand lg" href="#/app">Try it on a real call
+            <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="btn ghost lg" href="#proof">See the results</a>
+        </div>
+        <div class="fine">
+          <span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Works on Sarvam and OpenAI</span>
+          <span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>No model training</span>
+          <span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>One URL change for developers</span>
+        </div>
+      </div>
+
+      <div class="window" id="scene" aria-label="The same seconds of a real trade call, on a speech model alone and with Parakh">
+        <div class="window-top"><span class="wave" id="wave"></span>A real trade call · the same seconds, twice</div>
+        <div class="duo">
+          <div>
+            <h4>Speech model on its own</h4>
+            <div class="say">Kaun? <b data-bad="1">Mohan bhai</b>? … Teen ka kyon lo phir? <b data-bad="2">Aishar</b> mein lo to chaar ka hi lo … humse chaalis set ya bayalis set.</div>
+            <div class="note"><div class="eyebrow">Order note</div>
+              <dl><dt>For</dt><dd><span class="bad">Mohan bhai</span></dd><dt>Truck</dt><dd><span class="bad">Aishar</span></dd><dt>Sets</dt><dd>chaalis ya bayalis</dd></dl>
+              <span class="stamp bad on">Acted on · 2 names wrong</span></div>
+          </div>
+          <div>
+            <h4 class="us">Same model, with Parakh</h4>
+            <div class="say">Kaun? <b data-step="4" data-ask="1">Mohan bhai</b>? … Teen ka kyon lo phir? <b data-step="2" data-fix="Eicher">Aishar</b> mein lo to chaar ka hi lo … humse <b data-step="3" data-num="40">chaalis</b> set ya <b data-step="3" data-num="42">bayalis</b> set.</div>
+            <div class="steps-row">
+              <span data-step="1">3 models disagree on “Aishar”</span>
+              <span data-step="2">Sounds like Eicher, a name you know</span>
+              <span data-step="3">Numbers written as digits</span>
+              <span data-step="4">Asks: Mohan bhai or Mohammad bhai?</span>
+              <span data-step="5">You tapped Mohammad bhai</span>
+            </div>
+            <div class="note"><div class="eyebrow">Order note</div>
+              <dl><dt>For</dt><dd id="n-for"></dd><dt>Truck</dt><dd id="n-truck"></dd><dt>Sets</dt><dd id="n-sets"></dd></dl>
+              <span class="stamp good" id="n-stamp">Checked, then acted on</span></div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="screen center" id="try">
-    <h2 class="headline reveal" data-t="try_h"></h2>
-    <p class="deck reveal" data-t="try_p"></p>
-    <div class="picker reveal">
-      <span id="samples" style="display:contents"></span>
-      <div class="voice">
-        <button class="mic" id="rec" aria-label="Record"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
-        <div>
-          <b id="recinfo" data-t="voice"></b>
-          <div class="meter hidden" id="meter" aria-hidden="true"></div>
-          <button class="linkbtn" id="pick" data-t="upload"></button>
-          <input type="file" id="file" accept="audio/*,video/mp4" class="hidden">
-        </div>
-      </div>
-    </div>
-    <div class="earlier" id="earlier"></div>
-    <p class="fine" data-t="consent"></p>
-    <div class="err hidden" id="uploaderr"></div>
+  <section class="strip" id="strip" hidden>
+    <div class="wrap" id="strip-in"></div>
+  </section>
 
-    <div id="result" class="hidden">
-      <div class="verdict" id="verdict"></div>
-      <div class="asks" id="asks"></div>
-      <div class="agreed" id="agreed"></div>
-      <div class="actions-row hidden" id="share">
-        <a class="btn primary sm" id="wa" target="_blank" rel="noopener" data-t="whatsapp"></a>
-        <button class="btn ghost sm" id="copy" data-t="copy"></button>
-        <audio id="player" controls preload="metadata"></audio>
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-h"><span class="eyebrow">Who it is for</span><h2>Anywhere an Indian voice turns into an action.</h2>
+        <p>A misheard name sends the order to the wrong person. A misheard amount moves the wrong money. Parakh makes the words that carry the action trustworthy.</p></div>
+      <div class="grid3">
+        <div class="card feature"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Call assistants</h3><p>Call screening and call summaries where the caller's name, company and amount have to be right before anyone reads them.</p></div>
+        <div class="card feature"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 10h.01M15 10h.01M9 15c1.7 1.2 4.3 1.2 6 0" stroke-linecap="round"/></svg></div>
+          <h3>Voice agents</h3><p>Booking, support and ordering agents that take action on what they hear. Parakh returns a draft at once and the checked words a second later.</p></div>
+        <div class="card feature"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M7 15h4" stroke-linecap="round"/></svg></div>
+          <h3>Orders &amp; payments</h3><p>Trade calls, collections and payments, where “chaalis ya bayalis” and “Mohan or Mohammad” decide what actually happens.</p></div>
       </div>
-      <div class="compare">
-        <div class="head">
-          <h4 data-t="word_for_word"></h4>
-          <div class="seg" id="view" role="tablist"><button data-view="two" class="on" data-t="side_by_side"></button><button data-view="one" data-t="only_parakh"></button></div>
-        </div>
-        <div class="sheet"><div class="cols" id="cols"></div></div>
-        <div class="legend">
-          <span><span class="mark wrong" data-t="legend_wrong"></span></span>
-          <span><span class="mark fix" data-t="legend_fix"></span></span>
-          <span><span class="mark num">6,600</span></span>
-          <span><span class="mark unsure" data-t="legend_unsure"></span></span>
-          <span data-t="legend_hint"></span>
-        </div>
-      </div>
-      <div class="err hidden" id="joberr"></div>
     </div>
   </section>
 
-  <section class="screen center" id="numbers">
-    <h2 class="headline reveal">Measured, not promised.</h2>
-    <p class="deck reveal">189 public Hindi recordings it had never seen. Run once, after the rules were frozen.</p>
-    <div class="bignum reveal" id="bignum"></div>
-    <div class="models reveal" id="models"></div>
-    <div class="keyline reveal"><span><i style="background:var(--line-2)"></i>model alone</span><span><i style="background:var(--brand)"></i>with Parakh</span></div>
-    <details class="more">
-      <summary>Every test, including where it ties or loses</summary>
-      <div class="tests">
-        <div class="mhead"><span class="muted" id="tests-note"></span><div class="seg" id="modes" role="tablist" aria-label="Which test to show"></div></div>
+  <section class="sec" id="how" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-h"><span class="eyebrow">How it works</span><h2>It never guesses a name. It proves it, or it asks.</h2>
+        <p>No model is retrained. Parakh is a checking layer over the speech models you already use.</p></div>
+      <div class="grid4">
+        <div class="card step-card"><span class="n">01 · Listen</span><h3>Three models hear the call</h3><p>Sarvam Saaras v4, v3 and OpenAI hear the same audio side by side, with no hints that could bias them.</p></div>
+        <div class="card step-card"><span class="n">02 · Doubt</span><h3>Find where they disagree</h3><p>Where the models write different things, something unusual was said. Numbers are compared by value, however they were written.</p></div>
+        <div class="card step-card"><span class="n">03 · Check</span><h3>Match against people you know</h3><p>Names you have confirmed that sound like the doubtful words, across Hindi and Roman script. The audio has to back the name.</p></div>
+        <div class="card step-card"><span class="n">04 · Decide</span><h3>Fix, or ask once</h3><p>Proven names are fixed, numbers become digits by rule, and anything uncertain becomes one tap-to-answer question.</p></div>
+      </div>
+      <p id="funnel" style="color:var(--ink-2);font-size:14.5px;margin-top:18px;max-width:860px"></p>
+    </div>
+  </section>
+
+  <section class="sec" id="proof" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-h"><span class="eyebrow">Results</span><h2>Measured on recordings it never saw.</h2>
+        <p>189 public Hindi recordings, run once after the rules were frozen. The same audio goes through each speech model alone and with Parakh on top.</p></div>
+      <div class="proof-grid">
+        <div class="card card-b" id="proof-bars-card">
+          <div class="eyebrow" style="margin-bottom:10px">Names right, on each speech model</div>
+          <div class="bars" id="site-bars"><span class="pending"><span class="spinner"></span>Loading results</span></div>
+        </div>
+        <div class="card card-b">
+          <div class="eyebrow" style="margin-bottom:12px">Read this honestly</div>
+          <ul class="honest" id="site-honest"></ul>
+          <a class="btn ghost sm" href="#/app/results" style="margin-top:18px">Every test, including where it ties</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="developers" style="padding-top:0">
+    <div class="wrap dev">
+      <div>
+        <span class="eyebrow">For developers</span>
+        <div class="sec-h" style="margin:10px 0 0"><h2>Drop-in for the endpoint you already call.</h2>
+          <p><code class="mono">POST /speech-to-text</code> has the same request and response shape as Sarvam's endpoint of that name. Add the caller's names, and the checked transcript comes back with the evidence for every change.</p></div>
+        <ul class="checks">
+          <li><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Base transcript first, checked one after, as a stream</li>
+          <li><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Every edit says what each model heard and why</li>
+          <li><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>A verdict: clear, or exactly what to confirm</li>
+          <li><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Free key with 10 minutes of audio to start</li>
+        </ul>
+        <div style="display:flex;gap:10px;margin-top:24px;flex-wrap:wrap"><a class="btn primary" href="#/app/developers" style="color:#fff">Get an API key</a><a class="btn ghost" href="/docs" target="_blank" rel="noopener">API reference</a></div>
+      </div>
+      <pre class="code" id="site-curl"></pre>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="cta-band">
+        <h2>Hear it for yourself.</h2>
+        <p>Play one of three real trade calls, or record your own voice. Every check runs live.</p>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><a class="btn brand lg" href="#/app">Open Parakh</a><a class="btn ghost lg" href="#/app/developers">Developer access</a></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-foot"><div class="wrap"><span>Parakh (परख) · the jeweller's test for real gold. Built for Equal AI Builders '26.</span>
+    <span>Audio goes to Sarvam and OpenAI to be transcribed. Uploaded recordings are deleted after a day.</span></div></footer>
+</div>
+
+<!-- ======================= APP ======================= -->
+<div id="app" class="app" hidden>
+  <aside class="side">
+    <a class="logo" href="#/"><span class="mk"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9.5 8.5 6h7L18 9.5 12 18z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><path d="M6 9.5h12M10 6l2 12m2-12-2 12" stroke="#fff" stroke-width="1.2" opacity=".7"/></svg></span>Parakh <small>परख</small></a>
+    <a class="btn primary new" href="#/app" style="color:#fff"><svg viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span data-t="nav_new">New check</span></a>
+    <nav id="sidenav">
+      <a href="#/app" data-nav="new"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="7" y="2.5" width="6" height="10" rx="3"/><path d="M4 9.5a6 6 0 0 0 12 0M10 15.5v2" stroke-linecap="round"/></svg><span data-t="nav_check">Check a call</span></a>
+      <a href="#/app/calls" data-nav="calls"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5h12M4 10h12M4 15h8" stroke-linecap="round"/></svg><span data-t="nav_calls">Calls</span><span class="count" id="calls-count"></span></a>
+      <a href="#/app/names" data-nav="names"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="7" r="3.2"/><path d="M3.8 17a6.2 6.2 0 0 1 12.4 0" stroke-linecap="round"/></svg><span data-t="nav_names">Known names</span><span class="count" id="names-count"></span></a>
+      <a href="#/app/results" data-nav="results"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3.5 16.5V3.5m0 13h13M7 13V9m4 4V6m4 7v-3" stroke-linecap="round"/></svg><span data-t="nav_results">Results</span></a>
+      <a href="#/app/developers" data-nav="developers"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m7 6-4 4 4 4m6-8 4 4-4 4M11.5 4l-3 12" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-t="nav_dev">Developers</span></a>
+    </nav>
+    <div class="foot">
+      <div class="status" id="health"><span class="dot"></span><span>Connecting…</span></div>
+      <div class="row"><button class="btn ghost sm" id="langbtn">हिंदी</button><a class="btn ghost sm" href="#/">Website</a></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- New check -->
+    <section class="page" data-page="new" hidden>
+      <div class="page-h"><div><h1 data-t="new_h">Check a call</h1><p data-t="new_p">Play a real call, record your voice, or upload a recording. Parakh hears it with three speech models, checks every name and number, and asks you only what it cannot prove.</p></div></div>
+      <div class="starts">
         <div class="card">
-          <div class="big" id="big"></div>
-          <p class="lead" id="lead"></p>
-          <div class="bars" id="bars"></div>
-          <details><summary>How this was measured</summary><p id="fine5"></p><p id="fine1"></p><p id="fine2"></p><p id="fine3"></p><p id="fine4"></p></details>
+          <div class="card-h"><div><h3 data-t="samples_h">Real trade calls</h3><p data-t="samples_p">Recorded with the callers' permission. Processing is replayed from saved model answers, so it is instant and free.</p></div></div>
+          <div class="card-b"><div class="samples" id="samples"><span class="pending"><span class="spinner"></span>Loading</span></div></div>
+        </div>
+        <div class="card">
+          <div class="card-h"><div><h3 data-t="yours_h">Your own audio</h3><p data-t="yours_p">Hindi or Hinglish, up to 6 minutes. Sent live to Sarvam and OpenAI.</p></div></div>
+          <div class="card-b" style="display:grid;gap:14px">
+            <div class="rec">
+              <button class="mic" id="rec" aria-label="Record"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21" stroke-linecap="round"/></svg></button>
+              <div style="min-width:0"><b id="recinfo" style="font-weight:600" data-t="rec_idle">Record your voice</b>
+                <div class="meter hidden" id="meter"></div>
+                <small id="rechint" style="color:var(--muted);display:block;font-size:13px" data-t="rec_hint">Say a name and an amount, like a real call.</small></div>
+            </div>
+            <div class="drop" id="drop">
+              <b style="font-weight:600" data-t="drop_h">Upload a recording</b>
+              <p data-t="drop_p">Drop an audio file here: WAV, MP3, M4A, MP4 or WebM, up to 12 MB.</p>
+              <button class="btn ghost sm" id="pick" data-t="drop_btn">Choose file</button>
+              <input type="file" id="file" accept="audio/*,video/mp4,.m4a,.mp4,.webm,.wav,.mp3" class="hidden">
+            </div>
+            <div class="err hidden" id="uploaderr"></div>
+          </div>
         </div>
       </div>
-    </details>
-  </section>
+      <p class="consent" data-t="consent">Use recordings only when everyone on the call agreed to be recorded. Audio goes to Sarvam and OpenAI to be transcribed and uploaded recordings are deleted after a day.</p>
+      <div class="card" style="margin-top:20px">
+        <div class="card-h"><div><h3 data-t="recent_h">Recent calls</h3></div><a class="btn quiet sm" href="#/app/calls" data-t="view_all">View all</a></div>
+        <div class="rows" id="recent"></div>
+      </div>
+    </section>
 
-  <section class="screen center" id="how">
-    <h2 class="headline reveal">Five layers. Most words never notice.</h2>
-    <p class="deck reveal">A doubted name is caught, checked against the audio and the people you know, and written only when it holds. Everything else passes straight through.</p>
-    <div class="diagram reveal" id="diagram"></div>
-    <p class="fine center reveal" id="flow" style="margin-inline:auto"></p>
-  </section>
+    <!-- Call -->
+    <section class="page" data-page="call" hidden>
+      <a class="back" href="#/app/calls"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3 5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-t="all_calls">All calls</span></a>
+      <div class="call-h">
+        <div style="min-width:0"><h1 id="title">Call</h1><div class="sub" id="callsub"></div></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap" id="callacts"></div>
+      </div>
+      <div class="alert hidden" id="joberr"></div>
+      <div class="stepper" id="stepper"></div>
+      <div class="card player"><span class="eyebrow" data-t="recording_l">Recording</span><audio id="player" controls preload="metadata"></audio></div>
+      <div class="answer-grid">
+        <div class="card" id="confirm-card"><div id="verdict" style="padding:12px"></div><div id="asks"></div></div>
+        <div class="card" id="summary-card">
+          <div class="card-h"><div><h3 id="summary-h" data-t="summary_h">What was agreed</h3><p id="topic"></p></div></div>
+          <div class="card-b" id="summary"></div>
+          <div class="share hidden" id="share">
+            <a class="btn primary sm" id="wa" target="_blank" rel="noopener" style="color:#fff"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.4 6.4 0 0 0-5.5 9.7L1.7 14.3l3.2-.8A6.4 6.4 0 1 0 8 1.5m3.4 9.1c-.1.4-.8.8-1.2.8-.3.1-.7.1-1.1-.1a9 9 0 0 1-1-.4 7.7 7.7 0 0 1-3-2.6c-.2-.3-.7-1-.7-1.9s.5-1.3.7-1.5c.1-.2.3-.2.5-.2h.3c.1 0 .3 0 .4.3l.6 1.4c0 .1.1.3 0 .4l-.2.4-.3.3c-.1.1-.2.2-.1.4.1.2.6.9 1.2 1.4.8.7 1.4.9 1.6 1 .2.1.3.1.4-.1l.6-.7c.1-.2.3-.2.4-.1l1.3.6c.2.1.3.2.4.2.1.1.1.5-.1.8"/></svg><span data-t="whatsapp">Send on WhatsApp</span></a>
+            <button class="btn ghost sm" id="copy" data-t="copy">Copy summary</button>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="overflow:hidden">
+        <div class="compare-h">
+          <div><h3 style="font-size:15px;font-weight:600" data-t="wfw">The call, word for word</h3><p style="color:var(--muted);font-size:13px" data-t="wfw_p">Click any highlighted word for what each model heard.</p></div>
+          <div class="legend">
+            <span><i style="background:var(--fix-soft);box-shadow:inset 0 0 0 1px var(--fix)"></i><span data-t="lg_fix">Checked name</span></span>
+            <span><i style="background:var(--num-soft);box-shadow:inset 0 0 0 1px var(--num)"></i><span data-t="lg_num">Number as digits</span></span>
+            <span><i style="background:var(--ask-soft);box-shadow:inset 0 0 0 1px var(--ask)"></i><span data-t="lg_ask">Asked</span></span>
+            <span><i style="background:var(--wrong-soft);box-shadow:inset 0 0 0 1px var(--wrong)"></i><span data-t="lg_wrong">Misheard</span></span>
+          </div>
+        </div>
+        <div class="cols" id="cols"></div>
+      </div>
+    </section>
 
-  <section class="screen center" id="api">
-    <h2 class="headline reveal">One changed URL.</h2>
-    <p class="deck reveal">The same request and answer shape as Sarvam's <code>/speech-to-text</code>. The checks ride along under <code>parakh</code>.</p>
-    <pre class="code reveal" id="curl"></pre>
-    <ul class="facts reveal">
-      <li><b>Draft first</b>With <code>stream=true</code> the base transcript arrives at the model's own speed; the checked one follows about 0.6 s later.</li>
-      <li><b>Your model, kept</b>Send its text as <code>transcript</code> and Parakh checks that instead of producing its own.</li>
-      <li><b>Clear, or confirm</b>Every answer says whether anything is left to settle with the speaker, and what to ask.</li>
-    </ul>
-    <div class="keyrow reveal"><button class="btn ghost sm" id="getkey">Get a key</button><span>10 free minutes. About ₹1.4 a minute to run at list prices.</span><span id="keyinfo" class="mono"></span></div>
-  </section>
-</main>
+    <!-- Calls -->
+    <section class="page" data-page="calls" hidden>
+      <div class="page-h"><div><h1 data-t="calls_h">Calls</h1><p data-t="calls_p">Every checked call is saved with its answers and reopens exactly as it was.</p></div><a class="btn primary" href="#/app" style="color:#fff" data-t="nav_new">New check</a></div>
+      <div class="card"><div class="rows" id="calls-list"></div></div>
+    </section>
 
-<footer>
-  <p id="health">Parakh · परख</p>
-  <p>Recordings go to Sarvam and OpenAI to be transcribed and are deleted from this server after a day. Names are kept only when you confirm them. The three sample calls are real, played with the callers' permission.</p>
-</footer>
+    <!-- Names -->
+    <section class="page" data-page="names" hidden>
+      <div class="page-h"><div><h1 data-t="names_h">Known names</h1><p data-t="names_p">Like the contacts on a phone. Parakh only trusts a name after you add it or say yes to it, and uses these names to check every future call.</p></div></div>
+      <div class="answer-grid" style="grid-template-columns:1fr 1fr">
+        <div class="card">
+          <div class="card-h"><div><h3 data-t="add_h">Add names</h3><p data-t="add_p">Type a name and press Enter, or import a contacts file. Only names are kept, never numbers.</p></div></div>
+          <div class="card-b" style="display:grid;gap:12px">
+            <div style="display:flex;gap:8px"><input class="field" id="addname" placeholder="e.g. Mohammad bhai" aria-label="Add a name"><button class="btn primary" id="addbtn" data-t="add">Add</button></div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn ghost sm" id="fromfile" data-t="import">Import .vcf or .csv</button><button class="btn ghost sm hidden" id="fromphone" data-t="phone_pick">Pick from phone contacts</button>
+              <input type="file" id="contactsfile" accept=".vcf,.csv,.txt,text/vcard,text/x-vcard,text/csv,text/plain" class="hidden"></div>
+            <div id="names-note" class="consent" style="margin:0"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-h"><div><h3 data-t="waiting_h">Waiting for your yes</h3><p data-t="waiting_p">Names Parakh heard and backed, but will not trust until you confirm.</p></div></div>
+          <div id="candidates"></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <div class="card-h"><div><h3><span data-t="trusted_h">Trusted names</span> <span class="badge" id="trusted-n" style="margin-left:6px">0</span></h3></div>
+          <button class="btn danger sm" id="forget" data-t="forget">Delete all my data</button></div>
+        <div class="card-b"><div class="chips" id="verified"></div></div>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section class="page" data-page="results" hidden>
+      <div class="page-h"><div><h1 data-t="results_h">Results</h1><p data-t="results_p">Every number here comes from saved runs on public recordings and three real calls. Including where Parakh only ties, or loses.</p></div></div>
+      <div class="tiles" id="tiles"></div>
+      <div class="card" style="margin-top:16px">
+        <div class="compare-h"><div class="tabs" id="modes"></div></div>
+        <div class="card-b">
+          <div class="big-num" id="big" style="font-size:52px"></div>
+          <p id="lead" style="color:var(--ink-2);margin:14px 0 22px;max-width:820px"></p>
+          <div class="bars" id="bars"></div>
+        </div>
+      </div>
+      <div class="answer-grid" style="margin-top:16px;grid-template-columns:1fr 1fr">
+        <div class="card"><div class="card-h"><div><h3>Three real trade calls</h3><p id="calls-note"></p></div></div><table class="plain" id="calls-table"></table></div>
+        <div class="card"><div class="card-h"><div><h3>How this was measured</h3></div></div><div class="card-b"><ul class="honest" id="fine"></ul></div></div>
+      </div>
+    </section>
+
+    <!-- Developers -->
+    <section class="page" data-page="developers" hidden>
+      <div class="page-h"><div><h1 data-t="dev_h">Developers</h1><p data-t="dev_p">Put Parakh in front of the speech model you already call. Same request and response shape as Sarvam's /speech-to-text, plus the evidence.</p></div><a class="btn ghost" href="/docs" target="_blank" rel="noopener">API reference</a></div>
+      <div class="grid3" style="margin-bottom:16px">
+        <div class="card stat"><div class="eyebrow">Your free minutes</div><div class="v" id="k-left">–</div><small id="k-used">No key yet</small></div>
+        <div class="card stat"><div class="eyebrow">Audio checked on this server</div><div class="v" id="s-min">–</div><small id="s-req"></small></div>
+        <div class="card stat"><div class="eyebrow">Median response</div><div class="v" id="s-lat">–</div><small id="s-lat2">draft, then checked</small></div>
+      </div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-h"><div><h3>API key</h3><p>Send it as the <code class="mono">api-subscription-key</code> header. Each key starts with 10 free minutes of audio.</p></div></div>
+        <div class="card-b"><div class="keybox"><code id="keyval">No key yet</code><button class="btn primary" id="getkey">Create key</button></div><div class="err hidden" id="keyerr"></div></div>
+      </div>
+      <div class="card" style="overflow:hidden">
+        <div class="card-h"><div><h3>Quickstart</h3><p>One clip of up to 30 seconds, answered as a stream: the base transcript first, then the checked one.</p></div></div>
+        <pre class="code" id="curl" style="border-radius:0;margin:0"></pre>
+        <table class="plain">
+          <tr><th>Field</th><th>What it does</th></tr>
+          <tr><td class="mono">names</td><td>Names this caller knows. Commas or new lines.</td></tr>
+          <tr><td class="mono">user</td><td>Optional id. Names that person confirmed earlier are used too.</td></tr>
+          <tr><td class="mono">stream</td><td><code class="mono">true</code> sends the base transcript first, then the checked one, as JSON lines.</td></tr>
+          <tr><td class="mono">transcript</td><td>Your own recogniser's text for this clip. Parakh checks it instead, and calls one model fewer.</td></tr>
+          <tr><td class="mono">budget_ms</td><td>How long after the draft to wait for the other models. A slower one is left out.</td></tr>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
 
 <script>
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const user = localStorage.parakhUser || (localStorage.parakhUser = "u-" + Math.random().toString(36).slice(2, 10));
+const store = { get: (k) => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch {} } };
+const user = store.get("parakhUser") || (() => { const u = "u-" + Math.random().toString(36).slice(2, 10); store.set("parakhUser", u); return u; })();
 const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
-let lang = localStorage.parakhLang === "hi" ? "hi" : "en";
-let job = null, current = null, timer = null, last = null, baseChoice = 0, drawn = {}, infos = [], names = { verified: [], candidates: [] }, sb = {}, stopTimer = 0;
-let source = null, kept = {};  // answers given on this recording, so they survive when it is checked again
+let lang = store.get("parakhLang") === "hi" ? "hi" : "en";
+let job = null, current = null, timer = null, last = null, baseChoice = 0, drawn = {}, infos = [], names = { verified: [], candidates: [] }, sb = {}, stopTimer = 0, samples = [];
+let source = null, kept = {}, routeName = "";
 
-/* ---- two languages for the part a trader uses; the measurements below stay in English ---- */
+/* ---------------- words: English and Hindi for everything a trader touches ---------------- */
 const T = {
   en: {
-    h1: "Names and numbers, <em>checked</em> before you act on them.",
-    sub: "Parakh sits after any speech model, without changing it. It checks every name and amount against the audio and the people you know, fixes what it can prove, and asks you about the rest. 60% fewer name errors on three models, none added.",
-    cta_try: "Try it", cta_numbers: "See the numbers", nav_try: "Try it", nav_numbers: "Numbers", nav_how: "How it works",
-    hero_note: "Measured on Saaras v3, Saaras v4 and gpt-transcribe, on 189 recordings it had never seen.",
-    see_h: "Hear it the way a model does.", see_p: "One sentence from a real trade call. First as the model wrote it, then as Parakh writes it.",
-    cap: ["", "Three recognisers heard it three ways: Aishar, Aishwarya, आईशर.", "It sounds like Eicher, a name you know, and the audio agrees. Written.", "Spoken numbers become digits, by rule. No language model touches them.", "Mohan bhai: no other recogniser backs it, and nothing you confirmed settles it.", "So Parakh asks instead of guessing. Your answer is kept for next time."],
-    try_p: "Three real calls, or your own voice.", side_by_side: "Side by side", only_parakh: "Parakh only", agreed: "What was agreed", said_h: "What was said",
-    scene_note: "Call 1, 0:05 to 1:10", scene_base: "The problem: a speech model on its own", scene_us: "The fix: the same model, with Parakh",
-    order: "Order note", o_for: "For", o_truck: "Truck", o_sets: "Sets", stamp_no: "Acted on · 2 names wrong", stamp_yes: "Checked, then acted on",
-    n_heard: "Three recognisers heard: Aishar · Aishwarya · आईशर", n_sounds: "Sounds like Eicher, a name you know", n_digits: "Numbers written as digits, by rule",
-    n_asks: "Asks: Mohan bhai or Mohammad bhai?", n_chosen: "You tapped Mohammad bhai",
-    try_h: "Try it.", earlier: "Earlier:",
-    consent: "The three calls are real, played with the callers' permission. Use your own recordings only if everyone on the call agreed to be recorded; the audio goes to Sarvam and OpenAI to be transcribed.", fix_word: "Wrong word? Type what was said, and Parakh will know it next time.",
-    clear_proof: (a, b) => `On recordings it had never seen, ${a} of ${b} like this had every name right.`,
-    voice: "Your voice", upload: "or upload a file", names: "Names I know", word_for_word: "The call, word for word",
-    base: "Base model", legend_wrong: "misheard", legend_fix: "checked", legend_unsure: "unsure", legend_hint: "Click any highlight for the evidence.",
-    busy: { queued: "Starting…", listening: "Listening…", searching: "Looking up what it could be…", checking: "Hearing again…", summarising: "Writing the summary…" },
-    failed: "Something went wrong", waiting: "The summary appears here when the call has been checked.",
-    fixed: (n) => `${n} ${n === 1 ? "name fixed" : "names fixed"}`, digits: (n) => `${n} ${n === 1 ? "number as digits" : "numbers as digits"}`,
-    heard_in: (s) => `heard in ${s} s`, checked_in: (s) => `checked in ${s} s`,
-    clear: "Nothing to confirm.", toconfirm: (n) => `${n} ${n === 1 ? "thing" : "things"} to confirm before you act`,
+    nav_new: "New check", nav_check: "Check a call", nav_calls: "Calls", nav_names: "Known names", nav_results: "Results", nav_dev: "Developers",
+    new_h: "Check a call", new_p: "Play a real call, record your voice, or upload a recording. Parakh hears it with three speech models, checks every name and number, and asks you only what it cannot prove.",
+    samples_h: "Real trade calls", samples_p: "Recorded with the callers' permission. Processing is replayed from saved model answers, so it is instant and free.",
+    yours_h: "Your own audio", yours_p: "Hindi or Hinglish, up to 6 minutes. Sent live to Sarvam and OpenAI.",
+    rec_idle: "Record your voice", rec_hint: "Say a name and an amount, like a real call.", rec_stop: "Tap again to stop and check",
+    drop_h: "Upload a recording", drop_p: "Drop an audio file here: WAV, MP3, M4A, MP4 or WebM, up to 12 MB.", drop_btn: "Choose file",
+    consent: "Use recordings only when everyone on the call agreed to be recorded. Audio goes to Sarvam and OpenAI to be transcribed and uploaded recordings are deleted after a day.",
+    recent_h: "Recent calls", view_all: "View all", all_calls: "All calls", recording_l: "Recording",
+    summary_h: "What was agreed", said_h: "What was said", whatsapp: "Send on WhatsApp", copy: "Copy summary", copied: "Copied",
+    wfw: "The call, word for word", wfw_p: "Click any highlighted word for what each model heard.",
+    lg_fix: "Checked name", lg_num: "Number as digits", lg_ask: "Asked", lg_wrong: "Misheard",
+    calls_h: "Calls", calls_p: "Every checked call is saved with its answers and reopens exactly as it was.",
+    names_h: "Known names", names_p: "Like the contacts on a phone. Parakh only trusts a name after you add it or say yes to it, and uses these names to check every future call.",
+    add_h: "Add names", add_p: "Type a name and press Enter, or import a contacts file. Only names are kept, never numbers.", add: "Add",
+    import: "Import .vcf or .csv", phone_pick: "Pick from phone contacts", waiting_h: "Waiting for your yes", waiting_p: "Names Parakh heard and backed, but will not trust until you confirm.",
+    trusted_h: "Trusted names", forget: "Delete all my data",
+    results_h: "Results", results_p: "Every number here comes from saved runs on public recordings and three real calls. Including where Parakh only ties, or loses.",
+    dev_h: "Developers", dev_p: "Put Parakh in front of the speech model you already call. Same request and response shape as Sarvam's /speech-to-text, plus the evidence.",
+    steps: ["Listening with 3 models", "Finding likely names", "Checking against the audio", "Writing the summary"],
+    busy: { queued: "Starting…", listening: "Listening with three models…", searching: "Finding which names it could be…", checking: "Checking names against the audio…", summarising: "Writing the summary…" },
+    failed: "Something went wrong while checking this call.", waiting: "The answer appears here as soon as the call is checked.",
+    fixed: (n) => `${n} ${n === 1 ? "name fixed" : "names fixed"}`, digits: (n) => `${n} ${n === 1 ? "number" : "numbers"} as digits`,
+    clear: "All clear", clear_sub: "Nothing needs a second look. Safe to act on.",
+    toconfirm: (n) => `${n} ${n === 1 ? "thing" : "things"} to confirm before you act`, toconfirm_sub: "Tap the right answer. Play the audio if you are not sure.",
     q_who: "Who was it?", q_name: (n) => `Is “${n}” right?`, q_name_sub: (h) => `heard as “${h}”`, q_number: "Which number was it?", q_word: "What was said here?",
-    listen: "Listen to it", yes: "Yes", no: "No", other: "someone else", type_it: "or type what was said", save: "Save", at: (c) => `at ${c} in the recording`,
-    whatsapp: "Send on WhatsApp", copy: "Copy", copied: "Copied",
-    rows: { about: "About", people: "People", items: "Items", transport: "Transport", when: "When", money: "Money", next: "Next", check: "Left open in the call" },
-    pop_which: "Which is it?", pop_disagree: "The recognisers disagree here, so Parakh asks instead of guessing.",
-    pop_digits: "Written as digits by rule, never by a language model.", pop_disagree_number: "The recognisers heard different numbers here; the speakers' own arithmetic settled it.", pop_chosen: "You chose this.", said: "Said", remember: "Yes, remember it", nothing: "nothing",
-    names_help: "Like the contacts on a phone. Parakh trusts a name only after you add or confirm it.", names_add: "Add a name, press Enter",
-    names_file: "Add from a contacts file", names_phone: "Pick from phone contacts", names_forget: "Forget everything about me",
-    names_added: (n) => `${n} ${n === 1 ? "name" : "names"} added. Only names are kept, never numbers.`, more: (n) => `and ${n} more`,
-    recording: (c) => `Recording ${c}`, nomic: "No microphone",
+    listen: "Play this part", yes: "Yes, correct", no: "No", other: "Someone else…", type_it: "or type what was said", save: "Save", at: (c) => `at ${c}`,
+    rows: { about: "About", people: "People", items: "Items", transport: "Transport", when: "When", money: "Money", next: "Next steps", check: "Left open" },
+    pop_which: "Which is it?", pop_disagree: "The speech models disagree here, so Parakh asks instead of guessing.",
+    pop_digits: "Written as digits by a fixed rule, never by a language model.", pop_chosen: "You chose this.", said: "Said", remember: "Yes, remember it", nothing: "nothing",
+    pop_disagree_number: "The speech models heard different numbers here; the speakers' own arithmetic settled it.",
+    fix_word: "Wrong word? Type what was said. Parakh will know it next time and checks this call again.",
+    names_added: (n) => `${n} ${n === 1 ? "name" : "names"} added.`, no_calls: "No calls yet", no_calls_p: "Play a real call or record your own to see Parakh check it.",
+    start: "Check your first call", no_waiting: "Nothing waiting. Names Parakh backs in your calls appear here.", no_trusted: "No trusted names yet. Add the people and companies you deal with.",
+    confirm: "Confirm", reject: "Not right", remove: "Remove", recording: (c) => `Recording · ${c}`, nomic: "Microphone not available",
+    sure_forget: "Delete all your names and saved calls? This cannot be undone.", deleted: "All your data was deleted.",
+    min_left: (n) => `${n} min`, rechecking: "Checking the call again with your answer…",
   },
   hi: {
-    h1: "नाम और रकम, काम करने से पहले <em>जाँचे हुए।</em>",
-    sub: "परख किसी भी स्पीच मॉडल के बाद बैठता है, उसे बदले बिना। हर नाम और रकम को आवाज़ और आपके जाने-पहचाने लोगों से मिलाता है, जो साबित हो उसे ठीक करता है, और बाकी आपसे पूछ लेता है। तीन मॉडलों पर नाम की गलतियाँ 60% कम, नई एक भी नहीं।",
-    cta_try: "खुद आज़माइए", cta_numbers: "आँकड़े देखिए", nav_try: "आज़माइए", nav_numbers: "आँकड़े", nav_how: "कैसे काम करता है",
-    hero_note: "Saaras v3, Saaras v4 और gpt-transcribe पर, 189 ऐसी रिकॉर्डिंग पर नापा गया जो इसने पहले कभी नहीं सुनी थीं।",
-    see_h: "जैसे मशीन सुनती है, वैसे सुनिए।", see_p: "एक असली व्यापारी कॉल का एक वाक्य। पहले जैसा मॉडल ने लिखा, फिर जैसा परख लिखता है।",
-    cap: ["", "तीन मॉडलों ने तीन तरह सुना: Aishar, Aishwarya, आईशर।", "यह Eicher जैसा लगता है, जो नाम आप जानते हैं, और आवाज़ भी यही कहती है। लिख दिया।", "बोली गई रकम नियम से अंकों में। कोई AI मॉडल इन्हें नहीं छूता।", "Mohan bhai: कोई दूसरा मॉडल इसकी पुष्टि नहीं करता, और आपने भी कुछ पक्का नहीं किया।", "इसलिए परख अंदाज़ा नहीं लगाता, पूछता है। आपका जवाब अगली बार याद रहेगा।"],
-    try_p: "तीन असली कॉल, या अपनी आवाज़।", side_by_side: "आमने-सामने", only_parakh: "सिर्फ़ परख", agreed: "क्या तय हुआ", said_h: "क्या कहा गया",
-    scene_note: "कॉल 1, 0:05 से 1:10", scene_base: "दिक्कत: अकेला स्पीच मॉडल", scene_us: "हल: वही मॉडल, परख के साथ",
-    order: "ऑर्डर की पर्ची", o_for: "किसके लिए", o_truck: "गाड़ी", o_sets: "सेट", stamp_no: "काम हो गया · 2 नाम गलत", stamp_yes: "जाँचा, फिर काम हुआ",
-    n_heard: "तीन मॉडलों ने सुना: Aishar · Aishwarya · आईशर", n_sounds: "Eicher जैसा सुनाई देता है, जो नाम आप जानते हैं", n_digits: "रकम नियम से अंकों में लिखी गई",
-    n_asks: "पूछता है: Mohan bhai या Mohammad bhai?", n_chosen: "आपने Mohammad bhai चुना",
-    try_h: "खुद आज़माइए।", earlier: "पहले की कॉल:",
-    consent: "ये तीनों कॉल असली हैं और बोलने वालों की इजाज़त से चलाई गई हैं। अपनी रिकॉर्डिंग तभी डालिए जब कॉल पर सबने रिकॉर्ड करने की हामी दी हो; आवाज़ लिखने के लिए Sarvam और OpenAI को भेजी जाती है।", fix_word: "गलत शब्द? जो कहा गया वह लिखिए, परख अगली बार याद रखेगा।",
-    clear_proof: (a, b) => `जिन रिकॉर्डिंग पर इसे कभी नहीं परखा गया था, उनमें ऐसी ${b} में से ${a} में हर नाम सही था।`,
-    voice: "बोलकर बताइए", upload: "या फ़ाइल चुनिए", names: "जाने-पहचाने नाम", word_for_word: "पूरी बातचीत, शब्द-दर-शब्द",
-    base: "साधारण मॉडल", legend_wrong: "गलत सुना", legend_fix: "जाँचा हुआ", legend_unsure: "पक्का नहीं", legend_hint: "किसी भी रंगीन शब्द को दबाकर सबूत देखिए।",
-    busy: { queued: "शुरू हो रहा है…", listening: "सुन रहा है…", searching: "नाम खोज रहा है…", checking: "दोबारा सुन रहा है…", summarising: "सार लिख रहा है…" },
-    failed: "कुछ गड़बड़ हो गई", waiting: "कॉल जाँच लेने के बाद उसका सार यहाँ आएगा।",
+    nav_new: "नई जाँच", nav_check: "कॉल जाँचें", nav_calls: "कॉल", nav_names: "जाने-पहचाने नाम", nav_results: "नतीजे", nav_dev: "डेवलपर",
+    new_h: "कॉल जाँचें", new_p: "असली कॉल चलाइए, अपनी आवाज़ रिकॉर्ड कीजिए, या रिकॉर्डिंग डालिए। परख तीन मॉडलों से सुनता है, हर नाम और रकम जाँचता है, और जो साबित न हो वही आपसे पूछता है।",
+    samples_h: "असली व्यापारी कॉल", samples_p: "बोलने वालों की इजाज़त से। मॉडल के सहेजे जवाब दोबारा चलते हैं, इसलिए तुरंत और मुफ़्त।",
+    yours_h: "आपकी अपनी आवाज़", yours_p: "हिंदी या हिंग्लिश, 6 मिनट तक। Sarvam और OpenAI को भेजी जाती है।",
+    rec_idle: "बोलकर रिकॉर्ड करें", rec_hint: "कोई नाम और रकम बोलिए, जैसे असली कॉल में।", rec_stop: "रोकने के लिए फिर दबाइए",
+    drop_h: "रिकॉर्डिंग डालें", drop_p: "ऑडियो फ़ाइल यहाँ छोड़िए: WAV, MP3, M4A, MP4 या WebM, 12 MB तक।", drop_btn: "फ़ाइल चुनें",
+    consent: "रिकॉर्डिंग तभी डालिए जब कॉल पर सबने हामी दी हो। आवाज़ Sarvam और OpenAI को भेजी जाती है और डाली गई रिकॉर्डिंग एक दिन बाद मिटा दी जाती है।",
+    recent_h: "हाल की कॉल", view_all: "सब देखें", all_calls: "सारी कॉल", recording_l: "रिकॉर्डिंग",
+    summary_h: "क्या तय हुआ", said_h: "क्या कहा गया", whatsapp: "WhatsApp पर भेजें", copy: "सार कॉपी करें", copied: "कॉपी हो गया",
+    wfw: "पूरी बातचीत, शब्द-दर-शब्द", wfw_p: "किसी भी रंगीन शब्द को दबाकर देखिए किस मॉडल ने क्या सुना।",
+    lg_fix: "जाँचा हुआ नाम", lg_num: "अंकों में रकम", lg_ask: "पूछा गया", lg_wrong: "गलत सुना",
+    calls_h: "कॉल", calls_p: "हर जाँची गई कॉल अपने जवाबों के साथ सहेजी जाती है।",
+    names_h: "जाने-पहचाने नाम", names_p: "जैसे फ़ोन के कॉन्टैक्ट। परख किसी नाम पर तभी भरोसा करता है जब आप उसे जोड़ें या हाँ कहें।",
+    add_h: "नाम जोड़ें", add_p: "नाम लिखकर Enter दबाइए, या कॉन्टैक्ट फ़ाइल डालिए। सिर्फ़ नाम रखे जाते हैं, नंबर नहीं।", add: "जोड़ें",
+    import: ".vcf या .csv डालें", phone_pick: "फ़ोन के कॉन्टैक्ट से चुनें", waiting_h: "आपकी हाँ का इंतज़ार", waiting_p: "जो नाम परख ने सुने, पर आपकी हाँ के बिना भरोसा नहीं करेगा।",
+    trusted_h: "भरोसेमंद नाम", forget: "मेरी सारी जानकारी मिटाएँ",
+    steps: ["तीन मॉडल सुन रहे हैं", "नाम खोज रहा है", "आवाज़ से मिला रहा है", "सार लिख रहा है"],
+    busy: { queued: "शुरू हो रहा है…", listening: "तीन मॉडल सुन रहे हैं…", searching: "नाम खोज रहा है…", checking: "आवाज़ से मिला रहा है…", summarising: "सार लिख रहा है…" },
+    failed: "इस कॉल को जाँचते समय गड़बड़ हुई।", waiting: "कॉल जाँच लेने के बाद जवाब यहाँ आएगा।",
     fixed: (n) => `${n} नाम सुधारे`, digits: (n) => `${n} रकम अंकों में`,
-    heard_in: (s) => `${s} सेकंड में सुना`, checked_in: (s) => `${s} सेकंड में जाँचा`,
-    clear: "पक्का करने को कुछ नहीं।", toconfirm: (n) => `काम से पहले ${n} ${n === 1 ? "बात" : "बातें"} पक्की कर लीजिए`,
+    clear: "सब ठीक है", clear_sub: "कुछ भी दोबारा देखने लायक नहीं। इस पर काम कर सकते हैं।",
+    toconfirm: (n) => `काम से पहले ${n} ${n === 1 ? "बात" : "बातें"} पक्की कीजिए`, toconfirm_sub: "सही जवाब दबाइए। पक्का न हो तो आवाज़ सुनिए।",
     q_who: "कौन था?", q_name: (n) => `क्या “${n}” सही है?`, q_name_sub: (h) => `सुनाई दिया “${h}”`, q_number: "कौन-सी संख्या थी?", q_word: "यहाँ क्या कहा गया?",
-    listen: "सुनिए", yes: "हाँ", no: "नहीं", other: "कोई और", type_it: "या जो कहा गया वह लिखिए", save: "ठीक है", at: (c) => `रिकॉर्डिंग में ${c} पर`,
-    whatsapp: "WhatsApp पर भेजें", copy: "कॉपी करें", copied: "कॉपी हो गया",
-    rows: { about: "बात", people: "लोग", items: "माल", transport: "गाड़ी", when: "कब", money: "पैसे", next: "आगे", check: "कॉल में तय नहीं हुआ" },
+    listen: "यह हिस्सा सुनिए", yes: "हाँ, सही है", no: "नहीं", other: "कोई और…", type_it: "या जो कहा गया वह लिखिए", save: "ठीक है", at: (c) => `${c} पर`,
+    rows: { about: "बात", people: "लोग", items: "माल", transport: "गाड़ी", when: "कब", money: "पैसे", next: "आगे", check: "तय नहीं हुआ" },
     pop_which: "कौन-सा सही है?", pop_disagree: "यहाँ मॉडलों ने अलग-अलग सुना, इसलिए परख अंदाज़ा नहीं लगाता, आपसे पूछता है।",
-    pop_digits: "अंक नियम से लिखे गए हैं, किसी AI मॉडल ने नहीं।", pop_disagree_number: "यहाँ मॉडलों ने अलग-अलग रकम सुनी; बोलने वालों के अपने हिसाब ने इसे तय किया।", pop_chosen: "यह आपने चुना।", said: "कहा गया", remember: "हाँ, याद रखो", nothing: "कुछ नहीं",
-    names_help: "जैसे फ़ोन के कॉन्टैक्ट। परख किसी नाम पर तभी भरोसा करता है जब आप उसे जोड़ें या हाँ कहें।", names_add: "नाम लिखकर Enter दबाइए",
-    names_file: "कॉन्टैक्ट फ़ाइल से जोड़ें", names_phone: "फ़ोन के कॉन्टैक्ट से चुनें", names_forget: "मेरी सारी जानकारी मिटा दो",
-    names_added: (n) => `${n} नाम जुड़े। सिर्फ़ नाम रखे जाते हैं, नंबर नहीं।`, more: (n) => `और ${n}`,
-    recording: (c) => `रिकॉर्ड हो रहा है ${c}`, nomic: "माइक नहीं मिला",
+    pop_digits: "अंक तय नियम से लिखे गए, किसी AI मॉडल ने नहीं।", pop_chosen: "यह आपने चुना।", said: "कहा गया", remember: "हाँ, याद रखो", nothing: "कुछ नहीं",
+    pop_disagree_number: "यहाँ मॉडलों ने अलग-अलग संख्या सुनी; बोलने वालों के अपने हिसाब से तय हुई।",
+    fix_word: "गलत शब्द? जो कहा गया वह लिखिए। परख अगली बार याद रखेगा।",
+    names_added: (n) => `${n} नाम जुड़े।`, no_calls: "अभी कोई कॉल नहीं", no_calls_p: "असली कॉल चलाइए या अपनी आवाज़ रिकॉर्ड कीजिए।",
+    start: "पहली कॉल जाँचें", no_waiting: "कुछ इंतज़ार में नहीं।", no_trusted: "अभी कोई भरोसेमंद नाम नहीं। जिनसे आप काम करते हैं उन्हें जोड़िए।",
+    confirm: "हाँ", reject: "गलत", remove: "हटाएँ", recording: (c) => `रिकॉर्ड हो रहा है · ${c}`, nomic: "माइक नहीं मिला",
+    sure_forget: "आपके सारे नाम और कॉल मिटा दें? यह वापस नहीं होगा।", deleted: "आपकी सारी जानकारी मिटा दी गई।",
+    min_left: (n) => `${n} मिनट`, rechecking: "आपके जवाब के साथ कॉल फिर से जाँच रहा है…",
   },
 };
 const t = (k, ...a) => { const v = T[lang][k] ?? T.en[k]; return typeof v === "function" ? v(...a) : v; };
 const clock = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+const length = (secs) => { secs = Math.round(secs); return secs >= 60 ? `${Math.floor(secs / 60)} min ${secs % 60} s` : `${secs} s`; };
+const ago = (ts) => { const s = Date.now() / 1000 - ts; if (s < 60) return "just now"; if (s < 3600) return `${Math.floor(s / 60)} min ago`; if (s < 86400) return `${Math.floor(s / 3600)} h ago`; return new Date(ts * 1000).toLocaleDateString("en-IN", { day: "numeric", month: "short" }); };
+const PLAY = `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3.5v9l7-4.5z"/></svg>`;
+
 function applyLang() {
   document.documentElement.lang = lang;
-  document.querySelectorAll("[data-t]").forEach((el) => (el.innerHTML = t(el.dataset.t)));
+  document.querySelectorAll("[data-t]").forEach((el) => { const v = t(el.dataset.t); if (typeof v === "string") el.textContent = v; });
   $("langbtn").textContent = lang === "en" ? "हिंदी" : "English";
-  drawn = {}; infos = []; $("cols").innerHTML = "";
-  if (job) render(job);
+  drawn = {}; infos = [];
+  if (routeName === "call" && job) { $("cols").innerHTML = ""; render(job); }
 }
-$("langbtn").onclick = () => {
-  lang = lang === "en" ? "hi" : "en";
-  localStorage.parakhLang = lang;
-  applyLang();
-  if (job && job.deal_sheet && last) last();  // the summary is written again, in this language
-};
+$("langbtn").onclick = () => { lang = lang === "en" ? "hi" : "en"; store.set("parakhLang", lang); applyLang(); };
+
+function toast(msg) { const el = $("toast"); el.textContent = msg; el.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove("on"), 2400); }
 
 async function api(path, opts = {}) {
   const r = await fetch(path, opts);
@@ -505,7 +813,28 @@ async function api(path, opts = {}) {
 }
 const post = (path, body) => api(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
 
-/* ---- popovers ----------------------------------------------------------- */
+/* An in-page dialog: confirm, or ask for a short text. */
+function dialog({ title, body, input = false, ok = "OK", danger = false }) {
+  return new Promise((resolve) => {
+    const bg = document.createElement("div");
+    bg.className = "modal-bg";
+    bg.innerHTML = `<div class="modal" role="dialog" aria-modal="true"><h3>${esc(title)}</h3><p>${esc(body)}</p>${input ? `<input class="field" id="dlg-in" autocomplete="off">` : ""}
+      <div class="row"><button class="btn ghost" data-v="0">Cancel</button><button class="btn ${danger ? "danger" : "primary"}" data-v="1">${esc(ok)}</button></div></div>`;
+    document.body.appendChild(bg);
+    const done = (v) => { bg.remove(); resolve(v); };
+    bg.addEventListener("click", (e) => { if (e.target === bg) done(null); const b = e.target.closest("[data-v]"); if (b) done(b.dataset.v === "1" ? (input ? bg.querySelector("#dlg-in").value.trim() : true) : null); });
+    bg.addEventListener("keydown", (e) => { if (e.key === "Escape") done(null); if (e.key === "Enter" && input) done(bg.querySelector("#dlg-in").value.trim()); });
+    (bg.querySelector("#dlg-in") || bg.querySelector("[data-v='1']")).focus();
+  });
+}
+const codeHeaders = () => (store.get("parakhCode") ? { "X-Access-Code": store.get("parakhCode") } : {});
+async function askCode() {
+  const code = await dialog({ title: "Access code", body: "This server needs an access code before it processes new audio.", input: true, ok: "Continue" });
+  if (code) store.set("parakhCode", code);
+  return !!code;
+}
+
+/* ---------------- popovers ---------------- */
 function closePop() { document.querySelector(".pop")?.remove(); }
 function openPop(anchor, html) {
   closePop();
@@ -521,19 +850,17 @@ document.addEventListener("keydown", (e) => e.key === "Escape" && closePop());
 document.addEventListener("click", (e) => {
   const hear = e.target.closest(".hear");
   if (hear) return listen(+hear.dataset.at, hear);
-  if (e.target.closest(".pop") || e.target.closest("#namesbtn")) return;
+  if (e.target.closest(".pop")) return;
   const m = e.target.closest("[data-info]");
   if (m) return evidence(m);
   closePop();
 });
 
-/* ---- listen and choose: play the few seconds around a doubtful word ----- */
-const PLAY = `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3.5v9l7-4.5z"/></svg>`;
+/* Play the few seconds around a doubtful word. The time is an estimate, so play seven seconds. */
 function listen(at, button) {
-  const p = $("player"), from = Math.max(0, at - 3);  // the time is an estimate, so play a generous seven seconds
+  const p = $("player"), from = Math.max(0, at - 3);
   const go = () => {
-    p.currentTime = from;
-    p.play().catch(() => {});
+    p.currentTime = from; p.play().catch(() => {});
     document.querySelectorAll(".hear.on").forEach((b) => b.classList.remove("on"));
     button?.classList.add("on");
     clearTimeout(stopTimer);
@@ -542,17 +869,53 @@ function listen(at, button) {
   if (p.readyState >= 1) go(); else { p.addEventListener("loadedmetadata", go, { once: true }); p.load(); }
 }
 
-/* ---- names I know, typed in or brought from a contact list -------------- */
+/* ---------------- router ---------------- */
+function route() {
+  const h = location.hash || "#/";
+  closePop();
+  if (!h.startsWith("#/app")) {
+    $("site").hidden = false; $("app").hidden = true;
+    routeName = "site";
+    document.title = "Parakh · Voice AI you can act on";
+    if (h !== "#/" && !h.startsWith("#/")) return;
+    if (h === "#/") scrollTo(0, 0);
+    return;
+  }
+  $("site").hidden = true; $("app").hidden = false;
+  const parts = h.slice(2).split("/");  // ["app", page, id]
+  const page = parts[1] || "new";
+  routeName = page;
+  document.querySelectorAll("[data-page]").forEach((s) => (s.hidden = s.dataset.page !== page));
+  document.querySelectorAll("#sidenav a").forEach((a) => a.classList.toggle("on", a.dataset.nav === (page === "call" ? "calls" : page)));
+  scrollTo(0, 0);
+  if (page !== "call") { clearInterval(timer); current = null; }
+  if (page === "new") { document.title = "Check a call · Parakh"; earlier(); }
+  if (page === "calls") { document.title = "Calls · Parakh"; earlier(); }
+  if (page === "names") { document.title = "Known names · Parakh"; renderNames(); }
+  if (page === "results") { document.title = "Results · Parakh"; renderResults(); }
+  if (page === "developers") { document.title = "Developers · Parakh"; keyInfo(); }
+  if (page === "call" && parts[2] && parts[2] !== current) begin(parts[2]);
+}
+addEventListener("hashchange", route);
+addEventListener("scroll", () => $("nav").classList.toggle("scrolled", scrollY > 8), { passive: true });
+/* in-page anchors on the site, without leaving the hash router */
+document.querySelectorAll('#site a[href^="#"]:not([href^="#/"])').forEach((a) => a.addEventListener("click", (e) => {
+  e.preventDefault();
+  document.querySelector(a.getAttribute("href"))?.scrollIntoView({ behavior: calm ? "auto" : "smooth", block: "start" });
+}));
+
+/* ---------------- names ---------------- */
 async function loadNames() {
-  names = await api(`/api/users/${user}/memory`);
-  $("namescount").textContent = names.verified.length + names.candidates.length;
+  names = await api(`/api/users/${user}/memory`).catch(() => names);
+  $("names-count").textContent = names.verified.length + names.candidates.length || "";
 }
 async function nameAction(name, action, rerun) {
   closePop();
   await post(`/api/users/${user}/names`, { name, action });
   await loadNames();
-  if (rerun && last) last();
-  else if (job) render(job);
+  if (routeName === "names") renderNames();
+  if (rerun && last) { toast(t("rechecking")); last(); }
+  else if (job && routeName === "call") render(job);
 }
 function parseContacts(text) {  // a phone's .vcf export, a CSV with a name column, or one name per line; names only
   const out = [];
@@ -562,7 +925,7 @@ function parseContacts(text) {  // a phone's .vcf export, a CSV with a name colu
       const m = line.match(/^FN([^:]*):(.*)$/i);
       if (!m) continue;
       let v = m[2];
-      if (/QUOTED-PRINTABLE/i.test(m[1])) {  // how Android writes names that are not plain ASCII
+      if (/QUOTED-PRINTABLE/i.test(m[1])) {
         const bytes = [];
         v.replace(/=([0-9A-F]{2})|([\s\S])/gi, (_, hex, ch) => { hex ? bytes.push(parseInt(hex, 16)) : bytes.push(...new TextEncoder().encode(ch)); return ""; });
         v = new TextDecoder().decode(new Uint8Array(bytes));
@@ -580,72 +943,77 @@ function parseContacts(text) {  // a phone's .vcf export, a CSV with a name colu
 async function importNames(list) {
   const r = await post(`/api/users/${user}/names/import`, { names: list });
   await loadNames();
-  return r.added;
+  $("names-note").textContent = t("names_added", r.added) + (r.skipped ? ` ${r.skipped} skipped.` : "");
+  renderNames();
 }
-function namesPanel(note = "") {
-  const chip = (n, wait) => `<span class="chip${wait ? " wait" : ""}">${wait ? "" : "✓ "}${esc(n)}${wait ? " ?" : ""}<button data-drop="${esc(n)}" aria-label="Remove ${esc(n)}">×</button></span>`;
-  const shown = names.verified.slice(0, 30), hidden = names.verified.length - shown.length;
-  const phone = "contacts" in navigator && "ContactsManager" in window;  // Chrome on Android
-  const pop = openPop($("namesbtn"),
-    `<h4>${t("names")}</h4><p>${t("names_help")}</p>` +
-    `<div class="chips">${names.candidates.map((n) => chip(n, true)).join("")}${shown.map((n) => chip(n)).join("")}${hidden > 0 ? `<span class="chip">${t("more", hidden)}</span>` : ""}</div>` +
-    `<div class="acts"><input class="field" id="addname" placeholder="${t("names_add")}" aria-label="${t("names_add")}"></div>` +
-    `<div class="imports"><button class="btn ghost" id="fromfile">${t("names_file")}</button>${phone ? `<button class="btn ghost" id="fromphone">${t("names_phone")}</button>` : ""}` +
-    `<input type="file" id="contactsfile" accept=".vcf,.csv,.txt,text/vcard,text/x-vcard,text/csv,text/plain" class="hidden"></div>` +
-    (note ? `<p style="margin:12px 0 0">${esc(note)}</p>` : "") +
-    `<div class="acts"><button class="linkbtn" id="forget" style="font-size:12px">${t("names_forget")}</button></div>`);
-  const added = async (list) => { const n = await importNames(list); namesPanel(t("names_added", n)); if (job && last) last(); };
-  pop.querySelectorAll("[data-drop]").forEach((b) => (b.onclick = () => nameAction(b.dataset.drop, "forget").then(() => namesPanel())));
-  pop.querySelector("#addname").addEventListener("keydown", (ev) => {
-    if (ev.key === "Enter" && ev.target.value.trim()) nameAction(ev.target.value.trim(), "confirm", !!job);
-  });
-  pop.querySelector("#fromfile").onclick = () => pop.querySelector("#contactsfile").click();
-  pop.querySelector("#contactsfile").onchange = async (ev) => { const f = ev.target.files[0]; if (f) added(parseContacts(await f.text())); };
-  pop.querySelector("#fromphone")?.addEventListener("click", async () => {
-    try { added((await navigator.contacts.select(["name"], { multiple: true })).flatMap((c) => c.name || [])); } catch (e) { /* the picker was closed */ }
-  });
-  pop.querySelector("#forget").onclick = async () => { closePop(); await api(`/api/users/${user}`, { method: "DELETE" }); loadNames(); };
-  pop.querySelector("#addname").focus();
+function renderNames() {
+  $("trusted-n").textContent = names.verified.length;
+  $("verified").innerHTML = names.verified.length
+    ? names.verified.map((n) => `<span class="name-chip">${esc(n)}<button data-forget="${esc(n)}" aria-label="${t("remove")} ${esc(n)}" title="${t("remove")}">×</button></span>`).join("")
+    : `<p style="color:var(--muted);font-size:14px">${t("no_trusted")}</p>`;
+  $("candidates").innerHTML = names.candidates.length
+    ? names.candidates.map((n) => `<div class="wait-row"><span class="name-chip wait">${esc(n)} ?</span><span style="display:flex;gap:6px"><button class="btn primary sm" data-yes="${esc(n)}">${t("confirm")}</button><button class="btn ghost sm" data-reject="${esc(n)}">${t("reject")}</button></span></div>`).join("")
+    : `<div class="empty" style="padding:26px 20px">${t("no_waiting")}</div>`;
 }
-$("namesbtn").onclick = () => namesPanel();
+$("verified").addEventListener("click", (e) => { const b = e.target.closest("[data-forget]"); if (b) nameAction(b.dataset.forget, "forget"); });
+$("candidates").addEventListener("click", (e) => {
+  const y = e.target.closest("[data-yes]"), n = e.target.closest("[data-reject]");
+  if (y) nameAction(y.dataset.yes, "confirm"); if (n) nameAction(n.dataset.reject, "reject");
+});
+const addName = () => { const v = $("addname").value.trim(); if (v) { $("addname").value = ""; nameAction(v, "confirm"); toast(t("names_added", 1)); } };
+$("addbtn").onclick = addName;
+$("addname").addEventListener("keydown", (e) => e.key === "Enter" && addName());
+$("fromfile").onclick = () => $("contactsfile").click();
+$("contactsfile").onchange = async (e) => { const f = e.target.files[0]; if (f) importNames(parseContacts(await f.text())); e.target.value = ""; };
+if ("contacts" in navigator && "ContactsManager" in window) {
+  $("fromphone").classList.remove("hidden");
+  $("fromphone").onclick = async () => { try { importNames((await navigator.contacts.select(["name"], { multiple: true })).flatMap((c) => c.name || [])); } catch {} };
+}
+$("forget").onclick = async () => {
+  if (!(await dialog({ title: t("forget"), body: t("sure_forget"), ok: t("forget"), danger: true }))) return;
+  await api(`/api/users/${user}`, { method: "DELETE" });
+  await loadNames(); renderNames(); earlier(); toast(t("deleted"));
+};
 
-/* ---- starting a job ----------------------------------------------------- */
+/* ---------------- starting a check ---------------- */
 function from(what) { if (source !== what) { source = what; kept = {}; } }
 async function startSample(id) {
   from("sample:" + id);
   last = () => startSample(id);
-  document.querySelectorAll(".sample").forEach((b) => b.classList.toggle("on", b.dataset.id === id));
-  begin(await post("/api/jobs/sample", { sample: id, user, lang }));
+  const r = await post("/api/jobs/sample", { sample: id, user, lang }).catch((e) => (toast(e.message), null));
+  if (r) go(r.id);
 }
 async function startUpload(blob, name) {
   from(blob);
   last = () => startUpload(blob, name);
-  document.querySelectorAll(".sample").forEach((b) => b.classList.remove("on"));
   $("uploaderr").classList.add("hidden");
   const body = new FormData();
-  body.append("file", blob, name);
-  body.append("user", user);
-  body.append("lang", lang);
+  body.append("file", blob, name); body.append("user", user); body.append("lang", lang);
   try {
-    begin(await api("/api/jobs", { method: "POST", body, headers: localStorage.parakhCode ? { "X-Access-Code": localStorage.parakhCode } : {} }));
+    const r = await api("/api/jobs", { method: "POST", body, headers: codeHeaders() });
+    go(r.id);
   } catch (e) {
-    if (e.status === 401) {
-      const code = prompt("Access code for processing new audio:");
-      if (code) { localStorage.parakhCode = code; return startUpload(blob, name); }
-    }
+    if (e.status === 401 && (await askCode())) return startUpload(blob, name);
     $("uploaderr").textContent = e.message;
     $("uploaderr").classList.remove("hidden");
   }
 }
-function begin({ id }) {
+function go(id) {
+  current = null;  // force a fresh start even when the same id comes back
+  if (location.hash === `#/app/call/${id}`) route(); else location.hash = `#/app/call/${id}`;
+}
+
+function begin(id) {
   clearInterval(timer);
-  current = id; baseChoice = 0; drawn = {}; infos = []; closePop();
-  $("cols").innerHTML = ""; $("verdict").innerHTML = ""; $("asks").innerHTML = ""; $("agreed").innerHTML = ""; $("share").classList.add("hidden");
-  $("result").classList.remove("hidden");
+  current = id; baseChoice = 0; drawn = {}; infos = []; job = null; closePop();
+  $("cols").innerHTML = ""; $("asks").innerHTML = ""; $("summary").innerHTML = ""; $("share").classList.add("hidden");
+  $("title").textContent = "…"; $("callsub").innerHTML = ""; $("callacts").innerHTML = ""; $("topic").textContent = "";
   $("player").src = `/api/jobs/${id}/audio`;
   const poll = async () => {
-    const fresh = await api(`/api/jobs/${id}`);
-    if (current !== id) return;  // a newer recording was started meanwhile
+    let fresh;
+    try { fresh = await api(`/api/jobs/${id}`); }
+    catch (e) { clearInterval(timer); $("joberr").textContent = e.status === 404 ? "This call is no longer stored." : e.message; $("joberr").classList.remove("hidden"); return; }
+    if (current !== id) return;
     job = fresh;
     render(job);
     if (job.status === "done" || job.status === "error") {
@@ -658,12 +1026,11 @@ function begin({ id }) {
     }
   };
   poll();
-  timer = setInterval(poll, 300);
-  $("result").scrollIntoView({ behavior: calm ? "auto" : "smooth", block: "start" });
+  timer = setInterval(poll, 350);
 }
 
-/* ---- recording, with a live level meter --------------------------------- */
-$("meter").innerHTML = "<i></i>".repeat(20);
+/* ---------------- recording, with a live level meter ---------------- */
+$("meter").innerHTML = "<i></i>".repeat(24);
 let recorder = null, chunks = [], raf = 0, started = 0;
 $("rec").onclick = async () => {
   if (recorder) { recorder.stop(); return; }
@@ -675,7 +1042,7 @@ $("rec").onclick = async () => {
     const levels = new Uint8Array(analyser.frequencyBinCount), meter = [...$("meter").children];
     const draw = () => {
       analyser.getByteFrequencyData(levels);
-      meter.forEach((b, i) => (b.style.height = 4 + Math.round((levels[i] / 255) * 12) + "px"));
+      meter.forEach((b, i) => (b.style.height = 4 + Math.round((levels[i] / 255) * 18) + "px"));
       $("recinfo").textContent = t("recording", clock((Date.now() - started) / 1000));
       raf = requestAnimationFrame(draw);
     };
@@ -687,41 +1054,40 @@ $("rec").onclick = async () => {
       stream.getTracks().forEach((s) => s.stop());
       const type = recorder.mimeType || "audio/webm";
       recorder = null;
-      $("rec").classList.remove("on"); $("meter").classList.add("hidden"); $("pick").classList.remove("hidden");
-      $("recinfo").textContent = t("voice");
+      $("rec").classList.remove("on"); $("meter").classList.add("hidden"); $("rechint").classList.remove("hidden");
+      $("recinfo").textContent = t("rec_idle");
       startUpload(new Blob(chunks, { type }), type.includes("mp4") ? "recording.mp4" : "recording.webm");
     };
     started = Date.now();
     recorder.start();
-    $("rec").classList.add("on"); $("meter").classList.remove("hidden"); $("pick").classList.add("hidden");
+    $("rec").classList.add("on"); $("meter").classList.remove("hidden"); $("rechint").textContent = t("rec_stop");
     draw();
-  } catch (e) { $("recinfo").textContent = `${t("nomic")}: ${e.message}`; }
+  } catch (e) { $("recinfo").textContent = t("nomic"); $("rechint").textContent = e.message; }
 };
 $("pick").onclick = () => $("file").click();
 $("file").onchange = (e) => { const f = e.target.files[0]; if (f) startUpload(f, f.name); e.target.value = ""; };
+const drop = $("drop");
+["dragenter", "dragover"].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.add("over"); }));
+["dragleave", "drop"].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.remove("over"); }));
+drop.addEventListener("drop", (e) => { const f = e.dataTransfer.files[0]; if (f) startUpload(f, f.name); });
 
-/* ---- rendering ---- */
-function words(list, seg) {  // each highlight also carries roughly when it is said, for "listen to it"
+/* ---------------- rendering a call ---------------- */
+function words(list, seg) {  // each highlight also carries roughly when it is said, for "play this part"
   const total = Math.max(1, list.reduce((n, w) => n + w.t.length + 1, 0));
-  let n = 0, seen = 0;
+  let seen = 0;
   return list.map((w) => {
     const at = seg ? (seg.start_s + (seg.seconds * seen) / total).toFixed(1) : "";
     seen += w.t.length + 1;
     if (!w.c) return esc(w.t);
     infos.push({ ...w, at });
-    const tail = w.c === "unsure" ? (w.tail || "").replace(/^\?/, "") : w.tail || "";  // the highlight already shows a question mark
-    return `<button class="mark ${w.c}" style="--i:${n++}" data-info="${infos.length - 1}">${esc(w.t)}</button>${esc(tail)}`;
+    const tail = w.c === "unsure" ? (w.tail || "").replace(/^\?/, "") : w.tail || "";
+    return `<button class="mark ${w.c}" data-info="${infos.length - 1}">${esc(w.t)}</button>${esc(tail)}`;
   }).join(" ");
 }
-function setHTML(el, key, html) {  // only touch the page when something changed, so animations play once
-  if (drawn[key] === html) return false;
-  drawn[key] = html;
-  el.innerHTML = html;
-  return true;
-}
+function setHTML(el, key, html) { if (drawn[key] === html) return false; drawn[key] = html; el.innerHTML = html; return true; }
 const waiting = (name) => (job?.to_confirm || []).includes(name) && !names.verified.includes(name);
 const openQuestions = (j) => (j.questions || []).filter((q) => (q.kind === "number" ? !q.answer : q.kind === "name" ? !names.verified.includes(q.name) : true));
-const plain = (x) => (x && typeof x === "object" ? Object.values(x).filter(Boolean).join(" · ") : x);  // the model sometimes returns small objects
+const plain = (x) => (x && typeof x === "object" ? Object.values(x).filter(Boolean).join(" · ") : x);
 function sheetRows(d) {
   const R = t("rows"), rows = [], add = (k, v) => { const list = (Array.isArray(v) ? v : [v]).map(plain).filter(Boolean); if (list.length) rows.push([k, list]); };
   add(R.about, d.summary); add(R.people, d.people);
@@ -735,110 +1101,128 @@ function shareText(j) {
   if (j.deal_sheet) sheetRows(j.deal_sheet).forEach(([k, list]) => lines.push(`${k}: ${list.join("; ")}`));
   else lines.push(dictated(j));
   if (open.length) lines.push(`⚠ ${t("toconfirm", open.length)}: ` + open.map((q) => (q.kind === "name" ? q.name : q.options.join(" / ")) + "?").join("; "));
-  return [...lines, "— Parakh"].filter(Boolean).join("\n");
+  return [...lines, "Checked by Parakh"].filter(Boolean).join("\n");
 }
+const STAGE = { queued: 0, listening: 0, searching: 1, checking: 2, summarising: 3, done: 4, error: -1 };
 
 function render(j) {
-  const done = j.status === "done", busy = t("busy")[j.status];
+  $("title").textContent = j.title;
+  document.title = `${j.title} · Parakh`;
   const marks = j.segments.flatMap((s) => (s.view ? s.view.parakh : []));
   const fixed = marks.filter((w) => w.c === "fix").length, nums = marks.filter((w) => w.c === "num").length;
-  const secs = Math.round(j.seconds), length = secs >= 60 ? `${Math.floor(secs / 60)} min ${secs % 60} s` : `${secs} s`;
-  const open = done ? openQuestions(j) : [];
+  const done = j.status === "done", tm = j.timing || {};
+  const subs = [`<span class="badge">${length(j.seconds)}</span>`];
+  if (done) {
+    if (fixed) subs.push(`<span class="badge fix">${t("fixed", fixed)}</span>`);
+    if (nums) subs.push(`<span class="badge num">${t("digits", nums)}</span>`);
+    if (tm.replayed === false && tm.checked_s) subs.push(`<span>checked in ${tm.checked_s} s</span>`);
+    if (tm.replayed) subs.push(`<span>replayed from saved model answers</span>`);
+  } else if (j.status !== "error") subs.push(`<span class="pending"><span class="spinner"></span>${esc(t("busy")[j.status] || "")}</span>`);
+  setHTML($("callsub"), "sub", subs.join(""));
+  $("topic").textContent = j.topic || "";
+  $("joberr").classList.toggle("hidden", !j.error);
+  $("joberr").textContent = j.error ? `${t("failed")} ${j.error}` : "";
 
-  // 1. the verdict
-  let v;
-  if (busy) v = `<h3><span class="busy">${esc(busy)}</span></h3><p>${esc(j.title)}</p>`;
-  else if (j.status === "error") v = `<h3>${t("failed")}</h3><p>${esc(j.error || "")}</p>`;
-  else {
-    const tm = j.timing || {}, speed = tm.replayed === false ? [t("heard_in", tm.heard_s), t("checked_in", tm.checked_s)] : [];
-    v = `<h3 class="${open.length ? "" : "ok"}">${open.length ? t("toconfirm", open.length) : t("clear")}</h3>` +
-      `<p>${esc(j.title)} · ${[t("fixed", fixed), t("digits", nums), length, ...speed].join(" · ")}` +
-      (!open.length && sb.fresh?.clear ? `<br><span style="font-size:12px">${t("clear_proof", sb.fresh.clear.right, sb.fresh.clear.recordings)}</span>` : "") + `</p>`;
-  }
-  setHTML($("verdict"), "verdict", v);
-  $("joberr").classList.add("hidden");
+  // progress
+  const at = STAGE[j.status] ?? 0;
+  setHTML($("stepper"), "steps", t("steps").map((label, i) => {
+    const cls = at > i || done ? "done" : at === i ? "now" : "";
+    const icon = cls === "done" ? "✓" : cls === "now" ? `<span class="spinner" style="width:12px;height:12px"></span>` : i + 1;
+    return `<div class="${cls}"><i>${icon}</i><span>${esc(label)}</span></div>`;
+  }).join(""));
+  $("stepper").classList.toggle("hidden", done);
 
-  // 2. the questions
-  const ask = (q, i) => {
-    const head = q.kind === "who" ? t("q_who") : q.kind === "number" ? t("q_number") : q.kind === "name" ? t("q_name", q.name) : t("q_word");
-    const sub = [q.kind === "name" ? t("q_name_sub", q.heard_as) : "", t("at", clock(q.at_s))].filter(Boolean).join(" · ");
-    const opts = q.kind === "name"
-      ? `<button class="opt yes" data-q="${q.id}" data-v="yes">${t("yes")}</button><button class="opt" data-q="${q.id}" data-v="no">${t("no")}</button>`
-      : q.options.map((o) => `<button class="opt" data-q="${q.id}" data-v="${esc(o)}">${esc(o)}</button>`).join("") +
-        (q.kind === "number" ? "" : `<input class="field" data-q="${q.id}" placeholder="${t("other")}" aria-label="${t("other")}">`);
-    return `<div class="ask" style="--i:${i}"><button class="hear" data-at="${q.at_s}" aria-label="${t("listen")}" title="${t("listen")}">${PLAY}</button><div><b>${esc(head)}</b><small>${esc(sub)}</small></div><div class="opts">${opts}</div></div>`;
-  };
-  setHTML($("asks"), "asks", open.map(ask).join(""));
-
-  // 3. what was agreed
-  let agreed = "";
-  if (j.deal_sheet) agreed = `<h4>${t("agreed")}</h4><dl class="receipt">${sheetRows(j.deal_sheet).map(([k, list]) => `<dt>${esc(k)}</dt><dd>${list.map((x) => `<span>${esc(x)}</span>`).join("")}</dd>`).join("")}</dl>`;
-  else if (done) agreed = `<h4>${t("said_h")}</h4><div class="said">${esc(dictated(j))}</div>`;
-  setHTML($("agreed"), "agreed", agreed);
+  // answer first: what to confirm, then what was agreed
   $("share").classList.toggle("hidden", !done);
-  if (done) $("wa").href = "https://wa.me/?text=" + encodeURIComponent(shareText(j));
+  if (!done) {
+    setHTML($("verdict"), "verdict", `<div class="verdict wait"><span class="spinner"></span><span>${esc(j.status === "error" ? t("failed") : t("waiting"))}</span></div>`);
+    setHTML($("asks"), "asks", "");
+    setHTML($("summary"), "summary", `<div class="pending"><span class="spinner"></span>${esc(t("busy")[j.status] || "")}</div>`);
+  } else {
+    const open = openQuestions(j);
+    setHTML($("verdict"), "verdict", open.length
+      ? `<div class="verdict ask"><i>?</i><span>${t("toconfirm", open.length)}<small>${t("toconfirm_sub")}</small></span></div>`
+      : `<div class="verdict ok"><i>✓</i><span>${t("clear")}<small>${t("clear_sub")}${sb.fresh?.clear ? ` On unseen recordings, ${sb.fresh.clear.right} of ${sb.fresh.clear.recordings} calls like this had every name right.` : ""}</small></span></div>`);
+    const ask = (q) => {
+      const head = q.kind === "who" ? t("q_who") : q.kind === "number" ? t("q_number") : q.kind === "name" ? t("q_name", q.name) : t("q_word");
+      const sub = [q.kind === "name" ? t("q_name_sub", q.heard_as) : "", t("at", clock(q.at_s))].filter(Boolean).join(" · ");
+      const opts = q.kind === "name"
+        ? `<button class="btn primary sm" data-q="${q.id}" data-v="yes">${t("yes")}</button><button class="btn ghost sm" data-q="${q.id}" data-v="no">${t("no")}</button>`
+        : q.options.map((o) => `<button class="btn ghost sm" data-q="${q.id}" data-v="${esc(o)}">${esc(o)}</button>`).join("") +
+          (q.kind === "number" ? "" : `<input class="field" data-q="${q.id}" placeholder="${t("other")}" aria-label="${t("other")}">`);
+      return `<div class="ask-card"><button class="hear" data-at="${q.at_s}" aria-label="${t("listen")}" title="${t("listen")}">${PLAY}</button><div><b>${esc(head)}</b><small>${esc(sub)}</small></div><div class="opts">${opts}</div></div>`;
+    };
+    setHTML($("asks"), "asks", open.map(ask).join(""));
+    $("summary-h").textContent = j.deal_sheet ? t("summary_h") : t("said_h");
+    setHTML($("summary"), "summary", j.deal_sheet
+      ? `<dl class="sheet">${sheetRows(j.deal_sheet).map(([k, list]) => `<dt>${esc(k)}</dt><dd>${list.map((x) => `<span>${esc(x)}</span>`).join("")}</dd>`).join("")}</dl>`
+      : `<div class="said">${esc(dictated(j))}</div>`);
+    $("wa").href = "https://wa.me/?text=" + encodeURIComponent(shareText(j));
+  }
 
-  // 4. the words, base model beside Parakh
+  // word for word, one pair of cells per segment
   const first = j.segments.find((s) => s.witnesses);
-  const models = first ? first.witnesses.map((w) => w.name) : [t("base")];
+  const models = first ? first.witnesses.map((w) => w.name) : ["Base model"];
   const cols = $("cols");
   if (!cols.children.length) {
-    cols.innerHTML = `<div class="th base"><span>${t("base")}</span><select id="basepick" aria-label="${t("base")}"></select></div><div class="th us">Parakh</div>` +
-      j.segments.map((_, i) => `<div class="base" id="l${i}"></div><div class="us-cell" id="r${i}"></div>`).join("");
+    cols.innerHTML = `<div class="th"><span>Speech model alone</span><select id="basepick" aria-label="Speech model"></select></div><div class="th us">With Parakh</div>` +
+      j.segments.map((_, i) => `<div class="cell" id="l${i}"></div><div class="cell r" id="r${i}"></div>`).join("");
     $("basepick").onchange = (e) => { baseChoice = +e.target.value; render(job); };
   }
   setHTML($("basepick"), "pick", models.map((n, i) => `<option value="${i}"${i === baseChoice ? " selected" : ""}>${esc(n)}</option>`).join(""));
   j.segments.forEach((s, i) => {
-    const sig = [s.stage, baseChoice, (s.view?.parakh || []).filter((w) => w.c).map((w) => w.c + w.t).join("|")].join("/");
-    if (drawn["seg" + i] === sig) return;
+    const sig = [s.stage, baseChoice, lang, (s.view?.parakh || []).filter((w) => w.c).map((w) => w.c + w.t).join("|")].join("/");
+    if (drawn["seg" + i] === sig || !$("l" + i)) return;
     drawn["seg" + i] = sig;
-    let left = `<span class="pending">${esc(t("busy").listening)}</span>`, right = `<span class="pending">…</span>`;
+    let left = `<span class="pending"><span class="spinner"></span>${esc(t("busy").listening)}</span>`, right = `<span class="pending">…</span>`;
     if (s.witnesses) {
       left = baseChoice === 0 ? words(s.view.base, s) : esc((s.witnesses[baseChoice] || s.witnesses[0]).text);
-      right = s.stage === "checked" ? `<span class="pop-in">${words(s.view.parakh, s)}</span>` : `<span class="pending">${esc(t("busy").checking)}</span>`;
+      right = s.stage === "checked" ? `<span class="rise">${words(s.view.parakh, s)}</span>` : `<span class="pending"><span class="spinner"></span>${esc(t("busy").checking)}</span>`;
     }
     $("l" + i).innerHTML = left;
     $("r" + i).innerHTML = right;
   });
 }
-document.querySelectorAll("#view button").forEach((b) => (b.onclick = () => {
-  document.querySelectorAll("#view button").forEach((x) => x.classList.toggle("on", x === b));
-  $("cols").classList.toggle("one", b.dataset.view === "one");
-}));
 
-/* ---- answering: a tap on the answer card, or on a highlight ------------- */
+/* ---------------- answering ---------------- */
 async function answerQuestion(id, value) {
   const q = (job.questions || []).find((x) => x.id === id);
   if (!q || !value) return;
   closePop();
-  if (q.kind === "number") { kept[q.key] = value; job = await post(`/api/jobs/${job.id}/answers`, { question: id, value }); render(job); }
+  if (q.kind === "number") { kept[q.key] = value; job = await post(`/api/jobs/${job.id}/answers`, { question: id, value }); drawn = {}; $("cols").innerHTML = ""; infos = []; render(job); toast("Saved"); }
   else if (q.kind === "name") nameAction(q.name, value === "yes" ? "confirm" : "reject", value !== "yes");
-  else nameAction(value, "confirm", true);  // remembered, and the recording is checked again with it
+  else nameAction(value, "confirm", true);  // remembered, and the call is checked again with it
 }
 $("asks").addEventListener("click", (e) => { const b = e.target.closest("button[data-q]"); if (b) answerQuestion(+b.dataset.q, b.dataset.v); });
 $("asks").addEventListener("keydown", (e) => { if (e.key === "Enter" && e.target.matches("input[data-q]")) answerQuestion(+e.target.dataset.q, e.target.value.trim()); });
 $("copy").onclick = async () => {
-  await navigator.clipboard.writeText(shareText(job)).catch(() => {});
-  $("copy").textContent = t("copied");
-  setTimeout(() => ($("copy").textContent = t("copy")), 1600);
+  try { await navigator.clipboard.writeText(shareText(job)); toast(t("copied")); } catch { toast("Copy is blocked in this browser"); }
 };
 
-/* ---- evidence for one highlight, with the question if there is one ------ */
+/* ---------------- the evidence behind one highlight ---------------- */
 function evidence(m) {
-  const w = infos[+m.dataset.info], i = w.info || {};
+  const w = infos[+m.dataset.info]; if (!w) return;
+  const i = w.info || {};
   const table = (rows) => `<table>${Object.entries(rows || {}).map(([k, v]) => `<tr><td>${esc(k)}</td><td>${esc(v || t("nothing"))}</td></tr>`).join("")}</table>`;
   const hear = w.at ? `<button class="hear" data-at="${w.at}" aria-label="${t("listen")}" title="${t("listen")}">${PLAY}</button>` : "";
   const q = i.q != null ? (job.questions || []).find((x) => x.id === i.q) : null;
   let html;
-  if (w.c === "num") html = `${hear}<h4>${esc(w.t)}</h4><p>${i.answered ? t("pop_chosen") : i.checked ? esc(i.checked) + ". " + t("pop_disagree_number") : t("pop_digits")}</p>${table(i.heard || { [t("said")]: i.said })}`;
+  if (w.c === "num") {
+    // A number can be written as digits by rule, fixed because the other models agreed, or settled by the speakers' own arithmetic.
+    const head = i.from && !i.checked && !i.answered ? `“${esc(i.from)}” → ${esc(w.t)}` : esc(w.t);
+    const body = i.answered ? t("pop_chosen") : i.checked ? `${esc(i.checked)}. ${t("pop_disagree_number")}` : i.from ? esc(i.why || w.tip || "") : t("pop_digits");
+    html = `<h4>${hear}${head}</h4><p>${body}</p>${table(i.heard || { [t("said")]: i.said })}`;
+  }
   else if (w.c === "unsure") {
     const options = q ? q.options : i.options?.length ? i.options : [...new Set(Object.values(i.heard || {}).filter(Boolean))];
-    html = `${hear}<h4>${q?.kind === "number" ? t("q_number") : q?.kind === "who" ? t("q_who") : t("pop_which")}</h4><p>${t("pop_disagree")}</p>${table(q?.heard || i.heard)}` +
-      `<div class="acts">${options.map((o) => `<button class="btn ghost" data-use="${esc(o)}">${esc(o)}</button>`).join("")}</div>` +
-      (q?.kind === "number" ? "" : `<div class="acts"><input class="field" placeholder="${t("type_it")}" aria-label="${t("type_it")}"><button class="btn primary" data-save="1">${t("save")}</button></div>`);
+    html = `<h4>${hear}${q?.kind === "number" ? t("q_number") : q?.kind === "who" ? t("q_who") : t("pop_which")}</h4><p>${t("pop_disagree")}</p>${table(q?.heard || i.heard)}` +
+      `<div class="acts">${options.map((o) => `<button class="btn ghost sm" data-use="${esc(o)}">${esc(o)}</button>`).join("")}</div>` +
+      (q?.kind === "number" ? "" : `<div class="acts"><input class="field" placeholder="${t("type_it")}" aria-label="${t("type_it")}"><button class="btn primary sm" data-save="1">${t("save")}</button></div>`);
+  } else if (w.c === "wrong" && !i.from) {
+    html = `<h4>${hear}${esc(w.t)}</h4><p>${esc(w.tip || "")}</p>`;
   } else {
-    html = `${hear}<h4>${i.answered ? esc(w.t) : `“${esc(i.from)}” → ${esc(i.to)}`}</h4><p>${i.answered ? t("pop_chosen") : esc(i.why)}</p>${i.answered ? "" : table(i.heard)}`;
-    if (!i.answered && waiting(i.to)) html += `<div class="acts"><button class="btn primary" data-yes="${esc(i.to)}">${t("remember")}</button><button class="btn ghost" data-no="${esc(i.to)}">${t("no")}</button></div>`;
+    html = `<h4>${hear}${i.answered ? esc(w.t) : `“${esc(i.from)}” → ${esc(i.to)}`}</h4><p>${i.answered ? t("pop_chosen") : esc(i.why || w.tip || "")}</p>${i.answered ? "" : table(i.heard)}`;
+    if (!i.answered && waiting(i.to)) html += `<div class="acts"><button class="btn primary sm" data-yes="${esc(i.to)}">${t("remember")}</button><button class="btn ghost sm" data-no="${esc(i.to)}">${t("no")}</button></div>`;
   }
   const pop = openPop(m, html);
   const choose = (value) => (q ? answerQuestion(q.id, value) : nameAction(value, "confirm", true));
@@ -848,192 +1232,9 @@ function evidence(m) {
   pop.querySelector("[data-no]")?.addEventListener("click", (e) => nameAction(e.target.dataset.no, "reject", true));
 }
 
-/* ---- how it works: a line diagram of the five layers, with the real counts ---- */
-function diagram() {
-  const f = sb.funnel || { words: 4742, doubted: 276, names_considered: 344, recordings_heard_again: 35, names_written: 77, flagged_unsure: 11, recordings: 189 };
-  const n = (x) => Number(x).toLocaleString("en-IN");
-  const L = [
-    ["Listen", "three recognisers, no hints", `${n(f.words)} words heard`],
-    ["Doubt", "where they disagree", `${n(f.doubted)} words in doubt`],
-    ["Look up", "names you know that sound like it", `${n(f.names_considered)} names considered`],
-    ["Hear again", "the audio has to back the name", `${n(f.recordings_heard_again)} recordings heard again`],
-    ["Decide", "write it, ask, or leave it", `${n(f.names_written)} written · ${n(f.flagged_unsure)} asked`],
-  ];
-  const X0 = 236, W0 = 330, STEP = 76, TOP = 48, SKEW = 36, D = 22, TX = 400, CX = X0 + W0 + 24;  // counts share one left edge
-  const plate = (i) => { const w = W0 - i * 28, x = X0 + i * 14, y = TOP + i * STEP; return { x, y, w, d: `M${x} ${y}h${w}l-${SKEW} ${D}h-${w}z` }; };
-  const stops = L.map((_, i) => TOP + i * STEP + D / 2);
-  const parts = [`<defs><marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0.5 7 4 0 7.5z" class="arrowhead"/></marker></defs>`];
-  parts.push(`<path class="thread" d="M${TX} 8V${TOP + 4 * STEP + D + 24}"/>`);
-  L.forEach(([name, what, count], i) => {
-    const p = plate(i), last = i === L.length - 1;
-    parts.push(`<path class="plate${last ? " last" : ""}" d="${p.d}"/>`);
-    parts.push(`<g class="num${last ? " last" : ""}"><circle cx="26" cy="${p.y + D / 2}" r="12"/><text x="26" y="${p.y + D / 2 + 4}">${i + 1}</text></g>`);
-    parts.push(`<text class="name" x="48" y="${p.y + 8}">${esc(name)}</text><text class="what" x="48" y="${p.y + 24}">${esc(what)}</text>`);
-    parts.push(`<text class="count" x="${CX}" y="${p.y + 15}">${esc(count)}</text>`);
-    if (i === 1) parts.push(`<path class="exit" d="M${TX + 14} ${p.y + D + 4}q40 10 80 10"/><text class="count soft" x="${TX + 100}" y="${p.y + D + 18}">${n(f.words - f.doubted)} pass through untouched</text>`);
-    if (i === 3) parts.push(`<path class="exit" d="M${TX + 14} ${p.y + D + 4}q40 10 80 10"/><text class="count soft" x="${TX + 100}" y="${p.y + D + 18}">the rest need no second listen</text>`);
-  });
-  const dwell = (i) => `${stops[i]};${stops[i]}`;
-  const ys = [8, ...L.flatMap((_, i) => [stops[i], stops[i]]), TOP + 4 * STEP + D + 24].join(";");
-  const bead = calm ? `<circle class="bead" cx="${TX}" cy="${stops[4]}" r="5"/>`
-    : `<circle class="bead" cx="${TX}" cy="8" r="5"><animate attributeName="cy" values="${ys}" keyTimes="0;0.08;0.16;0.26;0.34;0.44;0.52;0.62;0.70;0.80;0.90;1" dur="9s" repeatCount="indefinite" calcMode="spline" keySplines="${Array(11).fill("0.4 0 0.2 1").join(";")}"/></circle>` +
-      `<circle class="bead ghost" cx="${TX - 60}" cy="8" r="4"><animate attributeName="cy" values="8;${stops[0]};${stops[1]};${stops[1] + 10};${stops[1] + 10}" keyTimes="0;0.12;0.22;0.26;1" dur="9s" repeatCount="indefinite"/><animate attributeName="cx" values="${TX - 60};${TX - 60};${TX - 60};${TX + 90};${TX + 90}" keyTimes="0;0.12;0.22;0.3;1" dur="9s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;1;1;0;0" keyTimes="0;0.22;0.28;0.34;1" dur="9s" repeatCount="indefinite"/></circle>`;
-  $("diagram").innerHTML = `<svg viewBox="0 0 860 ${TOP + 4 * STEP + D + 40}" role="img" aria-label="Five stacked layers that a word falls through: listen, doubt, look up, hear again, decide. Most words leave at the second layer untouched.">${parts.join("")}${bead}</svg>`;
-  $("flow").textContent = `On ${f.recordings} recordings it had never seen: ${n(f.words)} words went in, ${n(f.doubted)} were in doubt, ${n(f.names_considered)} known names sounded like them, ${n(f.recordings_heard_again)} recordings needed a second listen, ${n(f.names_written)} names were written and ${n(f.flagged_unsure)} questions asked. Every other word is exactly what the base model wrote.`;
-}
-
-/* ---- screen two: one sentence, as the model heard it, then as Parakh writes it ---- */
-function scene() {
-  const root = $("scene"), at = [900, 2300, 3900, 5400, 6700], CYCLE = 11000;
-  let timers = [], visible = false, running = false;
-  const show = (n) => {
-    root.querySelectorAll(`[data-step="${n}"]`).forEach((el) => el.classList.add("on"));
-    root.querySelectorAll(`[data-doubt="${n}"]`).forEach((el) => el.classList.add("doubt"));
-    $("caption").textContent = t("cap")[n] || "";
-  };
-  const play = () => {
-    timers.forEach(clearTimeout);
-    root.querySelectorAll(".on, .doubt").forEach((el) => el.classList.remove("on", "doubt"));
-    $("caption").textContent = "";
-    running = true;
-    timers = at.map((ms, i) => setTimeout(() => show(i + 1), ms));
-    timers.push(setTimeout(() => { running = false; if (visible) play(); }, CYCLE));
-  };
-  if (calm) { at.forEach((_, i) => show(i + 1)); return; }
-  new IntersectionObserver((entries) => {
-    visible = entries[entries.length - 1].isIntersecting;
-    if (visible && !running) play();
-    else if (!visible) { timers.forEach(clearTimeout); running = false; }
-  }, { threshold: 0.3 }).observe(root);
-}
-
-/* ---- screen four: one number, then the three models ---- */
-function numbers() {
-  const f = sb.fresh;
-  if (!f) return;
-  const base = row(f.rows, "Saaras v4"), us = row(f.rows, "Parakh"), v = f.versus[0];
-  $("bignum").innerHTML = `<div class="n"><small>${base.names_right}% →</small><span class="to">${us.names_right}%</span></div><p>names right on Saaras v4 · ${v.only_parakh_right} fixed · ${v.only_other_right} lost · ${f.mentions} names</p>`;
-  $("models").innerHTML = f.bases.map((r) => `<div class="model"><div class="lbl">${esc(r.base)}<small>${r.only_parakh_right} fixed · ${r.only_other_right} lost</small></div>` +
-    `<div class="track"><div class="bar base" data-w="${r.base_names}"></div><span class="v base" style="left:${r.base_names}%">${r.base_names}%</span><div class="bar us" data-w="${r.names_right}"></div><span class="v us" style="left:${r.names_right}%">${r.names_right}%</span></div></div>`).join("");
-  $("tests-note").textContent = `${f.clips} fresh recordings unless marked`;
-  new IntersectionObserver((es, ob) => { if (es.some((e) => e.isIntersecting)) { $("models").querySelectorAll(".bar").forEach((b) => (b.style.width = b.dataset.w + "%")); ob.disconnect(); } }, { threshold: 0.3 }).observe($("models"));
-}
-
-/* ---- sections rise in as they arrive ---- */
-function reveal() {
-  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
-  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
-}
-
-/* ---- measured: one card, one test at a time ------------------------------ */
-function bars(rows) {  // rows: {name, width 0-100, text, us}
-  $("bars").innerHTML = rows.map((r) => `<span class="${r.us ? "us-label" : ""}">${esc(r.name)}</span><div class="track"><div class="fill${r.us ? " us" : ""}" data-w="${r.width}"></div></div><span class="n mono">${r.text}</span>`).join("");
-  requestAnimationFrame(() => requestAnimationFrame(() => $("bars").querySelectorAll(".fill").forEach((f) => (f.style.width = f.dataset.w + "%"))));
-}
-const nameBars = (rows) => rows.map((r) => ({ name: r.system, width: r.names_right, text: `${r.names_right}% names · ${r.wer}% word errors`, us: r.system.startsWith("Parakh") }));
-const row = (rows, name) => rows.find((r) => r.system === name);
-const MODES = {
-  list: ["Names right", () => {
-    const f = sb.fresh || sb.fleurs, c = sb.calls, v = f.versus[0], sign = (x) => (x > 0 ? "+" : "") + x;
-    const against = f.versus.slice(1).map((k) => `${sign(k.names_points)} against ${k.against} (p = ${k.p})`).join(", ");
-    $("big").innerHTML = `<small>${row(f.rows, "Saaras v4").names_right}% →</small> <span class="to">${row(f.rows, "Parakh").names_right}%</span>`;
-    $("lead").textContent = `Names right on ${f.clips} ${sb.fresh ? "fresh " : ""}public recordings (${f.mentions} names): the base model, then Parakh on top of it. Parakh got ${v.only_parakh_right} names right that the base missed, and the base ${v.only_other_right} that Parakh missed. ` +
-      `Against the recognisers' own keyword features the differences are too small to call: ${against}. Parakh has the fewest word errors of any row.` +
-      (c ? ` On three real trade calls it got ${c.rows[0].right} of ${c.mentions} confirmed words right; the best baseline got ${c.rows[1].right}.` : "");
-    bars(nameBars(f.rows));
-  }],
-  bases: ["On any model", () => {
-    const b = sb.fresh?.bases || sb.bases.rows, low = b[0];
-    $("big").innerHTML = `<small>${low.base}: ${low.base_names}% →</small> <span class="to">${low.names_right}%</span>`;
-    $("lead").textContent = `The same checks written onto each recogniser's own transcript, as if that were the one you already run. On all three, Parakh fixed names the model had missed (${b.map((r) => r.only_parakh_right).join(", ")}) and lost none it had right.`;
-    bars(b.flatMap((r) => [{ name: r.base, width: r.base_names, text: `${r.base_names}% names · ${r.base_wer}% word errors` },
-      { name: `Parakh on ${r.base}`, width: r.names_right, text: `${r.names_right}% names · ${r.wer}% word errors`, us: true }]));
-  }],
-  trap: ["Sound-alike trap", () => {
-    const t = sb.fresh?.stress || sb.stress, most = Math.max(...t.rows.map((r) => r.sound_alikes_written)), us = row(t.rows, "Parakh"), lost = t.right_names_lost;
-    const shown = t.rows.filter((r) => r.system.includes("list") || r.system === "Parakh" || r.system === "Saaras v4");
-    const others = shown.filter((r) => r.system.includes("list")).map((r) => `${r.system.replace(" + its keyword list", "'s keyword feature").replace(", A to Z", " (list in alphabetical order)")} wrote ${r.sound_alikes_written}`).join("; ");
-    $("big").innerHTML = `${us.sound_alikes_written} <small>of ${t.planted} planted wrong names written</small>`;
-    $("lead").textContent = `${sb.stress.note} ${others}. Where a name sits in a keyword list changes how hard it is pushed, so Sarvam's is shown both ways; the row without "A to Z" has the planted names first. Parakh is not immune, and OpenAI's keyword feature did better here. Shorter bars are better.`;
-    bars(shown.map((r) => ({ name: r.system, width: 100 * r.sound_alikes_written / most,
-      text: `${r.sound_alikes_written} wrong names · ${lost[r.system] ?? 0} right names lost`, us: r.system === "Parakh" })));
-  }],
-  phone: ["Phone line", () => {
-    const f = sb.phone, v = f.versus[0];
-    $("big").innerHTML = `<small>${row(f.rows, "Saaras v4").names_right}% →</small> <span class="to">${row(f.rows, "Parakh").names_right}%</span>`;
-    $("lead").textContent = `${f.note} Parakh got ${v.only_parakh_right} names right that the base missed and the base ${v.only_other_right} that Parakh missed (p = ${v.p}).`;
-    bars(nameBars(f.rows));
-  }],
-  none: ["No context", () => {
-    const n = sb.fleurs_nocontext, cn = sb.calls_nocontext, nv = n.versus;
-    $("big").innerHTML = `<small>${row(n.rows, "Saaras v4").names_right}% →</small> ${row(n.rows, "Parakh, own lookup").names_right}%`;
-    $("lead").textContent = `With nothing given, Parakh looks names up itself and checks them by listening again. That got ${nv.only_parakh_right} more names right and lost none, a gain too small to tell from chance (p = ${nv.p}). Without context, most of the gain is gone.` +
-      (cn ? ` On the three real calls, which its rules were built on, its own topic search got ${cn.rows[0].right} of ${cn.mentions}; the best single recogniser got ${cn.rows[1].right}.` : "");
-    bars(nameBars(n.rows));
-  }],
-  numbers: ["Numbers", () => {
-    const n = sb.numbers, f = n.fresh, a = n.first, c = sb.calls;
-    $("big").innerHTML = `<small>${f.base_right} of ${f.numbers} →</small> <span class="to">${f.parakh_right} of ${f.numbers}</span>`;
-    $("lead").textContent = `Numbers right on the fresh recordings, base model then Parakh: no change, because the base model got them right (${f.numbers - f.base_right} wrong, and no recogniser had those right either). ${n.note} Across ${a.numbers + f.numbers} public numbers the rules fixed ${a.fixed + f.fixed} and broke ${a.broken + f.broken}. The gain is on real calls: in call 1 the recognisers heard 160 and 360 for the same quantity; "chaalis into chaar", said a sentence earlier, settles it at 160.`;
-    bars([{ name: "Saaras v4", width: 100 * f.base_right / f.numbers, text: `${f.base_right} of ${f.numbers} numbers` }, { name: "Parakh", width: 100 * f.parakh_right / f.numbers, text: `${f.parakh_right} of ${f.numbers} numbers · ${f.asked} asked`, us: true }]);
-  }],
-  speed: ["Speed", () => {
-    const l = sb.latency, secs = (ms) => (ms / 1000).toFixed(1), most = l.extra_listen.verified_ms_median || l.verified_ms.median;
-    $("big").innerHTML = `${secs(l.draft_ms.median)} s <small>to the draft ·</small> ${secs(l.verified_ms.median)} s <small>to the checked transcript</small>`;
-    $("lead").textContent = `Median wall-clock time over ${l.clips} clips the service had never seen, ${Math.round(l.median_seconds)} seconds of speech each, sent one at a time. The draft is the base model's own transcript at its own speed, so a voice agent can start on it and take the checked names when they arrive. Shorter bars are better here.`;
-    bars([{ name: "Base model alone: the draft", width: 100 * l.draft_ms.median / most, text: `${secs(l.draft_ms.median)} s` },
-      { name: `Parakh, no second listen (${l.no_extra_listen.clips} of ${l.clips} clips)`, width: 100 * l.no_extra_listen.verified_ms_median / most, text: `${secs(l.no_extra_listen.verified_ms_median)} s`, us: true },
-      { name: `Parakh, with a second listen (${l.extra_listen.clips} of ${l.clips})`, width: 100, text: `${secs(most)} s`, us: true }]);
-  }],
-};
-const HAS = { list: "fleurs", bases: "bases", trap: "stress", phone: "phone", none: "fleurs_nocontext", numbers: "numbers", speed: "latency" };
-function measured(mode) {
-  document.querySelectorAll("#modes button").forEach((b) => b.classList.toggle("on", b.dataset.mode === mode));
-  MODES[mode][1]();
-}
-function modes() {
-  $("modes").innerHTML = Object.entries(MODES).filter(([k]) => sb[HAS[k]]).map(([k, [label]]) => `<button data-mode="${k}">${label}</button>`).join("");
-  document.querySelectorAll("#modes button").forEach((b) => (b.onclick = () => measured(b.dataset.mode)));
-  measured("list");
-}
-
-/* ---- the endpoint, as you would call it ---------------------------------- */
-function endpoint(key) {
-  $("curl").innerHTML = `<i># the call you already make to Sarvam, plus the caller's names</i>
-curl -N <u>${esc(location.origin)}/speech-to-text</u> \\
-  -H "api-subscription-key: <b>${esc(key || "your key")}</b>" \\
-  -F file=@turn.wav \\
-  -F names=<b>"Eicher, Mohammad bhai"</b> \\
-  -F stream=true
-
-<i># 1. the base transcript, as soon as it exists</i>
-{"event": "draft", "ms": <u id="ms1">…</u>,
- "transcript": "Teen ka kyon lo phir? <b>Aishar</b> mein lo ..."}
-
-<i># 2. the checked transcript, with the evidence</i>
-{"event": "verified",
- "transcript": "Teen ka kyon lo phir? <b>Eicher</b> mein lo ...",
- "parakh": {
-   "edits": [{"from": "Aishar", "to": "Eicher",
-              "heard": {"Saaras v3": "Aishwarya",
-                        "gpt-transcribe": "आईशर"}}],
-   "unsure": [], "extra_listens": 0,
-   "timing_ms": {"draft": <u id="ms2">…</u>, "verified": <u id="ms3">…</u>}}}`;
-  const e = sb.latency && sb.latency.example;
-  if (e) { $("ms1").textContent = $("ms2").textContent = e.draft_ms; $("ms3").textContent = e.verified_ms; }
-}
-
-/* ---- earlier calls: every finished call is kept and reopens as it was ---- */
-async function earlier() {
-  const list = await api(`/api/users/${user}/calls`).catch(() => []);
-  $("earlier").innerHTML = list.length ? `<span>${t("earlier")}</span>` + list.slice(0, 4).map((c) =>
-    `<button class="linkbtn" data-call="${esc(c.id)}">${esc(c.title)}${c.open ? ` · ${c.open} ?` : ""}</button>`).join("") : "";
-  $("earlier").querySelectorAll("[data-call]").forEach((b) => (b.onclick = () => { last = null; from("call:" + b.dataset.call); begin({ id: b.dataset.call }); }));
-}
-
-/* ---- a wrong word nobody flagged: tap it and say what it was ---- */
+/* A wrong word nobody flagged: tap it and say what it was. */
 $("cols").addEventListener("click", (e) => {
-  if (e.target.closest(".mark") || !e.target.closest(".us-cell") || !getSelection().isCollapsed || job?.status !== "done") return;
+  if (e.target.closest(".mark") || !e.target.closest("[id^=r]") || !getSelection().isCollapsed || job?.status !== "done") return;
   const range = document.caretRangeFromPoint?.(e.clientX, e.clientY), node = range?.startContainer;
   if (!node || node.nodeType !== 3) return;
   const text = node.textContent;
@@ -1045,58 +1246,237 @@ $("cols").addEventListener("click", (e) => {
   e.stopPropagation();
   const spot = document.createRange();
   spot.setStart(node, a); spot.setEnd(node, b);
-  const pop = openPop(spot, `<h4>“${esc(word)}”</h4><p>${t("fix_word")}</p><div class="acts"><input class="field" aria-label="${t("fix_word")}"><button class="btn primary">${t("save")}</button></div>`);
+  const pop = openPop(spot, `<h4>“${esc(word)}”</h4><p>${t("fix_word")}</p><div class="acts"><input class="field" aria-label="${t("fix_word")}"><button class="btn primary sm">${t("save")}</button></div>`);
   const save = () => { const v = pop.querySelector("input").value.trim(); if (v) nameAction(v, "confirm", !!last); };
   pop.querySelector("button").onclick = save;
   pop.querySelector("input").addEventListener("keydown", (ev) => ev.key === "Enter" && save());
   pop.querySelector("input").focus();
 });
 
-/* ---- a key of your own, and what the server has done so far ---- */
+/* ---------------- calls list ---------------- */
+async function earlier() {
+  const list = await api(`/api/users/${user}/calls`).catch(() => []);
+  $("calls-count").textContent = list.length || "";
+  const row = (c) => `<a class="rowlink" href="#/app/call/${esc(c.id)}"><span style="min-width:0"><b>${esc(c.title)}</b><small>${esc(c.about || "")}</small></span>
+    ${c.open ? `<span class="badge ask">${c.open} to confirm</span>` : `<span class="badge ok">All clear</span>`}<span class="meta">${length(c.seconds)} · ${ago(c.when)}</span></a>`;
+  const empty = `<div class="empty"><h4>${t("no_calls")}</h4><p>${t("no_calls_p")}</p><a class="btn primary sm" href="#/app" style="color:#fff">${t("start")}</a></div>`;
+  $("calls-list").innerHTML = list.length ? list.map(row).join("") : empty;
+  $("recent").innerHTML = list.length ? list.slice(0, 4).map(row).join("") : `<div class="empty"><p>${t("no_calls_p")}</p></div>`;
+  document.querySelectorAll(".rowlink").forEach((a) => a.addEventListener("click", () => { last = null; from("call:" + a.getAttribute("href")); current = null; }));
+}
+
+/* ---------------- results ---------------- */
+function bars(el, rows) {
+  el.innerHTML = rows.map((r) => `<span class="${r.us ? "us-label" : ""}">${esc(r.name)}</span><div class="track"><div class="fill${r.us ? " us" : ""}" data-w="${r.width}"></div></div><span class="n">${r.text}</span>`).join("");
+  requestAnimationFrame(() => requestAnimationFrame(() => el.querySelectorAll(".fill").forEach((f) => (f.style.width = Math.max(1, f.dataset.w) + "%"))));
+}
+const nameBars = (rows) => rows.map((r) => ({ name: r.system, width: r.names_right, text: `${r.names_right}% names · ${r.wer}% word errors`, us: r.system.startsWith("Parakh") }));
+const row = (rows, name) => rows.find((r) => r.system === name);
+const basesRows = () => sb.fresh?.bases || sb.bases?.rows || [];
+const MODES = {
+  bases: ["On any model", () => {
+    const b = basesRows(), low = b[0];
+    $("big").innerHTML = `<small>${esc(low.base)}: ${low.base_names}% →</small> <span class="to">${low.names_right}%</span>`;
+    $("lead").textContent = `The same checks written onto each speech model's own transcript, as if that were the one you already run. On all three, Parakh fixed names the model had missed (${b.map((r) => r.only_parakh_right).join(", ")}) and lost none it had right.`;
+    bars($("bars"), b.flatMap((r) => [{ name: r.base, width: r.base_names, text: `${r.base_names}% names · ${r.base_wer}% word errors` },
+      { name: `Parakh on ${r.base}`, width: r.names_right, text: `${r.names_right}% names · ${r.wer}% word errors`, us: true }]));
+  }],
+  list: ["vs keyword features", () => {
+    const f = sb.fresh || sb.fleurs, v = f.versus[0], sign = (x) => (x > 0 ? "+" : "") + x;
+    const against = f.versus.slice(1).map((k) => `${sign(k.names_points)} against ${k.against} (p = ${k.p})`).join(", ");
+    $("big").innerHTML = `<small>${row(f.rows, "Saaras v4").names_right}% →</small> <span class="to">${row(f.rows, "Parakh").names_right}%</span>`;
+    $("lead").textContent = `Names right on ${f.clips} ${sb.fresh ? "fresh " : ""}public recordings (${f.mentions} names). Parakh got ${v.only_parakh_right} names right that the base missed, and the base ${v.only_other_right} that Parakh missed. Against the speech models' own keyword features the differences are too small to call: ${against}. Parakh has the fewest word errors of any row.`;
+    bars($("bars"), nameBars(f.rows));
+  }],
+  trap: ["Sound-alike trap", () => {
+    const tr = sb.fresh?.stress || sb.stress, most = Math.max(...tr.rows.map((r) => r.sound_alikes_written)), us = row(tr.rows, "Parakh"), lost = tr.right_names_lost;
+    const shown = tr.rows.filter((r) => r.system.includes("list") || r.system === "Parakh" || r.system === "Saaras v4");
+    $("big").innerHTML = `${us.sound_alikes_written} <small>of ${tr.planted} planted wrong names written</small>`;
+    $("lead").textContent = `${(sb.stress || {}).note || ""} Where a name sits in a keyword list changes how hard it is pushed, so Sarvam's is shown both ways. Parakh is not immune, and OpenAI's keyword feature did better here. Shorter bars are better.`;
+    bars($("bars"), shown.map((r) => ({ name: r.system, width: 100 * r.sound_alikes_written / most, text: `${r.sound_alikes_written} wrong · ${lost[r.system] ?? 0} right names lost`, us: r.system === "Parakh" })));
+  }],
+  phone: ["Phone line", () => {
+    const f = sb.phone, v = f.versus[0];
+    $("big").innerHTML = `<small>${row(f.rows, "Saaras v4").names_right}% →</small> <span class="to">${row(f.rows, "Parakh").names_right}%</span>`;
+    $("lead").textContent = `${f.note} Parakh got ${v.only_parakh_right} names right that the base missed and the base ${v.only_other_right} that Parakh missed (p = ${v.p}).`;
+    bars($("bars"), nameBars(f.rows));
+  }],
+  none: ["No names given", () => {
+    const n = sb.fleurs_nocontext, nv = n.versus;
+    $("big").innerHTML = `<small>${row(n.rows, "Saaras v4").names_right}% →</small> ${row(n.rows, "Parakh, own lookup").names_right}%`;
+    $("lead").textContent = `With no names given, Parakh looks names up itself and checks them by listening again. That got ${nv.only_parakh_right} more names right and lost none, a gain too small to tell from chance (p = ${nv.p}). Without your names, most of the gain is gone: that is why Known names matters.`;
+    bars($("bars"), nameBars(n.rows));
+  }],
+  numbers: ["Numbers", () => {
+    const n = sb.numbers, f = n.fresh, a = n.first;
+    $("big").innerHTML = `<small>${f.base_right} of ${f.numbers} →</small> <span class="to">${f.parakh_right} of ${f.numbers}</span>`;
+    $("lead").textContent = `Numbers right on the fresh recordings, base model then Parakh: no change, because the base model got them right (${f.numbers - f.base_right} wrong, and no recogniser had those right either). ${n.note} Across ${a.numbers + f.numbers} public numbers the rules fixed ${a.fixed + f.fixed} and broke ${a.broken + f.broken}. The gain is on real calls: in call 1 the recognisers heard 160 and 360 for the same quantity; "chaalis into chaar", said a sentence earlier, settles it at 160.`;
+    bars($("bars"), [{ name: "Saaras v4", width: 100 * f.base_right / f.numbers, text: `${f.base_right} of ${f.numbers} numbers` },
+      { name: "Parakh", width: 100 * f.parakh_right / f.numbers, text: `${f.parakh_right} of ${f.numbers} numbers · ${f.asked} asked`, us: true }]);
+  }],
+  speed: ["Speed", () => {
+    const l = sb.latency, secs = (ms) => (ms / 1000).toFixed(1), most = l.extra_listen.verified_ms_median || l.verified_ms.median;
+    $("big").innerHTML = `${secs(l.draft_ms.median)} s <small>to the draft ·</small> ${secs(l.verified_ms.median)} s <small>to the checked transcript</small>`;
+    $("lead").textContent = `Median wall-clock time over ${l.clips} clips the service had never seen, about ${Math.round(l.median_seconds)} seconds of speech each. A voice agent can start on the draft and take the checked names when they arrive. Shorter bars are better.`;
+    bars($("bars"), [{ name: "Speech model alone: the draft", width: 100 * l.draft_ms.median / most, text: `${secs(l.draft_ms.median)} s` },
+      { name: `Parakh, no second listen (${l.no_extra_listen.clips} of ${l.clips})`, width: 100 * l.no_extra_listen.verified_ms_median / most, text: `${secs(l.no_extra_listen.verified_ms_median)} s`, us: true },
+      { name: `Parakh, with a second listen (${l.extra_listen.clips} of ${l.clips})`, width: 100, text: `${secs(most)} s`, us: true }]);
+  }],
+};
+const HAS = { bases: () => basesRows().length, list: () => sb.fleurs, trap: () => sb.stress, phone: () => sb.phone, none: () => sb.fleurs_nocontext, numbers: () => sb.numbers?.fresh, speed: () => sb.latency };
+function measured(mode) {
+  document.querySelectorAll("#modes button").forEach((b) => b.classList.toggle("on", b.dataset.mode === mode));
+  try { MODES[mode][1](); } catch { $("lead").textContent = "This result is not available on this server."; }
+}
+function renderResults() {
+  if (!sb.fleurs) { $("lead").textContent = "No saved results on this server."; return; }
+  const f = sb.fresh || {}, out = [], src = f.clips ? `${f.clips} fresh public recordings, ${f.mentions} names, run once` : "";
+  const v3 = basesRows().find((r) => r.base === "Saaras v3");
+  if (v3) out.push(`<div class="card tile"><div class="num"><small>${v3.base_names}% →</small> <span class="to">${v3.names_right}%</span></div><p>Names right on Saaras v3, the model Equal runs today. ${v3.only_parakh_right} fixed, ${v3.only_other_right} lost. The model itself is not changed.</p><small class="src">${src}</small></div>`);
+  if (f.whole) out.push(`<div class="card tile"><div class="num"><small>${f.whole.base}% →</small> <span class="to">${f.whole.parakh}%</span></div><p>Recordings with every name right, on Saaras v4. One wrong name is enough to send the wrong order. ${f.whole.fixed} recordings fixed, ${f.whole.broken} broken.</p><small class="src">${src}</small></div>`);
+  if (f.loop) out.push(`<div class="card tile"><div class="num"><small>${f.loop.known_base}% →</small> <span class="to">${f.loop.known}%</span></div><p>Names you confirmed once, the next time they are said. Names heard for the first time stay at ${f.loop.new}%: it learns from your answers, not by itself.</p><small class="src">the same recordings, played as one person's calls in ${f.loop.orders} random orders</small></div>`);
+  $("tiles").innerHTML = out.join("");
+  $("modes").innerHTML = Object.entries(MODES).filter(([k]) => HAS[k]()).map(([k, [label]]) => `<button data-mode="${k}">${label}</button>`).join("");
+  document.querySelectorAll("#modes button").forEach((b) => (b.onclick = () => measured(b.dataset.mode)));
+  measured("bases");
+  const c = sb.calls;
+  if (c) {
+    $("calls-note").textContent = c.note;
+    $("calls-table").innerHTML = `<tr><th>System</th><th class="r">Right (of ${c.mentions})</th><th class="r">Wrong names</th></tr>` +
+      c.rows.map((r) => `<tr class="${r.system === "Parakh" ? "us" : ""}"><td>${esc(r.system)}</td><td class="r tab">${r.right}</td><td class="r tab">${r.wrong_names}</td></tr>`).join("");
+  }
+  const fine = [];
+  if (sb.fresh) fine.push(`The fresh set: ${sb.fresh.note} ${sb.fresh.clips} recordings, ${sb.fresh.mentions} name mentions. Sarvam's keyword feature takes 50 terms and OpenAI's was given 100, each including the recording's own names.`);
+  if (sb.fleurs) { const v = sb.fleurs.versus[0]; fine.push(`${sb.fleurs.title}: ${sb.fleurs.clips} recordings. Gain over the base ${v.names_points} points (95% interval ${v.names_ci[0]} to ${v.names_ci[1]}, p = ${v.p}).`); }
+  if (sb.ice) { const ir = (n) => sb.ice.rows.find((r) => r.system === n); fine.push(`Where it only ties: ${sb.ice.title}, ${sb.ice.clips} recordings. Parakh ${ir("Parakh").names_right}% against base ${ir("Saaras v4").names_right}%.`); }
+  if (sb.latency) fine.push(`Speed: ${sb.latency.clips} clips, each given a little added silence so no saved answer could be replayed, timed from request to each line of the stream.`);
+  fine.push("No model is trained or fine-tuned. Parakh is a harness over Sarvam Saaras v4/v3 and OpenAI gpt-transcribe.");
+  $("fine").innerHTML = fine.map((x) => `<li>${esc(x)}</li>`).join("");
+}
+
+/* ---------------- developers ---------------- */
+function curl(el, key) {
+  const e = sb.latency?.example || {};
+  el.innerHTML = `<i># the call you already make to Sarvam, plus the caller's names</i>
+curl -N <u>${esc(location.origin)}/speech-to-text</u> \\
+  -H "api-subscription-key: <b>${esc(key || "your key")}</b>" \\
+  -F file=@turn.wav \\
+  -F names=<b>"Eicher, Mohammad bhai"</b> \\
+  -F stream=true
+
+<i># 1. the base transcript, as soon as it exists</i>
+{"event": "draft", "ms": ${e.draft_ms ?? "…"},
+ "transcript": "Teen ka kyon lo phir? <b>Aishar</b> mein lo ..."}
+
+<i># 2. the checked transcript, with the evidence</i>
+{"event": "verified",
+ "transcript": "Teen ka kyon lo phir? <b>Eicher</b> mein lo ...",
+ "parakh": {
+   "edits": [{"from": "Aishar", "to": "Eicher",
+              "heard": {"Saaras v3": "Aishwarya", "gpt-transcribe": "आईशर"}}],
+   "verdict": {"clear": true},
+   "timing_ms": {"draft": ${e.draft_ms ?? "…"}, "verified": ${e.verified_ms ?? "…"}}}}`;
+}
 async function keyInfo() {
-  const key = localStorage.parakhKey, u = key ? await api(`/api/keys/${key}`).catch(() => null) : null;
+  const key = store.get("parakhKey"), u = key ? await api(`/api/keys/${key}`).catch(() => null) : null;
   const s = await api("/api/stats").catch(() => null);
-  $("keyinfo").textContent = (u ? `${u.minutes_left} of your free minutes left · ` : "") +
-    (s && s.requests ? `this server has checked ${s.audio_minutes} minutes of audio in ${s.requests} requests` : "");
-  if (u) { $("getkey").textContent = "Copy your key"; endpoint(key); }
+  if (u) {
+    $("keyval").textContent = key; $("getkey").textContent = "Copy key";
+    $("k-left").textContent = t("min_left", u.minutes_left); $("k-used").textContent = `${u.minutes_used} min used in ${u.requests} requests`;
+  }
+  if (s) { $("s-min").textContent = `${s.audio_minutes} min`; $("s-req").textContent = `${s.requests} requests so far`; }
+  const l = sb.latency;
+  if (l) { $("s-lat").textContent = `${(l.verified_ms.median / 1000).toFixed(1)} s`; $("s-lat2").textContent = `draft in ${(l.draft_ms.median / 1000).toFixed(1)} s, checked after`; }
+  curl($("curl"), u ? key : "");
 }
 $("getkey").onclick = async () => {
-  if (localStorage.parakhKey) { await navigator.clipboard.writeText(localStorage.parakhKey).catch(() => {}); $("getkey").textContent = "Copied"; return; }
+  const have = store.get("parakhKey");
+  if (have) { try { await navigator.clipboard.writeText(have); toast(t("copied")); } catch { toast("Copy is blocked in this browser"); } return; }
   try {
-    const made = await api("/api/keys", { method: "POST", headers: { "Content-Type": "application/json", ...(localStorage.parakhCode ? { "X-Access-Code": localStorage.parakhCode } : {}) }, body: JSON.stringify({ label: user }) });
-    localStorage.parakhKey = made.key;
-    keyInfo();
+    const made = await api("/api/keys", { method: "POST", headers: { "Content-Type": "application/json", ...codeHeaders() }, body: JSON.stringify({ label: user }) });
+    store.set("parakhKey", made.key); toast("Key created"); keyInfo();
   } catch (e) {
-    if (e.status === 401) { const code = prompt("Access code for this server:"); if (code) { localStorage.parakhCode = code; $("getkey").click(); } }
-    else $("keyinfo").textContent = e.message;
+    if (e.status === 401 && (await askCode())) return $("getkey").click();
+    $("keyerr").textContent = e.message; $("keyerr").classList.remove("hidden");
   }
 };
 
+/* ---------------- the site: hero scene and live results ---------------- */
+function scene() {
+  $("wave").innerHTML = Array.from({ length: 22 }, (_, i) => `<i style="--i:${i}"></i>`).join("");
+  const root = $("scene");
+  const steps = root.querySelectorAll(".steps-row span");
+  const reset = () => {
+    steps.forEach((s) => s.classList.remove("on"));
+    root.querySelectorAll("[data-fix]").forEach((b) => { b.textContent = "Aishar"; b.className = ""; });
+    root.querySelectorAll("[data-num]").forEach((b) => { b.textContent = b.dataset.num === "40" ? "chaalis" : "bayalis"; b.className = ""; });
+    root.querySelectorAll("[data-ask]").forEach((b) => { b.textContent = "Mohan bhai"; b.className = ""; });
+    ["n-for", "n-truck", "n-sets"].forEach((id) => ($(id).innerHTML = "")); $("n-stamp").classList.remove("on");
+  };
+  const at = [
+    () => { steps[0].classList.add("on"); root.querySelector("[data-fix]").className = "asked"; },
+    () => { steps[1].classList.add("on"); const b = root.querySelector("[data-fix]"); b.textContent = "Eicher"; b.className = "fixed"; },
+    () => { steps[2].classList.add("on"); root.querySelectorAll("[data-num]").forEach((b) => { b.textContent = b.dataset.num; b.className = "digit"; }); },
+    () => { steps[3].classList.add("on"); root.querySelector("[data-ask]").className = "asked"; },
+    () => { steps[4].classList.add("on"); const b = root.querySelector("[data-ask]"); b.textContent = "Mohammad bhai"; b.className = "fixed"; },
+    () => { $("n-for").innerHTML = `<span class="good">Mohammad bhai</span>`; $("n-truck").innerHTML = `<span class="good">Eicher</span>`; $("n-sets").textContent = "40 or 42 (asked)"; $("n-stamp").classList.add("on"); },
+  ];
+  if (calm) { at.forEach((f) => f()); return; }
+  let timers = [], running = false;
+  const play = () => {
+    timers.forEach(clearTimeout); reset(); running = true;
+    timers = at.map((f, i) => setTimeout(f, 900 + i * 1300));
+    timers.push(setTimeout(() => { running = false; if (visible) play(); }, 900 + at.length * 1300 + 5000));
+  };
+  let visible = false;
+  new IntersectionObserver((en) => { visible = en[en.length - 1].isIntersecting; if (visible && !running && !$("site").hidden) play(); }, { threshold: 0.3 }).observe(root);
+}
+function siteResults() {
+  const b = basesRows();
+  if (b.length) bars($("site-bars"), b.flatMap((r) => [{ name: r.base, width: r.base_names, text: `${r.base_names}%` }, { name: `Parakh on ${r.base}`, width: r.names_right, text: `${r.names_right}%`, us: true }]));
+  else $("site-bars").innerHTML = `<p style="color:var(--muted)">No saved results on this server.</p>`;
+  const f = sb.fresh, s = sb.stress, c = sb.calls, honest = [];
+  if (b.length) honest.push(`On all three speech models, Parakh fixed names the model missed (${b.map((r) => r.only_parakh_right).join(", ")}) and lost none it had right.`);
+  if (f) honest.push(`Against the speech models' own keyword features, the difference in names right is within chance. Parakh's edge is the fewest word errors and no weak column.`);
+  if (s) honest.push(`Planted look-alike names: Parakh wrote ${row(s.rows, "Parakh")?.sound_alikes_written ?? "a few"} of ${s.planted}. It is not immune, and OpenAI's keyword feature did better.`);
+  if (c) honest.push(`Three real trade calls: ${c.rows[0].right} of ${c.mentions} confirmed words right, best baseline ${c.rows[1].right}. Rules were built on these calls, so this is not a held-out result.`);
+  $("site-honest").innerHTML = honest.map((x) => `<li>${esc(x)}</li>`).join("");
+  if (b.length && sb.latency) {
+    const v3 = b.find((r) => r.base === "Saaras v3") || b[0], l = sb.latency;
+    $("strip-in").innerHTML = [
+      [`${v3.base_names}<small>% → </small>${v3.names_right}<small>%</small>`, `Names right on ${esc(v3.base)}, on recordings Parakh never saw`],
+      [`${b.reduce((n, r) => n + r.only_parakh_right, 0)}<small> fixed · </small>0<small> lost</small>`, "Names fixed across three speech models, none broken"],
+      [`${(l.draft_ms.median / 1000).toFixed(1)}<small> s</small>`, "To the first transcript. The checked one follows."],
+      [`${f ? f.clips : sb.fleurs.clips}`, "Public Hindi recordings, run once after the rules were frozen"],
+    ].map(([n, p]) => `<div><div class="num">${n}</div><p>${p}</p></div>`).join("");
+    $("strip").hidden = false;
+  }
+  const fu = sb.funnel;
+  if (fu) $("funnel").textContent = `On ${fu.recordings} held-out recordings: ${fu.words.toLocaleString("en-IN")} words went in, ${fu.doubted} were in doubt, ${fu.recordings_heard_again} recordings were heard a second time, ${fu.names_written} names were written${fu.names_fixed != null ? ` (${fu.names_fixed} of them fixing a name the base model had wrong)` : ""} and ${fu.flagged_unsure} words were flagged to ask. Every other word is exactly what the base model wrote.`;
+  curl($("site-curl"), "");
+}
+
+/* ---------------- start ---------------- */
 (async () => {
   applyLang();
-  reveal();
   scene();
-  api("/api/health").then((h) => ($("health").textContent = `Parakh · परख · ${h.recognisers.length} recognisers live`))
-    .catch(() => ($("health").textContent = "Parakh · परख · not reachable"));
-  const samples = await api("/api/samples").catch(() => []);
-  $("samples").innerHTML = samples.map((s) => `<button class="sample" data-id="${esc(s.id)}" title="${esc(s.note)}"><b>${esc(s.title.split(" · ")[1] || s.title)}</b><small>${esc(s.title.split(" · ")[0])} · ${esc((s.note.match(/[\d ]+min[\d s]*|\d+ s/) || [""])[0].trim())}</small></button>`).join("");
+  route();
+  api("/api/health").then((h) => { $("health").innerHTML = `<span class="dot"></span><span>${h.recognisers.length} speech models live</span>`; })
+    .catch(() => { $("health").innerHTML = `<span class="dot down"></span><span>Server not reachable</span>`; });
+  samples = await api("/api/samples").catch(() => []);
+  $("samples").innerHTML = samples.length ? samples.map((s) => {
+    const [num, name] = s.title.includes(" · ") ? s.title.split(" · ") : ["", s.title];
+    const len = (s.note.match(/\d+ min \d+ s|\d+ s/) || [""])[0];
+    const desc = s.note.replace(/\s*\d+ min \d+ s\.?$|\s*\d+ s\.?$/, "");
+    return `<button class="sample" data-id="${esc(s.id)}"><span class="pl">${PLAY}</span><span style="min-width:0"><b>${esc(name)}</b><small>${esc(desc)}</small></span><span class="len">${esc(len)}</span></button>`;
+  }).join("") : `<p style="color:var(--muted)">No sample calls on this server.</p>`;
   document.querySelectorAll(".sample").forEach((b) => (b.onclick = () => startSample(b.dataset.id)));
   loadNames();
-  sb = await api("/api/scoreboard").catch(() => ({}));
-  if (sb.fleurs) {
-    const f = sb.fleurs, v = f.versus[0], ice = sb.ice, irow = (name) => ice.rows.find((r) => r.system === name);
-    $("fine1").textContent = `${f.title}: ${f.clips} recordings, ${f.mentions} name mentions, and every context-aware system got the same list of 100 names. ${f.note} The gain over the base is ${v.names_points} points (95% interval ${v.names_ci[0]} to ${v.names_ci[1]}, p = ${v.p}). Against Saaras v4 with its own keyword list, which was handed each recording's names, it is a tie.`;
-    if (ice) $("fine2").textContent = `Where it only ties: ${ice.title}, ${ice.clips} recordings. Parakh ${irow("Parakh").names_right}% of tagged terms, base ${irow("Saaras v4").names_right}%. ${ice.note} There, a keyword list made gpt-transcribe write ${irow("gpt-transcribe + its keyword list").written_not_said} listed terms that were not in the reference, against ${irow("gpt-transcribe").written_not_said} without the list; Parakh wrote ${irow("Parakh").written_not_said}.`;
-    if (sb.calls) $("fine3").textContent = `The three trade calls: ${sb.calls.note}`;
-    if (sb.fresh) $("fine5").textContent = `The fresh set: ${sb.fresh.note} ${sb.fresh.clips} recordings, ${sb.fresh.mentions} name mentions. Sarvam's keyword feature takes 50 terms and OpenAI's was given 100, each including the recording's own names; Parakh searched the whole list. The phone-line, no-context and speed tests were run on the first set of 91 recordings.`;
-    if (sb.latency) $("fine4").textContent = `Speed: ${sb.latency.clips} clips (segments of the three calls and public recordings), each given a little added silence so that no saved answer could be replayed, timed at the client from the request to each line of the stream.`;
-    modes();
-  }
-  numbers();
-  diagram();
-  endpoint(localStorage.parakhKey);
-  keyInfo();
   earlier();
+  sb = await api("/api/scoreboard").catch(() => ({}));
+  siteResults();
+  if (routeName === "results") renderResults();
+  if (routeName === "developers") keyInfo();
 })();
 </script>
 </body>
