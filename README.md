@@ -200,8 +200,10 @@ The answer carries `transcript` (checked) and, under `parakh`: the base transcri
 
 | Endpoint | What it does |
 |---|---|
-| `POST /api/keys` | A key with ten free minutes of audio. Send it as the `api-subscription-key` header. |
+| `POST /api/keys` | A named key (`label`, `user`) with ten free minutes of audio. Send it as the `api-subscription-key` header. The full key is returned only once. |
 | `GET /api/keys/{key}` | Minutes used and left. |
+| `GET /api/users/{user}/keys` | A workspace's keys, masked, with usage and when each was last used. |
+| `DELETE /api/users/{user}/keys/{id}` | Revoke a key. It stops working at once. |
 | `GET /api/stats` | What the server has done so far. |
 | `POST /api/jobs` | A whole call: upload, then poll `GET /api/jobs/{id}`. Splits the call at pauses, searches the topic for names, and writes the summary. |
 | `GET /api/users/{user}/memory` | Names a person confirmed, and names waiting for a yes. |

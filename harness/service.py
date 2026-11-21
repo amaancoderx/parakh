@@ -14,7 +14,9 @@
     DELETE /api/users/{user}       forget everything about this user
     GET  /api/scoreboard           measured results on held-out public data and real calls
     GET  /api/users/{user}/calls   that person's finished calls, newest first; each reopens by its id
-    POST /api/keys                 {"label"} -> a key with a free allowance, for /speech-to-text
+    POST /api/keys                 {"label", "user"} -> a named key with a free allowance, for /speech-to-text
+    GET  /api/users/{user}/keys    that workspace's keys, masked, with usage
+    DELETE /api/users/{user}/keys/{id}  revoke a key
     GET  /api/keys/{key}           minutes used and left, and what they cost to run
     GET  /api/stats                requests, audio minutes and running cost so far
     POST /speech-to-text           one short clip, answered at once. Same request and response shape as
@@ -642,6 +644,7 @@ def forget_user(user: str):
 
 class KeyRequest(BaseModel):
     label: str = ""
+    user: str = ""
 
 
 @app.post("/api/keys")
@@ -649,7 +652,7 @@ def make_key(body: KeyRequest, x_access_code: str | None = Header(default=None))
     """A key for /speech-to-text with a free allowance of audio. Needs the access code when the server has one."""
     _check_code(x_access_code)
     try:
-        return account.new_key(body.label)
+        return account.new_key(body.label, _user(body.user) if body.user else "")
     except RuntimeError as e:
         raise HTTPException(429, str(e))
 
@@ -660,6 +663,18 @@ def key_usage(key: str):
     if found is None:
         raise HTTPException(404, "No such key.")
     return found
+
+
+@app.get("/api/users/{user}/keys")
+def list_keys(user: str):
+    return {"keys": account.list_keys(_user(user))}
+
+
+@app.delete("/api/users/{user}/keys/{key_id}")
+def revoke_key(user: str, key_id: str):
+    if not account.revoke(_user(user), key_id):
+        raise HTTPException(404, "No such key in this workspace.")
+    return {"revoked": True}
 
 
 @app.get("/api/stats")

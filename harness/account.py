@@ -22,6 +22,7 @@ LOG = ROOT / "data" / "logs" / "requests.jsonl"
 CALLS = ROOT / "data" / "calls"
 FREE_SECONDS = 10 * 60  # audio a new key may send before it is refused
 MAX_KEYS = 200
+MAX_KEYS_EACH = 10  # live keys one workspace may hold
 
 # List prices: Sarvam speech-to-text is Rs 30 an hour per model; gpt-transcribe is $0.0045 a minute.
 SARVAM_INR_PER_MIN = 0.5
@@ -43,27 +44,55 @@ def _save(keys: dict[str, dict]) -> None:
     KEYS.write_text(json.dumps(keys, indent=1, sort_keys=True), encoding="utf-8")
 
 
-def new_key(label: str = "") -> dict:
+def _hint(key: str) -> str:
+    return f"{key[:7]}...{key[-4:]}"
+
+
+def new_key(label: str = "", owner: str = "") -> dict:
+    """A new key. The full key is returned only here; afterwards it is shown as pk_xxxx...xxxx."""
     with _lock:
         keys = _keys()
         if len(keys) >= MAX_KEYS:
             raise RuntimeError("No more keys can be made on this server.")
+        if owner and sum(1 for e in keys.values() if e.get("owner") == owner) >= MAX_KEYS_EACH:
+            raise RuntimeError(f"A workspace can hold {MAX_KEYS_EACH} keys. Revoke one first.")
         key = "pk_" + secrets.token_hex(16)
-        keys[key] = {"label": label[:60], "made": time.time(), "seconds": 0.0, "requests": 0, "cost_inr": 0.0,
-                     "allowance_seconds": FREE_SECONDS}
+        keys[key] = {"label": label.strip()[:40] or "Untitled key", "owner": owner, "made": time.time(), "last_used": None,
+                     "seconds": 0.0, "requests": 0, "cost_inr": 0.0, "allowance_seconds": FREE_SECONDS}
         _save(keys)
     made = usage(key)
     assert made is not None
     return made
 
 
+def _public(key: str, entry: dict) -> dict:
+    return {"id": key[3:11], "hint": _hint(key), "label": entry["label"], "made": entry.get("made"),
+            "last_used": entry.get("last_used"), "requests": entry["requests"],
+            "minutes_used": round(entry["seconds"] / 60, 2),
+            "minutes_left": round(max(0.0, entry["allowance_seconds"] - entry["seconds"]) / 60, 2),
+            "minutes_total": round(entry["allowance_seconds"] / 60, 2), "cost_to_run_inr": round(entry["cost_inr"], 2)}
+
+
 def usage(key: str) -> dict | None:
     entry = _keys().get(key)
-    if entry is None:
-        return None
-    return {"key": key, "label": entry["label"], "requests": entry["requests"], "minutes_used": round(entry["seconds"] / 60, 2),
-            "minutes_left": round(max(0.0, entry["allowance_seconds"] - entry["seconds"]) / 60, 2),
-            "cost_to_run_inr": round(entry["cost_inr"], 2)}
+    return None if entry is None else {"key": key, **_public(key, entry)}
+
+
+def list_keys(owner: str) -> list[dict]:
+    """A workspace's keys, newest first, never with the full key."""
+    return sorted((_public(k, e) for k, e in _keys().items() if owner and e.get("owner") == owner),
+                  key=lambda k: -(k["made"] or 0))
+
+
+def revoke(owner: str, key_id: str) -> bool:
+    with _lock:
+        keys = _keys()
+        found = [k for k, e in keys.items() if k[3:11] == key_id and owner and e.get("owner") == owner]
+        for k in found:
+            del keys[k]
+        if found:
+            _save(keys)
+    return bool(found)
 
 
 def has_room(key: str, seconds: float) -> bool:
@@ -78,6 +107,7 @@ def charge(key: str, seconds: float, cost: float) -> None:
             keys[key]["seconds"] += seconds
             keys[key]["requests"] += 1
             keys[key]["cost_inr"] += cost
+            keys[key]["last_used"] = time.time()
             _save(keys)
 
 

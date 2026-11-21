@@ -540,6 +540,25 @@ table.plain tr.us td { font-weight: 600; }
 
 /* developers */
 .keybox { display: flex; gap: 8px; align-items: center; }
+.keyform { display: flex; gap: 8px; }
+.keyform .field { flex: 1; min-width: 0; }
+.keyon { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 10px; background: var(--sunken); }
+.keyon .kn { font-size: 13.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.keyon code { font: 13px var(--mono); color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.keyon .dot { width: 7px; height: 7px; border-radius: 99px; background: var(--ok); flex: none; }
+.keysecret { display: flex; gap: 8px; align-items: center; margin: 4px 0 12px; }
+.keysecret code { flex: 1; min-width: 0; padding: 11px 12px; border-radius: 10px; background: #16181c; color: #e9ecef; font: 13px var(--mono); word-break: break-all; }
+.modal p.warn { font-size: 13px; color: var(--ask); background: var(--ask-soft); padding: 9px 11px; border-radius: 9px; margin: 0; }
+.keys-t td { vertical-align: middle; }
+.keys-t .kname { font-weight: 600; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.keys-t code { font: 12.5px var(--mono); color: var(--ink-2); white-space: nowrap; }
+.keys-t .muted { color: var(--muted); font-size: 13px; white-space: nowrap; }
+.kuse { display: grid; gap: 5px; min-width: 120px; font-size: 12.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.kuse .bar { height: 5px; border-radius: 99px; background: var(--sunken); overflow: hidden; }
+.kuse .bar i { display: block; height: 100%; border-radius: 99px; background: var(--ink); }
+.keys-empty { padding: 28px 20px; text-align: center; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); }
+.keys-wrap { overflow-x: auto; }
+@media (max-width: 760px) { .keys-t .hide-s { display: none; } }
 .keybox code { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; height: 40px; display: flex; align-items: center; padding: 0 12px; border-radius: 10px; background: var(--sunken); font: 13px var(--mono); }
 .stat { padding: 18px 20px; }
 .stat .eyebrow { margin-bottom: 8px; }
@@ -894,8 +913,8 @@ table.plain tr.us td { font-weight: 600; }
         <div class="card-h"><div><h3>Quickstart</h3><p>Three steps, copy and paste. About a minute from here to a checked transcript.</p></div>
           <div class="seg" id="os-pick"><button data-os="unix" class="on">macOS / Linux</button><button data-os="win">Windows PowerShell</button></div></div>
         <ol class="steps">
-          <li><span class="sn">1</span><div class="sb"><b>Create your API key</b><small>Each key starts with 10 free minutes of audio. It is sent as the <code class="mono">api-subscription-key</code> header.</small>
-            <div class="keybox"><code id="keyval">No key yet</code><button class="btn primary" id="getkey">Create key</button></div><div class="err hidden" id="keyerr"></div></div></li>
+          <li><span class="sn">1</span><div class="sb"><b>Create your API key</b><small>Name it after where it will run. Each key gets 10 free minutes of audio and goes in the <code class="mono">api-subscription-key</code> header.</small>
+            <div id="key-step"></div><div class="err hidden" id="keyerr"></div></div></li>
           <li><span class="sn">2</span><div class="sb"><b>Download a sample clip</b><small>23 seconds of a real trade call, with a truck name the speech models mishear.</small>
             <div class="codebox"><pre class="code" id="dev-get"></pre><button class="copy" data-copy="dev-get">Copy</button></div></div></li>
           <li><span class="sn">3</span><div class="sb"><b>Call Parakh</b><small>The base transcript streams back first, then the checked one with the evidence for every change.</small>
@@ -903,6 +922,10 @@ table.plain tr.us td { font-weight: 600; }
             <div class="try"><button class="btn brand" id="tryit"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3.5v9l7-4.5z"/></svg>Run it here</button><span id="try-note">Sends this exact request from your browser.</span></div>
             <div class="console hidden" id="console"></div></div></li>
         </ol>
+      </div>
+      <div class="card" style="overflow:hidden;margin-bottom:16px">
+        <div class="card-h"><div><h3>API keys</h3><p>Keys in this workspace. Revoking a key stops it at once.</p></div><button class="btn ghost sm" id="newkey"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 3v10M3 8h10"/></svg>New key</button></div>
+        <div class="keys-wrap" id="keys"></div>
       </div>
       <div class="card" style="overflow:hidden">
         <div class="card-h"><div><h3>Request fields</h3><p>One clip of up to 30 seconds. Same request and response shape as Sarvam's /speech-to-text.</p></div></div>
@@ -1600,18 +1623,99 @@ curl -N <u>${esc(location.origin)}/speech-to-text</u> \\
    "timing_ms": {"draft": ${e.draft_ms ?? "…"}, "verified": ${e.verified_ms ?? "…"}}}}`;
 }
 async function keyInfo() {
-  const key = store.get("parakhKey"), u = key ? await api(`/api/keys/${key}`).catch(() => null) : null;
-  const s = await api("/api/stats").catch(() => null);
-  if (u) {
-    $("keyval").textContent = key; $("getkey").textContent = "Copy key";
-    $("k-left").textContent = t("min_left", u.minutes_left); $("k-used").textContent = `${u.minutes_used} min used in ${u.requests} requests`;
-  }
+  const key = store.get("parakhKey");
+  const [u, s, list] = await Promise.all([
+    key ? api(`/api/keys/${key}`).catch(() => null) : null,
+    api("/api/stats").catch(() => null),
+    api(`/api/users/${user}/keys`).catch(() => ({ keys: [] })),
+  ]);
+  if (!u && key) store.set("parakhKey", "");  // revoked, or a key this server no longer knows
+  if (u) { $("k-left").textContent = t("min_left", u.minutes_left); $("k-used").textContent = `${u.minutes_used} min used in ${u.requests} requests`; }
+  else { $("k-left").textContent = "–"; $("k-used").textContent = "No key yet"; }
   if (s) { $("s-min").textContent = `${s.audio_minutes} min`; $("s-req").textContent = `${s.requests} requests so far`; }
   const l = sb.latency;
   if (l) { $("s-lat").textContent = `${(l.verified_ms.median / 1000).toFixed(1)} s`; $("s-lat2").textContent = `draft in ${(l.draft_ms.median / 1000).toFixed(1)} s, checked after`; }
-  if (!u && key) store.set("parakhKey", "");  // a key this server no longer knows
+  keyStep(u);
+  keyTable(list.keys || [], u?.id);
   devSnippets(u ? key : "");
 }
+
+/* Step 1: name a key, or show the one the quickstart is using. */
+function keyStep(u) {
+  $("keyerr").classList.add("hidden");
+  if (u) {
+    $("key-step").innerHTML = `<div class="keybox"><div class="keyon"><span class="dot"></span><span class="kn">${esc(u.label)}</span><code>${esc(u.hint)}</code></div><button class="btn ghost" id="copykey">Copy key</button></div>`;
+    $("copykey").onclick = async () => { try { await navigator.clipboard.writeText(store.get("parakhKey")); toast(t("copied")); } catch { toast("Copy is blocked in this browser"); } };
+    return;
+  }
+  if ($("keyform")) return;  // keep what the reader is typing
+  $("key-step").innerHTML = `<form class="keyform" id="keyform"><input class="field" id="keyname" maxlength="40" placeholder="Key name, for example Production" autocomplete="off"><button class="btn primary">Create key</button></form>`;
+  $("keyform").onsubmit = async (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector("button");
+    btn.disabled = true;
+    try { await createKey($("keyname").value.trim() || "Quickstart"); }
+    catch (err) { $("keyerr").textContent = err.message; $("keyerr").classList.remove("hidden"); }
+    finally { btn.disabled = false; }
+  };
+}
+
+function keyTable(keys, activeId) {
+  $("keys").innerHTML = keys.length ? `<table class="plain keys-t">
+    <tr><th>Name</th><th>Key</th><th>Usage</th><th class="hide-s">Created</th><th class="hide-s">Last used</th><th></th></tr>
+    ${keys.map((k) => `<tr>
+      <td><span class="kname">${esc(k.label)}${k.id === activeId ? `<span class="badge ok">In quickstart</span>` : ""}</span></td>
+      <td><code>${esc(k.hint)}</code></td>
+      <td><div class="kuse">${k.minutes_used} / ${k.minutes_total} min<span class="bar"><i style="width:${Math.min(100, (k.minutes_used / k.minutes_total) * 100).toFixed(1)}%"></i></span></div></td>
+      <td class="muted hide-s">${k.made ? ago(k.made) : "–"}</td>
+      <td class="muted hide-s">${k.last_used ? ago(k.last_used) : "Never"}</td>
+      <td class="r"><button class="btn danger sm" data-revoke="${esc(k.id)}" data-name="${esc(k.label)}" data-hint="${esc(k.hint)}">Revoke</button></td></tr>`).join("")}
+  </table>` : `<div class="keys-empty">No keys yet. Create one in step 1, or with New key.</div>`;
+}
+
+/* Make a key, show it once in full, and put it in the quickstart. */
+async function createKey(label) {
+  let made;
+  try { made = await api("/api/keys", { method: "POST", headers: { "Content-Type": "application/json", ...codeHeaders() }, body: JSON.stringify({ label, user }) }); }
+  catch (e) { if (e.status === 401 && (await askCode())) return createKey(label); throw e; }
+  store.set("parakhKey", made.key);
+  keyInfo();
+  showSecret(made);
+  return made.key;
+}
+function showSecret(made) {
+  const bg = document.createElement("div");
+  bg.className = "modal-bg";
+  bg.innerHTML = `<div class="modal" role="dialog" aria-modal="true" style="width:min(480px,100%)"><h3>Save your API key</h3>
+    <p>${esc(made.label)} is ready with ${made.minutes_total} free minutes. Copy it now and keep it somewhere safe.</p>
+    <div class="keysecret"><code>${esc(made.key)}</code><button class="btn primary" data-c>Copy</button></div>
+    <p class="warn">After you close this, the key list only shows ${esc(made.hint)}. This browser keeps the full key for the quickstart.</p>
+    <div class="row"><button class="btn ghost" data-x>Done</button></div></div>`;
+  document.body.appendChild(bg);
+  const close = () => bg.remove();
+  bg.querySelector("[data-c]").onclick = async (e) => { try { await navigator.clipboard.writeText(made.key); e.target.textContent = "Copied"; } catch { toast("Copy is blocked in this browser"); } };
+  bg.querySelector("[data-x]").onclick = close;
+  bg.addEventListener("click", (e) => { if (e.target === bg) close(); });
+  bg.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+  bg.querySelector("[data-c]").focus();
+}
+$("newkey").onclick = async () => {
+  const name = await dialog({ title: "New API key", body: "Give it a name you will recognise, like Production or Staging.", input: true, ok: "Create key" });
+  if (name === null) return;
+  try { await createKey(name || "Untitled key"); } catch (e) { toast(e.message); }
+};
+document.addEventListener("click", async (e) => {
+  const b = e.target.closest("[data-revoke]");
+  if (!b) return;
+  const ok = await dialog({ title: `Revoke ${b.dataset.name}?`, body: `Anything using ${b.dataset.hint} stops working at once. This cannot be undone.`, ok: "Revoke key", danger: true });
+  if (!ok) return;
+  try {
+    await api(`/api/users/${user}/keys/${b.dataset.revoke}`, { method: "DELETE" });
+    if ((store.get("parakhKey") || "").slice(3, 11) === b.dataset.revoke) store.set("parakhKey", "");
+    toast("Key revoked");
+    keyInfo();
+  } catch (err) { toast(err.message); }
+});
 
 /* The three copy-and-paste steps, with the reader's own key and this server's address. */
 let os = store.get("parakhOs") || (/Win/.test(navigator.platform) ? "win" : "unix");
@@ -1636,28 +1740,13 @@ document.addEventListener("click", async (e) => {
   try { await navigator.clipboard.writeText($(b.dataset.copy).innerText.trim()); b.textContent = "Copied"; setTimeout(() => (b.textContent = "Copy"), 1500); }
   catch { toast("Copy is blocked in this browser. Select the text instead."); }
 });
-async function makeKey() {
-  const made = await api("/api/keys", { method: "POST", headers: { "Content-Type": "application/json", ...codeHeaders() }, body: JSON.stringify({ label: user }) });
-  store.set("parakhKey", made.key);
-  return made.key;
-}
-$("getkey").onclick = async () => {
-  const have = store.get("parakhKey");
-  if (have) { try { await navigator.clipboard.writeText(have); toast(t("copied")); } catch { toast("Copy is blocked in this browser"); } return; }
-  try { await makeKey(); toast("Key created"); keyInfo(); }
-  catch (e) {
-    if (e.status === 401 && (await askCode())) return $("getkey").click();
-    $("keyerr").textContent = e.message; $("keyerr").classList.remove("hidden");
-  }
-};
-
 /* Run step 3 from the browser and show the stream as it arrives. */
 $("tryit").onclick = async () => {
   const btn = $("tryit"), out = $("console");
   btn.disabled = true; out.classList.remove("hidden");
   out.innerHTML = `<div class="ev"><span class="t"><span class="spinner"></span> Sending the sample clip…</span></div>`;
   try {
-    const key = store.get("parakhKey") || (await makeKey());
+    const key = store.get("parakhKey") || (await createKey("Quickstart"));
     keyInfo();
     const audio = await fetch("/static/sample-turn.wav").then((r) => { if (!r.ok) throw new Error("The sample clip is not on this server."); return r.blob(); });
     const body = new FormData();
