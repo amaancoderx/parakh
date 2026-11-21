@@ -18,7 +18,7 @@ After=network.target
 [Service]
 User=ubuntu
 WorkingDirectory=/home/ubuntu/parakh
-Environment=PARAKH_ACCESS_CODE=${PARAKH_ACCESS_CODE}
+${PARAKH_ACCESS_CODE:+Environment=PARAKH_ACCESS_CODE=${PARAKH_ACCESS_CODE}}
 ExecStart=/home/ubuntu/.local/bin/uv run --no-dev uvicorn harness.service:app --host 127.0.0.1 --port 8000
 Restart=always
 

@@ -2,7 +2,7 @@
 # Put Parakh on one small EC2 server in Mumbai, with HTTPS.
 #
 #   brew install awscli && aws configure      # once: your own access key, region ap-south-1
-#   PARAKH_ACCESS_CODE=<a code you choose> deploy/aws.sh
+#   PARAKH_DOMAIN=<optional name> PARAKH_ACCESS_CODE=<optional code> deploy/aws.sh
 #
 # What it does: makes a key pair and a firewall rule (22, 80, 443), starts an Ubuntu 24.04
 # t3.small, copies this folder (code, .env, saved recogniser answers, the bundled calls) and
@@ -17,7 +17,7 @@ cd "$(dirname "$0")/.."
 REGION=${AWS_REGION:-ap-south-1}
 NAME=parakh
 KEY=~/.ssh/$NAME.pem
-: "${PARAKH_ACCESS_CODE:?set PARAKH_ACCESS_CODE to the code judges will type}"
+PARAKH_ACCESS_CODE=${PARAKH_ACCESS_CODE-}  # optional: when set, new audio needs this code
 aws() { command aws --region "$REGION" --output text "$@" | tr -d '\r'; }  # the Windows CLI ends lines with \r
 
 mkdir -p "$(dirname "$KEY")"
@@ -42,6 +42,7 @@ if [ -z "$ID" ] || [ "$ID" = "None" ]; then
 fi
 IP=$(aws ec2 describe-instances --instance-ids "$ID" --query 'Reservations[0].Instances[0].PublicIpAddress')
 HOST=$(echo "$IP" | tr . -).sslip.io
+NAMES="${PARAKH_DOMAIN:+$PARAKH_DOMAIN, }parakh-$HOST, $HOST"  # PARAKH_DOMAIN: your own name for the server, if it has one
 echo "server $ID at $IP"
 
 SSH="ssh -i $KEY -o StrictHostKeyChecking=accept-new ubuntu@$IP"
@@ -55,7 +56,7 @@ if command -v rsync > /dev/null; then
 else  # Windows (Git Bash) has no rsync: stream a tarball over ssh instead
   tar czf - "${SKIP[@]/#/--exclude=}" . | $SSH "mkdir -p parakh && tar xzf - -C parakh"
 fi
-$SSH "PARAKH_ACCESS_CODE='$PARAKH_ACCESS_CODE' HOST='$HOST' bash parakh/deploy/setup.sh"
+$SSH "PARAKH_ACCESS_CODE='$PARAKH_ACCESS_CODE' HOST='$NAMES' bash parakh/deploy/setup.sh"
 echo
-echo "Live at https://$HOST   (access code for new audio: $PARAKH_ACCESS_CODE)"
+echo "Live at https://${PARAKH_DOMAIN:-$HOST}${PARAKH_ACCESS_CODE:+   (access code for new audio: $PARAKH_ACCESS_CODE)}"
 echo "To remove everything: aws ec2 terminate-instances --region $REGION --instance-ids $ID"
