@@ -441,6 +441,18 @@ table.codes code.c4 { color: var(--ask) !important; } table.codes code.c5 { colo
 .code.wrap { white-space: pre-wrap; word-break: break-all; }
 .copy { position: absolute; top: 10px; right: 10px; height: 28px; padding: 0 10px; border-radius: 7px; border: 1px solid #343941; background: #23262c; color: #d6dae0; font-size: 12px; }
 .copy:hover { background: #2d3138; }
+.codewin { border-radius: 14px; overflow: hidden; background: #16181c; min-width: 0; }
+.codewin .code { margin: 0; border-radius: 0; padding-top: 16px; }
+.cw-h { display: flex; align-items: center; gap: 10px; padding: 8px 10px 0 12px; border-bottom: 1px solid #262a30; min-width: 0; }
+.cw-tabs { display: flex; gap: 2px; flex: none; }
+.cw-tabs button { position: relative; height: 34px; padding: 0 12px; border: 0; background: none; color: #8a9099; font-size: 12.5px; font-weight: 500; cursor: pointer; transition: color .15s; }
+.cw-tabs button:hover { color: #d6dae0; }
+.cw-tabs button.on { color: #fff; }
+.cw-tabs button.on::after { content: ""; position: absolute; left: 10px; right: 10px; bottom: -1px; height: 2px; border-radius: 2px; background: var(--brand); }
+.cw-note { flex: 1; min-width: 0; text-align: right; font: 11.5px var(--mono); color: #6f7680; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.codewin .cw-h .copy { position: static; flex: none; margin-bottom: 6px; }
+.code .c { color: #6f7680; }
+@media (max-width: 560px) { .cw-note { display: none; } .cw-h { justify-content: space-between; } }
 .try { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
 .try span { color: var(--muted); font-size: 13px; }
 .console { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
@@ -1023,7 +1035,7 @@ table.plain tr.us td { font-weight: 600; }
           <li><span class="sn">2</span><div class="sb"><b>Download a sample clip</b><small>23 seconds of a real trade call, with a truck name the speech models mishear.</small>
             <div class="codebox"><pre class="code" id="dev-get"></pre><button class="copy" data-copy="dev-get">Copy</button></div></div></li>
           <li><span class="sn">3</span><div class="sb"><b>Call Parakh</b><small>The base transcript streams back first, then the checked one with the evidence for every change.</small>
-            <div class="codebox"><pre class="code" id="dev-run"></pre><button class="copy" data-copy="dev-run">Copy</button></div>
+            <div class="codewin" data-tabs="dev-run"><div class="cw-h"><div class="cw-tabs"><button data-l="curl">cURL</button><button data-l="py">Python</button><button data-l="node">Node.js</button></div><span class="cw-note" id="dev-run-note"></span><button class="copy" data-copy="dev-run">Copy</button></div><pre class="code" id="dev-run"></pre></div>
             <div class="try"><button class="btn brand" id="tryit"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M5 3.5v9l7-4.5z"/></svg>Run it here</button><span id="try-note">Sends this exact request from your browser.</span></div>
             <div class="console hidden" id="console"></div></div></li>
         </ol>
@@ -1088,7 +1100,7 @@ table.plain tr.us td { font-weight: 600; }
               <tr><td><code>mode</code><em>string</em></td><td><code>translit</code>, the only mode in this version: Roman script out.</td></tr>
             </table>
             <h3>Request</h3>
-            <div class="codebox"><pre class="code" id="ref-req"></pre><button class="copy" data-copy="ref-req">Copy</button></div>
+            <div class="codewin" data-tabs="ref-req"><div class="cw-h"><div class="cw-tabs"><button data-l="curl">cURL</button><button data-l="py">Python</button><button data-l="node">Node.js</button></div><span class="cw-note" id="ref-req-note"></span><button class="copy" data-copy="ref-req">Copy</button></div><pre class="code" id="ref-req"></pre></div>
           </article>
 
           <article class="card ref-sec" id="ref-stream">
@@ -2019,6 +2031,66 @@ document.addEventListener("click", async (e) => {
   } catch (err) { toast(err.message); }
 });
 
+
+/* The call to Parakh in three languages, with this server's address and the reader's key. */
+let codeLang = store.get("parakhLang2") || "curl";
+function callSnippet(lang, key, o) {
+  const k = esc(key || "YOUR_KEY"), url = `<u>${esc(o)}/speech-to-text</u>`;
+  if (lang === "py") return { note: "pip install requests", code:
+`<span class="c"># Keep the key on your server, e.g. PARAKH_API_KEY=${k}</span>
+import os, requests
+
+r = requests.post(
+    "${url}",
+    headers={"api-subscription-key": os.environ.get("PARAKH_API_KEY", "<b>${k}</b>")},
+    files={"file": open("turn.wav", "rb")},
+    data={"names": "<b>Eicher, Mohammad bhai</b>"},
+)
+r.raise_for_status()
+out = r.json()
+
+print(out["transcript"])                  <span class="c"># the checked text</span>
+for e in out["parakh"]["edits"]:
+    print(f'{e["from"]} -> {e["to"]}: {e["why"]}')
+if not out["parakh"]["clear"]:
+    print("Ask the caller first:", out["parakh"]["confirm"])` };
+  if (lang === "node") return { note: "Node 18+ · save as parakh.mjs", code:
+`<span class="c">// Keep the key on your server, e.g. PARAKH_API_KEY=${k}</span>
+import { readFile } from "node:fs/promises";
+
+const form = new FormData();
+form.append("file", new Blob([await readFile("turn.wav")]), "turn.wav");
+form.append("names", "<b>Eicher, Mohammad bhai</b>");
+
+const res = await fetch("${url}", {
+  method: "POST",
+  headers: { "api-subscription-key": process.env.PARAKH_API_KEY ?? "<b>${k}</b>" },
+  body: form,
+});
+if (!res.ok) throw new Error((await res.json()).detail);
+const out = await res.json();
+
+console.log(out.transcript);              <span class="c">// the checked text</span>
+for (const e of out.parakh.edits) console.log(\`\${e.from} -> \${e.to}: \${e.why}\`);
+if (!out.parakh.clear) console.log("Ask the caller first:", out.parakh.confirm);` };
+  const win = os === "win", nl = win ? " `" : " \\", cmd = win ? "curl.exe" : "curl", names = win ? `"names=Eicher, Mohammad bhai"` : `names="Eicher, Mohammad bhai"`;
+  return { note: win ? "Windows PowerShell" : "macOS / Linux", code:
+`${cmd} -N ${url}${nl}
+  -H "api-subscription-key: <b>${k}</b>"${nl}
+  -F file=@turn.wav${nl}
+  -F <b>${esc(names)}</b>${nl}
+  -F stream=true` };
+}
+function drawTabs() {
+  const key = store.get("parakhKey") || "";
+  document.querySelectorAll("[data-tabs]").forEach((w) => {
+    const id = w.dataset.tabs, sn = callSnippet(codeLang, key, location.origin);
+    w.querySelectorAll(".cw-tabs button").forEach((b) => b.classList.toggle("on", b.dataset.l === codeLang));
+    $(id).innerHTML = sn.code; $(id + "-note").textContent = sn.note;
+  });
+}
+document.querySelectorAll(".cw-tabs button").forEach((b) => (b.onclick = () => { codeLang = b.dataset.l; store.set("parakhLang2", codeLang); drawTabs(); }));
+
 /* The three copy-and-paste steps, with the reader's own key and this server's address. */
 let os = store.get("parakhOs") || (/Win/.test(navigator.platform) ? "win" : "unix");
 function devSnippets(key) {
@@ -2027,13 +2099,7 @@ function devSnippets(key) {
   $("dev-get").innerHTML = win
     ? `curl.exe -o turn.wav <u>${esc(o)}/static/sample-turn.wav</u>`
     : `curl -o turn.wav <u>${esc(o)}/static/sample-turn.wav</u>`;
-  // PowerShell continues a line with a backtick, bash with a backslash.
-  const nl = win ? " `" : " \\", cmd = win ? "curl.exe" : "curl", names = win ? `"names=Eicher, Mohammad bhai"` : `names="Eicher, Mohammad bhai"`;
-  $("dev-run").innerHTML = `${cmd} -N <u>${esc(o)}/speech-to-text</u>${nl}
-  -H "api-subscription-key: <b>${esc(k)}</b>"${nl}
-  -F file=@turn.wav${nl}
-  -F <b>${esc(names)}</b>${nl}
-  -F stream=true`;
+  drawTabs();
 }
 document.querySelectorAll("#os-pick button").forEach((b) => (b.onclick = () => { os = b.dataset.os; store.set("parakhOs", os); devSnippets(store.get("parakhKey") || ""); }));
 document.addEventListener("click", async (e) => {
@@ -2093,11 +2159,7 @@ $("tryit").onclick = async () => {
 function refPage() {
   const o = location.origin;
   document.querySelectorAll("[data-page=reference] .origin").forEach((el) => (el.textContent = o));
-  $("ref-req").innerHTML = `curl -N <u>${esc(o)}/speech-to-text</u> \\
-  -H "api-subscription-key: <b>${esc(store.get("parakhKey") || "YOUR_KEY")}</b>" \\
-  -F file=@turn.wav \\
-  -F names="Eicher, Mohammad bhai" \\
-  -F stream=true`;
+  drawTabs();
 }
 document.querySelectorAll("#ref-toc a").forEach((a) => (a.onclick = (e) => {
   e.preventDefault();
