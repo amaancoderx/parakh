@@ -1049,7 +1049,7 @@ table.plain tr.us td { font-weight: 600; }
           </div>
         </div>
       </div>
-      <p class="consent" data-t="consent">Use recordings only when everyone on the call agreed to be recorded. Audio goes to Sarvam and OpenAI to be transcribed and uploaded recordings are deleted after a day.</p>
+      <p class="consent" data-t="consent">Use recordings only when everyone on the call agreed to be recorded. Audio goes to Sarvam and OpenAI to be transcribed and uploaded recordings are deleted after a week (the daily learning run re-checks calls until then).</p>
       <div class="card" style="margin-top:20px">
         <div class="card-h"><div><h3 data-t="recent_h">Recent calls</h3></div><a class="btn quiet sm" href="#/app/calls" data-t="view_all">View all</a></div>
         <div class="rows" id="recent"></div>
@@ -1418,7 +1418,7 @@ const T = {
     yours_h: "Your own audio", yours_p: "Hindi or Hinglish, up to 6 minutes. Sent live to Sarvam and OpenAI.",
     rec_idle: "Record your voice", rec_hint: "Say a name and an amount, like a real call.", rec_stop: "Tap again to stop and check",
     drop_h: "Upload a recording", drop_p: "Drop an audio file here: WAV, MP3, M4A, MP4 or WebM, up to 12 MB.", drop_btn: "Choose file",
-    consent: "Use recordings only when everyone on the call agreed to be recorded. Audio goes to Sarvam and OpenAI to be transcribed and uploaded recordings are deleted after a day.",
+    consent: "Use recordings only when everyone on the call agreed to be recorded. Audio goes to Sarvam and OpenAI to be transcribed and uploaded recordings are deleted after a week (the daily learning run re-checks calls until then).",
     recent_h: "Recent calls", view_all: "View all", all_calls: "All calls", recording_l: "Recording",
     summary_h: "What was agreed", said_h: "What was said", whatsapp: "Send on WhatsApp", copy: "Copy summary", copied: "Copied",
     wfw: "The call, word for word", wfw_p: "Click any highlighted word for what each model heard.",
@@ -1456,7 +1456,7 @@ const T = {
     yours_h: "आपकी अपनी आवाज़", yours_p: "हिंदी या हिंग्लिश, 6 मिनट तक। Sarvam और OpenAI को भेजी जाती है।",
     rec_idle: "बोलकर रिकॉर्ड करें", rec_hint: "कोई नाम और रकम बोलिए, जैसे असली कॉल में।", rec_stop: "रोकने के लिए फिर दबाइए",
     drop_h: "रिकॉर्डिंग डालें", drop_p: "ऑडियो फ़ाइल यहाँ छोड़िए: WAV, MP3, M4A, MP4 या WebM, 12 MB तक।", drop_btn: "फ़ाइल चुनें",
-    consent: "रिकॉर्डिंग तभी डालिए जब कॉल पर सबने हामी दी हो। आवाज़ Sarvam और OpenAI को भेजी जाती है और डाली गई रिकॉर्डिंग एक दिन बाद मिटा दी जाती है।",
+    consent: "रिकॉर्डिंग तभी डालिए जब कॉल पर सबने हामी दी हो। आवाज़ Sarvam और OpenAI को भेजी जाती है और डाली गई रिकॉर्डिंग एक हफ़्ते बाद मिटा दी जाती है।",
     recent_h: "हाल की कॉल", view_all: "सब देखें", all_calls: "सारी कॉल", recording_l: "रिकॉर्डिंग",
     summary_h: "क्या तय हुआ", said_h: "क्या कहा गया", whatsapp: "WhatsApp पर भेजें", copy: "सार कॉपी करें", copied: "कॉपी हो गया",
     wfw: "पूरी बातचीत, शब्द-दर-शब्द", wfw_p: "किसी भी रंगीन शब्द को दबाकर देखिए किस मॉडल ने क्या सुना।",
