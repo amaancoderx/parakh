@@ -84,7 +84,7 @@ Then open `http://localhost:8000`.
 
 | Command | What it does |
 |---|---|
-| `uv run pytest` | Runs 71 tests with no network |
+| `uv run pytest` | Runs 73 tests with no network |
 | `uv run uvicorn harness.service:app --port 8000` | Starts the web app and the API |
 | `http://localhost:8000/docs` | Interactive API reference |
 
@@ -247,7 +247,7 @@ The three trade calls are private and are not in the repository, so their table 
 | `CONTEXT.md` | A hand-over file: every decision, every number, and what was tried and switched off |
 | `web/index.html` | The web app |
 | `runs/` | Every result table, as JSON and Markdown |
-| `tests/` | 71 tests, no network |
+| `tests/` | 73 tests, no network |
 | `research_notes/`, `reports/` | Research behind the design |
 | `deploy/` | One-command deploy to AWS |
 

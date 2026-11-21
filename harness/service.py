@@ -481,7 +481,10 @@ async def speech_to_text(
     t0 = time.perf_counter()
     key = api_subscription_key if api_subscription_key and account.usage(api_subscription_key) else None
     if key is None:
-        _check_code(api_subscription_key, x_access_code)  # no key of ours: the server's own access code, if it has one
+        # Every request needs a live key: this calls paid recognisers. The server's access code, when it has one, also works.
+        code = os.getenv("PARAKH_ACCESS_CODE")
+        if not code or code not in (api_subscription_key, x_access_code):
+            raise HTTPException(401, "Missing or revoked API key. Create one at /#/app/developers and send it as the api-subscription-key header.")
     if mode != "translit":
         raise HTTPException(400, "This version answers in Roman script: use mode=translit.")
     _, wav, seconds = await _ingest(file, MAX_SECONDS_LIVE)

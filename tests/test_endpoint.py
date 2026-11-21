@@ -101,3 +101,26 @@ def test_the_answer_says_whether_anything_is_left_to_confirm(tmp_path, monkeypat
     _stand_ins(monkeypatch)
     final = list(service._verify(_clip(tmp_path), ["Eicher"], "", "", 0, time.perf_counter()))[-1]
     assert final["parakh"]["clear"] is True and final["parakh"]["confirm"] == []
+
+
+def test_keys_are_named_listed_masked_and_revoked_by_their_owner_only(tmp_path, monkeypatch):
+    from harness import account
+    monkeypatch.setattr(account, "KEYS", tmp_path / "keys.json")
+    made = account.new_key("Production", "u-a")
+    listed = account.list_keys("u-a")
+    assert [k["label"] for k in listed] == ["Production"] and made["key"] not in str(listed)
+    assert account.list_keys("u-b") == []
+    assert not account.revoke("u-b", made["id"])  # someone else's key
+    assert account.revoke("u-a", made["id"]) and account.usage(made["key"]) is None
+
+
+def test_speech_to_text_refuses_a_missing_or_unknown_key(tmp_path, monkeypatch):
+    from fastapi.testclient import TestClient
+    from harness import account
+    monkeypatch.setattr(account, "KEYS", tmp_path / "keys.json")
+    monkeypatch.delenv("PARAKH_ACCESS_CODE", raising=False)
+    client = TestClient(service.app)
+    clip = _clip(tmp_path).read_bytes()
+    for headers in ({}, {"api-subscription-key": "pk_" + "0" * 32}):
+        r = client.post("/speech-to-text", headers=headers, files={"file": ("clip.wav", clip, "audio/wav")})
+        assert r.status_code == 401
