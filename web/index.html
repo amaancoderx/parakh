@@ -237,7 +237,11 @@ input, select { font: inherit; color: inherit; }
 .node .eg { display: inline-flex; margin-top: 12px; font-size: 12.5px; padding: 3px 9px; border-radius: 7px; }
 @media (max-width: 760px) { .pipe { grid-template-columns: 1fr 1fr; row-gap: 32px; } .pipe::before { display: none; } }
 .funnel { margin: 52px auto 0; max-width: 860px; padding: 22px 24px; }
-.funnel .eyebrow { margin-bottom: 14px; }
+.funnel .eyebrow { margin-bottom: 8px; }
+.funnel-what { font-size: 13.5px; color: var(--muted); max-width: 720px; margin-bottom: 14px; }
+.funnel-take { font-size: 15.5px; line-height: 1.55; color: var(--ink); padding: 12px 14px; border-radius: 10px; background: var(--brand-soft); margin-bottom: 18px; }
+.funnel-take b { font-weight: 600; }
+.funnel-take .ok { color: var(--ok); font-weight: 600; }
 .frow { display: grid; grid-template-columns: 170px 1fr 70px; align-items: center; gap: 14px; padding: 6px 0; font-size: 13.5px; }
 .frow .bar { height: 12px; border-radius: 99px; background: #d9d5ce; width: 0; transition: width 1s cubic-bezier(.2,.7,.2,1); }
 .frow.us .bar { background: var(--brand); }
@@ -911,6 +915,8 @@ table.plain tr.us td { font-weight: 600; }
       </div>
       <div class="card funnel" id="funnel-card" hidden>
         <div class="eyebrow" id="funnel-h">On held-out recordings</div>
+        <p class="funnel-what" id="funnel-what">Public Hindi recordings from Google's FLEURS dataset, each with a human-checked transcript. Parakh was never tuned on them, so this is how it does on audio it has not seen.</p>
+        <p class="funnel-take" id="funnel-take"></p>
         <div id="funnel"></div>
       </div>
     </div>
@@ -2649,6 +2655,9 @@ function siteResults() {
     ].filter(Boolean);
     const top = Math.log10(fu.words + 1);
     $("funnel-h").textContent = `What happened on ${fu.recordings} unseen recordings`;
+    const broke = sb.edit_outcome ? sb.edit_outcome.names_broken : null;
+    $("funnel-take").innerHTML = `Of <b>${fu.words.toLocaleString("en-IN")}</b> words, Parakh doubted only <b>${fu.doubted}</b>, changed <b>${fu.names_written}</b> and asked a person about <b>${fu.flagged_unsure}</b>. Everything else was left exactly as the speech model wrote it.` +
+      (broke === 0 ? ` <span class="ok">Not one right name was made wrong.</span>` : "");
     $("funnel").innerHTML = rows.map(([k, v, us]) => `<div class="frow${us ? " us" : ""}"><span>${k}</span><div><div class="bar" data-w="${((Math.log10(v + 1) / top) * 100).toFixed(1)}"></div></div><span class="v">${v.toLocaleString("en-IN")}</span></div>`).join("");
     const mf = sb.memory?.fleurs;
     if (mf) $("mv-lift").innerHTML = `<div><b>${(mf.without.rate * 100).toFixed(1)}% → ${(mf.with.rate * 100).toFixed(1)}%</b><span>names right</span></div>` +
