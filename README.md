@@ -13,7 +13,8 @@
     <br />
 </div>
 
-[![Track](https://img.shields.io/badge/Equal%20AI%20Builders%20'26-Voice%20AI%20for%20India-c8553d?style=flat-square)](#what-was-measured)
+[![Live demo](https://img.shields.io/badge/live%20demo-tryparakh.duckdns.org-c8553d?style=flat-square)](https://tryparakh.duckdns.org)
+[![Track](https://img.shields.io/badge/Equal%20AI%20Builders%20'26-Voice%20AI%20for%20India-24292f?style=flat-square)](#what-was-measured)
 [![Names right](https://img.shields.io/badge/names%20right-89.1%25%20%E2%86%92%2095.8%25-157a42?style=flat-square)](#what-was-measured)
 [![Tests](https://img.shields.io/badge/tests-71%20passing-157a42?style=flat-square)](#quick-start)
 [![Python](https://img.shields.io/badge/python-3.10%2B-3776ab?style=flat-square&logo=python&logoColor=white)](pyproject.toml)
@@ -23,6 +24,8 @@
 </div>
 
 # Parakh (परख)
+
+**Live demo: [tryparakh.duckdns.org](https://tryparakh.duckdns.org)** · play a real trade call, record your own voice, or upload a recording.
 
 Speech models get names and amounts wrong, and they sound exactly as sure when they are wrong as when they are right. Then something acts on what they heard: an order is sent to the wrong person, a note records the wrong amount.
 
