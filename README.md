@@ -86,7 +86,8 @@ Then open `http://localhost:8000`.
 |---|---|
 | `uv run pytest` | Runs 73 tests with no network |
 | `uv run uvicorn harness.service:app --port 8000` | Starts the web app and the API |
-| `http://localhost:8000/docs` | Interactive API reference |
+| `http://localhost:8000/#/app/reference` | API reference |
+| `http://localhost:8000/docs` | Interactive API explorer |
 
 `ffmpeg` must be on the path. Every recogniser answer is saved under `.cache/`, so a recording is paid for once.
 
@@ -132,6 +133,7 @@ Two sets of public Hindi recordings (FLEURS). The rules were developed against t
 | Names right, on Saaras v4 | 91.1% | **96.5%** | 17 fixed, 0 lost, p < 0.0001 |
 | Names right, on gpt-transcribe | 90.7% | **96.8%** | 19 fixed, 0 lost, p < 0.0001 |
 | Recordings with every name right, on Saaras v4 | 85.7% | **94.7%** | 17 fixed, 0 broken |
+| Errors in every other word, on Saaras v4 | 138 | **137** | the 60 other changes were respellings and harmed nothing |
 | Word error rate, on Saaras v4 | 4.6% | **3.5%** | |
 | Names confirmed once, next time they are said | 93.1% | **96.7%** | simulated use, 4 to 5 fixed and 0 lost per pass |
 | Names heard for the first time | 89.8% | 89.8% | it learns from answers, not by itself |
@@ -209,7 +211,7 @@ The answer carries `transcript` (checked) and, under `parakh`: the base transcri
 | `GET /api/users/{user}/memory` | Names a person confirmed, and names waiting for a yes. |
 | `DELETE /api/users/{user}` | Removes that person's names and calls. |
 
-Every request writes one line to `data/logs/requests.jsonl` (sizes, times and running cost; never transcript text). The full reference is at `/docs`.
+Every request writes one line to `data/logs/requests.jsonl` (sizes, times and running cost; never transcript text). The full reference is in the app at `/#/app/reference`, and an interactive explorer is at `/docs`.
 
 ## Reproduce the results
 

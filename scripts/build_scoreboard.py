@@ -44,6 +44,25 @@ def on_each_base(path: Path) -> list[dict]:
     return out
 
 
+def edit_outcome(path: Path, ours: str = "Parakh", base: str = "saaras-v4") -> dict:
+    """What Parakh's changes did, name by name against the base model alone: fixed, broken, and harm to other words."""
+    clips = json.loads(path.read_text(encoding="utf-8"))["clips"]
+    b = {c["id"]: c for c in clips[base]}
+    out = dict(changes=0, names_fixed=0, names_broken=0, names_right_both=0, names_wrong_both=0)
+    errors = {"base": {}, "ours": {}}
+    for c in clips[ours]:
+        out["changes"] += len(c.get("edits") or [])
+        for a, z in zip(c["entity_hits"], b[c["id"]]["entity_hits"]):
+            out["names_fixed" if a and not z else "names_broken" if z and not a else "names_right_both" if a else "names_wrong_both"] += 1
+        for side, clip in (("ours", c), ("base", b[c["id"]])):
+            for cat, n in clip["errors_by_cat"].items():
+                errors[side][cat] = errors[side].get(cat, 0) + n
+    out["respelt"] = out["changes"] - out["names_fixed"]
+    out["errors"] = {cat: {"before": errors["base"].get(cat, 0), "after": errors["ours"].get(cat, 0)}
+                     for cat in ("entity", "other", "insertion")}
+    return out
+
+
 def funnel(which: str = "fresh") -> dict:
     """How many words reach each layer on held-out FLEURS recordings, with the full name list."""
     from harness import fleurs
@@ -202,6 +221,8 @@ def main() -> None:
         phone = benchmark(RUNS / "fleurs-test-bases-phone.json")
         out["phone"] = {**phone, "bases": on_each_base(RUNS / "fleurs-test-bases-phone.json"),
                         "note": "The same recordings passed through a phone line first: 300-3400 Hz, 8 kHz, G.711 mu-law."}
+    if (RUNS / "fleurs-fresh-bases.json").exists():
+        out["edit_outcome"] = edit_outcome(RUNS / "fleurs-fresh-bases.json")
     try:
         out["funnel"] = funnel("fresh" if (RUNS / "fleurs-fresh-bases.json").exists() else "first")
     except Exception as e:  # the public recordings are not in the repository

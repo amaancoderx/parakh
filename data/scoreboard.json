@@ -911,5 +911,27 @@
     "wrong_names": 0
    }
   ]
+ },
+ "edit_outcome": {
+  "changes": 77,
+  "names_fixed": 17,
+  "names_broken": 0,
+  "names_right_both": 285,
+  "names_wrong_both": 11,
+  "respelt": 60,
+  "errors": {
+   "entity": {
+    "before": 52,
+    "after": 15
+   },
+   "other": {
+    "before": 138,
+    "after": 137
+   },
+   "insertion": {
+    "before": 29,
+    "after": 17
+   }
+  }
  }
 }
