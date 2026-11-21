@@ -238,11 +238,14 @@ input, select { font: inherit; color: inherit; }
 @media (max-width: 760px) { .pipe { grid-template-columns: 1fr 1fr; row-gap: 32px; } .pipe::before { display: none; } }
 .funnel { margin: 52px auto 0; max-width: 860px; padding: 22px 24px; }
 .funnel .eyebrow { margin-bottom: 8px; }
-.funnel-what { font-size: 13.5px; color: var(--muted); max-width: 720px; margin-bottom: 14px; }
-.funnel-take { font-size: 15.5px; line-height: 1.55; color: var(--ink); padding: 12px 14px; border-radius: 10px; background: var(--brand-soft); margin-bottom: 18px; }
-.funnel-take b { font-weight: 600; }
-.funnel-take .ok { color: var(--ok); font-weight: 600; }
-.frow { display: grid; grid-template-columns: 170px 1fr 70px; align-items: center; gap: 14px; padding: 6px 0; font-size: 13.5px; }
+.funnel-take { font-size: 26px; line-height: 1.25; font-weight: 600; letter-spacing: -.02em; color: var(--ink); margin: 2px 0 12px; }
+.funnel-take b { color: var(--brand); font-weight: 600; }
+.funnel-take .ok { color: var(--ok); }
+.funnel-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.funnel-tags span { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 11px 0 8px; border-radius: 99px; background: var(--sunken); font-size: 12.5px; font-weight: 500; color: var(--ink-2); }
+.funnel-tags svg { width: 13px; height: 13px; color: var(--ok); }
+@media (max-width: 600px) { .funnel-take { font-size: 21px; } }
+.frow { display: grid; grid-template-columns: 230px 1fr 70px; align-items: center; gap: 14px; padding: 6px 0; font-size: 13.5px; }
 .frow .bar { height: 12px; border-radius: 99px; background: #d9d5ce; width: 0; transition: width 1s cubic-bezier(.2,.7,.2,1); }
 .frow.us .bar { background: var(--brand); }
 .fsplit { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line); display: grid; gap: 12px; }
@@ -915,8 +918,8 @@ table.plain tr.us td { font-weight: 600; }
       </div>
       <div class="card funnel" id="funnel-card" hidden>
         <div class="eyebrow" id="funnel-h">On held-out recordings</div>
-        <p class="funnel-what" id="funnel-what">Public Hindi recordings from Google's FLEURS dataset, each with a human-checked transcript. Parakh was never tuned on them, so this is how it does on audio it has not seen.</p>
-        <p class="funnel-take" id="funnel-take"></p>
+        <h3 class="funnel-take" id="funnel-take"></h3>
+        <div class="funnel-tags"><span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Public dataset</span><span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Human-checked transcripts</span><span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Never tuned on</span></div>
         <div id="funnel"></div>
       </div>
     </div>
@@ -2647,17 +2650,16 @@ function siteResults() {
 
   if (fu) {
     const rows = [
-      ["Words heard", fu.words, false],
-      ["Words in doubt", fu.doubted, false],
-      ["Recordings heard again", fu.recordings_heard_again, false],
-      ["Changes made", fu.names_written, true],
-      ["Asked a person instead", fu.flagged_unsure, false],
+      ["Words in the recordings", fu.words, false],
+      ["Words the models disagreed on", fu.doubted, false],
+      ["Recordings listened to again", fu.recordings_heard_again, false],
+      ["Words Parakh changed", fu.names_written, true],
+      ["Words it asked about instead", fu.flagged_unsure, false],
     ].filter(Boolean);
     const top = Math.log10(fu.words + 1);
-    $("funnel-h").textContent = `What happened on ${fu.recordings} unseen recordings`;
+    $("funnel-h").textContent = `${fu.recordings} unseen recordings · Google FLEURS Hindi`;
     const broke = sb.edit_outcome ? sb.edit_outcome.names_broken : null;
-    $("funnel-take").innerHTML = `Of <b>${fu.words.toLocaleString("en-IN")}</b> words, Parakh doubted only <b>${fu.doubted}</b>, changed <b>${fu.names_written}</b> and asked a person about <b>${fu.flagged_unsure}</b>. Everything else was left exactly as the speech model wrote it.` +
-      (broke === 0 ? ` <span class="ok">Not one right name was made wrong.</span>` : "");
+    $("funnel-take").innerHTML = `Changes only <b>${fu.names_written}</b> of ${fu.words.toLocaleString("en-IN")} words.` + (broke === 0 ? ` <span class="ok">Never breaks a right name.</span>` : "");
     $("funnel").innerHTML = rows.map(([k, v, us]) => `<div class="frow${us ? " us" : ""}"><span>${k}</span><div><div class="bar" data-w="${((Math.log10(v + 1) / top) * 100).toFixed(1)}"></div></div><span class="v">${v.toLocaleString("en-IN")}</span></div>`).join("");
     const mf = sb.memory?.fleurs;
     if (mf) $("mv-lift").innerHTML = `<div><b>${(mf.without.rate * 100).toFixed(1)}% → ${(mf.with.rate * 100).toFixed(1)}%</b><span>names right</span></div>` +
@@ -2671,7 +2673,7 @@ function siteResults() {
         <div class="fs-bar"><i class="fix" style="flex:${eo.names_fixed}"></i><i class="resp" style="flex:${eo.respelt}"></i>${eo.names_broken ? `<i class="bad" style="flex:${eo.names_broken}"></i>` : ""}</div>
         <div class="fs-key">
           <span><i class="fix"></i><b>${eo.names_fixed}</b> wrong names made right</span>
-          <span><i class="resp"></i><b>${eo.respelt}</b> respelt to the known spelling</span>
+          <span><i class="resp"></i><b>${eo.respelt}</b> spelling matched to your list</span>
           <span><i class="bad"></i><b>${eo.names_broken}</b> right names made wrong</span>
         </div>
         <div class="fs-err">
