@@ -16,7 +16,7 @@
 [![Live demo](https://img.shields.io/badge/live%20demo-tryparakh.duckdns.org-c8553d?style=flat-square)](https://tryparakh.duckdns.org)
 [![Track](https://img.shields.io/badge/Equal%20AI%20Builders%20'26-Voice%20AI%20for%20India-24292f?style=flat-square)](#what-was-measured)
 [![Names right](https://img.shields.io/badge/names%20right-89.1%25%20%E2%86%92%2095.8%25-157a42?style=flat-square)](#what-was-measured)
-[![Tests](https://img.shields.io/badge/tests-71%20passing-157a42?style=flat-square)](#quick-start)
+[![Tests](https://img.shields.io/badge/tests-73%20passing-157a42?style=flat-square)](#quick-start)
 [![Python](https://img.shields.io/badge/python-3.10%2B-3776ab?style=flat-square&logo=python&logoColor=white)](pyproject.toml)
 [![FastAPI](https://img.shields.io/badge/FastAPI-service-009688?style=flat-square&logo=fastapi&logoColor=white)](harness/service.py)
 [![Models](https://img.shields.io/badge/runs%20on-Sarvam%20%7C%20OpenAI-24292f?style=flat-square)](#how-it-works)
