@@ -1165,7 +1165,7 @@ table.plain tr.us td { font-weight: 600; }
         <div class="card">
           <div class="card-h"><div><h3>Feed your memory</h3><p>One place for everything. Parakh reads the names and drops phone numbers, amounts and dates.</p></div></div>
           <div class="card-b" style="display:grid;gap:14px">
-            <label class="drop" id="drop" tabindex="0">
+            <label class="drop" id="memdrop" tabindex="0">
               <input type="file" id="memfile" multiple accept=".csv,.tsv,.xlsx,.xlsm,.vcf,.txt,.mp4,.m4a,.mp3,.wav,.ogg,.opus,.webm,.aac,.amr,.3gp,.mov,audio/*,video/*" class="hidden">
               <span class="drop-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 15V4m0 0-4 4m4-4 4 4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" stroke-linecap="round"/></svg></span>
               <b>Drop files here, or <u>browse</u></b>
@@ -1860,10 +1860,10 @@ async function feedFiles(files) {
   }
 }
 $("memfile").onchange = (e) => { feedFiles([...e.target.files]); e.target.value = ""; };
-$("drop").addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); $("memfile").click(); } });
-["dragenter", "dragover"].forEach((ev) => $("drop").addEventListener(ev, (e) => { e.preventDefault(); $("drop").classList.add("over"); }));
-["dragleave", "drop"].forEach((ev) => $("drop").addEventListener(ev, (e) => { e.preventDefault(); $("drop").classList.remove("over"); }));
-$("drop").addEventListener("drop", (e) => feedFiles([...e.dataTransfer.files]));
+$("memdrop").addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); $("memfile").click(); } });
+["dragenter", "dragover"].forEach((ev) => $("memdrop").addEventListener(ev, (e) => { e.preventDefault(); $("memdrop").classList.add("over"); }));
+["dragleave", "drop"].forEach((ev) => $("memdrop").addEventListener(ev, (e) => { e.preventDefault(); $("memdrop").classList.remove("over"); }));
+$("memdrop").addEventListener("drop", (e) => feedFiles([...e.dataTransfer.files]));
 async function memSettings(change) {
   mem = await api(`/api/users/${user}/memory/settings`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify(change) });
   names = { verified: mem.verified, candidates: mem.candidates };

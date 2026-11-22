@@ -12,7 +12,7 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { background: #fff; }
   body { font: 10.2px/1.45 "Geist", system-ui, sans-serif; color: var(--ink); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .page { width: 210mm; height: 297mm; padding: 11mm 14mm 9mm; position: relative; overflow: hidden; page-break-after: always; display: flex; flex-direction: column; gap: 3.4mm; }
+  .page { width: 210mm; height: 297mm; padding: 14mm 16mm 11mm; position: relative; overflow: hidden; page-break-after: always; display: flex; flex-direction: column; gap: 5mm; }
   .page > * { flex-shrink: 0; }
   .page:last-child { page-break-after: auto; }
   .mono { font-family: "Geist Mono", monospace; }
@@ -52,7 +52,7 @@
   .hero .v .g { color: var(--ok); }
   .hero p { font-size: 9px; color: var(--ink2); line-height: 1.35; }
 
-  .card { border: 1px solid var(--line); border-radius: 10px; padding: 3.4mm 3.8mm; }
+  .card { border: 1px solid var(--line); border-radius: 12px; padding: 4.4mm 5mm; }
   .row2 { display: grid; grid-template-columns: 1.05fr 1fr; gap: 3.4mm; }
 
   /* paired bars */
@@ -164,12 +164,12 @@
   <div>
     <div class="kicker">The trust layer for voice AI</div>
     <h1>Voice AI hears. <em>Parakh checks.</em></h1>
-    <p class="lead">Speech models mishear the names and numbers a business acts on: <b>"Aishar"</b> for an <b>Eicher</b> truck, <b>"Mohan bhai"</b> for <b>Mohammad bhai</b>. Parakh has three speech models hear the same audio, finds the words they disagree on, checks those against the audio and the caller's memory, fixes what it can prove, and asks about the rest.</p>
+    <p class="lead">Speech models mishear the names a business acts on: <b>"Aishar"</b> for an <b>Eicher</b> truck. Parakh has three models hear the audio, checks the words they disagree on, and fixes only what it can prove.</p>
     <div class="tested">
-      <span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>189 public Hindi recordings, Google FLEURS</span>
-      <span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>313 names, correct answers checked by people</span>
-      <span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Never seen while building: rules frozen, run once</span>
-      <span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Plus real Hinglish trade calls, recorded with consent</span>
+      <span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><a href="https://huggingface.co/datasets/google/fleurs/viewer/hi_in" style="color:inherit;text-decoration:underline;text-underline-offset:2px">189 public Hindi recordings, Google FLEURS</a></span>
+      
+      <span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Never seen while building</span>
+      <span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Real trader calls, with consent</span>
     </div>
   </div>
 
@@ -183,7 +183,7 @@
   <div class="row2">
     <div class="card">
       <h2><span class="n">1</span>Better on every speech model</h2>
-      <p class="sub">Names right on the 189 unseen recordings. Parakh is added on top of each model.</p>
+      <p class="sub">Names right on 189 unseen recordings.</p>
       <div class="pairs">
         <div class="pair"><div class="lbl"><b>Saaras v3</b><small>21 fixed · 0 lost</small></div><div class="bars">
           <div class="bar"><div class="tr"><div class="fl" style="width:63.7%"></div></div><span>89.1%</span></div>
@@ -198,17 +198,17 @@
       <div class="legend"><span><i style="background:#cfc8bc"></i>Speech model alone</span><span><i style="background:var(--brand)"></i>With Parakh</span><span>Axis starts at 70%</span></div>
       <div class="src">Source: <a href="https://github.com/amaancoderx/parakh/blob/main/runs/fleurs-fresh-bases.md">runs/fleurs-fresh-bases.md</a></div>
       <div class="ex">
-        <div class="ex-h">One real fix, with its evidence</div>
+        <div class="ex-h">One real fix, with its proof</div>
         <div class="ex-line"><s>Aishar</s><span class="arr">→</span><b>Eicher</b></div>
         <div class="ex-heard"><span>Saaras v4 heard <i>Aishar</i></span><span>Saaras v3 heard <i>Aishwarya</i></span><span>gpt-transcribe heard <i>आईशर</i></span></div>
-        <p>The models disagreed. Saaras v4's word sounds like Eicher, a name this caller deals with, and another model heard something close. So Parakh wrote Eicher, and says why.</p>
+        
       </div>
     </div>
 
     <div class="card">
       <h2><span class="n">2</span>Memory that improves every day</h2>
-      <p class="sub">Contacts, ledgers and voice notes are fed once. Every call uses them, and a daily run re-checks past calls.</p>
-      <div class="mem-big"><s>91.0%</s><b>97.1%</b><span>names right, 189 recordings,<br>no names sent with any request</span></div>
+      <p class="sub">Fed once from a sheet. No names sent with any request.</p>
+      <div class="mem-big"><s>91.0%</s><b>97.1%</b><span>names right</span></div>
       <div class="pills"><span class="ok"><b>19</b> fixed by memory</span><span class="ok"><b>0</b> made wrong</span><span>every name right: <b>162 → 181</b> recordings</span></div>
       <table class="week">
         <tr><th>A trader's week, real calls</th><th>Steel drums</th><th>Tile, 1st call</th><th>Tile, 2nd call</th></tr>
@@ -217,19 +217,19 @@
         <tr><td>Day 2, the 2nd tile call arrives</td><td>5/5</td><td>0/3</td><td>5/5</td></tr>
         <tr><td>Night 2, daily learning run</td><td>5/5</td><td class="up">3/3</td><td>5/5</td></tr>
       </table>
-      <p class="note">Names right out of names said. On day 1 nobody on the tile call knew the tile's name. The next call taught it, and that night the earlier call fixed itself.</p>
+      <p class="note">Names right out of names said. Green: fixed overnight by memory.</p>
       <div class="src">Source: <a href="https://github.com/amaancoderx/parakh/blob/main/runs/memory.md">runs/memory.md</a> · <a href="https://github.com/amaancoderx/parakh/blob/main/scripts/memory_eval.py">scripts/memory_eval.py</a></div>
     </div>
   </div>
 
   <div class="card">
     <h2><span class="n">3</span>Careful, not a guesser</h2>
-    <p class="sub">What Parakh did to the 4,742 words in the 189 recordings. Everything not changed was left exactly as the speech model wrote it.</p>
+    <p class="sub">What it did to 4,742 words. Everything else was left as written.</p>
     <div class="flow">
       <div><span class="v">4,742</span><p>words in the recordings</p></div>
-      <div><span class="v">276</span><p>the three models disagreed on</p></div>
-      <div class="hot"><span class="v">77</span><p>changed: 17 wrong names made right, 60 spellings matched to the list</p></div>
-      <div><span class="v">11</span><p>not sure enough, so it asked a person</p></div>
+      <div><span class="v">276</span><p>in doubt</p></div>
+      <div class="hot"><span class="v">77</span><p>changed</p></div>
+      <div><span class="v">11</span><p>asked a person</p></div>
       <div class="safe"><span class="v">0</span><p>right names made wrong</p></div>
     </div>
     <div class="errs">
@@ -240,15 +240,7 @@
     <div class="src">Source: <a href="https://github.com/amaancoderx/parakh/blob/main/data/scoreboard.json">data/scoreboard.json</a> · <a href="https://github.com/amaancoderx/parakh/blob/main/scripts/build_scoreboard.py">scripts/build_scoreboard.py</a></div>
   </div>
 
-  <div class="how">
-    <div><i>1</i><b>Listen</b><span>Three speech models hear the same audio</span></div>
-    <div><i>2</i><b>Doubt</b><span>Finds the words they disagree on</span></div>
-    <div><i>3</i><b>Check</b><span>Against the audio, by sound, and memory</span></div>
-    <div><i>4</i><b>Decide</b><span>Fixes what it can prove, asks the rest</span></div>
-    <div><i>5</i><b>Learn</b><span>Memory grows; past calls re-checked daily</span></div>
-  </div>
-
-  <div class="foot"><span>All numbers are from <span class="mono">runs/*.json</span> in the repository and can be re-run with the commands on page 2.</span><span>1 / 2</span></div>
+<div class="foot"><span>All numbers are from <span class="mono">runs/*.json</span> in the repository and can be re-run with the commands on page 2.</span><span>1 / 2</span></div>
 </section>
 
 <!-- ============================== PAGE 2 ============================== -->
@@ -260,52 +252,37 @@
 
   <div class="card">
     <h2><span class="n">4</span>Harder tests</h2>
-    <p class="sub">Beyond clean recordings: phone audio, a misleading name list, real calls, and numbers.</p>
+    
     <table class="tests">
       <tr><th>Test</th><th>Compared with</th><th>Parakh</th><th>What it shows</th></tr>
-      <tr><td>Phone-line audio<small>91 recordings, 8 kHz phone codec</small></td><td class="num">Saaras v4 alone: 86.4%</td><td class="num g">94.3%</td><td>Holds up on call-quality audio. 11 fixed, 0 lost, p = 0.001.</td></tr>
-      <tr><td>A misleading name list<small>119 sound-alikes planted (ईरान → इराक)</small></td><td class="num">Sarvam's keyword list:<br>10 wrong written, 11 right lost</td><td class="num g">6 written,<br>1 lost</td><td>A name is written only when the audio backs it, so a bad list does far less harm. OpenAI's keyword list wrote none here, but makes twice the word errors.</td></tr>
-      <tr><td>Real trade calls<small>Hinglish phone calls, private</small></td><td class="num">Best other: 11 of 14</td><td class="num g">14 of 14</td><td>Names and numbers confirmed by the callers. Rules were built on these calls, so not a held-out test.</td></tr>
-      <tr><td>Numbers<small>111 numbers in the public sets</small></td><td class="num">Speech model alone</td><td class="num">0 fixed,<br>0 broken</td><td>Digits are written by rule and never changed on a guess. No gain on public data; it shows on real calls.</td></tr>
+      <tr><td>Phone-line audio<small>91 recordings, 8 kHz phone codec</small></td><td class="num">Saaras v4 alone: 86.4%</td><td class="num g">94.3%</td><td>11 fixed, 0 lost.</td></tr>
+      <tr><td>A misleading name list<small>119 sound-alikes planted (ईरान → इराक)</small></td><td class="num">Sarvam's keyword list:<br>10 wrong written, 11 right lost</td><td class="num g">6 written,<br>1 lost</td><td>A bad list does far less harm. OpenAI's list wrote none, with twice the word errors.</td></tr>
+      <tr><td>Real trade calls<small>Hinglish phone calls, private</small></td><td class="num">Best other: 11 of 14</td><td class="num g">14 of 14</td><td>Rules were built on these calls, so not held out.</td></tr>
+      <tr><td>Numbers<small>111 numbers in the public sets</small></td><td class="num">Speech model alone</td><td class="num">0 fixed,<br>0 broken</td><td>Never changed on a guess.</td></tr>
     </table>
     <div class="src">Source: <a href="https://github.com/amaancoderx/parakh/blob/main/runs/fleurs-test-bases-phone.md">runs/fleurs-test-bases-phone.md</a> · <a href="https://github.com/amaancoderx/parakh/blob/main/runs/stress-test.md">runs/stress-test.md</a> · <a href="https://github.com/amaancoderx/parakh/blob/main/runs/numbers.json">runs/numbers.json</a> · <a href="https://github.com/amaancoderx/parakh/blob/main/runs/latency.json">runs/latency.json</a></div>
   </div>
 
   <div class="card">
     <h2><span class="n">5</span>Read this honestly</h2>
-    <p class="sub">Where Parakh only ties, and what it does not do yet.</p>
+    
     <div class="honest">
-      <div><i>!</i><span><b>It is not shown to beat a keyword feature on accuracy.</b> Against Sarvam's and OpenAI's own keyword lists, every difference in names right is within chance (p from 0.39 to 0.73). Its edge there is safety and proof: with a misleading list it lost 1 right name where Sarvam's lost 11, and it shows the evidence for every change.</span></div>
-      <div><i>!</i><span><b>Its questions do not catch its own remaining mistakes.</b> Of 179 recordings it raised no question on, 170 had every name right; the 9 that did not were not flagged.</span></div>
-      <div><i>!</i><span><b>No gain on a second benchmark.</b> On IndicContextEval (lecture speech, technical terms) it ties its base: 82.0% against 82.3%.</span></div>
-      <div><i>!</i><span><b>Two rules changed after results on the first public set were seen.</b> The 189-recording set was run once, after both changes.</span></div>
+      <div><i>!</i><span><b>Ties a keyword feature on accuracy</b> (p 0.39 to 0.73). Its edge is safety and proof.</span></div>
+      <div><i>!</i><span><b>Its questions miss some of its own mistakes:</b> 9 of 179 unflagged recordings had a wrong name.</span></div>
+      <div><i>!</i><span><b>No gain on IndicContextEval</b> (lecture speech): 82.0% against 82.3%.</span></div>
+      <div><i>!</i><span><b>Two rules changed after the first public set.</b> The 189-recording set ran once, after.</span></div>
     </div>
   </div>
 
   <div class="brs">
-    <div><h3><i style="background:var(--brand)"></i>Built by me</h3><ul>
-      <li><b>The Parakh harness:</b> three speech models compared word by word, sound matching for Indian names, re-listening with hints, number rules, and the fix-or-ask decision</li>
-      <li><b>Memory:</b> contacts, ledger and voice-note intake, trust after 3 hearings, and the daily learning run that re-checks past calls</li>
-      <li><b>The API:</b> Sarvam-compatible, streaming, named API keys, usage metering, a memory per end user</li>
-      <li><b>The web app</b>, every evaluation script and statistic, and the AWS deployment</li>
-    </ul></div>
-    <div><h3><i style="background:#3056c9"></i>Reused</h3><ul>
-      <li>Speech models: Sarvam Saaras v3 and v4, OpenAI gpt-transcribe</li>
-      <li>OpenAI text models for the call summary, name lookup and how a name is said; never to write a transcript</li>
-      <li>Google FLEURS Hindi (CC BY 4.0) for testing</li>
-      <li>Open-source libraries (FastAPI, RapidFuzz, jiwer, openpyxl) and AWS EC2, Caddy, DuckDNS</li>
-    </ul></div>
-    <div><h3><i style="background:var(--ask)"></i>Simulated, and why</h3><ul>
-      <li>The two sample calls are <b>real trader recordings</b>. To keep the demo instant and free, the app reuses the speech models' saved answers for them. Any new recording is processed live</li>
-      <li>The trader's week uses <b>the real calls</b>. Only the timing is scripted: the days and nights ran back to back, and the script made the one "yes" tap</li>
-      <li>The ledger in that test was written for it, with decoy names. The phone-line test passes real recordings through a phone codec instead of dialling</li>
-      <li>No sign-in, on purpose, so anyone can try it at once. Each browser gets its own workspace; developers use API keys</li>
-    </ul></div>
+    <div><h3><i style="background:var(--brand)"></i>Built by me</h3><ul><li><b>The Parakh harness:</b> three-model check, sound matching, re-listening, number rules</li><li><b>Memory</b> with the daily learning run</li><li><b>The API</b>, keys and metering</li><li><b>The web app</b>, evaluation, deployment</li></ul></div>
+    <div><h3><i style="background:#3056c9"></i>Reused</h3><ul><li>Sarvam Saaras v3, v4 and OpenAI gpt-transcribe</li><li>OpenAI text models for summary and name lookup</li><li>Google FLEURS Hindi for testing</li><li>FastAPI, AWS EC2, Caddy</li></ul></div>
+    <div><h3><i style="background:var(--ask)"></i>Simulated, and why</h3><ul><li><b>Real trader calls</b>; saved model answers replayed so the demo is instant</li><li>Trader's week: real calls, days and nights run back to back</li><li>Test ledger written for the test</li><li>No sign-in, so anyone can try it</li></ul></div>
   </div>
 
   <div class="card">
     <h2><span class="n">6</span>Check it yourself</h2>
-    <p class="sub">Every number here is reproducible from the repository, and everything works on the live site with fresh input.</p>
+    
     <div class="verify">
       <div class="code"><span class="c"># the tests (no network)</span>
 uv run pytest                          <span class="c"># 78 pass</span>
@@ -318,6 +295,7 @@ uv run python scripts/build_scoreboard.py</div>
         <div><span>Try fresh input</span><a href="https://tryparakh.duckdns.org/#/app"><b>Check a call → record your voice</b></a></div>
         <div><span>API in a minute</span><a href="https://tryparakh.duckdns.org/#/app/developers"><b>Developers → create key → Run it here</b></a></div>
         <div><span>Source code</span><a href="https://github.com/amaancoderx/parakh"><b>github.com/amaancoderx/parakh</b></a></div>
+        <div><span>Test audio</span><a href="https://huggingface.co/datasets/google/fleurs/viewer/hi_in"><b>Google FLEURS Hindi (Hugging Face)</b></a></div>
         <div><span>Raw results</span><a href="https://github.com/amaancoderx/parakh/tree/main/runs"><b>runs/*.json, data/scoreboard.json</b></a></div>
         <div><span>Data use</span><em>FLEURS is public (CC BY 4.0). The trade calls were recorded with everyone's consent and are not in the repository.</em></div>
       </div>
