@@ -12,7 +12,8 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { background: #fff; }
   body { font: 10.2px/1.45 "Geist", system-ui, sans-serif; color: var(--ink); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .page { width: 210mm; height: 297mm; padding: 13mm 14mm 11mm; position: relative; overflow: hidden; page-break-after: always; display: flex; flex-direction: column; gap: 4.2mm; }
+  .page { width: 210mm; height: 297mm; padding: 11mm 14mm 9mm; position: relative; overflow: hidden; page-break-after: always; display: flex; flex-direction: column; gap: 3.4mm; }
+  .page > * { flex-shrink: 0; }
   .page:last-child { page-break-after: auto; }
   .mono { font-family: "Geist Mono", monospace; }
   b { font-weight: 600; }
@@ -69,7 +70,7 @@
   .legend { display: flex; gap: 10px; font-size: 8.6px; color: var(--muted); margin-top: 2.2mm; }
   .legend i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 4px; vertical-align: -1px; }
 
-  .ex { margin-top: 3mm; padding: 2.6mm 3mm; border-radius: 9px; background: var(--paper); border: 1px dashed #dcd5c9; display: grid; gap: 1.4mm; }
+  .ex { margin-top: 2.4mm; padding: 2.2mm 3mm; border-radius: 9px; background: var(--paper); border: 1px dashed #dcd5c9; display: grid; gap: 1.4mm; }
   .ex-h { font-size: 8.4px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
   .ex-line { display: flex; align-items: center; gap: 8px; font-size: 13px; }
   .ex-line s { color: var(--wrong); text-decoration-thickness: 1.5px; }
@@ -80,7 +81,7 @@
   .ex-heard i { font-style: normal; font-weight: 600; color: var(--ink); }
   .ex p { font-size: 8.8px; color: var(--ink2); line-height: 1.4; }
   .how { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2.4mm; }
-  .how > div { padding: 2.6mm 3mm; border-radius: 9px; background: var(--sunken); display: grid; gap: 1px; align-content: start; }
+  .how > div { padding: 2.2mm 2.8mm; border-radius: 9px; background: var(--sunken); display: grid; gap: 1px; align-content: start; }
   .how i { width: 16px; height: 16px; border-radius: 99px; background: var(--ink); color: #fff; font: 600 8.6px "Geist Mono", monospace; font-style: normal; display: grid; place-items: center; margin-bottom: 1mm; }
   .how > div:nth-child(4) i { background: var(--brand); } .how > div:nth-child(5) i { background: var(--ok); }
   .how b { font-size: 10px; }
@@ -146,6 +147,8 @@
   .links span { color: var(--muted); }
   .links b { font-family: "Geist Mono", monospace; font-weight: 500; font-size: 8.9px; }
   .links em { font-style: normal; font-size: 9px; color: var(--ink2); line-height: 1.4; }
+  .src { margin-top: 2mm; font-size: 8.2px; color: var(--muted); }
+  .src a { font-family: "Geist Mono", monospace; color: var(--brand); text-decoration: underline; text-decoration-color: rgba(200,85,61,.35); text-underline-offset: 2px; }
   .foot { margin-top: auto; padding-top: 2.6mm; border-top: 1px solid var(--line); display: flex; justify-content: space-between; font-size: 8.6px; color: var(--muted); }
 </style>
 </head>
@@ -193,6 +196,7 @@
           <div class="bar us"><div class="tr"><div class="fl us" style="width:89.3%"></div></div><span>96.8%</span></div></div></div>
       </div>
       <div class="legend"><span><i style="background:#cfc8bc"></i>Speech model alone</span><span><i style="background:var(--brand)"></i>With Parakh</span><span>Axis starts at 70%</span></div>
+      <div class="src">Source: <a href="https://github.com/amaancoderx/parakh/blob/main/runs/fleurs-fresh-bases.md">runs/fleurs-fresh-bases.md</a></div>
       <div class="ex">
         <div class="ex-h">One real fix, with its evidence</div>
         <div class="ex-line"><s>Aishar</s><span class="arr">→</span><b>Eicher</b></div>
@@ -214,6 +218,7 @@
         <tr><td>Night 2, daily learning run</td><td>5/5</td><td class="up">3/3</td><td>5/5</td></tr>
       </table>
       <p class="note">Names right out of names said. On day 1 nobody on the tile call knew the tile's name. The next call taught it, and that night the earlier call fixed itself.</p>
+      <div class="src">Source: <a href="https://github.com/amaancoderx/parakh/blob/main/runs/memory.md">runs/memory.md</a> · <a href="https://github.com/amaancoderx/parakh/blob/main/scripts/memory_eval.py">scripts/memory_eval.py</a></div>
     </div>
   </div>
 
@@ -232,6 +237,7 @@
       <div><small>Words added that were never said</small><b>29 <em>→</em> 17</b></div>
       <div><small>Errors in every other word</small><b>138 <em>→</em> 137</b></div>
     </div>
+    <div class="src">Source: <a href="https://github.com/amaancoderx/parakh/blob/main/data/scoreboard.json">data/scoreboard.json</a> · <a href="https://github.com/amaancoderx/parakh/blob/main/scripts/build_scoreboard.py">scripts/build_scoreboard.py</a></div>
   </div>
 
   <div class="how">
@@ -262,6 +268,7 @@
       <tr><td>Real trade calls<small>Hinglish phone calls, private</small></td><td class="num">Best other: 11 of 14</td><td class="num g">14 of 14</td><td>Names and numbers confirmed by the callers. Rules were built on these calls, so not a held-out test.</td></tr>
       <tr><td>Numbers<small>111 numbers in the public sets</small></td><td class="num">Speech model alone</td><td class="num">0 fixed,<br>0 broken</td><td>Digits are written by rule and never changed on a guess. No gain on public data; it shows on real calls.</td></tr>
     </table>
+    <div class="src">Source: <a href="https://github.com/amaancoderx/parakh/blob/main/runs/fleurs-test-bases-phone.md">runs/fleurs-test-bases-phone.md</a> · <a href="https://github.com/amaancoderx/parakh/blob/main/runs/stress-test.md">runs/stress-test.md</a> · <a href="https://github.com/amaancoderx/parakh/blob/main/runs/numbers.json">runs/numbers.json</a> · <a href="https://github.com/amaancoderx/parakh/blob/main/runs/latency.json">runs/latency.json</a></div>
   </div>
 
   <div class="card">
