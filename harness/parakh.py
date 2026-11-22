@@ -54,11 +54,6 @@ class Config:
     # unprompted is then written only by this rule. "" = off; "2of3" = any two of the usual second listen,
     # OpenAI-with-the-list and Sarvam-with-the-retrieved-list; "openai+1" = OpenAI-with-the-list and one other.
     vote: str = ""
-    # The acoustic arbiter (harness/phones.py): when saved names that sound alike compete and the hinted
-    # listens give no clear winner, compare each candidate's phones with the phones actually in the audio,
-    # anchored between the words around the slot, and take the best fit if it leads by `acoustic_margin`.
-    acoustic: bool = False
-    acoustic_margin: float = 0.04
     sarvam_mode: str = "translit"  # how the Sarvam juror is asked to write: as the base does
     sarvam_language: str = "unknown"
     # Tried and left off: letting two agreeing recognisers outvote the base on a name-like word, with no
@@ -401,27 +396,6 @@ def transplant(
         consider(bs, be, term)
     edits.sort(key=lambda e: e["span"])
     return apply_edits(base, edits), edits
-
-
-def _acoustic_pick(audio: Path, group: list[Term], base: str, mentions: list[Mention], margin: float) -> tuple[Term | None, dict[str, float]]:
-    """The group member whose phones best fit the audio where the group's mention sits, if it leads clearly.
-
-    Each candidate is phonemised inside the base's neighbouring words (anchors), so the alignment is held in
-    place; only Devanagari anchors are used, because espeak reads Roman letters as letter names.
-    """
-    from harness.phones import arbitrate
-
-    names = {t.text for t in group}
-    slot = next((m for m in mentions if any(c.text in names for c, _ in m.candidates)), None)
-    toks = [_clean(t) for t in base.split()]
-    left = toks[slot.start - 1] if slot and slot.start > 0 and is_devanagari(toks[slot.start - 1]) else ""
-    right = toks[slot.end] if slot and slot.end < len(toks) and is_devanagari(toks[slot.end]) else ""
-    say = {t.text: f"{left} {t.spoken[0] if t.spoken and not is_devanagari(t.text) else t.text} {right}".strip() for t in group}
-    ranked = arbitrate(audio, say)
-    scores = {n: round(f, 3) for n, f in ranked}
-    if len(ranked) >= 2 and ranked[1][1] - ranked[0][1] >= margin:
-        return next(t for t in group if t.text == ranked[0][0]), scores
-    return None, scores
 
 
 def _rival_groups(terms: list[Term], floor: float = 0.55) -> list[list[Term]]:
@@ -785,7 +759,6 @@ def run(audio: Path, index: ContextIndex, cfg: Config, systems: dict[str, System
     # clip twice more with the hints in a different order, and keep a name only if it wins clearly.
     votes: dict[str, int] = {}
     unresolved: list[list[str]] = []
-    acoustic_calls: list[dict] = []
     if cfg.rivals:
         rejected: set[str] = set()
         for group in _rival_groups([t for t in shortlist if t.kind != "part"]):
@@ -806,17 +779,9 @@ def run(audio: Path, index: ContextIndex, cfg: Config, systems: dict[str, System
                 rejected |= {t.text for t in ranked[1:]}
                 if ranked[0] not in accepted:
                     accepted.append(ranked[0])
-                continue
-            if cfg.acoustic:  # the hinted listens could not settle it: ask the sounds in the audio
-                pick, scores = _acoustic_pick(audio, group, base, mentions[cfg.base], cfg.acoustic_margin)
-                acoustic_calls.append({"group": [t.text for t in group], "fit": scores, "pick": pick.text if pick else None})
-                if pick is not None:
-                    rejected |= {t.text for t in group if t is not pick}
-                    if pick not in accepted:
-                        accepted.append(pick)
-                    continue
-            rejected |= {t.text for t in group}  # no clear winner: refuse to guess
-            unresolved.append([t.text for t in ranked if votes[t.text]])
+            else:  # no clear winner: refuse to guess
+                rejected |= {t.text for t in group}
+                unresolved.append([t.text for t in ranked if votes[t.text]])
         # A first name or surname goes the way of the full names it belongs to.
         accepted = [
             t for t in accepted
@@ -894,7 +859,7 @@ def run(audio: Path, index: ContextIndex, cfg: Config, systems: dict[str, System
         hints=hints, rivals=list(rivals.values()), corroborated=sorted(corroborated), hinted=hinted_text,
         extra_passes=(max(1, len(jurors)) if hinted_text else 0) + (2 if votes else 0) + len(list_texts),
         list_votes=list_votes,
-        votes={k: v for k, v in votes.items() if v}, unresolved=unresolved, suggested=suggested, acoustic=acoustic_calls,
+        votes={k: v for k, v in votes.items() if v}, unresolved=unresolved, suggested=suggested,
         accepted=[t.text for t in accepted], found=[t.text for t in accepted if t.trust == "found"], edits=edits,
         wrote_it={t.text: wrote_it[t.text] for t in accepted},
         wrote_exactly={t.text: [w for w, h in heard.items() if _find_terms(h["text"].split(), t, exact=True)] for t in accepted},

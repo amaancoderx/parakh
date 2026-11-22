@@ -16,7 +16,7 @@
 [![Live demo](https://img.shields.io/badge/live%20demo-tryparakh.duckdns.org-c8553d?style=flat-square)](https://tryparakh.duckdns.org)
 [![Track](https://img.shields.io/badge/Equal%20AI%20Builders%20'26-Voice%20AI%20for%20India-24292f?style=flat-square)](#what-was-measured)
 [![Names right](https://img.shields.io/badge/names%20right-89.1%25%20%E2%86%92%2095.8%25-157a42?style=flat-square)](#what-was-measured)
-[![Tests](https://img.shields.io/badge/tests-79%20passing-157a42?style=flat-square)](#quick-start)
+[![Tests](https://img.shields.io/badge/tests-78%20passing-157a42?style=flat-square)](#quick-start)
 [![Python](https://img.shields.io/badge/python-3.10%2B-3776ab?style=flat-square&logo=python&logoColor=white)](pyproject.toml)
 [![FastAPI](https://img.shields.io/badge/FastAPI-service-009688?style=flat-square&logo=fastapi&logoColor=white)](harness/service.py)
 [![Models](https://img.shields.io/badge/runs%20on-Sarvam%20%7C%20OpenAI-24292f?style=flat-square)](#how-it-works)
@@ -43,7 +43,6 @@ Built solo for Equal AI Builders '26, track **Build Challenging: Voice AI for In
 | **Never makes a name worse** | A name is written only when the audio backs it: on 313 fresh names it fixed 17 and lost 0. | Pushes every listed name whether or not it was said: a misleading list broke 12 to 34 right names. |
 | **Asks instead of guessing** | A name no recogniser backs becomes one question with a play button, about 1 word in 100. | Writes something either way. |
 | **Learns only from you** | A name enters memory when you confirm it, never from a transcript, so a mishearing cannot compound. Confirmed names were right 96.7% of the time on the next call. | The list is yours to maintain. |
-| **A lexicon everyone builds** | A name two different people have confirmed is offered to everyone else as a candidate; the audio still has to back it. Every confirmation teaches how India says a name, and no model vendor has that lexicon. | Each customer keeps their own list. |
 | **Numbers are checked too** | Written as digits by rule; a disputed number is fixed when both other recognisers agree, or when the speakers' own arithmetic settles it ("chaalis into chaar" settles 160 against 360); otherwise asked. | Numbers are not in scope. |
 | **Evidence, not confidence** | Every change carries what each recogniser heard and why it was accepted; every answer says `clear` or what to `confirm`. | A transcript. |
 | **One changed URL** | The same request and response shape as Sarvam's `/speech-to-text`, draft first, checked text about 0.6 s later. | |
@@ -86,7 +85,7 @@ Then open `http://localhost:8000`.
 
 | Command | What it does |
 |---|---|
-| `uv run pytest` | Runs 79 tests with no network |
+| `uv run pytest` | Runs 78 tests with no network |
 | `uv run uvicorn harness.service:app --port 8000` | Starts the web app and the API |
 | `http://localhost:8000/#/app/reference` | API reference |
 | `http://localhost:8000/docs` | Interactive API explorer |
@@ -172,8 +171,6 @@ Two sets of public Hindi recordings (FLEURS). The rules were developed against t
 | Phone-line audio (first set), on Saaras v4 | 86.4% | **94.3%** | 11 fixed, 0 lost |
 | No name list at all (first set) | 89.3% | 90.7% | not distinguishable from chance |
 | Numbers right, on Saaras v4 | 77 of 80 | 77 of 80 | the base had none genuinely wrong that any recogniser got right, so the number rules changed nothing here (fixed 0, broke 0) |
-| Two contacts that sound alike, both on the list (251 pairs) | 91.1% | **96.2%** | 1 wrong name written, 0 questions left open: the "Mohan or Mohammad" case |
-| A name two other users confirmed, new to this user (shared lexicon, 60 mentions) | 96.7% | **98.3%** | simulated, 10 users; 0 lost. Small here because names repeated across public recordings are the easy ones |
 
 ### Against the recognisers' own keyword features
 
@@ -196,7 +193,6 @@ This is the fair comparison.
 - **A second benchmark shows no gain.** On IndicContextEval (lecture speech, technical terms, first-set rules) Parakh ties its base: 82.0% against 82.3%.
 - **Three real trade calls: 14 of 14 confirmed words right, best baseline 11.** The rules were developed on these calls, so this is not a held-out result.
 - **Numbers are checked, not improved on public data.** Across 111 numbers in the two public sets, every supposed base error was checked by hand: none was a real mishearing that another recogniser got right, so the number rules fixed 0 and broke 0 there. The gain shows on real calls, where disputed quantities and spoken arithmetic are common: one case settled so far (160 against 360), not a measured rate.
-- **The acoustic arbiter is a research direction, not a gain.** `harness/phones.py` adds a listener with no vocabulary (wav2vec2 emitting IPA phones, no language model) and aligns each candidate name's phones against the audio. In a forced choice between a true name and its planted sound-alike it picks the true one 92.9% of the time (fresh set, 252 pairs; chance 50%). Inside the pipeline it adds nothing measurable: a recogniser's misspelling of a name fits the sounds about as well as the name itself, and the hinted cross-examination already settles nearly every sound-alike group. It is off by default (`uv sync --extra acoustic`, `Config(acoustic=True)`), with its numbers in `CONTEXT.md`.
 - **Two rules changed after results on the first set were seen** (a competing spelling is offered in the transcript's own script; a word matching a confirmed name is not asked about). The second set was run after both.
 
 ### Speed
@@ -270,9 +266,6 @@ uv run python -m harness.stress --split test                  # sound-alike stre
 uv run python -m harness.ice --split test                     # IndicContextEval
 uv run python -m harness.stats runs/fleurs-test.json Parakh saaras-v4
 uv run python scripts/numbers_table.py                         # numbers right, base against Parakh, both sets
-uv run python -m harness.stress --set fresh --split fresh --both  # two contacts that sound alike, both on the list
-uv run python -m harness.lexicon --set fresh --split fresh --users 10   # the shared lexicon, simulated
-uv sync --extra acoustic && uv run python -m harness.arbiter_eval --set fresh --split fresh   # the acoustic arbiter
 uv run python scripts/measure_latency.py                      # needs the service running
 uv run python scripts/memory_eval.py all                      # memory off against on, and the trader's week
 uv run python scripts/build_scoreboard.py                     # what the page shows
@@ -293,7 +286,7 @@ The three trade calls are private and are not in the repository, so their table 
 | `CONTEXT.md` | A hand-over file: every decision, every number, and what was tried and switched off |
 | `web/index.html` | The web app |
 | `runs/` | Every result table, as JSON and Markdown |
-| `tests/` | 79 tests, no network |
+| `tests/` | 78 tests, no network |
 | `research_notes/`, `reports/` | Research behind the design |
 | `deploy/` | One-command deploy to AWS |
 

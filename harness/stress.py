@@ -87,8 +87,6 @@ def main() -> None:
     ap.add_argument("--limit", type=int, default=0, help="first N utterances only")
     ap.add_argument("--decoys", action="store_true", help="write and print the sound-alikes, then stop")
     ap.add_argument("--stack", action="store_true", help="also run Parakh on Sarvam-with-its-keyword-feature, the 50 names chosen by Parakh")
-    ap.add_argument("--both", action="store_true", help="keep the true names in the list too: two contacts that sound alike, who was it?")
-    ap.add_argument("--acoustic", action="store_true", help="let the acoustic arbiter settle sound-alike groups the hinted listens cannot")
     ap.add_argument("--vote", default="", choices=["", "2of3", "openai+1"], help="use the vendors' keyword features as votes")
     ap.add_argument("--jury", type=int, default=0, help="how many of the three second listens must write a name (0: the usual single listen)")
     ap.add_argument("--real", action="store_true", help="also run the keyword features as a product could: 50 of the list for Sarvam, all of it for OpenAI")
@@ -108,8 +106,6 @@ def main() -> None:
     def transcripts(row: dict) -> dict[str, dict]:
         audio = row["audio"]
         terms, traps = clip_list(row, context, decoy)
-        if args.both:  # the true names stay on the list beside their sound-alikes
-            terms = list(dict.fromkeys([*terms, *context]))
         out = {name: fn(audio) for name, fn in WITNESSES.items()}
         # A long list is cut to the size OpenAI's baseline uses elsewhere: the sound-alikes plus other names,
         # never the recording's own (an earlier version of this line let them back in, which voided that row).
@@ -132,7 +128,7 @@ def main() -> None:
             out["saaras-v4 + its keyword list, alphabetical"] = _cached(
                 "stress saaras-v4 kt " + "|".join(az), _sarvam("saaras:v4", "transcribe", az, language="hi-IN"))(audio)
         index = ContextIndex({"brands": terms}, said)
-        out["Parakh"] = run(audio, index, replace(CFG, jury=args.jury, vote=args.vote, acoustic=args.acoustic), WITNESSES)
+        out["Parakh"] = run(audio, index, replace(CFG, jury=args.jury, vote=args.vote), WITNESSES)
         if args.stack:
             heard = {w: fn(audio) for w, fn in WITNESSES.items()}
             listed = sarvam_with_list(audio, {w: h["text"] for w, h in heard.items()}, index, CFG)
@@ -150,15 +146,11 @@ def main() -> None:
             text = o["text"].replace("\n", " ")
             s = score_clip(row["ref"], text, [[n, said[n]] if n in said else [n] for n in row["names"]], [], terms)
             s.update(id=row["id"], hyp=text, traps=traps, decoys_written=false_insertions(row["ref"], text, traps),
-                     extra_passes=o.get("trace", {}).get("extra_passes", 0), edits=o.get("trace", {}).get("edits", []),
-                     unresolved=o.get("trace", {}).get("unresolved", []), acoustic=o.get("trace", {}).get("acoustic", []))
+                     extra_passes=o.get("trace", {}).get("extra_passes", 0), edits=o.get("trace", {}).get("edits", []))
             scored.setdefault(name, []).append(s)
 
     summary = {name: {**aggregate(ss), "decoys_written": sum(len(s["decoys_written"]) for s in ss)} for name, ss in scored.items()}
     n_traps = sum(len(s["traps"]) for s in scored["Parakh"])
-    if args.both:
-        asked = sum(len(s.get("unresolved", [])) for s in scored["Parakh"])
-        print(f"sound-alike groups left as a question by Parakh: {asked}")
     table = ["| System | Sound-alikes written | Any list name written but not said | True names still right | WER |", "|---|---|---|---|---|"]
     for name in sorted(summary, key=lambda n: (summary[n]["decoys_written"], summary[n]["false_insertions"], -(summary[n]["entity_acc"] or 0))):
         a = summary[name]
@@ -173,7 +165,7 @@ def main() -> None:
         lines.append(f"Parakh minus {other}, sound-alikes written per recording: {d:+.3f} (95% interval {lo:+.3f} to {hi:+.3f})")
     print(f"\n{head}\n\n" + "\n".join(table) + "\n\n" + "\n".join(lines))
     RUNS_DIR.mkdir(exist_ok=True)
-    stem = f"stress-{args.split}" + ("-both" if args.both else "") + ("-acoustic" if args.acoustic else "") + ("-alpha" if args.alpha else "") + ("-real" if args.real else "") + (f"-jury{args.jury}" if args.jury else "") + (f"-vote{args.vote.replace('+', 'plus')}" if args.vote else "") + ("-stack" if args.stack else "")
+    stem = f"stress-{args.split}" + ("-alpha" if args.alpha else "") + ("-real" if args.real else "") + (f"-jury{args.jury}" if args.jury else "") + (f"-vote{args.vote.replace('+', 'plus')}" if args.vote else "") + ("-stack" if args.stack else "")
     (RUNS_DIR / f"{stem}.md").write_text(head + "\n\n" + "\n".join(table) + "\n\n" + "\n".join(lines) + "\n", encoding="utf-8")
     (RUNS_DIR / f"{stem}.json").write_text(
         json.dumps({"summary": summary, "traps": n_traps, "clips": scored}, ensure_ascii=False, indent=1), encoding="utf-8")

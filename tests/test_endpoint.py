@@ -124,14 +124,3 @@ def test_speech_to_text_refuses_a_missing_or_unknown_key(tmp_path, monkeypatch):
     for headers in ({}, {"api-subscription-key": "pk_" + "0" * 32}):
         r = client.post("/speech-to-text", headers=headers, files={"file": ("clip.wav", clip, "audio/wav")})
         assert r.status_code == 401
-
-
-def test_a_name_two_people_confirmed_is_shared_with_a_third_as_a_candidate(tmp_path, monkeypatch):
-    from harness import memory
-    monkeypatch.setattr(memory, "MEMORY_DIR", tmp_path)
-    memory.confirm("a", "Eicher")
-    memory.confirm("b", "Eicher")
-    memory.confirm("a", "Arizona Bianco")
-    shared = memory.shared_names(exclude="c")
-    assert list(shared) == ["Eicher"] and shared["Eicher"]["users"] == 2  # one person's word is not enough
-    assert "Eicher" not in memory.shared_names(exclude="a") or memory.shared_names(exclude="a") == {}  # the second confirmer alone does not make it shared
