@@ -25,7 +25,7 @@
 
 # Parakh (परख)
 
-**Live demo: [tryparakh.duckdns.org](https://tryparakh.duckdns.org)** · **[Evidence of results (2-page PDF)](docs/Parakh-Evidence.pdf)** · play a real trade call, record your own voice, or upload a recording.
+**Live demo: [tryparakh.duckdns.org](https://tryparakh.duckdns.org)** · **[Evidence of results (2-page PDF)](docs/Parakh-Evidence.pdf)** · **[29-second demo video](web/demo.mp4)** · play a real trade call, record your own voice, or upload a recording.
 
 Speech models get names and amounts wrong, and they sound exactly as sure when they are wrong as when they are right. Then something acts on what they heard: an order is sent to the wrong person, a note records the wrong amount.
 

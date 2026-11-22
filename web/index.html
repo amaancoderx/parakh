@@ -221,6 +221,16 @@ input, select { font: inherit; color: inherit; }
 
 /* sections */
 .sec { padding: 104px 0 0; }
+.demo-frame { position: relative; max-width: 1060px; margin: 0 auto; border-radius: 20px; overflow: hidden; background: #121417; box-shadow: 0 0 0 1px var(--line), 0 40px 80px -40px rgba(21,23,26,.45); aspect-ratio: 16 / 9; }
+.demo-frame video { display: block; width: 100%; height: 100%; object-fit: cover; background: #121417; }
+.demo-sound { position: absolute; top: 16px; right: 16px; display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px 0 12px; border-radius: 99px; border: 0; background: rgba(21,23,26,.82); color: #fff; font-size: 13.5px; font-weight: 500; cursor: pointer; backdrop-filter: blur(6px); transition: background .15s, opacity .2s; }
+.demo-sound:hover { background: rgba(21,23,26,.95); }
+.demo-sound svg { width: 17px; height: 17px; }
+.demo-sound.gone { opacity: 0; pointer-events: none; }
+.demo-points { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px 22px; margin-top: 20px; font-size: 14px; color: var(--ink-2); }
+.demo-points span { display: inline-flex; align-items: center; gap: 8px; }
+.demo-points b { width: 22px; height: 22px; border-radius: 99px; background: var(--brand-soft); color: var(--brand-ink); display: grid; place-items: center; font: 600 11.5px var(--mono); }
+@media (max-width: 600px) { .demo-frame { border-radius: 14px; } .demo-sound { top: 10px; right: 10px; height: 34px; font-size: 12.5px; } }
 .sec-h { text-align: center; max-width: 680px; margin: 0 auto 44px; }
 .sec-h .eyebrow { display: block; margin-bottom: 12px; color: var(--brand-ink); }
 .sec-h h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(34px, 4.6vw, 52px); line-height: 1.02; letter-spacing: -0.02em; }
@@ -845,6 +855,7 @@ table.plain tr.us td { font-weight: 600; }
     <div class="wrap">
       <a class="logo" href="#/"><span class="mk"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9.5 8.5 6h7L18 9.5 12 18z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><path d="M6 9.5h12M10 6l2 12m2-12-2 12" stroke="#fff" stroke-width="1.2" opacity=".7"/></svg></span>Parakh <small>परख</small></a>
       <nav class="nav-links">
+        <a class="hide-m" href="#demo">Demo</a>
         <a class="hide-m" href="#how">How it works</a>
         <a class="hide-m" href="#proof">Results</a>
         <a class="hide-m" href="#developers">Developers</a>
@@ -916,6 +927,19 @@ table.plain tr.us td { font-weight: 600; }
       <div class="runs-on"><span>Works on top of</span><span class="m">Sarvam Saaras v4</span><span class="m">Sarvam Saaras v3</span><span class="m">OpenAI gpt-transcribe</span></div>
 
       <div class="metrics" id="metrics"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="demo">
+    <div class="wrap">
+      <div class="sec-h"><span class="eyebrow">See it on a real call</span><h2>29 seconds. One real call.</h2><p>A real trader call, run through the live product: the speech model's mistake, Parakh's proof, and memory fixing it with no names sent.</p></div>
+      <div class="demo-frame">
+        <video id="demo-video" src="/static/demo.mp4" poster="/static/demo-poster.jpg" muted loop playsinline preload="metadata" controls></video>
+        <button class="demo-sound" id="demo-sound" type="button"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3.5 8v4h3l4 3.5v-11L6.5 8z" stroke-linejoin="round"/><path d="M13.5 7.5a3.5 3.5 0 0 1 0 5M15.5 5a7 7 0 0 1 0 10" stroke-linecap="round"/></svg>Play with sound</button>
+      </div>
+      <div class="demo-points">
+        <span><b>1</b>Real trader audio</span><span><b>2</b>Live app, nothing mocked</span><span><b>3</b>Proof shown for every fix</span>
+      </div>
     </div>
   </section>
 
@@ -2585,6 +2609,17 @@ if ("IntersectionObserver" in window) {
   }), { rootMargin: "-20% 0px -70% 0px" });
   document.querySelectorAll(".ref-sec").forEach((sec) => seen.observe(sec));
 }
+
+/* The demo video: plays muted while on screen; one tap restarts it with the trader's voice. */
+(() => {
+  const v = $("demo-video"), b = $("demo-sound");
+  if (!v) return;
+  if ("IntersectionObserver" in window && !calm) new IntersectionObserver((es) => es.forEach((e) => {
+    if (e.isIntersecting && v.muted) v.play().catch(() => {}); else if (!e.isIntersecting) v.pause();
+  }), { threshold: 0.4 }).observe(v);
+  b.onclick = () => { v.muted = false; v.currentTime = 0; v.play().catch(() => {}); b.classList.add("gone"); };
+  v.addEventListener("volumechange", () => b.classList.toggle("gone", !v.muted));
+})();
 
 /* ---------------- the site: hero scene and live results ---------------- */
 function scene() {
