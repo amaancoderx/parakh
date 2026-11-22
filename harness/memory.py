@@ -198,6 +198,29 @@ def touch(user: str, names: list[str]) -> None:
         _save(user, memory)
 
 
+SHARED_MIN_USERS = 2  # a name becomes shared once this many different people have confirmed it
+
+
+def shared_names(exclude: str | None = None, min_users: int = SHARED_MIN_USERS) -> dict[str, dict]:
+    """The lexicon everyone builds: names confirmed by at least `min_users` different users.
+
+    Offered to other users only as candidates, so the audio still has to back them; nobody's confirmation
+    writes a name into anybody else's transcript by itself. Returns name -> {"users": n, "heard_as": [...]}.
+    """
+    seen: dict[str, dict] = {}
+    for file in MEMORY_DIR.glob("*.json") if MEMORY_DIR.exists() else []:
+        if exclude and file.stem == exclude:
+            continue
+        for name, entry in load(file.stem)["verified"].items():
+            slot = seen.setdefault(name, {"users": 0, "heard_as": []})
+            slot["users"] += 1
+            for ev in entry.get("evidence", []):
+                for h in (ev.get("heard_as") or []):
+                    if h and h not in slot["heard_as"]:
+                        slot["heard_as"].append(h)
+    return {n: v for n, v in seen.items() if v["users"] >= min_users}
+
+
 def forget(user: str) -> None:
     path(user).unlink(missing_ok=True)
 

@@ -18,6 +18,16 @@ dependencies = [
     "openpyxl>=3.1.5",
 ]
 
+[project.optional-dependencies]
+# The experimental acoustic arbiter (harness/phones.py): about 2 GB of wheels plus a 1.2 GB model.
+# Off by default; nothing else needs it.  uv sync --extra acoustic
+acoustic = [
+    "torch>=2.14.1",
+    "torchaudio>=2.11.1",
+    "transformers>=5.20.2",
+    "phonemizer>=3.6.0",
+]
+
 [dependency-groups]
 dev = ["pytest>=8,<9"]
 

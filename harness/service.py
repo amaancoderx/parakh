@@ -165,8 +165,10 @@ def _work(job: dict) -> None:
         on = memory.enabled(user)
         remembered = memory.verified(user) if on else []
         trusted = [*typed, *remembered]
-        job["memory"] = {"on": on, "names": len(remembered), "version": _version(remembered)}
-        index = ContextIndex.build({"contacts": trusted, "found": [*(memory.candidates(user) if on else []), *found["candidates"]]})
+        # Names two other people confirmed are offered as candidates too; the audio must still back them.
+        shared = [n for n in memory.shared_names(exclude=user) if n not in trusted] if on else []
+        job["memory"] = {"on": on, "names": len(remembered), "version": _version(remembered), "shared": len(shared)}
+        index = ContextIndex.build({"contacts": trusted, "found": [*(memory.candidates(user) if on else []), *found["candidates"], *shared]})
         heard_and_backed: dict[str, dict] = {}
         traces = []
         everything = [h["text"] for heard in heard_all for h in heard.values()]
@@ -175,7 +177,8 @@ def _work(job: dict) -> None:
             t = r["trace"]
             traces.append(t)
             for name in t.get("found", []):
-                heard_and_backed[name] = {"from": job["title"], "call": job["id"], "evidence": "a recogniser wrote it unprompted and another backed it"}
+                heard_as = [e["from"] for e in t.get("edits", []) if e.get("to") == name]
+                heard_and_backed[name] = {"from": job["title"], "call": job["id"], "evidence": "a recogniser wrote it unprompted and another backed it", "heard_as": heard_as}
             base_text = t["witnesses"][t["base"]]
             job["segments"][n].update(
                 stage="checked",
@@ -871,7 +874,9 @@ async def api_memory_learn(user: str = "", api_subscription_key: str | None = He
 @app.get("/api/users/{user}/memory")
 def get_memory(user: str):
     m = memory.load(_user(user))
-    return {"verified": sorted(m["verified"]), "candidates": sorted(m["candidates"])}
+    shared = memory.shared_names(exclude=_user(user))
+    return {"verified": sorted(m["verified"]), "candidates": sorted(m["candidates"]),
+            "shared": sorted(n for n in shared if n not in m["verified"])}
 
 
 class NameAction(BaseModel):

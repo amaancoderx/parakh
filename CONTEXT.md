@@ -115,6 +115,24 @@ jury (three differently-ordered second listens), vote "2of3"/"openai+1" (vendor 
 "stacked" (Parakh on Sarvam-with-retrieved-50: ties Sarvam's keyword row, writes 27/251 planted names),
 an unconditional majority vote on numbers (changed 0 on fresh; its one change on the first set was a different mention). The shipped rule needs BOTH others to agree.
 
+## Two late additions (Sun 22 Nov, 00:00-11:30)
+
+- **Shared lexicon** (memory.shared_names): a name verified by >= 2 different users is offered to other users
+  as a "found" candidate (audio must back it; never written on memory alone). Service passes them into the
+  index; the Names panel says how many. Simulation (harness/lexicon.py, fresh set, 10 users, 3 orders): names
+  new to a user but confirmed by two others: base 96.7% -> alone 96.7% -> shared 98.3%; 0.3 fixed / 0 lost per
+  pass. Tiny on FLEURS because names repeated across recordings are the easy ones; the mechanism is the point.
+- **Acoustic arbiter** (harness/phones.py, optional extra `acoustic`): wav2vec2-xlsr-53-espeak-cv-ft emits IPA
+  phones with no lexicon; candidates phonemised with espeak-ng, anchored between the base's neighbouring
+  Devanagari words, local alignment with free ends (vowel mismatch costs 0.5). Forced choice true vs planted
+  sound-alike: 84.6% (first set, 123 pairs), 92.9% (fresh, 252 pairs). Picking a spelling with no list: worse
+  than base (283 vs 284/312). As a veto: blocks 12/77 right names. In-pipeline tie-breaker for sound-alike
+  groups (Config.acoustic): first set 2 groups (1 right, 1 wrong), fresh set 0 groups to settle. On the real
+  calls, anchored: Mohammad bhai and Arizona Bianco right, Jawar wrong (favours shorter names). Verdict:
+  real signal, no net gain in the pipeline; kept off by default as a research direction.
+- **Sound-alike contacts both on the list** (stress.py --both, fresh): Parakh 96.2% names right, 1 planted
+  name written of 251, 0 groups left as questions.
+
 ## Service surface (harness/service.py)
 
 - POST /api/jobs (file, user, contacts, lang) and POST /api/jobs/sample -> {id}; GET /api/jobs/{id} to poll.
