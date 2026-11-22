@@ -1675,7 +1675,7 @@ function route() {
   if (page !== "call") { clearInterval(timer); current = null; }
   if (page === "new") { document.title = "Check a call · Parakh"; earlier(); }
   if (page === "calls") { document.title = "Calls · Parakh"; earlier(); }
-  if (page === "names") { document.title = "Known names · Parakh"; renderNames(); }
+  if (page === "names") { document.title = "Memory · Parakh"; renderNames(); }
   if (page === "results") { document.title = "Results · Parakh"; renderResults(); }
   if (page === "developers") { document.title = "Developers · Parakh"; keyInfo(); }
   if (page === "reference") { document.title = "API reference · Parakh"; refPage(); }
@@ -2216,7 +2216,7 @@ const MODES = {
   none: ["No names given", () => {
     const n = sb.fleurs_nocontext, nv = n.versus;
     $("big").innerHTML = `<small>${row(n.rows, "Saaras v4").names_right}% →</small> ${row(n.rows, "Parakh, own lookup").names_right}%`;
-    $("lead").textContent = `With no names given, Parakh looks names up itself and checks them by listening again. That got ${nv.only_parakh_right} more names right and lost none, a gain too small to tell from chance (p = ${nv.p}). Without your names, most of the gain is gone: that is why Known names matters.`;
+    $("lead").textContent = `With no names given, Parakh looks names up itself and checks them by listening again. That got ${nv.only_parakh_right} more names right and lost none, a gain too small to tell from chance (p = ${nv.p}). Without your names, most of the gain is gone: that is why Memory matters.`;
     bars($("bars"), nameBars(n.rows));
   }],
   numbers: ["Numbers", () => {
