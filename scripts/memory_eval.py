@@ -100,7 +100,7 @@ def calls() -> dict:
     samples = {s["id"]: s for s in service._samples()}
 
     def run_call(sample_id: str) -> dict:
-        meta = samples[sample_id]
+        meta = samples.get(sample_id) or {"title": sample_id, "audio": "call.mp4"}  # a call can be kept off the app's list
         folder = service.SAMPLES_DIR / sample_id
         segs = sorted((folder / "segments").glob("seg*.wav"))
         job = service._new_job(meta["title"], folder / meta["audio"], segs, user, [], discover_names=True)

@@ -410,10 +410,13 @@ table.codes code.c4 { color: var(--ask) !important; } table.codes code.c5 { colo
 .switch b { display: block; font-size: 13px; font-weight: 600; line-height: 1.2; }
 .switch small { display: block; font-size: 11.5px; color: var(--muted); }
 .mem-off { display: flex; gap: 10px; align-items: center; padding: 11px 14px; border-radius: 12px; background: var(--ask-soft); color: var(--ask); font-size: 13.5px; margin-bottom: 16px; }
-.mem-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+.mem-stats { display: grid; grid-template-columns: repeat(4, 1fr); margin-bottom: 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+.mem-stats > div { padding: 14px 20px; display: grid; gap: 2px; }
+.mem-stats > div + div { border-left: 1px solid var(--line); }
+.mem-stats .k { font-size: 12.5px; color: var(--muted); }
 .mem-stats .card { padding: 16px 18px; display: grid; gap: 4px; }
 .mem-stats .eyebrow { font-size: 10.5px; }
-.mem-stats .v { font-size: 26px; font-weight: 600; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.mem-stats .v { font-size: 24px; font-weight: 600; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
 .mem-stats small { font-size: 12.5px; color: var(--muted); }
 .mem-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 16px; margin-bottom: 16px; align-items: start; }
 .drop { display: grid; justify-items: center; gap: 10px; padding: 22px 18px 18px; border: 1.5px dashed #d3cec5; border-radius: 14px; background: #fcfbf9; text-align: center; cursor: pointer; transition: border-color .15s, background .15s; }
@@ -477,9 +480,22 @@ table.codes code.c4 { color: var(--ask) !important; } table.codes code.c5 { colo
 .origin-tag.call { background: #e8eefc; color: #3056c9; }
 .heard-as { display: flex; flex-wrap: wrap; gap: 4px; }
 .heard-as span { font: 12px var(--mono); padding: 1px 6px; border-radius: 5px; background: var(--wrong-soft); color: var(--wrong); text-decoration: line-through; text-decoration-color: rgba(180,40,40,.4); }
-.mem-proof { display: grid; grid-template-columns: 1.1fr 1fr; margin-bottom: 16px; overflow: hidden; }
-.mem-proof > div { padding: 18px 20px; display: grid; gap: 12px; align-content: start; min-width: 0; }
-.mem-proof > div + div { border-left: 1px solid var(--line); background: #fcfbf9; }
+.mem-proof { margin-bottom: 16px; overflow: hidden; display: block; }
+.mp-line { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 14px; padding: 12px 16px; font-size: 13.5px; color: var(--ink-2); }
+.mp-line b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.mp-tag { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ok); background: var(--ok-soft); padding: 3px 9px; border-radius: 99px; }
+.mp-main s { color: var(--muted); } .mp-main b { color: var(--ok); font-size: 17px; }
+.mp-sep { width: 1px; height: 16px; background: var(--line-2); }
+.mp-more { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 10px 0 12px; border-radius: 8px; border: 1px solid var(--line-2); background: var(--surface); font-size: 12.5px; font-weight: 500; color: var(--ink-2); cursor: pointer; }
+.mp-more:hover { color: var(--ink); border-color: #c9c4bb; }
+.mp-more svg { width: 12px; height: 12px; transition: transform .15s; } .mp-more[aria-expanded="true"] svg { transform: rotate(180deg); }
+.mp-weekbox { border-top: 1px solid var(--line); padding: 14px 16px 16px; background: #fcfbf9; }
+.mp-note { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
+.learn-chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 2px 20px 16px; }
+.learn-chips span { display: inline-flex; align-items: center; gap: 7px; height: 30px; padding: 0 12px 0 5px; border-radius: 99px; background: var(--sunken); font-size: 12.5px; color: var(--ink-2); }
+.learn-chips i { width: 20px; height: 20px; border-radius: 99px; background: var(--surface); display: grid; place-items: center; font: 600 11px var(--mono); font-style: normal; color: var(--ink); }
+.learn-chips em { font-style: normal; font-weight: 600; color: var(--ink); }
+.learn-chips b { font-weight: 400; }
 .mem-proof .eyebrow { display: flex; justify-content: space-between; gap: 8px; }
 .mp-big { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
 .mp-big b { font-size: 34px; font-weight: 600; letter-spacing: -.02em; color: var(--ok); font-variant-numeric: tabular-nums; }
@@ -494,15 +510,15 @@ table.codes code.c4 { color: var(--ask) !important; } table.codes code.c5 { colo
 .mp-week td { padding: 6px 6px 6px 0; border-top: 1px solid var(--line); font-variant-numeric: tabular-nums; }
 .mp-week td:first-child { color: var(--ink-2); }
 .mp-week td.up { color: var(--ok); font-weight: 600; }
-@media (max-width: 900px) { .mem-proof { grid-template-columns: 1fr; } .mem-proof > div + div { border-left: 0; border-top: 1px solid var(--line); } }
+@media (max-width: 900px) { .mp-sep { display: none; } .mp-more { margin-left: 0; } }
 .x-btn { width: 28px; height: 28px; border-radius: 8px; border: 0; background: none; color: var(--muted); display: inline-grid; place-items: center; cursor: pointer; }
 .x-btn:hover { background: var(--wrong-soft); color: var(--wrong); }
 .known-more { padding: 12px 20px; border-top: 1px solid var(--line); text-align: center; }
 .mem-chip { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 99px; font-size: 12.5px; font-weight: 500; text-decoration: none; background: var(--ok-soft); color: var(--ok); }
 .mem-chip.off { background: var(--sunken); color: var(--muted); }
 .mem-chip i { width: 6px; height: 6px; border-radius: 99px; background: currentColor; }
-@media (max-width: 1000px) { .mem-grid { grid-template-columns: 1fr; } .mem-stats { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 640px) { .wait-row2 { grid-template-columns: 1fr; gap: 8px; } .known-tools .field { width: 130px; } .known-t .hide-s { display: none; } .quick-add { flex-wrap: wrap; } }
+@media (max-width: 1000px) { .mem-grid { grid-template-columns: 1fr; } .mem-stats { grid-template-columns: 1fr 1fr; } .mem-stats > div:nth-child(3) { border-left: 0; } .mem-stats > div:nth-child(n+3) { border-top: 1px solid var(--line); } }
+@media (max-width: 640px) { .known-h { flex-wrap: wrap; } .known-h > div:first-child { flex: 1 1 100%; } .known-tools { flex: 1 1 100%; min-width: 0; } .known-tools .field { flex: 1; width: auto; min-width: 0; } .known-tools .btn { flex: none; } .wait-row2 { grid-template-columns: 1fr; gap: 8px; } .known-t .hide-s { display: none; } .quick-add { flex-wrap: wrap; } }
 
 /* =========================================================================
    APP (console)
@@ -1001,8 +1017,8 @@ table.plain tr.us td { font-weight: 600; }
 
   <footer class="site-foot"><div class="wrap">
     <a class="logo" href="#/" style="font-size:15px"><span class="mk" style="width:24px;height:24px;border-radius:7px"><svg viewBox="0 0 24 24" fill="none" style="width:14px;height:14px"><path d="M6 9.5 8.5 6h7L18 9.5 12 18z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg></span>Parakh</a>
-    <span>The jeweller's test for real gold. Built for Equal AI Builders '26.</span>
-    <span>Audio is deleted a day after upload.</span></div></footer>
+    <span>Built for Equal AI Builders '26.</span>
+    <span>Audio is deleted a week after upload.</span></div></footer>
 </div>
 
 <!-- ======================= APP ======================= -->
@@ -1146,10 +1162,10 @@ table.plain tr.us td { font-weight: 600; }
         </div>
         <div class="card">
           <div class="card-h"><div><h3>Daily learning</h3><p id="learn-p">Once a day Parakh learns from what you fed it and checks your recent calls again.</p></div><button class="btn ghost sm" id="learn-now"><svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9M13.5 2.5v3h-3" stroke-linecap="round" stroke-linejoin="round"/></svg>Run now</button></div>
-          <div class="learn-steps">
-            <div><span>1</span><p><b>Trusts what it heard</b>A name the audio backs in <em id="auto-n">3</em> separate recordings is trusted on its own.</p></div>
-            <div><span>2</span><p><b>Learns how names are said</b>Each new name, and the ways the speech models mishear it.</p></div>
-            <div><span>3</span><p><b>Fixes past calls</b>The week's calls are checked again with today's memory.</p></div>
+          <div class="learn-chips">
+            <span><i>1</i><b>Trusts a name heard <em id="auto-n">3</em> times</b></span>
+            <span><i>2</i><b>Learns how names are misheard</b></span>
+            <span><i>3</i><b>Re-checks the week's calls</b></span>
           </div>
           <div class="timeline" id="timeline"></div>
         </div>
@@ -1159,7 +1175,7 @@ table.plain tr.us td { font-weight: 600; }
         <div id="candidates"></div>
       </div>
       <div class="card">
-        <div class="card-h"><div><h3><span data-t="trusted_h">What Parakh knows</span> <span class="badge" id="trusted-n" style="margin-left:6px">0</span></h3><p>Every name it checks your calls against, where it came from, and how the speech models misheard it.</p></div>
+        <div class="card-h known-h"><div><h3><span data-t="trusted_h">What Parakh knows</span> <span class="badge" id="trusted-n" style="margin-left:6px">0</span></h3><p>Every name it checks your calls against, where it came from, and how the speech models misheard it.</p></div>
           <div class="known-tools"><input class="field" id="known-q" placeholder="Search names" aria-label="Search names"><button class="btn danger sm" id="forget" data-t="forget">Delete all my data</button></div></div>
         <div class="keys-wrap" id="verified"></div>
       </div>
@@ -1713,11 +1729,11 @@ function renderNames() {
   $("mem-off").classList.toggle("hidden", s.enabled);
   $("auto-n").textContent = st.auto_trust_after;
   $("mem-stats").innerHTML = [
-    ["Names it knows", st.names, `${st.from_files} from your files`],
-    ["Learned from your calls", st.from_calls + st.learned_alone, `${st.learned_alone} trusted on its own`],
-    ["Misheard forms learned", st.misheard_forms, "How the models got them wrong"],
-    ["Waiting for a yes", st.waiting, `Trusted at ${st.auto_trust_after} hearings`],
-  ].map(([k, v, sub]) => `<div class="card"><span class="eyebrow">${k}</span><span class="v">${v.toLocaleString("en-IN")}</span><small>${sub}</small></div>`).join("");
+    ["Names it knows", st.names],
+    ["Learned from calls", st.from_calls + st.learned_alone],
+    ["Mishearings learned", st.misheard_forms],
+    ["Waiting for a yes", st.waiting],
+  ].map(([k, v]) => `<div><span class="v">${v.toLocaleString("en-IN")}</span><span class="k">${k}</span></div>`).join("");
 
   // what memory was measured to do
   const mm = sb.memory;
@@ -1725,13 +1741,17 @@ function renderNames() {
     const f = mm.fleurs, pc = (x) => (x * 100).toFixed(1) + "%";
     const week = mm.calls ? mm.calls.days : [];
     const cell = (d, k) => { const c = d.calls[k]; return c ? `${c.right}/${c.names_said}` : "–"; };
-    $("mem-proof").innerHTML = `<div><span class="eyebrow"><span>Measured: memory off vs on</span><span>${f.recordings} unseen recordings</span></span>
-        <div class="mp-big"><s>${pc(f.without.rate)}</s><b>${pc(f.with.rate)}</b><span>names right, fed once from a CSV. No names sent with any request.</span></div>
-        <div class="mp-row"><span class="ok"><b>${f.fixed_by_memory}</b> names fixed by memory</span><span class="ok"><b>${f.broken_by_memory}</b> made wrong</span>
-          <span>Every name right: <b>${f.without.whole_recordings_right} → ${f.with.whole_recordings_right}</b> of ${f.recordings}</span><span>Word errors <b>${(f.without.wer * 100).toFixed(2)}% → ${(f.with.wer * 100).toFixed(2)}%</b></span></div></div>` +
-      (week.length ? `<div><span class="eyebrow"><span>A trader's week, three real calls</span></span>
-        <table class="mp-week"><tr><th></th><th>Call 1</th><th>Call 2</th><th>Call 3</th></tr>
-        ${week.map((d, i) => `<tr><td>${esc(d.when)}</td>${["dad_call", "call2", "call3"].map((k) => { const prev = i ? cell(week[i - 1], k) : null, now = cell(d, k); return `<td class="${prev && prev !== "–" && now !== prev ? "up" : ""}">${now}</td>`; }).join("")}</tr>`).join("")}</table></div>` : "");
+    const cols = [["dad_call", "Steel drums"], ["call2", "Tile, 1st call"], ["call3", "Tile, 2nd call"]];
+    $("mem-proof").innerHTML = `<div class="mp-line">
+        <span class="mp-tag">Measured</span>
+        <span class="mp-main"><s>${pc(f.without.rate)}</s> <b>${pc(f.with.rate)}</b> names right with memory</span>
+        <span class="mp-sep"></span><span><b>${f.broken_by_memory}</b> made wrong</span>
+        <span class="mp-sep"></span><span><b>${f.without.whole_recordings_right} → ${f.with.whole_recordings_right}</b> of ${f.recordings} recordings fully right</span>
+        ${week.length ? `<button class="mp-more" id="mp-more" aria-expanded="false">A trader's week<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m3 4.5 3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>` : ""}</div>` +
+      (week.length ? `<div class="mp-weekbox hidden" id="mp-week"><table class="mp-week"><tr><th></th>${cols.map(([, n]) => `<th>${n}</th>`).join("")}</tr>
+        ${week.map((d, i) => `<tr><td>${esc(d.when.replace("call 3 arrives", "the 2nd tile call arrives"))}</td>${cols.map(([k]) => { const prev = i ? cell(week[i - 1], k) : null, now = cell(d, k); return `<td class="${prev && prev !== "–" && now !== prev ? "up" : ""}">${now}</td>`; }).join("")}</tr>`).join("")}</table>
+        <p class="mp-note">Names right out of names said. Green: fixed by memory overnight, with no one touching the call.</p></div>` : "");
+    if ($("mp-more")) $("mp-more").onclick = () => { const open = $("mp-week").classList.toggle("hidden") === false; $("mp-more").setAttribute("aria-expanded", open); };
     $("mem-proof").classList.remove("hidden");
   }
 
@@ -1755,7 +1775,7 @@ function renderNames() {
   // timeline
   const lastRun = mem.log[0];
   $("learn-p").textContent = !s.enabled ? "Memory is off, so nothing is learned." : !s.auto_learn ? "Daily learning is off. Run it yourself any time."
-    : lastRun ? `Runs by itself once a day. Next run in about ${Math.max(1, Math.round((lastRun.at + 86400 - Date.now() / 1000) / 3600))} h.` : "Runs by itself once a day. It has not run yet.";
+    : lastRun ? `Runs by itself once a day. Next run in about ${Math.max(1, Math.round((lastRun.at + 86400 - Date.now() / 1000) / 3600))} h.` : st.names ? "Runs by itself once a day. The first run starts within 30 minutes." : "Starts by itself once you add your first file, then runs every day.";
   $("timeline").innerHTML = mem.log.length ? mem.log.slice(0, 6).map((r) => {
     if (r.skipped) return `<div class="tl"><span class="when">${ago(r.at)}</span><span class="what">Skipped: ${esc(r.skipped)}</span></div>`;
     const parts = [];
@@ -2249,11 +2269,10 @@ function renderResults() {
 /* ---------------- developers ---------------- */
 function curl(el, key) {
   const e = sb.latency?.example || {};
-  el.innerHTML = `<i># the call you already make to Sarvam, plus the caller's names</i>
+  el.innerHTML = `<i># the call you already make to Sarvam. The names come from memory.</i>
 curl -N <u>${esc(location.origin)}/speech-to-text</u> \\
   -H "api-subscription-key: <b>${esc(key || "your key")}</b>" \\
   -F file=@turn.wav \\
-  -F names=<b>"Eicher, Mohammad bhai"</b> \\
   -F stream=true
 
 <i># 1. the base transcript, as soon as it exists</i>
