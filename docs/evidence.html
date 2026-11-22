@@ -16,6 +16,9 @@
   .page:last-child { page-break-after: auto; }
   .mono { font-family: "Geist Mono", monospace; }
   b { font-weight: 600; }
+  a { color: inherit; text-decoration: none; }
+  .links a b, .meta a b { color: var(--brand); text-decoration: underline; text-decoration-color: rgba(200,85,61,.35); text-underline-offset: 2px; }
+  .brs li b { color: var(--ink); }
 
   /* header */
   .top { display: flex; justify-content: space-between; align-items: center; padding-bottom: 3.2mm; border-bottom: 1px solid var(--line); }
@@ -152,7 +155,7 @@
 <section class="page">
   <div class="top">
     <div class="brand"><span class="logo"><svg viewBox="0 0 16 16" fill="none"><path d="M8 13.5S2.5 10 2.5 6.2A2.9 2.9 0 0 1 8 4.7a2.9 2.9 0 0 1 5.5 1.5C13.5 10 8 13.5 8 13.5Z" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/><path d="m5.8 7.6 1.6 1.6 2.9-3" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><b>Parakh</b><span>परख</span></div>
-    <div class="meta"><b>Evidence of results</b> · Equal AI Builders '26 · Track 2, Voice AI for India<br>Live: <b>tryparakh.duckdns.org</b> · Code: <b>github.com/amaancoderx/parakh</b></div>
+    <div class="meta"><b>Evidence of results</b> · Equal AI Builders '26 · Track 2, Voice AI for India<br>Live: <a href="https://tryparakh.duckdns.org"><b>tryparakh.duckdns.org</b></a> · Code: <a href="https://github.com/amaancoderx/parakh"><b>github.com/amaancoderx/parakh</b></a></div>
   </div>
 
   <div>
@@ -274,10 +277,10 @@
 
   <div class="brs">
     <div><h3><i style="background:var(--brand)"></i>Built by me</h3><ul>
-      <li>The checking engine: three models compared word by word, sound matching for Indian names, re-listening with hints, number rules, ask-or-fix decision</li>
-      <li>Memory: contacts, ledger and voice-note intake, trust after 3 hearings, daily learning run that re-checks past calls</li>
-      <li>Sarvam-compatible API with streaming, named API keys, usage metering, memory per end user</li>
-      <li>Web app, all evaluation scripts and statistics, AWS deployment</li>
+      <li><b>The Parakh harness:</b> three speech models compared word by word, sound matching for Indian names, re-listening with hints, number rules, and the fix-or-ask decision</li>
+      <li><b>Memory:</b> contacts, ledger and voice-note intake, trust after 3 hearings, and the daily learning run that re-checks past calls</li>
+      <li><b>The API:</b> Sarvam-compatible, streaming, named API keys, usage metering, a memory per end user</li>
+      <li><b>The web app</b>, every evaluation script and statistic, and the AWS deployment</li>
     </ul></div>
     <div><h3><i style="background:#3056c9"></i>Reused</h3><ul>
       <li>Speech models: Sarvam Saaras v3 and v4, OpenAI gpt-transcribe</li>
@@ -285,11 +288,11 @@
       <li>Google FLEURS Hindi (CC BY 4.0) for testing</li>
       <li>Open-source libraries (FastAPI, RapidFuzz, jiwer, openpyxl) and AWS EC2, Caddy, DuckDNS</li>
     </ul></div>
-    <div><h3><i style="background:var(--ask)"></i>Simulated</h3><ul>
-      <li>The two sample calls in the app replay saved model answers, so they are instant and free; they are labelled as replayed</li>
-      <li>The trader's week is a scripted sequence of day and night, with the one "yes" tap made by the script</li>
-      <li>The ledger in that test is made up, with decoy names; phone-line audio is filtered, not dialled</li>
-      <li>No sign-in: each browser gets its own workspace; developers use API keys</li>
+    <div><h3><i style="background:var(--ask)"></i>Simulated, and why</h3><ul>
+      <li>The two sample calls are <b>real trader recordings</b>. To keep the demo instant and free, the app reuses the speech models' saved answers for them. Any new recording is processed live</li>
+      <li>The trader's week uses <b>the real calls</b>. Only the timing is scripted: the days and nights ran back to back, and the script made the one "yes" tap</li>
+      <li>The ledger in that test was written for it, with decoy names. The phone-line test passes real recordings through a phone codec instead of dialling</li>
+      <li>No sign-in, on purpose, so anyone can try it at once. Each browser gets its own workspace; developers use API keys</li>
     </ul></div>
   </div>
 
@@ -304,11 +307,11 @@ uv run python scripts/memory_eval.py all
 <span class="c"># the page's numbers, from the saved runs</span>
 uv run python scripts/build_scoreboard.py</div>
       <div class="links">
-        <div><span>Live app</span><b>tryparakh.duckdns.org</b></div>
-        <div><span>Try fresh input</span><b>Check a call → record your voice</b></div>
-        <div><span>API in a minute</span><b>Developers → create key → Run it here</b></div>
-        <div><span>Source code</span><b>github.com/amaancoderx/parakh</b></div>
-        <div><span>Raw results</span><b>runs/*.json, data/scoreboard.json</b></div>
+        <div><span>Live app</span><a href="https://tryparakh.duckdns.org"><b>tryparakh.duckdns.org</b></a></div>
+        <div><span>Try fresh input</span><a href="https://tryparakh.duckdns.org/#/app"><b>Check a call → record your voice</b></a></div>
+        <div><span>API in a minute</span><a href="https://tryparakh.duckdns.org/#/app/developers"><b>Developers → create key → Run it here</b></a></div>
+        <div><span>Source code</span><a href="https://github.com/amaancoderx/parakh"><b>github.com/amaancoderx/parakh</b></a></div>
+        <div><span>Raw results</span><a href="https://github.com/amaancoderx/parakh/tree/main/runs"><b>runs/*.json, data/scoreboard.json</b></a></div>
         <div><span>Data use</span><em>FLEURS is public (CC BY 4.0). The trade calls were recorded with everyone's consent and are not in the repository.</em></div>
       </div>
     </div>
