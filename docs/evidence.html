@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Parakh · Evidence of results</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  :root { --ink: #15171a; --ink2: #3d4148; --muted: #6f747c; --line: #e6e1d8; --paper: #f7f5f0; --sunken: #efebe4;
+          --brand: #c8553d; --brand-soft: #f8e7e2; --ok: #1f7a4a; --ok-soft: #e3f2e8; --ask: #9a6a12; --ask-soft: #fbf1dc; --wrong: #b4322a; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #fff; }
+  body { font: 10.2px/1.45 "Geist", system-ui, sans-serif; color: var(--ink); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { width: 210mm; height: 297mm; padding: 13mm 14mm 11mm; position: relative; overflow: hidden; page-break-after: always; display: flex; flex-direction: column; gap: 4.2mm; }
+  .page:last-child { page-break-after: auto; }
+  .mono { font-family: "Geist Mono", monospace; }
+  b { font-weight: 600; }
+
+  /* header */
+  .top { display: flex; justify-content: space-between; align-items: center; padding-bottom: 3.2mm; border-bottom: 1px solid var(--line); }
+  .brand { display: flex; align-items: center; gap: 8px; }
+  .logo { width: 24px; height: 24px; border-radius: 7px; background: var(--brand); display: grid; place-items: center; }
+  .logo svg { width: 13px; height: 13px; }
+  .brand b { font-size: 14px; } .brand span { color: var(--muted); font-size: 12px; margin-left: 2px; }
+  .meta { text-align: right; font-size: 9px; color: var(--muted); line-height: 1.5; }
+  .meta b { color: var(--ink); font-weight: 600; }
+  .kicker { font-size: 8.6px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--brand); }
+  h1 { font: 400 31px/1.05 "Instrument Serif", serif; letter-spacing: -.01em; margin-top: 1mm; }
+  h1 em { color: var(--brand); }
+  .lead { font-size: 11px; color: var(--ink2); max-width: 165mm; margin-top: 1.6mm; }
+  h2 { font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 7px; }
+  h2 .n { width: 17px; height: 17px; border-radius: 99px; background: var(--ink); color: #fff; font: 600 9px "Geist Mono", monospace; display: grid; place-items: center; }
+  .sub { color: var(--muted); font-size: 9.4px; margin-top: 1px; }
+
+  /* tested on */
+  .tested { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 2mm; }
+  .tested span { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px 3px 7px; border-radius: 99px; background: var(--sunken); font-size: 9.2px; color: var(--ink2); }
+  .tested svg { width: 10px; height: 10px; color: var(--ok); }
+
+  /* hero metrics */
+  .hero { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .hero > div { padding: 3.2mm 3.6mm; display: grid; gap: 1px; align-content: start; }
+  .hero > div + div { border-left: 1px solid var(--line); }
+  .hero .v { font: 400 25px/1.05 "Instrument Serif", serif; }
+  .hero .v small { font: 400 13px "Instrument Serif", serif; color: var(--muted); }
+  .hero .v .to { color: var(--brand); }
+  .hero .v .g { color: var(--ok); }
+  .hero p { font-size: 9px; color: var(--ink2); line-height: 1.35; }
+
+  .card { border: 1px solid var(--line); border-radius: 10px; padding: 3.4mm 3.8mm; }
+  .row2 { display: grid; grid-template-columns: 1.05fr 1fr; gap: 3.4mm; }
+
+  /* paired bars */
+  .pairs { display: grid; gap: 2.4mm; margin-top: 2.6mm; }
+  .pair { display: grid; grid-template-columns: 26mm 1fr; gap: 3mm; align-items: center; }
+  .pair .lbl b { display: block; font-size: 10px; }
+  .pair .lbl small { font-size: 8.4px; color: var(--muted); }
+  .bars { display: grid; gap: 2px; }
+  .bar { display: grid; grid-template-columns: 1fr 12mm; align-items: center; gap: 2mm; }
+  .tr { height: 7px; border-radius: 99px; background: var(--sunken); overflow: hidden; }
+  .fl { height: 100%; border-radius: 99px; background: #cfc8bc; }
+  .fl.us { background: var(--brand); }
+  .bar span { font: 500 9px "Geist Mono", monospace; text-align: right; }
+  .bar.us span { color: var(--brand); font-weight: 600; }
+  .legend { display: flex; gap: 10px; font-size: 8.6px; color: var(--muted); margin-top: 2.2mm; }
+  .legend i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 4px; vertical-align: -1px; }
+
+  .ex { margin-top: 3mm; padding: 2.6mm 3mm; border-radius: 9px; background: var(--paper); border: 1px dashed #dcd5c9; display: grid; gap: 1.4mm; }
+  .ex-h { font-size: 8.4px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .ex-line { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  .ex-line s { color: var(--wrong); text-decoration-thickness: 1.5px; }
+  .ex-line b { color: var(--ok); background: var(--ok-soft); padding: 1px 8px; border-radius: 6px; }
+  .ex-line .arr { color: var(--muted); }
+  .ex-heard { display: flex; flex-wrap: wrap; gap: 4px; }
+  .ex-heard span { font-size: 8.6px; padding: 2px 7px; border-radius: 99px; background: #fff; border: 1px solid var(--line); color: var(--ink2); }
+  .ex-heard i { font-style: normal; font-weight: 600; color: var(--ink); }
+  .ex p { font-size: 8.8px; color: var(--ink2); line-height: 1.4; }
+  .how { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2.4mm; }
+  .how > div { padding: 2.6mm 3mm; border-radius: 9px; background: var(--sunken); display: grid; gap: 1px; align-content: start; }
+  .how i { width: 16px; height: 16px; border-radius: 99px; background: var(--ink); color: #fff; font: 600 8.6px "Geist Mono", monospace; font-style: normal; display: grid; place-items: center; margin-bottom: 1mm; }
+  .how > div:nth-child(4) i { background: var(--brand); } .how > div:nth-child(5) i { background: var(--ok); }
+  .how b { font-size: 10px; }
+  .how span { font-size: 8.6px; color: var(--ink2); line-height: 1.35; }
+
+  /* memory */
+  .mem-big { display: flex; align-items: baseline; gap: 6px; margin-top: 1.8mm; }
+  .mem-big s { font: 400 17px "Instrument Serif", serif; color: var(--muted); }
+  .mem-big b { font: 400 30px/1 "Instrument Serif", serif; color: var(--ok); }
+  .mem-big span { font-size: 9.4px; color: var(--ink2); }
+  .pills { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 1.8mm; }
+  .pills span { font-size: 8.8px; padding: 2px 8px; border-radius: 99px; background: var(--sunken); color: var(--ink2); }
+  .pills span.ok { background: var(--ok-soft); color: var(--ok); }
+  table { width: 100%; border-collapse: collapse; }
+  .week { margin-top: 2.4mm; font-size: 8.9px; }
+  .week th { text-align: left; font-weight: 500; color: var(--muted); padding: 0 4px 3px 0; font-size: 8.4px; }
+  .week td { padding: 3px 4px 3px 0; border-top: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+  .week td.up { color: var(--ok); font-weight: 600; }
+  .note { font-size: 8.4px; color: var(--muted); margin-top: 1.8mm; line-height: 1.4; }
+
+  /* funnel */
+  .flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; margin-top: 2.6mm; }
+  .flow > div { padding: 2.4mm 2.6mm; border: 1px solid var(--line); margin-left: -1px; display: grid; gap: 1px; position: relative; }
+  .flow > div:first-child { border-radius: 9px 0 0 9px; margin-left: 0; }
+  .flow > div:last-child { border-radius: 0 9px 9px 0; }
+  .flow .v { font: 600 15px "Geist Mono", monospace; }
+  .flow .hot { background: var(--brand-soft); border-color: #efcfc6; z-index: 1; }
+  .flow .hot .v { color: var(--brand); }
+  .flow .safe { background: var(--ok-soft); border-color: #c7e3d1; z-index: 1; }
+  .flow .safe .v { color: var(--ok); }
+  .flow p { font-size: 8.7px; color: var(--ink2); line-height: 1.3; }
+  .errs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.4mm; margin-top: 2.4mm; }
+  .errs div { background: var(--sunken); border-radius: 8px; padding: 2.2mm 3mm; display: flex; justify-content: space-between; align-items: baseline; gap: 6px; }
+  .errs small { font-size: 8.6px; color: var(--ink2); }
+  .errs b { font: 600 11px "Geist Mono", monospace; white-space: nowrap; }
+  .errs em { font-style: normal; color: var(--muted); }
+
+  /* page 2 */
+  .tests { margin-top: 2.4mm; font-size: 9.2px; }
+  .tests th { text-align: left; font-weight: 500; color: var(--muted); font-size: 8.4px; padding: 0 6px 4px 0; border-bottom: 1px solid var(--line); }
+  .tests td { padding: 5px 6px 5px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .tests td:first-child { font-weight: 600; width: 37mm; }
+  .tests td small { display: block; font-weight: 400; color: var(--muted); font-size: 8.3px; }
+  .tests .num { white-space: nowrap; }
+  .tests .g { color: var(--ok); font-weight: 600; }
+  .tests .w { color: var(--ask); font-weight: 600; }
+  .honest { display: grid; gap: 1.8mm; margin-top: 2.4mm; }
+  .honest div { display: grid; grid-template-columns: 14px 1fr; gap: 5px; font-size: 9.3px; color: var(--ink2); line-height: 1.4; }
+  .honest i { width: 14px; height: 14px; border-radius: 99px; background: var(--ask-soft); color: var(--ask); font: 700 9px "Geist", sans-serif; display: grid; place-items: center; font-style: normal; margin-top: 1px; }
+  .honest b { color: var(--ink); }
+  .brs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; margin-top: 2.4mm; }
+  .brs > div { border: 1px solid var(--line); border-radius: 10px; padding: 3mm 3.2mm; }
+  .brs h3 { font-size: 10px; font-weight: 600; display: flex; align-items: center; gap: 6px; margin-bottom: 1.6mm; }
+  .brs h3 i { width: 8px; height: 8px; border-radius: 99px; }
+  .brs ul { list-style: none; display: grid; gap: 1.3mm; }
+  .brs li { font-size: 8.8px; color: var(--ink2); line-height: 1.35; padding-left: 9px; position: relative; }
+  .brs li::before { content: ""; position: absolute; left: 0; top: 5px; width: 3px; height: 3px; border-radius: 99px; background: var(--muted); }
+  .verify { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; margin-top: 2.4mm; }
+  .code { background: #16181c; color: #d6dae0; border-radius: 9px; padding: 3mm 3.4mm; font: 8.6px/1.6 "Geist Mono", monospace; white-space: pre; }
+  .code .c { color: #7b828c; }
+  .links { display: grid; gap: 1.6mm; align-content: start; }
+  .links div { display: grid; grid-template-columns: 22mm 1fr; gap: 4px; font-size: 9.2px; }
+  .links span { color: var(--muted); }
+  .links b { font-family: "Geist Mono", monospace; font-weight: 500; font-size: 8.9px; }
+  .links em { font-style: normal; font-size: 9px; color: var(--ink2); line-height: 1.4; }
+  .foot { margin-top: auto; padding-top: 2.6mm; border-top: 1px solid var(--line); display: flex; justify-content: space-between; font-size: 8.6px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- ============================== PAGE 1 ============================== -->
+<section class="page">
+  <div class="top">
+    <div class="brand"><span class="logo"><svg viewBox="0 0 16 16" fill="none"><path d="M8 13.5S2.5 10 2.5 6.2A2.9 2.9 0 0 1 8 4.7a2.9 2.9 0 0 1 5.5 1.5C13.5 10 8 13.5 8 13.5Z" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/><path d="m5.8 7.6 1.6 1.6 2.9-3" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><b>Parakh</b><span>परख</span></div>
+    <div class="meta"><b>Evidence of results</b> · Equal AI Builders '26 · Track 2, Voice AI for India<br>Live: <b>tryparakh.duckdns.org</b> · Code: <b>github.com/amaancoderx/parakh</b></div>
+  </div>
+
+  <div>
+    <div class="kicker">The trust layer for voice AI</div>
+    <h1>Voice AI hears. <em>Parakh checks.</em></h1>
+    <p class="lead">Speech models mishear the names and numbers a business acts on: <b>"Aishar"</b> for an <b>Eicher</b> truck, <b>"Mohan bhai"</b> for <b>Mohammad bhai</b>. Parakh has three speech models hear the same audio, finds the words they disagree on, checks those against the audio and the caller's memory, fixes what it can prove, and asks about the rest.</p>
+    <div class="tested">
+      <span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>189 public Hindi recordings, Google FLEURS</span>
+      <span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>313 names, correct answers checked by people</span>
+      <span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Never seen while building: rules frozen, run once</span>
+      <span><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Plus real Hinglish trade calls, recorded with consent</span>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div><span class="v"><small>89.1% → </small><span class="to">95.8%</span></span><p>Names right on <b>Saaras v3</b>. Same audio, Parakh on top.</p></div>
+    <div><span class="v">57 <small>fixed ·</small> <span class="g">0</span> <small>lost</small></span><p>Names, across three speech models. Each gain p &lt; 0.001.</p></div>
+    <div><span class="v"><small>91.0% → </small><span class="g">97.1%</span></span><p>With <b>memory</b> fed once from a sheet. No names sent, 0 made wrong.</p></div>
+    <div><span class="v">1.8<small> s</small></span><p>Median to a checked transcript. A draft streams in 0.9 s.</p></div>
+  </div>
+
+  <div class="row2">
+    <div class="card">
+      <h2><span class="n">1</span>Better on every speech model</h2>
+      <p class="sub">Names right on the 189 unseen recordings. Parakh is added on top of each model.</p>
+      <div class="pairs">
+        <div class="pair"><div class="lbl"><b>Saaras v3</b><small>21 fixed · 0 lost</small></div><div class="bars">
+          <div class="bar"><div class="tr"><div class="fl" style="width:63.7%"></div></div><span>89.1%</span></div>
+          <div class="bar us"><div class="tr"><div class="fl us" style="width:86.0%"></div></div><span>95.8%</span></div></div></div>
+        <div class="pair"><div class="lbl"><b>Saaras v4</b><small>17 fixed · 0 lost</small></div><div class="bars">
+          <div class="bar"><div class="tr"><div class="fl" style="width:70.3%"></div></div><span>91.1%</span></div>
+          <div class="bar us"><div class="tr"><div class="fl us" style="width:88.3%"></div></div><span>96.5%</span></div></div></div>
+        <div class="pair"><div class="lbl"><b>gpt-transcribe</b><small>19 fixed · 0 lost</small></div><div class="bars">
+          <div class="bar"><div class="tr"><div class="fl" style="width:69.0%"></div></div><span>90.7%</span></div>
+          <div class="bar us"><div class="tr"><div class="fl us" style="width:89.3%"></div></div><span>96.8%</span></div></div></div>
+      </div>
+      <div class="legend"><span><i style="background:#cfc8bc"></i>Speech model alone</span><span><i style="background:var(--brand)"></i>With Parakh</span><span>Axis starts at 70%</span></div>
+      <div class="ex">
+        <div class="ex-h">One real fix, with its evidence</div>
+        <div class="ex-line"><s>Aishar</s><span class="arr">→</span><b>Eicher</b></div>
+        <div class="ex-heard"><span>Saaras v4 heard <i>Aishar</i></span><span>Saaras v3 heard <i>Aishwarya</i></span><span>gpt-transcribe heard <i>आईशर</i></span></div>
+        <p>The models disagreed. Saaras v4's word sounds like Eicher, a name this caller deals with, and another model heard something close. So Parakh wrote Eicher, and says why.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="n">2</span>Memory that improves every day</h2>
+      <p class="sub">Contacts, ledgers and voice notes are fed once. Every call uses them, and a daily run re-checks past calls.</p>
+      <div class="mem-big"><s>91.0%</s><b>97.1%</b><span>names right, 189 recordings,<br>no names sent with any request</span></div>
+      <div class="pills"><span class="ok"><b>19</b> fixed by memory</span><span class="ok"><b>0</b> made wrong</span><span>every name right: <b>162 → 181</b> recordings</span></div>
+      <table class="week">
+        <tr><th>A trader's week, real calls</th><th>Steel drums</th><th>Tile, 1st call</th><th>Tile, 2nd call</th></tr>
+        <tr><td>Day 1, memory empty</td><td>4/5</td><td>0/3</td><td>–</td></tr>
+        <tr><td>Night 1, after the ledger upload</td><td class="up">5/5</td><td>0/3</td><td>–</td></tr>
+        <tr><td>Day 2, the 2nd tile call arrives</td><td>5/5</td><td>0/3</td><td>5/5</td></tr>
+        <tr><td>Night 2, daily learning run</td><td>5/5</td><td class="up">3/3</td><td>5/5</td></tr>
+      </table>
+      <p class="note">Names right out of names said. On day 1 nobody on the tile call knew the tile's name. The next call taught it, and that night the earlier call fixed itself.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="n">3</span>Careful, not a guesser</h2>
+    <p class="sub">What Parakh did to the 4,742 words in the 189 recordings. Everything not changed was left exactly as the speech model wrote it.</p>
+    <div class="flow">
+      <div><span class="v">4,742</span><p>words in the recordings</p></div>
+      <div><span class="v">276</span><p>the three models disagreed on</p></div>
+      <div class="hot"><span class="v">77</span><p>changed: 17 wrong names made right, 60 spellings matched to the list</p></div>
+      <div><span class="v">11</span><p>not sure enough, so it asked a person</p></div>
+      <div class="safe"><span class="v">0</span><p>right names made wrong</p></div>
+    </div>
+    <div class="errs">
+      <div><small>Errors in names</small><b>52 <em>→</em> 15</b></div>
+      <div><small>Words added that were never said</small><b>29 <em>→</em> 17</b></div>
+      <div><small>Errors in every other word</small><b>138 <em>→</em> 137</b></div>
+    </div>
+  </div>
+
+  <div class="how">
+    <div><i>1</i><b>Listen</b><span>Three speech models hear the same audio</span></div>
+    <div><i>2</i><b>Doubt</b><span>Finds the words they disagree on</span></div>
+    <div><i>3</i><b>Check</b><span>Against the audio, by sound, and memory</span></div>
+    <div><i>4</i><b>Decide</b><span>Fixes what it can prove, asks the rest</span></div>
+    <div><i>5</i><b>Learn</b><span>Memory grows; past calls re-checked daily</span></div>
+  </div>
+
+  <div class="foot"><span>All numbers are from <span class="mono">runs/*.json</span> in the repository and can be re-run with the commands on page 2.</span><span>1 / 2</span></div>
+</section>
+
+<!-- ============================== PAGE 2 ============================== -->
+<section class="page">
+  <div class="top">
+    <div class="brand"><span class="logo"><svg viewBox="0 0 16 16" fill="none"><path d="M8 13.5S2.5 10 2.5 6.2A2.9 2.9 0 0 1 8 4.7a2.9 2.9 0 0 1 5.5 1.5C13.5 10 8 13.5 8 13.5Z" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/><path d="m5.8 7.6 1.6 1.6 2.9-3" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><b>Parakh</b><span>परख</span></div>
+    <div class="meta"><b>Harder tests, limits, and what is real</b></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="n">4</span>Harder tests</h2>
+    <p class="sub">Beyond clean recordings: phone audio, a misleading name list, real calls, and numbers.</p>
+    <table class="tests">
+      <tr><th>Test</th><th>Compared with</th><th>Parakh</th><th>What it shows</th></tr>
+      <tr><td>Phone-line audio<small>91 recordings, 8 kHz phone codec</small></td><td class="num">Saaras v4 alone: 86.4%</td><td class="num g">94.3%</td><td>Holds up on call-quality audio. 11 fixed, 0 lost, p = 0.001.</td></tr>
+      <tr><td>A misleading name list<small>119 sound-alikes planted (ईरान → इराक)</small></td><td class="num">Sarvam's keyword list:<br>10 wrong written, 11 right lost</td><td class="num g">6 written,<br>1 lost</td><td>A name is written only when the audio backs it, so a bad list does far less harm. OpenAI's keyword list wrote none here, but makes twice the word errors.</td></tr>
+      <tr><td>Real trade calls<small>Hinglish phone calls, private</small></td><td class="num">Best other: 11 of 14</td><td class="num g">14 of 14</td><td>Names and numbers confirmed by the callers. Rules were built on these calls, so not a held-out test.</td></tr>
+      <tr><td>Numbers<small>111 numbers in the public sets</small></td><td class="num">Speech model alone</td><td class="num">0 fixed,<br>0 broken</td><td>Digits are written by rule and never changed on a guess. No gain on public data; it shows on real calls.</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2><span class="n">5</span>Read this honestly</h2>
+    <p class="sub">Where Parakh only ties, and what it does not do yet.</p>
+    <div class="honest">
+      <div><i>!</i><span><b>It is not shown to beat a keyword feature on accuracy.</b> Against Sarvam's and OpenAI's own keyword lists, every difference in names right is within chance (p from 0.39 to 0.73). Its edge there is safety and proof: with a misleading list it lost 1 right name where Sarvam's lost 11, and it shows the evidence for every change.</span></div>
+      <div><i>!</i><span><b>Its questions do not catch its own remaining mistakes.</b> Of 179 recordings it raised no question on, 170 had every name right; the 9 that did not were not flagged.</span></div>
+      <div><i>!</i><span><b>No gain on a second benchmark.</b> On IndicContextEval (lecture speech, technical terms) it ties its base: 82.0% against 82.3%.</span></div>
+      <div><i>!</i><span><b>Two rules changed after results on the first public set were seen.</b> The 189-recording set was run once, after both changes.</span></div>
+    </div>
+  </div>
+
+  <div class="brs">
+    <div><h3><i style="background:var(--brand)"></i>Built by me</h3><ul>
+      <li>The checking engine: three models compared word by word, sound matching for Indian names, re-listening with hints, number rules, ask-or-fix decision</li>
+      <li>Memory: contacts, ledger and voice-note intake, trust after 3 hearings, daily learning run that re-checks past calls</li>
+      <li>Sarvam-compatible API with streaming, named API keys, usage metering, memory per end user</li>
+      <li>Web app, all evaluation scripts and statistics, AWS deployment</li>
+    </ul></div>
+    <div><h3><i style="background:#3056c9"></i>Reused</h3><ul>
+      <li>Speech models: Sarvam Saaras v3 and v4, OpenAI gpt-transcribe</li>
+      <li>OpenAI text models for the call summary, name lookup and how a name is said; never to write a transcript</li>
+      <li>Google FLEURS Hindi (CC BY 4.0) for testing</li>
+      <li>Open-source libraries (FastAPI, RapidFuzz, jiwer, openpyxl) and AWS EC2, Caddy, DuckDNS</li>
+    </ul></div>
+    <div><h3><i style="background:var(--ask)"></i>Simulated</h3><ul>
+      <li>The two sample calls in the app replay saved model answers, so they are instant and free; they are labelled as replayed</li>
+      <li>The trader's week is a scripted sequence of day and night, with the one "yes" tap made by the script</li>
+      <li>The ledger in that test is made up, with decoy names; phone-line audio is filtered, not dialled</li>
+      <li>No sign-in: each browser gets its own workspace; developers use API keys</li>
+    </ul></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="n">6</span>Check it yourself</h2>
+    <p class="sub">Every number here is reproducible from the repository, and everything works on the live site with fresh input.</p>
+    <div class="verify">
+      <div class="code"><span class="c"># the tests (no network)</span>
+uv run pytest                          <span class="c"># 78 pass</span>
+<span class="c"># memory off against on, and the trader's week</span>
+uv run python scripts/memory_eval.py all
+<span class="c"># the page's numbers, from the saved runs</span>
+uv run python scripts/build_scoreboard.py</div>
+      <div class="links">
+        <div><span>Live app</span><b>tryparakh.duckdns.org</b></div>
+        <div><span>Try fresh input</span><b>Check a call → record your voice</b></div>
+        <div><span>API in a minute</span><b>Developers → create key → Run it here</b></div>
+        <div><span>Source code</span><b>github.com/amaancoderx/parakh</b></div>
+        <div><span>Raw results</span><b>runs/*.json, data/scoreboard.json</b></div>
+        <div><span>Data use</span><em>FLEURS is public (CC BY 4.0). The trade calls were recorded with everyone's consent and are not in the repository.</em></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Built solo by amaancoderx for Equal AI Builders '26.</span><span>2 / 2</span></div>
+</section>
+</body>
+</html>
