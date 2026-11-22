@@ -137,6 +137,15 @@ def _sarvam(model: str, mode: str, keyterms: list[str] | None = None, language: 
     return call
 
 
+def _needs_key(var: str, fn: Callable[[Path], str]) -> Callable[[Path], str]:
+    """Call fn only when its key is set; otherwise say what is missing (saved answers still replay)."""
+    def run(audio: Path) -> str:
+        if not os.getenv(var):
+            raise RuntimeError(f"{var} is not set: only the bundled recordings replay without it (see AGENTS.md)")
+        return fn(audio)
+    return run
+
+
 def available_systems() -> dict[str, SystemFn]:
     terms = context_terms()
     systems: dict[str, SystemFn] = {
@@ -147,10 +156,11 @@ def available_systems() -> dict[str, SystemFn]:
         "gpt-transcribe + hi/en": _openai("gpt-transcribe", languages=["hi", "en"]),
         "gpt-transcribe + keywords + hi/en": _openai("gpt-transcribe", keywords=terms, languages=["hi", "en"]),
     }
-    if os.getenv("SARVAM_API_KEY"):
-        # translit = Roman-script output, the mode Equal reportedly runs on Saaras v3.
-        systems["saaras-v3 translit"] = _cached("saaras-v3 translit", _sarvam("saaras:v3", "translit"))
-        systems["saaras-v4 translit"] = _cached("saaras-v4 translit", _sarvam("saaras:v4", "translit"))
+    # translit = Roman-script output, the mode Equal reportedly runs on Saaras v3. Registered even
+    # without a key: saved answers (the bundled recordings) replay from .cache, and only new audio
+    # needs SARVAM_API_KEY. That is the no-key demo mode described in AGENTS.md.
+    systems["saaras-v3 translit"] = _cached("saaras-v3 translit", _needs_key("SARVAM_API_KEY", _sarvam("saaras:v3", "translit")))
+    systems["saaras-v4 translit"] = _cached("saaras-v4 translit", _needs_key("SARVAM_API_KEY", _sarvam("saaras:v4", "translit")))
     if os.getenv("ELEVENLABS_API_KEY"):
         systems["elevenlabs scribe-v2"] = _cached("elevenlabs scribe-v2", _elevenlabs("scribe_v2"))
     if os.getenv("DEEPGRAM_API_KEY"):
