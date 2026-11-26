@@ -1,7 +1,9 @@
 # AGENTS.md: set up, run and test Parakh
 
-**Deployed and live: https://tryparakh.duckdns.org** (same code as this zip, all keys set, nothing to install).
-Code: https://github.com/amaancoderx/parakh · Evidence of results: `docs/Parakh-Evidence.pdf`
+Code: https://github.com/amaancoderx/parakh · Demo video: `web/demo.mp4` · Evidence of results: `docs/Parakh-Evidence.pdf`
+
+The hosted demo (tryparakh.duckdns.org) ran on AWS during Equal AI Builders '26 and has been taken down.
+Run it locally with the steps below: it works without any keys.
 
 Parakh is a verification layer for Indian speech-to-text. Three speech models hear the same audio; Parakh finds
 the words they disagree on, checks those against the audio and the caller's memory of names, fixes what the
@@ -43,7 +45,7 @@ recordings are saved in `.cache/`, so with an empty `.env`:
 
 Only **brand-new audio** (recording your own voice, uploading your own file) needs `OPENAI_API_KEY` and
 `SARVAM_API_KEY`. Without them it shows: "SARVAM_API_KEY is not set: only the bundled recordings replay without it".
-To test new audio without keys, use the deployed site above, which has keys set.
+To test new audio, add both keys to `.env` and restart.
 
 ## 3. Install, seed and start
 

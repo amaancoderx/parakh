@@ -13,7 +13,8 @@
     <br />
 </div>
 
-[![Live demo](https://img.shields.io/badge/live%20demo-tryparakh.duckdns.org-c8553d?style=flat-square)](https://tryparakh.duckdns.org)
+[![Demo video](https://img.shields.io/badge/demo-watch%20the%20video-c8553d?style=flat-square)](web/demo.mp4)
+[![Run locally](https://img.shields.io/badge/run%20locally-no%20keys%20needed-c8553d?style=flat-square)](#quick-start)
 [![Track](https://img.shields.io/badge/Equal%20AI%20Builders%20'26-Voice%20AI%20for%20India-24292f?style=flat-square)](#what-was-measured)
 [![Names right](https://img.shields.io/badge/names%20right-89.1%25%20%E2%86%92%2095.8%25-157a42?style=flat-square)](#what-was-measured)
 [![Tests](https://img.shields.io/badge/tests-78%20passing-157a42?style=flat-square)](#quick-start)
@@ -25,7 +26,9 @@
 
 # Parakh (परख)
 
-**Live demo: [tryparakh.duckdns.org](https://tryparakh.duckdns.org)** · **[Evidence of results (2-page PDF)](docs/Parakh-Evidence.pdf)** · play a real trade call, record your own voice, or upload a recording.
+**[Watch the demo (42 s)](web/demo.mp4)** · **[Evidence of results (2-page PDF)](docs/Parakh-Evidence.pdf)** · **[Run it locally in 2 minutes, no keys needed](#quick-start)**
+
+The hosted demo ran on AWS during Equal AI Builders '26 and has since been taken down. Everything still runs on your machine: the real trade calls, memory and the API work out of the box.
 
 Speech models get names and amounts wrong, and they sound exactly as sure when they are wrong as when they are right. Then something acts on what they heard: an order is sent to the wrong person, a note records the wrong amount.
 
@@ -77,11 +80,12 @@ The same real trade call, on a speech model alone and with Parakh. Struck-throug
 
 ```bash
 uv sync
-cp .env.example .env          # OPENAI_API_KEY and SARVAM_API_KEY are both needed
 uv run uvicorn harness.service:app --port 8000
 ```
 
 Then open `http://localhost:8000`.
+
+**No keys needed to try it.** The answers of all three speech models for the bundled real trade calls are saved in `.cache/`, so the sample calls, memory, the developer page and the API on the sample clip all work with an empty `.env`. To check new audio (your own voice or recordings), add keys first: `cp .env.example .env`, then set `OPENAI_API_KEY` and `SARVAM_API_KEY`. Full setup and test journeys are in [AGENTS.md](AGENTS.md).
 
 | Command | What it does |
 |---|---|
@@ -136,6 +140,8 @@ Measured with `scripts/memory_eval.py`, without memory and with it:
 Call 2 is the one nobody on the line could name the tile in. No model and no list could fix it on the day; memory learned the name from the next call and fixed it that night. The FLEURS names reach Parakh through the same path an upload takes (parser, memory store, the index every request searches), with the recognisers' cached answers.
 
 ## How it works
+
+<img src="docs/assets/architecture.png" alt="How Parakh checks what voice AI hears: the call, the five-step harness, memory, numbers, the safety gate, and outputs for traders and developers" />
 
 | Layer | What happens | Where |
 |---|---|---|
